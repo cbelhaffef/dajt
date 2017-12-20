@@ -1,0 +1,98 @@
+<div class="s-transmission-file-pg">
+    <div class="panel-box">
+        <form class="form" [formGroup]="employeeAddressForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
+            <section class="form-block">
+                <label>Informations sur le mémo de frais</label>
+                <div class="form-group">
+                    <label for="empFullName">Numéro de série</label>
+                    <label for="empFullName"
+                           aria-haspopup="true"
+                           role="tooltip"
+                           class="tooltip tooltip-validation tooltip-sm"
+                           [class.invalid]="employeeAddressForm.get('fullName').invalid
+                    && (employeeAddressForm.get('fullName').dirty || employeeAddressForm.get('fullName').touched)">
+                        <input id="empFullName" type="text"
+                               formControlName="fullName">
+                        <span class="tooltip-content">
+                    Numéro requis.
+                </span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="empPostalCode">Date d'arrivée</label>
+                    <label for="empPostalCode"
+                           aria-haspopup="true"
+                           role="tooltip"
+                           class="tooltip tooltip-validation tooltip-sm"
+                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
+                            && (employeeAddressForm.get('address').get('postalCode').dirty ||
+                            employeeAddressForm.get('address').get('postalCode').touched)">
+                        <input id="empPostalCode" type="text" formControlName="postalCode">
+                        <span class="tooltip-content"> Date requise.</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="empType">Sujet de l'affaire</label>
+                    <div class="select">
+                        <select id="empType"
+                                name="employeeType"
+                                [(ngModel)]="model.employeeType">
+                            <option value="Default">Sélectionnez le sujet</option>
+                            <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="judgeDate">Date du jugement</label>
+                    <label for="judgeDate"
+                           aria-haspopup="true"
+                           role="tooltip"
+                           class="tooltip tooltip-validation tooltip-sm"
+                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
+                                && (employeeAddressForm.get('address').get('postalCode').dirty ||
+                                employeeAddressForm.get('address').get('postalCode').touched)">
+                        <input id="judgeDate" type="text" formControlName="judgeDate">
+                        <span class="tooltip-content"> Date requise.</span>
+                    </label>
+                 </div>
+
+                <div class="form-group">
+                    <label for="judgeNumber">Numéro du jugement</label>
+                    <label for="judgeNumber"
+                           aria-haspopup="true"
+                           role="tooltip"
+                           class="tooltip tooltip-validation tooltip-sm"
+                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
+                                && (employeeAddressForm.get('address').get('postalCode').dirty ||
+                                employeeAddressForm.get('address').get('postalCode').touched)">
+                        <input id="judgeNumber" type="text" formControlName="judgeNumber">
+                        <span class="tooltip-content"> Numéro requis.</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Montant</label>
+                    <label for="amount"
+                           aria-haspopup="true"
+                           role="tooltip"
+                           class="tooltip tooltip-validation tooltip-sm"
+                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
+                                && (employeeAddressForm.get('address').get('postalCode').dirty ||
+                                employeeAddressForm.get('address').get('postalCode').touched)">
+                        <input id="amount" type="text" formControlName="amount">
+                        <span class="tooltip-content"> Montant requis.</span>
+                    </label>
+                </div>
+
+                <button class="btn btn-primary"
+                        type="submit"
+                        [disabled]="employeeAddressForm.invalid">Valider</button>
+            </section>
+        </form>
+    </div>
+
+
+</div>

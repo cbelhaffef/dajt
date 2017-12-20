@@ -34,7 +34,15 @@ export class HomeComponent   {
         { label: 'Orders'   , href: '/home/orders'    , subNav: []},
         { label: 'Products' , href: '/home/products'  , subNav: []},
         { label: 'Customers', href: '/home/customers' , subNav: []},
-        { label: 'Employees', href: '/home/employees' , subNav: []}
+        { label: 'Employees', href: '/home/employees' , subNav: []},
+        {
+            label   : 'Affaires Judiciaires',
+            href    : '/home/legal_cases',
+            subNav  : [
+                { label:"Liste des transmissions"  , href:"/home/legal_cases/transmissions"  },
+                { label:"Demande de Transmission", href:"/home/legal_cases/transmission_file"}
+            ]
+        },
     ];
 
     public selectedHeaderItemIndex:number=0;

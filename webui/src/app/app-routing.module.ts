@@ -16,6 +16,9 @@ import { EmployeesComponent    }   from './pages/employees/employees.component';
 
 import { AuthGuard } from './services/auth_guard.service';
 import { PageNotFoundComponent }  from './pages/404/page-not-found.component';
+import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
+import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
+import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
 
 export const routes: Routes = [
   //Important: The sequence of path is important as the router go over then in sequential manner
@@ -41,6 +44,16 @@ export const routes: Routes = [
         { path:'products'  , component: ProductsComponent    , data:[{selectedHeaderItemIndex:2, selectedSubNavItemIndex:-1}]  },
         { path:'customers' , component: CustomersComponent   , data:[{selectedHeaderItemIndex:3, selectedSubNavItemIndex:-1}]  },
         { path:'employees' , component: EmployeesComponent   , data:[{selectedHeaderItemIndex:4, selectedSubNavItemIndex:-1}]  },
+        {
+            path     : 'legal_cases',
+            component: LegalCasesComponent,
+            data     : [{selectedHeaderItemIndex:0, selectedSubNavItemIndex:-1}],
+            children :[
+                { path: ''        , redirectTo: '/home/legal_cases/transmissions', pathMatch: 'full'},
+                { path: 'transmissions'   , component: TransmissionsComponent     , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:0}]  },
+                { path: 'transmission_file' , component: TransmissionFileComponent   , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:1}]  }
+            ]
+        },
     ]
   },
   { path: 'login' , component: LoginComponent       , data:[{selectedHeaderItemIndex:-1, selectedSubNavItemIndex:-1}] },

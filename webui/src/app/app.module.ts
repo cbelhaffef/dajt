@@ -49,6 +49,9 @@ import { OrderService     } from './services/api/order.service';
 import { ProductService   } from './services/api/product.service';
 import { CustomerService  } from './services/api/customer.service';
 import { EmployeeService  } from './services/api/employee.service';
+import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
+import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
+import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
 
 
 @NgModule({
@@ -90,6 +93,9 @@ import { EmployeeService  } from './services/api/employee.service';
     CustomersComponent,
     OrdersComponent,
     OrderDetailsComponent,
+    LegalCasesComponent,
+    TransmissionsComponent,
+    TransmissionFileComponent,
 
     //Directives
     TrackScrollDirective
