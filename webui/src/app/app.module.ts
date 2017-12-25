@@ -53,6 +53,8 @@ import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
 import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
 import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
 import {AdvocatesComponent} from './pages/advocates/advocate.component';
+import {FoldersComponent} from './pages/folders/folders.component';
+import {FolderDetailsComponent} from './pages/folder_details/folder_details.component';
 
 
 @NgModule({
@@ -98,6 +100,8 @@ import {AdvocatesComponent} from './pages/advocates/advocate.component';
     TransmissionsComponent,
     TransmissionFileComponent,
     AdvocatesComponent,
+    FoldersComponent,
+    FolderDetailsComponent,
 
     //Directives
     TrackScrollDirective

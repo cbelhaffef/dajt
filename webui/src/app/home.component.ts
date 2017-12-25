@@ -22,8 +22,8 @@ export class HomeComponent   {
             label   : 'Affaires Judiciaires',
             href    : '/home/legal_cases',
             subNav  : [
-                { label:"Liste des transmissions"  , href:"/home/legal_cases/transmissions"  },
-                { label:"Demande de Transmission", href:"/home/legal_cases/transmission_file"}
+                { label:"Liste des Dossiers"  , href:"/home/legal_cases/folders"  },
+                { label:"Liste des Avocats", href:"/home/legal_cases/advocates"}
             ]
         }
     ];

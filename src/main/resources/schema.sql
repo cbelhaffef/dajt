@@ -92,6 +92,18 @@ CREATE TABLE orders (
   PRIMARY KEY (id)
 );
 
+/* Table: folders */
+CREATE TABLE folder (
+    id              INT NOT NULL,
+    serial_number   VARCHAR(255),
+    name            VARCHAR(255),
+    create_date     DATETIME ,
+    modif_date      DATETIME ,
+    close_date      VARCHAR(50),
+    status          VARCHAR(150),
+    PRIMARY KEY (id)
+);
+
 /* Table: order_details */
 CREATE TABLE order_items (
   order_id            INT NOT NULL,
