@@ -40,7 +40,7 @@ export class OrderStatsComponent implements OnInit {
         me.orderService.getOrderStats("status")
         .mergeMap(function(statusData) {
             me.ordersByStatusData = statusData.items;
-            console.log("Received Orders By Status");
+            console.log("Received Orders By AffairStatus");
             return me.orderService.getOrderStats("paytype");
         }).mergeMap( function(payTypeData) {
             me.ordersByPaymentData = payTypeData.items;

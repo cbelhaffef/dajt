@@ -19,6 +19,8 @@ import { PageNotFoundComponent }  from './pages/404/page-not-found.component';
 import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
 import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
 import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
+import {AdvocatesComponent} from './pages/advocates/advocate.component';
+
 
 export const routes: Routes = [
   //Important: The sequence of path is important as the router go over then in sequential manner
@@ -28,30 +30,16 @@ export const routes: Routes = [
     component: HomeComponent,
     canActivate:[AuthGuard],
     children:[  // Children paths are appended to the parent path
-        { path: '', redirectTo: '/home/dashboard/order', pathMatch: 'full', data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:-1}] },  // Default path (if no deep path is specified for home component like webui/home then it will by default show ProductsComponent )
-        {
-            path     : 'dashboard',
-            component: DashboardComponent,
-            data     : [{selectedHeaderItemIndex:0, selectedSubNavItemIndex:-1}],
-            children :[
-                { path: ''        , redirectTo: '/home/dashboard/order', pathMatch: 'full'},
-                { path: 'order'   , component: OrderStatsComponent     , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:0}]  },
-                { path: 'product' , component: ProductStatsComponent   , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:1}]  }
-            ]
-        },
-        { path:'orders'    , component: OrdersComponent      , data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:-1}]  },
-        { path:'orders/:id', component: OrderDetailsComponent, data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:-1}]  },
-        { path:'products'  , component: ProductsComponent    , data:[{selectedHeaderItemIndex:2, selectedSubNavItemIndex:-1}]  },
-        { path:'customers' , component: CustomersComponent   , data:[{selectedHeaderItemIndex:3, selectedSubNavItemIndex:-1}]  },
-        { path:'employees' , component: EmployeesComponent   , data:[{selectedHeaderItemIndex:4, selectedSubNavItemIndex:-1}]  },
+        { path: '', redirectTo: '/home/legal_cases/transmissions', pathMatch: 'full', data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:-1}] },  // Default path (if no deep path is specified for home component like webui/home then it will by default show ProductsComponent )
         {
             path     : 'legal_cases',
             component: LegalCasesComponent,
-            data     : [{selectedHeaderItemIndex:0, selectedSubNavItemIndex:-1}],
-            children :[
+            data     : [{selectedHeaderItemIndex:1, selectedSubNavItemIndex:-1}],
+            children : [
                 { path: ''        , redirectTo: '/home/legal_cases/transmissions', pathMatch: 'full'},
-                { path: 'transmissions'   , component: TransmissionsComponent     , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:0}]  },
-                { path: 'transmission_file' , component: TransmissionFileComponent   , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:1}]  }
+                { path: 'transmissions'     , component: TransmissionsComponent      , data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:0 }] },
+                { path: 'transmission_file' , component: TransmissionFileComponent   , data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:1 }] },
+                { path: 'advocates'         , component: AdvocatesComponent          , data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:2 }] }
             ]
         },
     ]

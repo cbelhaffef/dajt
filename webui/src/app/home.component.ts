@@ -1,17 +1,12 @@
-import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
-import { Router,ActivatedRoute, NavigationEnd } from '@angular/router';
-
-import { LogoComponent  } from './components/logo/logo.component';
-import { LoginService   } from './services/api/login.service';
-import { UserInfoService} from './services/user-info.service';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {LoginService} from './services/api/login.service';
+import {UserInfoService} from './services/user-info.service';
 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/switchMap';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 
 @Component({
   selector   : 'home-comp',
@@ -24,25 +19,13 @@ export class HomeComponent   {
     public showAppAlert:boolean = false;
     public appHeaderItems=[
         {
-            label   : 'Dashboard',
-            href    : '/home/dashboard',
-            subNav  : [
-                { label:"Order Stats"  , href:"/home/dashboard/order"  },
-                { label:"Product Stats", href:"/home/dashboard/product"}
-            ]
-        },
-        { label: 'Orders'   , href: '/home/orders'    , subNav: []},
-        { label: 'Products' , href: '/home/products'  , subNav: []},
-        { label: 'Customers', href: '/home/customers' , subNav: []},
-        { label: 'Employees', href: '/home/employees' , subNav: []},
-        {
             label   : 'Affaires Judiciaires',
             href    : '/home/legal_cases',
             subNav  : [
                 { label:"Liste des transmissions"  , href:"/home/legal_cases/transmissions"  },
                 { label:"Demande de Transmission", href:"/home/legal_cases/transmission_file"}
             ]
-        },
+        }
     ];
 
     public selectedHeaderItemIndex:number=0;

@@ -1,98 +1,127 @@
-<div class="s-transmission-file-pg">
+<form class="form" (ngSubmit)="onSubmit()" [hidden]="submitted">
+
+    <div class="s-transmission-file-pg">
+
     <div class="panel-box">
-        <form class="form" [formGroup]="employeeAddressForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
-            <section class="form-block">
-                <label>Informations sur le mémo de frais</label>
-                <div class="form-group">
-                    <label for="empFullName">Numéro de série</label>
-                    <label for="empFullName"
-                           aria-haspopup="true"
-                           role="tooltip"
-                           class="tooltip tooltip-validation tooltip-sm"
-                           [class.invalid]="employeeAddressForm.get('fullName').invalid
-                    && (employeeAddressForm.get('fullName').dirty || employeeAddressForm.get('fullName').touched)">
-                        <input id="empFullName" type="text"
-                               formControlName="fullName">
-                        <span class="tooltip-content">
-                    Numéro requis.
-                </span>
-                    </label>
+
+        <section class="form-block">
+            <label>Membres de l'affaire</label>
+            <div class="form-group">
+                <label for="professor">Professeur</label>
+                <div class="select">
+                    <select id="professor"  name="professor">
+                        <option value="Default">Sélectionnez le sujet</option>
+                        <option *ngFor="let professor of professors" [value]="professor.id">{{professor.name}}</option>
+                    </select>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="defense">Partie défenderesse</label>
+                <label for="defense" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="defense" type="text">
+                </label>
+            </div>
 
-                <div class="form-group">
-                    <label for="empPostalCode">Date d'arrivée</label>
-                    <label for="empPostalCode"
-                           aria-haspopup="true"
-                           role="tooltip"
-                           class="tooltip tooltip-validation tooltip-sm"
-                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
-                            && (employeeAddressForm.get('address').get('postalCode').dirty ||
-                            employeeAddressForm.get('address').get('postalCode').touched)">
-                        <input id="empPostalCode" type="text" formControlName="postalCode">
-                        <span class="tooltip-content"> Date requise.</span>
-                    </label>
+            <div class="form-group">
+                <label for="accused">Accusé</label>
+                <label for="accused" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="accused" type="text">
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="authority">Autoritié judiciaire compétente</label>
+                <div class="select">
+                    <select id="authority"  name="authority">
+                        <option value="Default">Sélectionnez le sujet</option>
+                        <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
+                    </select>
                 </div>
-
-                <div class="form-group">
-                    <label for="empType">Sujet de l'affaire</label>
-                    <div class="select">
-                        <select id="empType"
-                                name="employeeType"
-                                [(ngModel)]="model.employeeType">
-                            <option value="Default">Sélectionnez le sujet</option>
-                            <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="judgeDate">Date du jugement</label>
-                    <label for="judgeDate"
-                           aria-haspopup="true"
-                           role="tooltip"
-                           class="tooltip tooltip-validation tooltip-sm"
-                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
-                                && (employeeAddressForm.get('address').get('postalCode').dirty ||
-                                employeeAddressForm.get('address').get('postalCode').touched)">
-                        <input id="judgeDate" type="text" formControlName="judgeDate">
-                        <span class="tooltip-content"> Date requise.</span>
-                    </label>
-                 </div>
-
-                <div class="form-group">
-                    <label for="judgeNumber">Numéro du jugement</label>
-                    <label for="judgeNumber"
-                           aria-haspopup="true"
-                           role="tooltip"
-                           class="tooltip tooltip-validation tooltip-sm"
-                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
-                                && (employeeAddressForm.get('address').get('postalCode').dirty ||
-                                employeeAddressForm.get('address').get('postalCode').touched)">
-                        <input id="judgeNumber" type="text" formControlName="judgeNumber">
-                        <span class="tooltip-content"> Numéro requis.</span>
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label for="amount">Montant</label>
-                    <label for="amount"
-                           aria-haspopup="true"
-                           role="tooltip"
-                           class="tooltip tooltip-validation tooltip-sm"
-                           [class.invalid]="employeeAddressForm.get('address').get('postalCode').invalid
-                                && (employeeAddressForm.get('address').get('postalCode').dirty ||
-                                employeeAddressForm.get('address').get('postalCode').touched)">
-                        <input id="amount" type="text" formControlName="amount">
-                        <span class="tooltip-content"> Montant requis.</span>
-                    </label>
-                </div>
-
-                <button class="btn btn-primary"
-                        type="submit"
-                        [disabled]="employeeAddressForm.invalid">Valider</button>
-            </section>
-        </form>
+            </div>
+        </section>
     </div>
 
+    <div class="panel-box">
 
+        <section class="form-block">
+            <label>Informations sur le mémo de frais</label>
+            <div class="form-group">
+                <label for="serialNumber">Numéro de série</label>
+                <label for="serialNumber" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="serialNumber" type="text">
+                    <span class="tooltip-content">
+                Numéro requis.
+            </span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="arrivalDate">Date d'arrivée</label>
+                <label for="arrivalDate" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="arrivalDate" type="text">
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="subjectCase">Sujet de l'affaire</label>
+                <div class="select">
+                    <select id="subjectCase"  name="subjectCase" >
+                        <option value="Default">Sélectionnez le sujet</option>
+                        <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="judgeDate">Date du jugement</label>
+                <label for="judgeDate" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="judgeDate" type="text">
+                </label>
+             </div>
+
+            <div class="form-group">
+                <label for="judgeNumber">Numéro du jugement</label>
+                <label for="judgeNumber" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="judgeNumber" type="text">
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Montant</label>
+                <label for="amount" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="amount" type="text">
+                </label>
+            </div>
+        </section>
+    </div>
+
+    <div class="panel-box">
+        <section class="form-block">
+            <div class="form-group">
+                <label for="folderNumber">Numéro du dossier</label>
+                <label for="folderNumber" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="folderNumber" type="text" >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="workDone">Travail effectuée</label>
+                <label for="workDone" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <input id="workDone" type="text" >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="observation">Observation</label>
+                <label for="observation" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                    <textarea id="observation" >
+                    </textarea>
+                </label>
+            </div>
+        </section>
+    </div>
 </div>
+
+    <button class="btn btn-primary"  type="submit">Valider</button>
+
+</form>

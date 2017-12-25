@@ -52,6 +52,7 @@ import { EmployeeService  } from './services/api/employee.service';
 import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
 import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
 import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
+import {AdvocatesComponent} from './pages/advocates/advocate.component';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import {TransmissionFileComponent} from './pages/transmission_file/transmission_
     LegalCasesComponent,
     TransmissionsComponent,
     TransmissionFileComponent,
+    AdvocatesComponent,
 
     //Directives
     TrackScrollDirective

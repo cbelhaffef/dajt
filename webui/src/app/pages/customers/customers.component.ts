@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CustomerService } from '../../services/api/customer.service';
 
 @Component({
-	selector: 's-customers-pg',
+	selector: 's-advocates-pg',
 	templateUrl: './customers.component.html',
     styleUrls: [ './customers.scss'],
 })

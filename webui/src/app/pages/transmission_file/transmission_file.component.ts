@@ -9,25 +9,21 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 
 export class TransmissionFileComponent {
 
-    employeeAddressForm = new FormGroup({
-        fullName: new FormControl('', Validators.required),
-        address: new FormGroup({
-            postalCode: new FormControl('', Validators.required),
-            country: new FormControl('', Validators.required)
-        })
-    });
     submitted = false;
 
     subjects = [
-        [{id : '1' , name : 'اهانة'}]
-    ]
+        {id : '1' , name : 'اهانة'}
+    ];
+
+    professors = [
+        {id : '1' , name : 'بن براح عبد اللطيف'}
+    ];
 
     onSubmit() {
 
     }
 
     addNewEmployeeAddress() {
-        this.employeeAddressForm.reset();
         this.submitted = false;
     }
 }
