@@ -8,6 +8,57 @@ DROP SCHEMA IF EXISTS northwind;
 CREATE SCHEMA northwind;
 USE northwind;
 
+/* Table: folders */
+CREATE TABLE folder (
+    id              INT NOT NULL,
+    number          VARCHAR(255),
+    create_date     DATETIME ,
+    modif_date      DATETIME ,
+    close_date      VARCHAR(50),
+    status          VARCHAR(150),
+    PRIMARY KEY (id)
+);
+
+/* Table: advocates */
+CREATE TABLE advocates (
+    adv_id              INT NOT NULL,
+    last_name       VARCHAR(50) ,
+    first_name      VARCHAR(50)
+);
+
+/* Table: advocates */
+CREATE TABLE affair (
+    affair_id    INT NOT NULL,
+    number       VARCHAR(255),
+    arrival_date DATETIME,
+    theme        VARCHAR(50),
+    prosecutor   VARCHAR(50),
+    defendant    VARCHAR(50),
+    judiciary    VARCHAR(50),
+    status       VARCHAR(50),
+    ADV_id       INT,
+    judg_id      INT,
+    FOLDER_ID    INT
+);
+
+/* Table : Transmission */
+CREATE TABLE transmission (
+  id              INT NOT NULL,
+  product_code    VARCHAR(25) ,
+  product_name    VARCHAR(50) ,
+  description     VARCHAR(250),
+  standard_cost   DECIMAL(19,4) NULL DEFAULT '0.0000',
+  list_price      DECIMAL(19,4) NOT NULL DEFAULT '0.0000',
+  target_level    INT ,
+  reorder_level   INT ,
+  minimum_reorder_quantity INT ,
+  quantity_per_unit VARCHAR(50) ,
+  discontinued    TINYINT NOT NULL DEFAULT '0',
+  category        VARCHAR(50),
+  PRIMARY KEY (id)
+);
+
+
 /* Table: user (Application Users) */
 CREATE TABLE user (
     user_id     NVARCHAR(20) NOT NULL,
@@ -92,18 +143,6 @@ CREATE TABLE orders (
   PRIMARY KEY (id)
 );
 
-/* Table: folders */
-CREATE TABLE folder (
-    id              INT NOT NULL,
-    serial_number   VARCHAR(255),
-    name            VARCHAR(255),
-    create_date     DATETIME ,
-    modif_date      DATETIME ,
-    close_date      VARCHAR(50),
-    status          VARCHAR(150),
-    PRIMARY KEY (id)
-);
-
 /* Table: order_details */
 CREATE TABLE order_items (
   order_id            INT NOT NULL,
@@ -132,52 +171,6 @@ CREATE TABLE products (
   category        VARCHAR(50),
   PRIMARY KEY (id)
 );
-
-/* Table: advocates */
-CREATE TABLE advocates (
-    adv_id              INT NOT NULL,
-    last_name       VARCHAR(50) ,
-    first_name      VARCHAR(50)
-);
-
-/* Table: advocates */
-CREATE TABLE folder (
-    folder_id    INT NOT NULL,
-    number       VARCHAR(255)
-);
-
-/* Table: advocates */
-CREATE TABLE affair (
-    affair_id    INT NOT NULL,
-    number       VARCHAR(255),
-    arrival_date DATETIME,
-    theme        VARCHAR(50),
-    prosecutor   VARCHAR(50),
-    defendant    VARCHAR(50),
-    judiciary    VARCHAR(50),
-    status       VARCHAR(50),
-    ADV_id       INT,
-    judg_id      INT,
-    FOLDER_ID    INT
-);
-
-/* Table : Transmission */
-CREATE TABLE transmission (
-  id              INT NOT NULL,
-  product_code    VARCHAR(25) ,
-  product_name    VARCHAR(50) ,
-  description     VARCHAR(250),
-  standard_cost   DECIMAL(19,4) NULL DEFAULT '0.0000',
-  list_price      DECIMAL(19,4) NOT NULL DEFAULT '0.0000',
-  target_level    INT ,
-  reorder_level   INT ,
-  minimum_reorder_quantity INT ,
-  quantity_per_unit VARCHAR(50) ,
-  discontinued    TINYINT NOT NULL DEFAULT '0',
-  category        VARCHAR(50),
-  PRIMARY KEY (id)
-);
-
 
 /* Foreign Key: orders */
 ALTER TABLE orders ADD CONSTRAINT fk_orders__customers FOREIGN KEY (customer_id) REFERENCES customers(id);

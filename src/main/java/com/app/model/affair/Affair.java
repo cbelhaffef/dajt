@@ -16,28 +16,29 @@ import java.util.Date;
 public class Affair {
 
     @Id
-    @Column(name="AFFAIR_ID")
+    @Column(name="affair_id")
     private Long id;
     private String number;
-    private Date arrivalDate;
+    private Date creationDate;
+    private Date modificationDate;
+    private Date closeDate;
     private Theme theme;
 
     private String prosecutor;
     private String Defendant;
     private String judiciary;
 
-
     private AffairStatus status;
 
     @ManyToOne
-    @JoinColumn(name="ADV_ID", nullable=true, updatable=true)
+    @JoinColumn(name="folder_id", nullable=true, updatable=true)
+    private Folder folder;
+
+    @ManyToOne
+    @JoinColumn(name="advocate_ID", nullable=true, updatable=true)
     private Advocate advocate;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "affair", cascade = CascadeType.ALL)
     private Judgement judgement;
-
-    @ManyToOne
-    @JoinColumn(name="FOLDER_ID", nullable=true, updatable=true)
-    private Folder folder;
 
 }
