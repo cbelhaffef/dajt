@@ -55,6 +55,7 @@ import {TransmissionFileComponent} from './pages/transmission_file/transmission_
 import {AdvocatesComponent} from './pages/advocates/advocate.component';
 import {FoldersComponent} from './pages/folders/folders.component';
 import {FolderDetailsComponent} from './pages/folder_details/folder_details.component';
+import {FolderService} from './services/api/folder.service';
 
 
 @NgModule({
@@ -117,6 +118,7 @@ import {FolderDetailsComponent} from './pages/folder_details/folder_details.comp
     ProductService,
     CustomerService,
     EmployeeService,
+    FolderService,
     AppConfig,
   ],
 

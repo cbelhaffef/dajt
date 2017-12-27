@@ -14,7 +14,7 @@ CREATE TABLE folder (
     number          VARCHAR(255),
     create_date     DATETIME ,
     modif_date      DATETIME ,
-    close_date      VARCHAR(50),
+    close_date      DATETIME,
     status          VARCHAR(150),
     PRIMARY KEY (id)
 );

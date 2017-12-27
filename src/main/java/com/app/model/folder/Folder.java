@@ -14,20 +14,20 @@ import java.util.List;
 public class Folder {
 
     @Id
-    @Column(name="folder_id")
+    @Column(name="id")
     private Long id;
     private String number;
 
-    @Column(name="folder_status")
-    private FolderStatus Status;
+    @Column(name="status")
+    private FolderStatus status;
 
-    @Column(name="create_dth")
-    private Date creationDate;
+    @Column(name="create_date")
+    private Date createDate;
 
-    @Column(name="modif_dth")
-    private Date modificationDate;
+    @Column(name="modif_date")
+    private Date modifDate;
 
-    @Column(name="close_dth")
+    @Column(name="close_date")
     private Date closeDate;
 
     @OneToMany(mappedBy="folder")

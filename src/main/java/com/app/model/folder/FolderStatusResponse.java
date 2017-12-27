@@ -1,6 +1,6 @@
 package com.app.model.folder;
 
-import com.app.model.response.PageResponse;
+import com.app.enums.FolderStatus;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class FolderResponse extends PageResponse {
+public class FolderStatusResponse {
     @ApiModelProperty(required = true, value = "")
-    private List<Folder> items;
+    private List<FolderStatus> items;
 }
