@@ -16,6 +16,8 @@ bower_components/
 **/.idea
 **/.vscode
 .settings/
+**/.iml
+**/*bundle.js
 
 # misc
 **/.sass-cache
