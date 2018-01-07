@@ -1,39 +1,37 @@
-package com.app.api.order;
+package com.app.api.folder;
 
 import com.app.enums.FolderStatus;
 import com.app.model.folder.Folder;
 import com.app.model.folder.FolderResponse;
 import com.app.model.folder.FolderStatusResponse;
-import io.swagger.annotations.*;
-//import springfox.documentation.annotations.*;
-import org.springframework.data.domain.Example;
-import org.springframework.http.*;
+import com.app.repo.FolderRepo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.data.domain.*;
-//import static org.springframework.http.MediaType.*;
 
-import java.util.*;
-import java.math.BigDecimal;
-import com.app.api.*;
-import com.app.model.order.*;
-import com.app.repo.*;
-import static com.app.model.response.OperationResponse.*;
+import java.util.Arrays;
+import java.util.Optional;
+
+//import springfox.documentation.annotations.*;
+//import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = {"Order"})
+@Api(tags = {"Folder"})
 public class FolderController {
 
     @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private FolderRepo folderRepo;
-    @Autowired private OrderRepo orderRepo;
 
-
-    @ApiOperation(value = "List of folders", response = OrderResponse.class)
-    @RequestMapping(value = "/folders", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+    @ApiOperation(value = "List of folders", response = FolderResponse.class)
+    @RequestMapping(value = "/folders", method = RequestMethod.GET)
     public FolderResponse getFoldersByPage(
         @ApiParam(value = ""    )               @RequestParam(value = "page"  ,  defaultValue="0"   ,  required = false) Integer page,
         @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="20"  ,  required = false) Integer size,
@@ -52,7 +50,7 @@ public class FolderController {
         return resp;
     }
 
-    @ApiOperation(value = "List of folders", response = OrderResponse.class)
+    @ApiOperation(value = "List of folders", response = FolderStatusResponse.class)
     @RequestMapping(value = "/folders/status", method = RequestMethod.GET)
     public FolderStatusResponse getFoldersStatus() {
         FolderStatusResponse resp = new FolderStatusResponse();
@@ -60,4 +58,10 @@ public class FolderController {
         return resp;
     }
 
+    @ApiOperation(value = "Order Details", response = Folder.class)
+    @RequestMapping(value = "/folders/{folderNumber}", method = RequestMethod.GET)
+    public Folder getFolderDetail( @PathVariable("folderNumber") String folderNumber) {
+        Optional<Folder> folder = folderRepo.findByNumber(folderNumber);
+        return folder.isPresent() ? folder.get() : null;
+    }
 }

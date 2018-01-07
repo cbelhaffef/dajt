@@ -30,18 +30,18 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate:[AuthGuard],
-    children:[  // Children paths are appended to the parent path
+    canActivate: [AuthGuard],
+    children: [  // Children paths are appended to the parent path
         { path: '', redirectTo: '/home/legal_cases/folders', pathMatch: 'full', data:[{selectedHeaderItemIndex:1, selectedSubNavItemIndex:-1}] },
         // Default path (if no deep path is specified for home component like webui/home then it will by default show ProductsComponent )
         {
             path     : 'legal_cases',
             component: LegalCasesComponent,
-            data     : [{selectedHeaderItemIndex:1, selectedSubNavItemIndex:-1}],
+            data     : [{selectedHeaderItemIndex:0, selectedSubNavItemIndex:-1}],
             children : [
                 { path: ''                  , redirectTo: '/home/legal_cases/folders', pathMatch: 'full'},
                 { path: 'folders'           , component: FoldersComponent          , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:0 }] },
-                { path: 'folder/:id'        , component: FolderDetailsComponent    , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:-1}]  },
+                { path: 'folders/:id'        , component: FolderDetailsComponent    , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:0}]  },
                 { path: 'advocates'         , component: AdvocatesComponent        , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:1 }] },
                 { path: 'transmission_file' , component: TransmissionFileComponent , data:[{selectedHeaderItemIndex:0, selectedSubNavItemIndex:2 }] },
 

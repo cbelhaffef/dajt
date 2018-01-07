@@ -1,63 +1,59 @@
 <div class="pad-16">
-    <h3 i18n>Folders</h3>
-
     <div class="row">
-        <div class="col-lg-12">
-            <div style="width:1140px">
-                <form>
-                    <section class="form-block">
-                        <div class="form-group row">
-                            <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                <label for="folderNumber">Numéro Dossier</label>
-                            </div>
-                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                <input class="form-control" type="text" id="folderNumber" placeholder="Entrez le numéro ici" size="45">
-                            </div>
-                            <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                <label for="status">Status</label>
-                            </div>
-                            <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
-                                <div class="select form-control">
-                                    <select id="status">
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                        <option>Option 3</option>
-                                        <option>Option 4</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                <button type="submit" class="btn btn-primary" i18n>Recherche</button>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-9">
+
+            <form style="text-align: center" #f="ngForm" (ngSubmit)="onSubmit(f)">
+                <section class="form-block">
+                    <div class="form-group row">
+                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                            <label for="folderNumber">Numéro Dossier</label>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                            <input class="form-control" type="text" id="folderNumber" name="folderNumber"
+                                   placeholder="Entrez le numéro ici" size="45" ngModel #folderNumber="ngModel" >
+                        </div>
+                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                            <label for="status">Status</label>
+                        </div>
+                        <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+                            <div class="select form-control">
+                                <select id="status" name="status" ngModel #status="ngModel">
+                                    <option value=""></option>
+                                    <option *ngFor="let st of folderStatus" value="{{st}}">{{st}}</option>
+                                </select>
                             </div>
                         </div>
-                    </section>
-                </form>
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                            <button [clrLoading]="validateLoading"  type="submit" class="btn btn-primary" i18n>Recherche</button>
+                        </div>
+                    </div>
+                </section>
+            </form>
 
-
-                <ngx-datatable
-                    style='height:450px; width:100%;'
-                    [rows]='rows'
-                    [columns]="columns"
-                    [columnMode]="'standard'"
-                    [headerHeight]="45"
-                    [footerHeight]="45"
-                    [rowHeight]="36"
-                    [scrollbarV]="true"
-                >
-                </ngx-datatable>
-            </div>
-
+            <ngx-datatable
+                style='height:450px; width:100%;'
+                [rows]='rows'
+                [columns]="columns"
+                [columnMode]="'standard'"
+                [headerHeight]="45"
+                [footerHeight]="45"
+                [rowHeight]="36"
+                [scrollbarV]="true">
+            </ngx-datatable>
 
         </div>
+        <div class="col-lg-1"></div>
     </div>
 </div>
 
-<ng-template #orderIdTpl let-row="row" let-value="value" let-i="index">
-    <a routerLink="/home/orders/{{value}}" attr.data-itemid="{{value}}">{{value}}</a>
+
+<ng-template #folderIdTpl let-row="row" let-value="value" let-i="index">
+    <a routerLink="/home/legal_cases/folders/{{value}}" attr.data-itemid="{{value}}">{{value}}</a>
 </ng-template>
 
 
-<ng-template #orderStatusCellTpl let-row="row" let-value="value" let-i="index">
+<ng-template #folderStatusCellTpl let-row="row" let-value="value" let-i="index">
     <s-badge [text]=value [badgeCls]="'s-badge-'+value.toLowerCase().replace(' ','')"></s-badge>
 </ng-template>
 

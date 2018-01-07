@@ -1,21 +1,19 @@
-package com.app.model.advocate;
+package com.app.model.victim;
 
-import com.app.model.folder.Folder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
-@Table(name="advocate")
-public class Advocate {
+@Table(name="victim")
+public class Victim {
 
     @Id
     @GeneratedValue
-    @Column(name="advocate_id")
+    @Column(name="victim_id")
     private Long id;
 
     @Column(name="first_name")
@@ -23,7 +21,4 @@ public class Advocate {
 
     @Column(name="last_name")
     private String lastName;
-
-    @OneToMany(mappedBy="advocate")
-    List<Folder> folders;
 }

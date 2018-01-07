@@ -3,266 +3,150 @@
  Model : NorthWind
 **/
 
-DROP SCHEMA IF EXISTS northwind;
+DROP SCHEMA IF EXISTS dajt;
 
-CREATE SCHEMA northwind;
-USE northwind;
+CREATE SCHEMA dajt;
+USE dajt;
 
-/* Table: folders */
+/* Table: folder */
 CREATE TABLE folder (
-    id              INT NOT NULL,
+    folder_id       INT NOT NULL AUTO_INCREMENT,
     number          VARCHAR(255),
     create_date     DATETIME ,
     modif_date      DATETIME ,
     close_date      DATETIME,
-    status          VARCHAR(150),
-    PRIMARY KEY (id)
+    folder_status   VARCHAR(50),
+    offense         VARCHAR(255),
+    court_id        INT,
+    advocate_id     INT,
+    judgment_id     INT,
+    assigned        INT,
+    PRIMARY KEY (folder_id)
 );
 
-/* Table: advocates */
-CREATE TABLE advocates (
-    adv_id              INT NOT NULL,
-    last_name       VARCHAR(50) ,
-    first_name      VARCHAR(50)
+/* Table: guilty */
+CREATE TABLE guilty (
+    guilty_id INT NOT NULL AUTO_INCREMENT,
+    first_name NVARCHAR(20),
+    last_name NVARCHAR (20),
+    PRIMARY KEY (guilty_id)
 );
 
-/* Table: advocates */
-CREATE TABLE affair (
-    affair_id    INT NOT NULL,
-    number       VARCHAR(255),
-    arrival_date DATETIME,
-    theme        VARCHAR(50),
-    prosecutor   VARCHAR(50),
-    defendant    VARCHAR(50),
-    judiciary    VARCHAR(50),
-    status       VARCHAR(50),
-    ADV_id       INT,
-    judg_id      INT,
-    FOLDER_ID    INT
+/* Table: victim */
+CREATE TABLE victim (
+    victim_id INT NOT NULL AUTO_INCREMENT,
+    first_name NVARCHAR(20),
+    last_name NVARCHAR(20),
+    PRIMARY KEY (victim_id)
+);
+
+CREATE TABLE court (
+    court_id INT NOT NULL,
+    name NVARCHAR(20),
+    PRIMARY KEY (court_id)
+);
+
+/* Table: folder_guilty */
+CREATE TABLE folder_guilty(
+    folder_id INT NOT NULL,
+    guilty_id INT NOT NULL
+);
+
+/* Table: folder_victim */
+CREATE TABLE folder_victim(
+    folder_id INT NOT NULL,
+    victim_id INT NOT NULL
+);
+
+/* Table: advocate */
+CREATE TABLE advocate (
+    advocate_id     INT NOT NULL AUTO_INCREMENT,
+    last_name       NVARCHAR(50),
+    first_name      NVARCHAR(50),
+    PRIMARY KEY (advocate_id)
+);
+
+/* Table judgment */
+CREATE TABLE judgment (
+    judgment_id     INT NOT NULL AUTO_INCREMENT,
+    number          INT,
+    judgment_date   DATETIME,
+    judgment_status VARCHAR(50),
+    folder_id       INT,
+    PRIMARY KEY (judgment_id)
 );
 
 /* Table : Transmission */
 CREATE TABLE transmission (
-  id              INT NOT NULL,
-  product_code    VARCHAR(25) ,
-  product_name    VARCHAR(50) ,
-  description     VARCHAR(250),
-  standard_cost   DECIMAL(19,4) NULL DEFAULT '0.0000',
-  list_price      DECIMAL(19,4) NOT NULL DEFAULT '0.0000',
-  target_level    INT ,
-  reorder_level   INT ,
-  minimum_reorder_quantity INT ,
-  quantity_per_unit VARCHAR(50) ,
-  discontinued    TINYINT NOT NULL DEFAULT '0',
-  category        VARCHAR(50),
-  PRIMARY KEY (id)
+  transmission_id  INT NOT NULL AUTO_INCREMENT,
+  work_done        VARCHAR(255) ,
+  note             VARCHAR(255) ,
+  send_number      VARCHAR(250),
+  send_date        DATETIME,
+  amount           INT,
+  folder_id        INT,
+  affair_id        INT,
+  advocate_id      INT,
+  judgment_id     INT,
+  transmitted      BOOLEAN NOT NULL DEFAULT FALSE,
+  PRIMARY KEY (transmission_id)
 );
 
+/* Table : role  */
+CREATE TABLE role (
+    role_id INT NOT NULL  AUTO_INCREMENT,
+    name NVARCHAR (20) NOT NULL,
+    PRIMARY KEY (role_id)
+);
 
 /* Table: user (Application Users) */
 CREATE TABLE user (
-    user_id     NVARCHAR(20) NOT NULL,
+    user_id     INT NOT NULL,
+    login       NVARCHAR(20) NOT NULL,
     password    NVARCHAR(20) NOT NULL,
     first_name  NVARCHAR(50) ,
     last_name   NVARCHAR(50) ,
     email       NVARCHAR(70) ,
-    security_provider_id INT ,
-    default_customer_id  INT ,
-    company     NVARCHAR(50) ,
     phone       NVARCHAR(20) ,
     address1    NVARCHAR(100),
     address2    NVARCHAR(100),
     country     NVARCHAR(20) ,
     postal      NVARCHAR(20) ,
-    role        NVARCHAR(20) ,
-    other_roles NVARCHAR(80) ,
     is_active   TINYINT  ,
     is_blocked  TINYINT  ,
     secret_question     NVARCHAR(100),
     secret_answer       NVARCHAR(100),
-    enable_beta_testing TINYINT,
-    enable_renewal      TINYINT,
     CONSTRAINT user_id PRIMARY KEY(user_id)
 );
 
-/* Table: customers */
-CREATE TABLE customers (
-  id              INT NOT NULL,
-  last_name       VARCHAR(50) ,
-  first_name      VARCHAR(50) ,
-  email           VARCHAR(50) ,
-  company         VARCHAR(50) ,
-  phone           VARCHAR(25) ,
-  address1        VARCHAR(150),
-  address2        VARCHAR(150),
-  city            VARCHAR(50) ,
-  state           VARCHAR(50) ,
-  postal_code     VARCHAR(15) ,
-  country         VARCHAR(50) ,
-  PRIMARY KEY (id)
+/* Table : user_role */
+CREATE TABLE user_role (
+    user_id INT NOT NULL,
+    role_id int NOT NULL
 );
 
-/* Table: employees */
-CREATE TABLE employees (
-  id              INT NOT NULL,
-  last_name       VARCHAR(50) ,
-  first_name      VARCHAR(50) ,
-  email           VARCHAR(50) ,
-  avatar          VARCHAR(250) ,
-  job_title       VARCHAR(50) ,
-  department      VARCHAR(50) ,
-  manager_id      INT ,
-  phone           VARCHAR(25) ,
-  address1        VARCHAR(150),
-  address2        VARCHAR(150),
-  city            VARCHAR(50) ,
-  state           VARCHAR(50) ,
-  postal_code     VARCHAR(15) ,
-  country         VARCHAR(50) ,
-  PRIMARY KEY (id)
-);
+/* Foreign Key: folder */
+ALTER TABLE folder ADD CONSTRAINT fk_folder__advocate FOREIGN KEY (advocate_id) REFERENCES advocate(advocate_id);
+ALTER TABLE folder ADD CONSTRAINT fk_folder__judgment FOREIGN KEY (judgment_id) REFERENCES judgment(judgment_id);
+ALTER TABLE folder ADD CONSTRAINT fk_folder__user FOREIGN KEY (user_id) REFERENCES user(user_id);
 
-/* Table: orders */
-CREATE TABLE orders (
-  id              INT NOT NULL,
-  employee_id     INT ,
-  customer_id     INT ,
-  order_date      DATETIME ,
-  shipped_date    DATETIME ,
-  ship_name       VARCHAR(50) ,
-  ship_address1   VARCHAR(150) ,
-  ship_address2   VARCHAR(150) ,
-  ship_city       VARCHAR(50) ,
-  ship_state      VARCHAR(50) ,
-  ship_postal_code VARCHAR(50) ,
-  ship_country    VARCHAR(50) ,
-  shipping_fee    DECIMAL(19,4) NULL DEFAULT '0.0000',
-  payment_type    VARCHAR(50) ,
-  paid_date       DATETIME ,
-  order_status    VARCHAR(25),
-  PRIMARY KEY (id)
-);
+/* Foreign Key: folder_guilty */
+ALTER TABLE folder_guilty ADD CONSTRAINT fk_folder__guilty FOREIGN KEY (folder_id) REFERENCES folder(folder_id);
+ALTER TABLE folder_guilty ADD CONSTRAINT fk_guilty__folder FOREIGN KEY (guilty_id) REFERENCES guilty(guilty_id);
 
-/* Table: order_details */
-CREATE TABLE order_items (
-  order_id            INT NOT NULL,
-  product_id          INT ,
-  quantity            DECIMAL(18,4) NOT NULL DEFAULT '0.0000',
-  unit_price          DECIMAL(19,4) NULL DEFAULT '0.0000',
-  discount            DECIMAL(19,4) NULL DEFAULT '0.0000',
-  order_item_status   VARCHAR(25),
-  date_allocated      DATETIME ,
-  PRIMARY KEY (order_id, product_id)
-);
+/* Foreign Key: folder_victim */
+ALTER TABLE folder_victim ADD CONSTRAINT fk_folder__victim FOREIGN KEY (folder_id) REFERENCES folder(folder_id);
+ALTER TABLE folder_victim ADD CONSTRAINT fk_victim__folder FOREIGN KEY (victim_id) REFERENCES victim(victim_id);
 
-/* Table: products */
-CREATE TABLE products (
-  id              INT NOT NULL,
-  product_code    VARCHAR(25) ,
-  product_name    VARCHAR(50) ,
-  description     VARCHAR(250),
-  standard_cost   DECIMAL(19,4) NULL DEFAULT '0.0000',
-  list_price      DECIMAL(19,4) NOT NULL DEFAULT '0.0000',
-  target_level    INT ,
-  reorder_level   INT ,
-  minimum_reorder_quantity INT ,
-  quantity_per_unit VARCHAR(50) ,
-  discontinued    TINYINT NOT NULL DEFAULT '0',
-  category        VARCHAR(50),
-  PRIMARY KEY (id)
-);
+/* Foreign Key: judgment */
+ALTER TABLE judgment ADD CONSTRAINT fk_judgment__folder FOREIGN KEY (folder_id) REFERENCES folder(folder_id);
 
-/* Foreign Key: orders */
-ALTER TABLE orders ADD CONSTRAINT fk_orders__customers FOREIGN KEY (customer_id) REFERENCES customers(id);
-ALTER TABLE orders ADD CONSTRAINT fk_orders__employees FOREIGN KEY (employee_id) REFERENCES employees(id);
-/* Foreign Key:  order_items */
-ALTER TABLE order_items ADD CONSTRAINT fk_order_items__orders      FOREIGN KEY (order_id) REFERENCES orders(id);
-ALTER TABLE order_items ADD CONSTRAINT fk_order_items__products    FOREIGN KEY (product_id) REFERENCES products(id);
+/* Foreign Key: user_role */
+ALTER TABLE user_role ADD CONSTRAINT fk_user__role FOREIGN KEY (user_id) REFERENCES user(user_id);
+ALTER TABLE user_role ADD CONSTRAINT fk_role__user FOREIGN KEY (role_id) REFERENCES role(role_id);
 
-/* Views */
-CREATE OR REPLACE VIEW order_info AS
-select o.id as order_id
- , o.order_date
- , o.order_status
- , o.paid_date
- , o.payment_type
- , o.shipped_date
- , o.shipping_fee
- , o.ship_name
- , o.ship_address1
- , o.ship_address2
- , o.ship_city
- , o.ship_state
- , o.ship_postal_code
- , o.ship_country
- , o.customer_id
- , o.employee_id
- , concat(c.first_name, ' ', c.last_name) as customer_name
- , c.phone customer_phone
- , c.email customer_email
- , c.company as customer_company
- , concat(e.first_name, ' ', e.last_name) as employee_name
- , e.department employee_department
- , e.job_title  employee_job_title
-  From   orders o
-       , employees e
-       , customers c
- where o.employee_id  = e.id
-   and o.customer_id  = c.id;
 
-CREATE OR REPLACE VIEW order_details AS
-select oi.order_id
-  , oi.product_id
-  , oi.quantity
-  , oi.unit_price
-  , oi.discount
-  , oi.date_allocated
-  , oi.order_item_status
-  , o.order_date
-  , o.order_status
-  , o.paid_date
-  , o.payment_type
-  , o.shipped_date
-  , o.shipping_fee
-  , o.ship_name
-  , o.ship_address1
-  , o.ship_address2
-  , o.ship_city
-  , o.ship_state
-  , o.ship_postal_code
-  , o.ship_country
-  , p.product_code
-  , p.product_name
-  , p.category
-  , p.description
-  , p.list_price
-  , o.customer_id
-  , concat(c.first_name, ' ', c.last_name)  as customer_name
-  , c.phone   as customer_phone
-  , c.email   as customer_email
-  , c.company as customer_company
-  , o.employee_id
-  , concat(e.first_name, ' ', e.last_name) as employee_name
-  , e.department as employee_department
-  , e.job_title  as employee_job_title
-  From   orders o
-       , products p
-       , order_items oi
-       , employees e
-       , customers c
- where oi.order_id    = o.id
-   and oi.product_id  = p.id
-   and o.employee_id  = e.id
-   and o.customer_id  = c.id;
-
-CREATE OR REPLACE VIEW customer_orders AS
-select o.order_date, o.order_status, o.paid_date, o.payment_type, o.shipping_fee, o.customer_id
-       , c.first_name customer_first_name, c.last_name  customer_last_name, c.phone customer_phone, c.email customer_email, c.company
-  from orders o,customers c
- where o.customer_id  = c.id;
-
-CREATE OR REPLACE VIEW employee_orders AS
-select o.order_date, o.order_status, o.paid_date, o.payment_type, o.shipping_fee, o.employee_id
-       , e.first_name employee_first_name, e.last_name  employee_last_name,  e.email employee_email, e.department
-  from orders o,employees e
- where o.customer_id  = e.id;
+/* Foreign Key: transmission */
+ALTER TABLE transmission ADD CONSTRAINT fk_transmission__folder FOREIGN KEY (folder_id) REFERENCES folder(folder_id);
+ALTER TABLE transmission ADD CONSTRAINT fk_transmission__advocate FOREIGN KEY (advocate_id) REFERENCES advocate(advocate_id);
+ALTER TABLE transmission ADD CONSTRAINT fk_transmission__judgment FOREIGN KEY (judgment_id) REFERENCES judgment(judgment_id);

@@ -1,4 +1,4 @@
-package com.app.model.affair;
+package com.app.model.victim;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -6,9 +6,10 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class AffairResponse {
+public class AdvocateResponse {
     @ApiModelProperty(required = true, value = "")
-    private List<Affair> items;
+    private List<Advocate> items;
 }

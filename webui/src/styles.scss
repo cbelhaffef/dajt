@@ -100,7 +100,12 @@ header.legend-title{
   &.s-badge-warning  { background-color: #ff8e28; color:$s-c-text;}
   &.s-badge-good     { background-color: $s-c-good; color:$s-c-text;}
   &.s-badge-new      { background-color: $s-c-info; color:$s-c-white;}
+
+  &.s-badge-close      { background-color: #ff8e28; color:$s-c-text;}
+  &.s-badge-in_progres { background-color: $s-c-good; color:$s-c-text;}
+  &.s-badge-open       { background-color: $s-c-info; color:$s-c-white;}
 }
+
 
 .tile{
     display:flex;

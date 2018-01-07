@@ -1,6 +1,7 @@
 package com.app.model.judgement;
 
-import com.app.model.affair.Affair;
+import com.app.enums.JudgementStatus;
+import com.app.model.folder.Folder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,13 +13,21 @@ import java.util.Date;
 public class Judgement {
 
     @Id
-    @Column(name="judg_id")
+    @GeneratedValue
+    @Column(name="judgement_id")
     private Long id;
+
+    @Column(name="number")
     private String number;
+
+    @Column(name="judgement_date")
     private Date judgementDate;
+
+    @Column(name="judgement_status")
+    @Enumerated(EnumType.STRING)
+    private JudgementStatus status;
 
     @OneToOne
     @PrimaryKeyJoinColumn
-    private Affair affair;
-
+    private Folder folder;
 }

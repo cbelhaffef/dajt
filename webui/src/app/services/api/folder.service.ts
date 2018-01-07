@@ -12,12 +12,18 @@ export class FolderService {
     /**
      * Gets List of orders
      */
-    getFolder(page?:number, size?:number): Observable<any> {
+    getFolder(folderNumber?:string, status?:string,page?:number, size?:number): Observable<any> {
         //Create Request URL params
         let me = this;
         let params: HttpParams = new HttpParams();
         params = params.append('page', typeof page === "number"? page.toString():"0");
         params = params.append('size', typeof size === "number"? size.toString():"1000");
+        if (folderNumber && typeof folderNumber === "string"){
+            params = params.append(folderNumber);
+        }
+        if (status && typeof status === "string"){
+            params = params.append(status);
+        }
         let folderListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/folders',params)
             .subscribe(jsonResp => {
@@ -25,7 +31,7 @@ export class FolderService {
                     let newRow = Object.assign({}, v, {
                         createDate  : me.translate.getDateString(v.createDate),
                         modifDate   : me.translate.getDateString(v.modifDate),
-                        closeDate: me.translate.getDateString(v.closeDate)
+                        closeDate: (v.closeDate != null ? me.translate.getDateString(v.closeDate) : '')
                     });
                     return newRow;
                 });
@@ -34,11 +40,12 @@ export class FolderService {
         return folderListSubject;
     }
 
-
-
-    getOrderStatus(): Observable<any> {
-        return this.apiRequest.get('api/orders/status');
+    getFolderStatus(): Observable<any> {
+        return this.apiRequest.get('api/folders/status');
     }
 
+    getFolderDetails(number: string): Observable<any> {
+        return this.apiRequest.get('api/folders/' + number);
+    }
 
 }

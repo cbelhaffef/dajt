@@ -1,24 +1,32 @@
 package com.app.model.folder;
 
 import com.app.enums.FolderStatus;
-import com.app.model.affair.Affair;
+import com.app.enums.FolderTopic;
+import com.app.model.advocate.Advocate;
+import com.app.model.court.Court;
+import com.app.model.judgement.Judgement;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper=false)
 @Table(name="folder")
 public class Folder {
 
     @Id
-    @Column(name="id")
+    @GeneratedValue
+    @Column(name="folder_id")
     private Long id;
+
+    @Column(name="number")
     private String number;
 
-    @Column(name="status")
+    @Column(name="folder_status")
+    @Enumerated(EnumType.STRING)
     private FolderStatus status;
 
     @Column(name="create_date")
@@ -30,6 +38,20 @@ public class Folder {
     @Column(name="close_date")
     private Date closeDate;
 
-    @OneToMany(mappedBy="folder")
-    private List<Affair> affairs;
+    @Column(name="offence")
+    private String offence;
+
+    @ManyToOne
+    @JoinColumn(name="court__id", nullable=true, updatable=true)
+    private Court court;
+
+    @ManyToOne
+    @JoinColumn(name="advocate_id", nullable=true, updatable=true)
+    private Advocate advocate;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "affair", cascade = CascadeType.ALL)
+    @JoinColumn(name = "judgement_id")
+    private Judgement judgement;
+
+    public Folder(){}
 }

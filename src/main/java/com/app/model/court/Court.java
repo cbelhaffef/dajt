@@ -1,4 +1,4 @@
-package com.app.model.advocate;
+package com.app.model.court;
 
 import com.app.model.folder.Folder;
 import lombok.Data;
@@ -10,20 +10,17 @@ import java.util.List;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
-@Table(name="advocate")
-public class Advocate {
+@Table(name="court")
+public class Court {
 
     @Id
     @GeneratedValue
-    @Column(name="advocate_id")
+    @Column(name="court_id")
     private Long id;
 
-    @Column(name="first_name")
+    @Column(name="name")
     private String firstName;
 
-    @Column(name="last_name")
-    private String lastName;
-
-    @OneToMany(mappedBy="advocate")
+    @OneToMany(mappedBy="court")
     List<Folder> folders;
 }

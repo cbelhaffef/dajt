@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FolderRepo extends JpaRepository<Folder, Long> {
     public List<Folder> findAll();
     public Page<Folder> findAll(Pageable p);
+    public Optional<Folder> findByNumber(String number);
 }
