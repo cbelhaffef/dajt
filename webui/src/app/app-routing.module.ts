@@ -6,13 +6,7 @@ import { HomeComponent  }       from './home.component';
 import { LoginComponent        }   from './pages/login/login.component';
 import { LogoutComponent       }   from './pages/logout/logout.component';
 import { DashboardComponent    }   from './pages/dashboard/dashboard.component';
-import { ProductStatsComponent }   from './pages/product_stats/product_stats.component';
-import { OrderStatsComponent   }   from './pages/order_stats/order_stats.component';
-import { ProductsComponent     }   from './pages/products/products.component';
-import { CustomersComponent    }   from './pages/customers/customers.component';
-import { OrdersComponent       }   from './pages/orders/orders.component';
-import { OrderDetailsComponent }   from './pages/order_details/order_details.component';
-import { EmployeesComponent    }   from './pages/employees/employees.component';
+
 
 import { AuthGuard } from './services/auth_guard.service';
 import { PageNotFoundComponent }  from './pages/404/page-not-found.component';

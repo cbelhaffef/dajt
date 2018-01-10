@@ -1,8 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { ApiRequestService } from './api-request.service';
-import { TranslateService } from './translate.service';
-import { HttpParams} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {ApiRequestService} from './api-request.service';
+import {TranslateService} from './translate.service';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class FolderService {
@@ -19,10 +19,10 @@ export class FolderService {
         params = params.append('page', typeof page === "number"? page.toString():"0");
         params = params.append('size', typeof size === "number"? size.toString():"1000");
         if (folderNumber && typeof folderNumber === "string"){
-            params = params.append(folderNumber);
+            params = params.append("folderNumber",folderNumber);
         }
         if (status && typeof status === "string"){
-            params = params.append(status);
+            params = params.append("status",status);
         }
         let folderListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/folders',params)

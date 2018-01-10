@@ -5,7 +5,7 @@ import com.app.model.user.User;
 import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Long> {
-    Optional<User> findOneByUserId(String userId);
-    Optional<User> findOneByUserIdAndPassword(String userId, String password);
+    Optional<User> findOneByUsername(String username);
+    Optional<User> findOneByUsernameAndPassword(String userId, String password);
 }
 

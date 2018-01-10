@@ -1,5 +1,6 @@
 package com.app.model.victim;
 
+import com.app.model.advocate.Advocate;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

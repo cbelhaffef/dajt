@@ -5,6 +5,7 @@ import com.app.enums.FolderTopic;
 import com.app.model.advocate.Advocate;
 import com.app.model.court.Court;
 import com.app.model.judgement.Judgement;
+import com.app.model.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -49,9 +50,13 @@ public class Folder {
     @JoinColumn(name="advocate_id", nullable=true, updatable=true)
     private Advocate advocate;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "affair", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "folder", cascade = CascadeType.ALL)
     @JoinColumn(name = "judgement_id")
     private Judgement judgement;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=true, updatable=true)
+    private User assigned;
 
     public Folder(){}
 }

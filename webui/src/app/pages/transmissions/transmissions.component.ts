@@ -1,5 +1,4 @@
 import { Component, OnInit,TemplateRef, ViewChild } from '@angular/core';
-import { OrderService } from '../../services/api/order.service';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/mergeMap';
 
@@ -17,11 +16,11 @@ export class TransmissionsComponent implements OnInit {
     rows:any[];
     orderByStatusData: any[] = [];
     isLoading:boolean=false;
-    constructor(private router: Router, private orderService: OrderService) { }
+    constructor(private router: Router) { }
 
     ngOnInit() {
         var me = this;
-        me.getPageData();
+
         this.columns=[
             {prop:"orderId"         , name: "ID"           , width:65, cellTemplate: this.orderIdTpl   },
             {prop:"orderDate"       , name: "Order Date"   , width:105 },
@@ -34,25 +33,6 @@ export class TransmissionsComponent implements OnInit {
             {prop:"shippedDate"     , name: "Ship Date"    , width:105 },
             {prop:"shipCountry"     , name: "Ship Country" , width:110 }
         ];
-    }
-
-    getPageData() {
-        var me = this;
-        let legendColors = {"On Hold":'#ef2e2e', "Shipped":'#ff8e28', "Complete":'#61c673', "New":'#007cbb'};
-        me.isLoading=true;
-        me.orderService.getOrderStats("status")
-        .mergeMap(function(statusData){
-            me.orderByStatusData = statusData.items.map(function(v,i,a){
-                return {name:v.name, value:v.value, color:legendColors[v.name]}
-            });
-            console.log("Got Order Stats");
-            return me.orderService.getOrderInfo();
-        })
-        .subscribe(function(orderData){
-            me.rows = orderData;
-            me.isLoading=false;
-            console.log("Got Order Data");
-        })
     }
 
 

@@ -36,13 +36,13 @@ public class SessionController {
     @ResponseBody
     public SessionResponse newSession(@RequestBody Login login, HttpServletRequest request, HttpServletResponse response) {
         System.out.format("\n /Session Called username=%s\n", login.getUsername());
-        User user = userRepo.findOneByUserIdAndPassword(login.getUsername(), login.getPassword()).orElse(null);
+        User user = userRepo.findOneByUsernameAndPassword(login.getUsername(), login.getPassword()).orElse(null);
         SessionResponse resp = new SessionResponse();
         SessionItem sessionItem = new SessionItem();
         if (user != null){
             System.out.format("\n /User Details=%s\n", user.getFirstName());
             sessionItem.setToken("xxx.xxx.xxx");
-            sessionItem.setUserId(user.getUserId());
+            sessionItem.setUsername(user.getUsername());
             sessionItem.setFirstName(user.getFirstName());
             sessionItem.setLastName(user.getLastName());
             sessionItem.setEmail(user.getEmail());
