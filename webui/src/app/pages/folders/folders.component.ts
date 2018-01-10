@@ -26,11 +26,13 @@ export class FoldersComponent implements OnInit {
         let me = this;
         me.getPageData();
         this.columns = [
-            {prop: 'number'      , name: 'Numéro dossier'       , width: 105, cellTemplate: this.folderIdTpl  },
-            {prop: 'status'      , name: 'Status'               , width: 85 , celleTemplate: this.folderStatusCellTpl },
-            {prop: 'createDate'  , name: 'Date de création'     , width: 105 },
-            {prop: 'modifDate'   , name: 'Date de modification' , width: 110  },
-            {prop: 'closeDate'   , name: 'Date de clôture'      , width: 105 }
+            {prop: 'number'        , name: 'Numéro dossier'       , width: 105, cellTemplate: this.folderIdTpl  },
+            {prop: 'status'        , name: 'Status'               , width: 85 , celleTemplate: this.folderStatusCellTpl },
+            {prop: 'createDate'    , name: 'Date de création'     , width: 105 },
+            {prop: 'lastModifDate' , name: 'Date de modification' , width: 110 },
+            {prop: 'closeDate'     , name: 'Date de clôture'      , width: 105 },
+            {prop: 'victim'     , name: 'Victim'      , width: 105 },
+            {prop: 'guilty'     , name: 'Guilty'      , width: 105 }
         ];
         me.folderService.getFolderStatus()
             .subscribe(function(folderStatus) {

@@ -1,19 +1,23 @@
 package com.app.model.user;
 
+import com.app.model.folder.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name="user")
 public class User {
     @Id
-    @Getter @Setter private Long userId;
+    @Getter @Setter
+    @GeneratedValue
+    @Column(name="user_id")
+    private Long userId;
+
     @Getter @Setter private String username = "";
     @Getter @Setter private String password = "";
     @Getter @Setter private String company;
@@ -41,6 +45,9 @@ public class User {
     @JsonIgnore @Getter @Setter private String  secretAnswer;
     @JsonIgnore @Getter @Setter private boolean enableBetaTesting;
     @JsonIgnore @Getter @Setter private boolean enableRenewal;
+
+    @OneToMany(mappedBy = "user")
+    List<Folder> folders;
 
     public User(){
         this("new", "PASSWORD", Role.USER, "new", "new", true, "", "", "", "", "", "", "", "", true, false);

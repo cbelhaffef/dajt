@@ -24,25 +24,25 @@ public class UserController {
 
 	@ApiOperation(value = "Gets current user information", response = UserResponse.class)
 	@RequestMapping(value = "/user", method = RequestMethod.GET, produces = {"application/json"})
-	public UserResponse getUserInformation(@RequestParam(value = "name", required = false) String userIdParam, HttpServletRequest req) {
+	public UserResponse getUserInformation(@RequestParam(value = "name", required = false) String usernameParam, HttpServletRequest req) {
 
-		String loggedInUserId = userService.getLoggedInUserId();
+		String loggedInUsername = userService.getLoggedInUsername();
 
 		User user;
 		boolean provideUserDetails = false;
 
-		if (Strings.isNullOrEmpty(userIdParam)) {
+		if (Strings.isNullOrEmpty(usernameParam)) {
 			provideUserDetails = true;
 			user = userService.getLoggedInUser();
 		}
-		else if (loggedInUserId.equals(userIdParam)) {
+		else if (loggedInUsername.equals(usernameParam)) {
 			provideUserDetails = true;
 			user = userService.getLoggedInUser();
 		}
 		else {
 			//Check if the current user is superuser then provide the details of requested user
 			provideUserDetails = true;
-			user = userService.getUserInfoByUserId(userIdParam);
+			user = userService.getUserInfoByUsername(usernameParam);
 		}
 
 		UserResponse resp = new UserResponse();

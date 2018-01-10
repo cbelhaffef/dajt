@@ -13,7 +13,7 @@ public class UserService {
   @Autowired
   private UserRepo userRepo;
 
-	public String getLoggedInUserId(){
+	public String getLoggedInUsername(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth==null){
             return "nosession";
@@ -23,15 +23,15 @@ public class UserService {
 
 
 	public User getLoggedInUser() {
-		String loggedInUserId = this.getLoggedInUserId();
-		System.out.format("\n1. Inside >> getLoggedInUser: %s", loggedInUserId);
-		User user = this.getUserInfoByUsername(loggedInUserId);
-		System.out.format("\n2. After Find User: %s", loggedInUserId);
+		String loggedInUsername = this.getLoggedInUsername();
+		System.out.format("\n1. Inside >> getLoggedInUser: %s", loggedInUsername);
+		User user = this.getUserInfoByUsername(loggedInUsername);
+		System.out.format("\n2. After Find User: %s", loggedInUsername);
 		return user;
 	}
 
-	public User getUserInfoByUsername(String userId){
-			User user = this.userRepo.findOneByUsername(userId).orElseGet( () -> new User());
+	public User getUserInfoByUsername(String username){
+			User user = this.userRepo.findOneByUsername(username).orElseGet( () -> new User());
 			return user;
 	}
 
@@ -42,7 +42,7 @@ public class UserService {
 
 	public boolean addNewUser(User user) {
 		User newUser = this.getUserInfoByUsername(user.getUsername());
-		if (newUser.getUserId().equals("new")){
+		if (newUser.getUsername().equals("new")){
 			// This means the username is not found therfore its is returning a default value of "new"
 			return this.insertOrSaveUser(user);
 		}
