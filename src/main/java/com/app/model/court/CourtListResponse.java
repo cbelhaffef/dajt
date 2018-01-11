@@ -1,15 +1,15 @@
-package com.app.model.folder;
+package com.app.model.court;
 
-import com.app.model.response.PageResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class FolderResponse extends PageResponse {
+public class CourtListResponse {
     @ApiModelProperty(required = true, value = "")
-    private List<Folder> items;
+    private List<Court> items;
 }

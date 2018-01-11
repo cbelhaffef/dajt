@@ -2,7 +2,7 @@ package com.app.api.folder;
 
 import com.app.enums.FolderStatus;
 import com.app.model.folder.Folder;
-import com.app.model.folder.FolderResponse;
+import com.app.model.folder.FolderListResponse;
 import com.app.model.folder.FolderStatusResponse;
 import com.app.repo.FolderRepo;
 import io.swagger.annotations.Api;
@@ -30,16 +30,16 @@ public class FolderController {
     @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private FolderRepo folderRepo;
 
-    @ApiOperation(value = "List of folders", response = FolderResponse.class)
+    @ApiOperation(value = "List of folders", response = FolderListResponse.class)
     @RequestMapping(value = "/folders", method = RequestMethod.GET)
-    public FolderResponse getFoldersByPage(
+    public FolderListResponse getFoldersByPage(
         @ApiParam(value = ""    )               @RequestParam(value = "page"  ,  defaultValue="0"   ,  required = false) Integer page,
         @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="20"  ,  required = false) Integer size,
         @RequestParam(value = "folderNumber"     , required = false) String folderNumber,
         @RequestParam(value = "folderStatus"      , required = false) FolderStatus folderStatus,
         Pageable pageable
     ) {
-        FolderResponse resp = new FolderResponse();
+        FolderListResponse resp = new FolderListResponse();
         Folder qry = new Folder();
         if (folderNumber != null)     { qry.setNumber(folderNumber); }
         if (folderStatus != null)  { qry.setStatus(folderStatus); }

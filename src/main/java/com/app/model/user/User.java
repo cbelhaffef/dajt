@@ -46,6 +46,7 @@ public class User {
     @JsonIgnore @Getter @Setter private boolean enableBetaTesting;
     @JsonIgnore @Getter @Setter private boolean enableRenewal;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     List<Folder> folders;
 

@@ -1,4 +1,4 @@
-package com.app.model.court;
+package com.app.model.victim;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class CourtResponse {
+public class VictimResponse {
     @ApiModelProperty(required = true, value = "")
-    private List<Court> items;
+    private List<Victim> items;
 }

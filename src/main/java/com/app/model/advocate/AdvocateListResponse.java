@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class AdvocateResponse {
+public class AdvocateListResponse {
     @ApiModelProperty(required = true, value = "")
     private List<Advocate> items;
 }

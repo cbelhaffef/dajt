@@ -25,6 +25,16 @@ insert into victim(victim_id, first_name, last_name) values
     (1,'ق.خ','و'),
     (2,  'م', 'ط');
 
+insert into folder_guilty(folder_id,guilty_id) values
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (4, 5);
+
+insert into folder_victim(folder_id,victim_id) values
+    (1, 1),
+    (1, 2);
+
 insert into court(court_id,`name`) values
     (1 , 'عبادلـة'),
     (2 , 'سعيـدة'),

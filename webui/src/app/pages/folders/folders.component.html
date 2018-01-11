@@ -48,8 +48,9 @@
 </div>
 
 
-<ng-template #folderIdTpl let-row="row" let-value="value" let-i="index">
-    <a routerLink="/home/legal_cases/folders/{{value}}" attr.data-itemid="{{value}}">{{value}}</a>
+<ng-template #folderNumberTpl let-row="row" let-value="value" let-i="index">
+    <!--<a routerLink="/home/legal_cases/folders/{{value}}" attr.data-itemid="{{value}}">{{value}}</a>-->
+    <span style="color:red">{{value}}</span>
 </ng-template>
 
 
@@ -57,7 +58,12 @@
     <s-badge [text]=value [badgeCls]="'s-badge-'+value.toLowerCase().replace(' ','')"></s-badge>
 </ng-template>
 
-
+<ng-template #folderPeopleTpl let-row="row" let-value="value" let-i="index">
+    {{value.length}}
+    <!--<ul>-->
+        <!--<li *ngFor="let v of value">{{v.firstname}}&nbsp;{{v.lastname}}</li>-->
+    <!--</ul>-->
+</ng-template>
 
 
 

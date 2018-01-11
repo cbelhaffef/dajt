@@ -12,7 +12,8 @@ import {NgForm} from '@angular/forms';
 
 export class FoldersComponent implements OnInit {
     @ViewChild('folderStatusCellTpl') folderStatusCellTpl: TemplateRef<any>;
-    @ViewChild('folderIdTpl') folderIdTpl: TemplateRef<any>;
+    @ViewChild('folderNumberTpl') folderNumberTpl: TemplateRef<any>;
+    @ViewChild('folderPeopleTpl') folderPeopleTpl : TemplateRef<any>;
     @ViewChild(NgForm) f: NgForm;
 
     columns: any[];
@@ -25,19 +26,19 @@ export class FoldersComponent implements OnInit {
     ngOnInit(): void {
         let me = this;
         me.getPageData();
-        this.columns = [
-            {prop: 'number'        , name: 'Numéro dossier'       , width: 105, cellTemplate: this.folderIdTpl  },
-            {prop: 'status'        , name: 'Status'               , width: 85 , celleTemplate: this.folderStatusCellTpl },
-            {prop: 'createDate'    , name: 'Date de création'     , width: 105 },
-            {prop: 'lastModifDate' , name: 'Date de modification' , width: 110 },
-            {prop: 'closeDate'     , name: 'Date de clôture'      , width: 105 },
-            {prop: 'victim'     , name: 'Victim'      , width: 105 },
-            {prop: 'guilty'     , name: 'Guilty'      , width: 105 }
-        ];
         me.folderService.getFolderStatus()
             .subscribe(function(folderStatus) {
                 me.folderStatus = folderStatus.items;
             });
+        this.columns = [
+            {prop: 'number'        , name: 'Numéro dossier'       , width: 105, cellTemplate: this.folderNumberTpl  },
+            {prop: 'status'        , name: 'Status'               , width: 85 , celleTemplate: this.folderStatusCellTpl },
+            {prop: 'createDate'    , name: 'Date de création'     , width: 105 },
+            {prop: 'lastModifDate' , name: 'Date dernière modification' , width: 110 },
+            {prop: 'closeDate'     , name: 'Date de clôture'      , width: 105 },
+            {prop: 'victims'       , name: 'Victim'      , width: 105, cellTemplate : this.folderPeopleTpl },
+            {prop: 'guilties'      , name: 'Guilty'      , width: 105, cellTemplate : this.folderPeopleTpl }
+        ];
     }
 
     getPageData(folderName?: string, status?: string) {

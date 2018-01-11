@@ -64,7 +64,7 @@ public class Folder {
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany
     @JoinTable(
         name = "folder_victim",
         joinColumns = { @JoinColumn(name = "folder_id") },
@@ -72,7 +72,7 @@ public class Folder {
     )
     private Set<Victim> victims = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany
     @JoinTable(
         name = "folder_guilty",
         joinColumns = { @JoinColumn(name = "folder_id") },

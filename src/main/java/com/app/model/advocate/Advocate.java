@@ -1,6 +1,7 @@
 package com.app.model.advocate;
 
 import com.app.model.folder.Folder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,6 +25,7 @@ public class Advocate {
     @Column(name="last_name")
     private String lastName;
 
+    @JsonIgnore
     @OneToMany(mappedBy="advocate")
     List<Folder> folders;
 }

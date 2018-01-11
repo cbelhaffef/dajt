@@ -1,16 +1,16 @@
-package com.app.model.victim;
+package com.app.model.folder;
 
-import com.app.model.advocate.Advocate;
+import com.app.model.response.PageResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class AdvocateResponse {
+public class FolderListResponse extends PageResponse {
+
     @ApiModelProperty(required = true, value = "")
-    private List<Advocate> items;
+    private List<Folder> items;
 }
