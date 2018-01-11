@@ -32,14 +32,16 @@
             </form>
 
             <ngx-datatable
-                style='height:450px; width:100%;'
                 [rows]='rows'
                 [columns]="columns"
-                [columnMode]="'standard'"
-                [headerHeight]="45"
-                [footerHeight]="45"
-                [rowHeight]="36"
-                [scrollbarV]="true">
+                [rowHeight]="'auto'"
+                class="material"
+                [loadingIndicator]="loadingIndicator"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [reorderable]="reorderable">
             </ngx-datatable>
 
         </div>
@@ -58,12 +60,19 @@
     <s-badge [text]=value [badgeCls]="'s-badge-'+value.toLowerCase().replace(' ','')"></s-badge>
 </ng-template>
 
-<ng-template #folderPeopleTpl let-row="row" let-value="value" let-i="index">
-    {{value.length}}
-    <!--<ul>-->
-        <!--<li *ngFor="let v of value">{{v.firstname}}&nbsp;{{v.lastname}}</li>-->
-    <!--</ul>-->
+<ng-template #folderVictimsTpl let-row="row" let-value="value">
+    <ul>
+        <li  *ngFor="let v of row.victims">
+            {{v.lastName}}&nbsp;{{v.firstName}}
+        </li>
+    </ul>
 </ng-template>
 
-
+<ng-template #folderGuiltiesTpl let-row="row" let-value="value">
+    <ul>
+        <li  *ngFor="let g of row.guilties">
+            {{g.lastName}}&nbsp;{{g.firstName}}
+        </li>
+    </ul>
+</ng-template>
 

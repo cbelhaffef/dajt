@@ -13,7 +13,8 @@ import {NgForm} from '@angular/forms';
 export class FoldersComponent implements OnInit {
     @ViewChild('folderStatusCellTpl') folderStatusCellTpl: TemplateRef<any>;
     @ViewChild('folderNumberTpl') folderNumberTpl: TemplateRef<any>;
-    @ViewChild('folderPeopleTpl') folderPeopleTpl : TemplateRef<any>;
+    @ViewChild('folderVictimsTpl') folderVictimsTpl: TemplateRef<any>;
+    @ViewChild('folderGuiltiesTpl') folderGuiltiesTpl: TemplateRef<any>;
     @ViewChild(NgForm) f: NgForm;
 
     columns: any[];
@@ -31,13 +32,14 @@ export class FoldersComponent implements OnInit {
                 me.folderStatus = folderStatus.items;
             });
         this.columns = [
-            {prop: 'number'        , name: 'Numéro dossier'       , width: 105, cellTemplate: this.folderNumberTpl  },
+
             {prop: 'status'        , name: 'Status'               , width: 85 , celleTemplate: this.folderStatusCellTpl },
+            {prop: 'victims'       , name: 'Victim'      , width: 105, cellTemplate : this.folderVictimsTpl },
+            {prop: 'guilties'      , name: 'Guilty'      , width: 105, cellTemplate : this.folderGuiltiesTpl },
             {prop: 'createDate'    , name: 'Date de création'     , width: 105 },
             {prop: 'lastModifDate' , name: 'Date dernière modification' , width: 110 },
             {prop: 'closeDate'     , name: 'Date de clôture'      , width: 105 },
-            {prop: 'victims'       , name: 'Victim'      , width: 105, cellTemplate : this.folderPeopleTpl },
-            {prop: 'guilties'      , name: 'Guilty'      , width: 105, cellTemplate : this.folderPeopleTpl }
+            {prop: 'number'        , name: 'Numéro dossier'       , width: 105, cellTemplate: this.folderNumberTpl  }
         ];
     }
 
@@ -58,4 +60,9 @@ export class FoldersComponent implements OnInit {
         this.getPageData(f.controls['folderNumber'].value, f.controls['status'].value);
     }
 
+    parsePeople(people: any[]) {
+        return people.map(function(elem) {
+            return elem.firstName + ' ' + elem.lastName;
+        }).join(' <br> ');
+    }
 }
