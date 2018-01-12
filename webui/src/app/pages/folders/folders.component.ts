@@ -22,6 +22,10 @@ export class FoldersComponent implements OnInit {
     isLoading = false;
     folderStatus: any[];
 
+    validateLoading = false;
+    loadingIndicator= true;
+    reorderable = false;
+
     constructor(private router: Router, private folderService: FolderService) { }
 
     ngOnInit(): void {
