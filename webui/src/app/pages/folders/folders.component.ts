@@ -40,7 +40,7 @@ export class FoldersComponent implements OnInit {
             {prop: 'status'        , name: 'Status'               , width: 85 , celleTemplate: this.folderStatusCellTpl },
             {prop: 'victims'       , name: 'Victim'      , width: 105, cellTemplate : this.folderVictimsTpl },
             {prop: 'guilties'      , name: 'Guilty'      , width: 105, cellTemplate : this.folderGuiltiesTpl },
-            {prop: 'createDate'    , name: 'Date de création'     , width: 105 },
+            {prop: 'createDate'    , name: 'Date de création'     , width: 105 , pipe: 'date:\'full\':\'\':\'ar\''},
             {prop: 'lastModifDate' , name: 'Date dernière modification' , width: 110 },
             {prop: 'closeDate'     , name: 'Date de clôture'      , width: 105 },
             {prop: 'number'        , name: 'Numéro dossier'       , width: 105, cellTemplate: this.folderNumberTpl  }

@@ -46,6 +46,12 @@ import { FoldersComponent          } from './pages/folders/folders.component';
 import { FolderDetailsComponent    } from './pages/folder_details/folder_details.component';
 import { FolderService             } from './services/api/folder.service';
 
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
 
@@ -104,4 +110,4 @@ import { FolderService             } from './services/api/folder.service';
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {}

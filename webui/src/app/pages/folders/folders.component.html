@@ -30,10 +30,10 @@
                     </div>
                 </section>
             </form>
-
+            <!-- [columns]="columns"-->
             <ngx-datatable
                 [rows]='rows'
-                [columns]="columns"
+
                 [rowHeight]="'auto'"
                 class="material"
                 [loadingIndicator]="loadingIndicator"
@@ -42,6 +42,14 @@
                 [footerHeight]="50"
                 [rowHeight]="'auto'"
                 [reorderable]="reorderable">
+                <ngx-datatable-column name="Status" prop="status">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span i18n>Status</span>
+                    </ng-template>
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
             </ngx-datatable>
 
         </div>
