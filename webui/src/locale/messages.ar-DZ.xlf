@@ -8,6 +8,7 @@
           <context context-type="sourcefile">app/home.component.ts</context>
           <context context-type="linenumber">28</context>
         </context-group>
+        <target>الشؤون القضائية</target>
       </trans-unit>
       <trans-unit id="40e0bdcfee016d4bca0bd27d398456b44ac3c6d5" datatype="html">
         <source>Liste des Dossiers</source>
@@ -15,6 +16,7 @@
           <context context-type="sourcefile">app/home.component.ts</context>
           <context context-type="linenumber">48</context>
         </context-group>
+        <target>قائمة الملفات</target>
       </trans-unit>
       <trans-unit id="d94174db6e0e6c4948e4bf9703e28c9a81fc0951" datatype="html">
         <source>Liste des Avocats</source>
@@ -22,6 +24,7 @@
           <context context-type="sourcefile">app/home.component.ts</context>
           <context context-type="linenumber">51</context>
         </context-group>
+        <target>قائمة المحامين</target>
       </trans-unit>
       <trans-unit id="c97a9c737cf4172db11ce7b1b99c2876e3714e92" datatype="html">
         <source>Numéro Dossier</source>
@@ -29,6 +32,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">10</context>
         </context-group>
+        <target>رقم الملف</target>
       </trans-unit>
       <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
         <source>Status</source>
@@ -40,6 +44,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">45</context>
         </context-group>
+        <target>حالة</target>
       </trans-unit>
       <trans-unit id="68f804572d399e03252ce1a60c961465e1f543a5" datatype="html">
         <source>Recherche</source>
@@ -47,6 +52,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">28</context>
         </context-group>
+        <target>بحث</target>
       </trans-unit>
       <trans-unit id="55353fbd1e4d1c8aa0b41b2039310dd5fd5f88de" datatype="html">
         <source>Victimes</source>
@@ -54,6 +60,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">53</context>
         </context-group>
+        <target>الضحايا</target>
       </trans-unit>
       <trans-unit id="2136c374e0ee4f00bce48578c6d22b1f9d6de0c5" datatype="html">
         <source>Coupables</source>
@@ -61,6 +68,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">65</context>
         </context-group>
+        <target>المتهمين</target>
       </trans-unit>
       <trans-unit id="edc7f1aae66135bd8939b48e30a715ca4ac3ff42" datatype="html">
         <source>Date de création</source>
@@ -68,6 +76,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">77</context>
         </context-group>
+        <target>تاريخ الإنشاء</target>
       </trans-unit>
       <trans-unit id="d87cb292dcb458849b3c44e62d306d171bb2a689" datatype="html">
         <source>Date dernière modification</source>
@@ -75,6 +84,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">85</context>
         </context-group>
+        <target>تاريخ آخر تعديل</target>
       </trans-unit>
       <trans-unit id="a9597c8bef70a5d12fdc81c6137eb6c60544b040" datatype="html">
         <source>Date clôture</source>
@@ -82,6 +92,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">93</context>
         </context-group>
+        <target>تاريخ الإقفال</target>
       </trans-unit>
       <trans-unit id="9562fd44bcb90e1f4c628deb32c3ae8675f43bae" datatype="html">
         <source>Numéro</source>
@@ -89,6 +100,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">101</context>
         </context-group>
+        <target>رقم الملف</target>
       </trans-unit>
       <trans-unit id="3a5b0fea8f78687076d1978214ad6b4bc5a63fde" datatype="html">
         <source>Totale</source>
@@ -96,6 +108,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">117</context>
         </context-group>
+        <target>عدد الملفات</target>
       </trans-unit>
     </body>
   </file>

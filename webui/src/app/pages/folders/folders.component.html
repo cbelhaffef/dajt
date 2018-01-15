@@ -7,14 +7,14 @@
                 <section class="form-block">
                     <div class="form-group row">
                         <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                            <label for="folderNumber">Numéro Dossier</label>
+                            <label for="folderNumber" i18n>Numéro Dossier</label>
                         </div>
                         <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                             <input class="form-control" type="text" id="folderNumber" name="folderNumber"
-                                   placeholder="Entrez le numéro ici" size="45" ngModel #folderNumber="ngModel" >
+                                   i18n-placeholder="Entrez le numéro ici" size="45" ngModel #folderNumber="ngModel" >
                         </div>
                         <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                            <label for="status">Status</label>
+                            <label for="status" i18n>Status</label>
                         </div>
                         <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
                             <div class="select form-control">
@@ -30,10 +30,8 @@
                     </div>
                 </section>
             </form>
-            <!-- [columns]="columns"-->
             <ngx-datatable
                 [rows]='rows'
-
                 [rowHeight]="'auto'"
                 class="material"
                 [loadingIndicator]="loadingIndicator"
@@ -50,6 +48,77 @@
                         <strong>{{value}}</strong>
                     </ng-template>
                 </ngx-datatable-column>
+                <ngx-datatable-column name="Victimes" prop="victims">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span i18n>Victimes</span>
+                    </ng-template>
+                    <ng-template #folderVictimsTpl let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <ul>
+                            <li  *ngFor="let v of value">
+                                {{v.lastName}}&nbsp;{{v.firstName}}
+                            </li>
+                        </ul>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Coupables" prop="guilties">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span i18n>Coupables</span>
+                    </ng-template>
+                    <ng-template #folderGuiltiesTpl let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <ul>
+                            <li  *ngFor="let g of row.guilties">
+                                {{g.lastName}}&nbsp;{{g.firstName}}
+                            </li>
+                        </ul>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Date de création" prop="createDate">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span i18n>Date de création</span>
+                    </ng-template>
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value | date :'full':'':'ar-DZ'}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Date dernière modification" prop="lastModifDate">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span i18n>Date dernière modification</span>
+                    </ng-template>
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value | date : 'long':'':'ar'}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Date clôture" prop="closeDate">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span i18n>Date clôture</span>
+                    </ng-template>
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value | date : 'full':'':'ar'}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Numéro" prop="number">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span i18n>Numéro</span>
+                    </ng-template>
+                    <ng-template #folderNumberTpl let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+                        <a routerLink="" attr.data-itemid="{{value}}">{{value}}</a>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-footer>
+                    <ng-template
+                        ngx-datatable-footer-template
+                        let-rowCount="rowCount"
+                        let-pageSize="pageSize"
+                        let-selectedCount="selectedCount"
+                        let-curPage="curPage"
+                        let-offset="offset">
+                        <div style="padding: 5px 10px">
+                            <div>
+                                <strong i18n>Totale</strong>:&nbsp;{{rowCount}}
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-footer>
             </ngx-datatable>
 
         </div>
