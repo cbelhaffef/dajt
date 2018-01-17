@@ -4,19 +4,25 @@ import com.app.enums.FolderStatus;
 import com.app.model.folder.Folder;
 import com.app.model.folder.FolderListResponse;
 import com.app.model.folder.FolderStatusResponse;
+import com.app.model.guilty.Guilty;
 import com.app.repo.FolderRepo;
+import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 //import springfox.documentation.annotations.*;
@@ -37,14 +43,27 @@ public class FolderController {
         @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="20"  ,  required = false) Integer size,
         @RequestParam(value = "folderNumber"     , required = false) String folderNumber,
         @RequestParam(value = "folderStatus"      , required = false) FolderStatus folderStatus,
+        @RequestParam(value = "guilty"      , required = false) String guilty,
+        @RequestParam(value = "victim"      , required = false) String victim,
         Pageable pageable
     ) {
         FolderListResponse resp = new FolderListResponse();
         Folder qry = new Folder();
-        if (folderNumber != null)     { qry.setNumber(folderNumber); }
+        if (folderNumber != null)  { qry.setNumber(folderNumber); }
         if (folderStatus != null)  { qry.setStatus(folderStatus); }
+        Guilty guiltyObj = new Guilty();
+        guiltyObj.setFirstName(guilty);
+        guiltyObj.setLastName(guilty);
+        if (guilty != null)        { qry.setGuilties(Sets.newHashSet(guiltyObj)); };
 
-        Page<Folder> pg = folderRepo.findAll(Example.of(qry), pageable);
+        ExampleMatcher matcher = ExampleMatcher.matching()
+            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+            .withIgnoreNullValues()
+            .withIgnoreCase()
+            .withMatcher("number", ExampleMatcher.GenericPropertyMatchers.contains())
+            .withMatcher("guilties", ExampleMatcher.GenericPropertyMatchers.contains());
+
+        Page<Folder> pg = folderRepo.findAll(Example.of(qry,matcher), pageable);
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         return resp;
