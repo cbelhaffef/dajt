@@ -37,7 +37,7 @@ public class FolderController {
     @Autowired private FolderRepo folderRepo;
 
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
-    @RequestMapping(value = "/folders", method = RequestMethod.GET)
+    @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
     public FolderListResponse getFoldersByPage(
         @ApiParam(value = ""    )               @RequestParam(value = "page"  ,  defaultValue="0"   ,  required = false) Integer page,
         @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="20"  ,  required = false) Integer size,
