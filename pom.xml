@@ -79,6 +79,7 @@
             			            </excludes>
                                 </resource>
                             </resources>
+                            <encoding>UTF-8</encoding>
 						</configuration>
 					</execution>
 				</executions>

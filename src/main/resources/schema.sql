@@ -38,7 +38,7 @@ CREATE TABLE user (
 /* Table : role  */
 CREATE TABLE role (
     role_id INT NOT NULL  AUTO_INCREMENT,
-    name NVARCHAR (20) NOT NULL,
+    name NVARCHAR (255) NOT NULL,
     PRIMARY KEY (role_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -55,15 +55,15 @@ CREATE TABLE user_role (
 /* Table: advocate */
 CREATE TABLE advocate (
     advocate_id     INT NOT NULL AUTO_INCREMENT,
-    last_name       NVARCHAR(50),
-    first_name      NVARCHAR(50),
+    last_name       NVARCHAR(255),
+    first_name      NVARCHAR(255),
     PRIMARY KEY (advocate_id)
 );
 
 /* Table: folder */
 CREATE TABLE folder (
     folder_id       INT NOT NULL AUTO_INCREMENT,
-    number          VARCHAR(50),
+    number          VARCHAR(255),
     create_date     DATETIME ,
     last_modif_date DATETIME ,
     close_date      DATETIME,
@@ -82,22 +82,22 @@ CREATE TABLE folder (
 /* Table: guilty */
 CREATE TABLE guilty (
     guilty_id INT NOT NULL AUTO_INCREMENT,
-    first_name NVARCHAR(20),
-    last_name NVARCHAR (20),
+    first_name NVARCHAR(255),
+    last_name NVARCHAR (255),
     PRIMARY KEY (guilty_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table: victim */
 CREATE TABLE victim (
     victim_id INT NOT NULL AUTO_INCREMENT,
-    first_name NVARCHAR(20),
-    last_name NVARCHAR(20),
+    first_name NVARCHAR(255),
+    last_name NVARCHAR(255),
     PRIMARY KEY (victim_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE court (
     court_id INT NOT NULL,
-    name NVARCHAR(20),
+    name NVARCHAR(255),
     PRIMARY KEY (court_id)
 );
 

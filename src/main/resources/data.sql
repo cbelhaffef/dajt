@@ -1,3 +1,4 @@
+SET NAMES 'utf8' COLLATE 'utf8_general_ci';
 /* Folders */
 insert into folder (folder_id, `number`, folder_status, create_date, offence,court_id) values
     (1, '01/13'     , 'OPEN' , '2017-12-31', 'إهانـة رجال القوة العمومية',1),
