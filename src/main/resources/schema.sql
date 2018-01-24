@@ -3,10 +3,10 @@
  Model : NorthWind
 **/
 
-DROP SCHEMA IF EXISTS dajt;
+/*DROP SCHEMA IF EXISTS dajt;*/
 
-CREATE SCHEMA dajt;
-USE dajt;
+/*CREATE SCHEMA dajt;
+/*USE dajt;
 
 /* Table: user (Application Users) */
 CREATE TABLE user (
