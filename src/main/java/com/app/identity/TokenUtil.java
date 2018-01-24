@@ -55,7 +55,7 @@ public class TokenUtil {
         .setExpiration(new Date(System.currentTimeMillis() + VALIDITY_TIME_MS))
         .setSubject(user.getFullName())
         .claim("username", user.getUsername())
-        .claim("role", user.getRoles().stream().map(Role::getName).collect(Collectors.joining( "," )))
+        .claim("role", user.getRole())
         .signWith(SignatureAlgorithm.HS256, secret)
         .compact();
     }
