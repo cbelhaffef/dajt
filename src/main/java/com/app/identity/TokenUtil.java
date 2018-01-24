@@ -6,6 +6,7 @@ import io.jsonwebtoken.*;
 import javax.servlet.http.*;
 import java.util.*;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import com.app.model.user.Role;
 import com.app.model.user.User;
@@ -42,9 +43,6 @@ public class TokenUtil {
 
         User user = new User();
         user.setUsername( (String)claims.get("username"));
-        //user.setCustomerId((Integer)claims.get("customerId"));
-        //user.setRole((String)claims.get("role"));
-        user.setRole(Role.valueOf((String)claims.get("role")));
         return new TokenUser(user);
     }
 
@@ -57,7 +55,7 @@ public class TokenUtil {
         .setExpiration(new Date(System.currentTimeMillis() + VALIDITY_TIME_MS))
         .setSubject(user.getFullName())
         .claim("username", user.getUsername())
-        .claim("role", user.getRole().toString())
+        .claim("role", user.getRoles().stream().map(Role::getName).collect(Collectors.joining( "," )))
         .signWith(SignatureAlgorithm.HS256, secret)
         .compact();
     }
