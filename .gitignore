@@ -7,6 +7,7 @@ bin/
 **/dist
 # WebUI Builds
 tmp/
+**/*.js.map
 
 # WebUI dependencies
 node_modules/
