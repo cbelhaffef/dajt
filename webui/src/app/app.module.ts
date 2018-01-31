@@ -65,7 +65,7 @@ registerLocaleData(localeFr, 'fr');
     // Thirdparty Module
     NgxDatatableModule,
     NgxChartsModule,
-    ClarityModule.forChild(),
+    ClarityModule,
 
     // Local App Modules
     AppRoutingModule
