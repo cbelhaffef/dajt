@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {FolderService} from '../../services/api/folder.service';
+import {VictimService} from '../../services/api/victim.service';
 import {NgForm} from '@angular/forms';
 
 
@@ -17,7 +18,7 @@ export class FoldersComponent implements OnInit {
     @ViewChild('folderGuiltiesTpl') folderGuiltiesTpl: TemplateRef<any>;
     @ViewChild(NgForm) f: NgForm;
 
-    columns: any[];
+
     rows: any[];
     isLoading = false;
     folderStatus: any[];
@@ -26,12 +27,14 @@ export class FoldersComponent implements OnInit {
     loadingIndicator= true;
     reorderable = false;
 
-    isCompact: boolean = false;
+    basic = false;
 
-    basic: boolean = false;
+    public listVictims = [];
+    public selectedVictims = [];
 
-
-    constructor(private router: Router, private folderService: FolderService) { }
+    constructor(private router: Router,
+                private folderService: FolderService,
+                private victimService: VictimService) { }
 
     ngOnInit(): void {
         let me = this;
@@ -39,7 +42,11 @@ export class FoldersComponent implements OnInit {
         me.folderService.getFolderStatus()
             .subscribe(function(folderStatus) {
                 me.folderStatus = folderStatus.items;
-            });
+        });
+        me.victimService.getVictims()
+            .subscribe(function(victims) {
+                me.listVictims = victims.items;
+        });
     }
 
     getPageData(folderName?: string, status?: string) {

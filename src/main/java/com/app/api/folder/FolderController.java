@@ -25,15 +25,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-//import springfox.documentation.annotations.*;
-//import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = {"Folder"})
 public class FolderController {
 
-    @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private FolderRepo folderRepo;
 
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
@@ -47,6 +44,7 @@ public class FolderController {
         @RequestParam(value = "victim"      , required = false) String victim,
         Pageable pageable
     ) {
+
         FolderListResponse resp = new FolderListResponse();
         Folder qry = new Folder();
         if (folderNumber != null)  { qry.setNumber(folderNumber); }
