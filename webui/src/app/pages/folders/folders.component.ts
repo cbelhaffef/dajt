@@ -26,6 +26,11 @@ export class FoldersComponent implements OnInit {
     loadingIndicator= true;
     reorderable = false;
 
+    isCompact: boolean = false;
+
+    basic: boolean = false;
+
+
     constructor(private router: Router, private folderService: FolderService) { }
 
     ngOnInit(): void {

@@ -145,7 +145,7 @@
 <div id="container-floating">
 
     <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="basic = true">
-        <span class="floating-button-label">Compose</span>
+        <span class="floating-button-label" i18n>Créer un dossier</span>
         <p class="plus">+</p>
         <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
     </div>
@@ -153,20 +153,35 @@
 </div>
 
 <clr-modal [(clrModalOpen)]="basic">
-    <h3 class="modal-title">I have a nice title</h3>
+    <h3 class="modal-title" i18n>Création d'un dossier</h3>
     <div class="modal-body">
         <form>
             <section class="form-block">
-                <label>Form Inside a Grid</label>
                 <div class="form-group row">
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <label for="gForm_1">Input field</label>
+                        <label for="gFolderNumber" i18n>Numéro dossier</label>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <input class="form-control" type="text" id="gForm_1" placeholder="Enter value here" size="45">
+                        <input class="form-control" type="text" id="gFolderNumber" i18n-placeholder="Entrer votre valeur ici" size="45">
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <input class="form-control" type="password" id="gForm_2" placeholder="Enter another value here" size="35">
+                        <input class="form-control" type="text" id="gFolderYear" i18n-placeholder="Entrer votre valeur ici" size="35">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <label for="gVictime" i18n>Victime</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <input class="form-control" type="text" id="gVictime" i18n-placeholder="Entrer votre valeur ici" size="45">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <label for="gCoupable" i18n>Coupable</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <input class="form-control" type="text" id="gCoupable" i18n-placeholder="Entrer votre valeur ici" size="45">
                     </div>
                 </div>
                 <div class="form-group row">
