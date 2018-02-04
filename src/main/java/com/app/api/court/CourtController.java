@@ -1,9 +1,9 @@
-package com.app.api.vicitm;
+package com.app.api.court;
 
+import com.app.model.court.Court;
+import com.app.model.court.CourtListResponse;
 import com.app.model.folder.FolderListResponse;
-import com.app.model.victim.Victim;
-import com.app.model.victim.VictimListResponse;
-import com.app.repo.VictimRepo;
+import com.app.repo.CourtRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = {"Victim"})
-public class VictimController {
+@Api(tags = {"Guilty"})
+public class CourtController {
 
-    @Autowired private VictimRepo victimRepo;
+    @Autowired private CourtRepo courtRepo;
 
-    @ApiOperation(value = "List of victims", response = FolderListResponse.class)
-    @RequestMapping(value = "/victims", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
-    public VictimListResponse getVictims(Pageable pageable){
-        VictimListResponse resp = new VictimListResponse();
-        Page<Victim> pg = victimRepo.findAll(pageable);
+    @ApiOperation(value = "List of courts", response = FolderListResponse.class)
+    @RequestMapping(value = "/courts", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
+    public CourtListResponse getVictims(Pageable pageable){
+        CourtListResponse resp = new CourtListResponse();
+        Page<Court> pg = courtRepo.findAll(pageable);
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         return resp;

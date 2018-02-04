@@ -49,6 +49,7 @@ public class FolderController {
         Folder qry = new Folder();
         if (folderNumber != null)  { qry.setNumber(folderNumber); }
         if (folderStatus != null)  { qry.setStatus(folderStatus); }
+
         Guilty guiltyObj = new Guilty();
         guiltyObj.setFirstName(guilty);
         guiltyObj.setLastName(guilty);
@@ -65,6 +66,13 @@ public class FolderController {
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         return resp;
+    }
+
+    @RequestMapping(value="/folders", method = RequestMethod.POST)
+    public Folder addFolder(@RequestBody Folder folder){
+        // TODO (check if fodler with same number already exist)
+        Folder folderSaved = folderRepo.save(folder);
+        return folder;
     }
 
     @ApiOperation(value = "List of folders", response = FolderStatusResponse.class)

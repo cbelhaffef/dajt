@@ -1,53 +1,48 @@
-
-import { BrowserModule }    from '@angular/platform-browser';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NgModule }         from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule }     from '@angular/router';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // Third Party Modules
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgxChartsModule    } from '@swimlane/ngx-charts';
-import { ClarityModule      } from 'clarity-angular';
-
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {ClarityModule} from 'clarity-angular';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 // Local App Modules
-import { AppRoutingModule } from './app-routing.module';
-
+import {AppRoutingModule} from './app-routing.module';
 // Directives
-import { TrackScrollDirective } from './directives/track_scroll/track_scroll.directive';
-
-
+import {TrackScrollDirective} from './directives/track_scroll/track_scroll.directive';
 // Components
-import { BadgeComponent  } from './components/badge/badge.component';
-import { LegendComponent } from './components/legend/legend.component';
-import { LogoComponent   } from './components/logo/logo.component';
-
+import {BadgeComponent} from './components/badge/badge.component';
+import {LegendComponent} from './components/legend/legend.component';
+import {LogoComponent} from './components/logo/logo.component';
 // Pages  -- Pages too are components, they contain other components
-import { AppComponent          } from './app.component';
-import { HomeComponent         } from './home.component';
-import { LoginComponent        } from './pages/login/login.component';
-import { LogoutComponent       } from './pages/logout/logout.component';
-import { DashboardComponent    } from './pages/dashboard/dashboard.component';
-
-
+import {AppComponent} from './app.component';
+import {HomeComponent} from './home.component';
+import {LoginComponent} from './pages/login/login.component';
+import {LogoutComponent} from './pages/logout/logout.component';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
 // Services
-import { AppConfig        } from './app-config';
-import { UserInfoService  } from './services/user-info.service';
-import { AuthGuard        } from './services/auth_guard.service';
-import { ApiRequestService} from './services/api/api-request.service';
-import { TranslateService } from './services/api/translate.service';
-import { LoginService     } from './services/api/login.service';
-import { LegalCasesComponent } from './pages/legal_cases/legal_cases.component';
-import { TransmissionsComponent } from './pages/transmissions/transmissions.component';
-import { TransmissionFileComponent } from './pages/transmission_file/transmission_file.component';
-import { AdvocatesComponent        } from './pages/advocates/advocate.component';
-import { FoldersComponent          } from './pages/folders/folders.component';
-import { FolderDetailsComponent    } from './pages/folder_details/folder_details.component';
-import { FolderService             } from './services/api/folder.service';
+import {AppConfig} from './app-config';
+import {UserInfoService} from './services/user-info.service';
+import {AuthGuard} from './services/auth_guard.service';
+import {ApiRequestService} from './services/api/api-request.service';
+import {TranslateService} from './services/api/translate.service';
+import {LoginService} from './services/api/login.service';
+import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
+import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
+import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
+import {AdvocatesComponent} from './pages/advocates/advocate.component';
+import {FoldersComponent} from './pages/folders/folders.component';
+import {FolderDetailsComponent} from './pages/folder_details/folder_details.component';
+import {FolderService} from './services/api/folder.service';
+import {VictimService} from './services/api/victim.service';
+import {GuiltyService} from './services/api/guilty.service';
+import {CourtService} from './services/api/court.service';
 
-import { registerLocaleData } from '@angular/common';
+import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+
 
 
 // the second parameter 'fr' is optional
@@ -66,6 +61,7 @@ registerLocaleData(localeFr, 'fr');
     NgxDatatableModule,
     NgxChartsModule,
     ClarityModule,
+    MatAutocompleteModule,
 
     // Local App Modules
     AppRoutingModule
@@ -79,7 +75,7 @@ registerLocaleData(localeFr, 'fr');
     LegendComponent,
     LogoComponent,
 
-    //Pages -- Pages too are components, they contain other components
+    // Pages -- Pages too are components, they contain other components
     AppComponent,
     HomeComponent,
     LoginComponent,
@@ -93,7 +89,7 @@ registerLocaleData(localeFr, 'fr');
     FoldersComponent,
     FolderDetailsComponent,
 
-    //Directives
+    // Directives
     TrackScrollDirective
   ],
 
@@ -104,6 +100,9 @@ registerLocaleData(localeFr, 'fr');
     ApiRequestService,
     LoginService,
     FolderService,
+    VictimService,
+    GuiltyService,
+    CourtService,
     AppConfig,
   ],
 

@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ApiRequestService} from './api-request.service';
 import {TranslateService} from './translate.service';
-import {HttpParams} from "@angular/common/http";
+import {HttpParams} from '@angular/common/http';
+import {NgForm} from '@angular/forms';
 
 @Injectable()
 export class FolderService {
@@ -10,7 +11,7 @@ export class FolderService {
     constructor( private apiRequest: ApiRequestService, private translate: TranslateService) {}
 
     /**
-     * Gets List of orders
+     * Gets List of folders
      */
     getFolder(folderNumber?:string, status?:string,page?:number, size?:number): Observable<any> {
         //Create Request URL params
@@ -48,4 +49,13 @@ export class FolderService {
         return this.apiRequest.get('api/folders/' + number);
     }
 
+    addFolder(folder) {
+        let me = this;
+        let folderSubject = new Subject<any>()
+        this.apiRequest.post('api/folders', folder)
+            .subscribe(jsonResp => {
+                    folderSubject.next(jsonResp);
+                });
+        return folderSubject;
+    }
 }

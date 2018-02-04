@@ -1,0 +1,80 @@
+<form #mf="ngForm" (ngSubmit)="addFolder(mf)">
+    <h1 mat-dialog-title i18n>Création d'un dossier</h1>
+
+    <div mat-dialog-content>
+        <section class="form-block">
+
+            <div class="form-group row">
+                <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
+                    <input class="form-control" type="text" id="number" name="number" ngModel required #number="ngModel">
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <label for="number" i18n>Numéro dossier</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
+                </div>
+                <div class="col-lg-7 col-md-4 col-sm-12 col-xs-12">
+                    <mat-form-field>
+                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    </mat-form-field>
+
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let v of listVictims" [value]="v">
+                            {{ v.lastName + ' ' + v.firstName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div class="ng-select-modal">
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <label for="victims" i18n>Victimes</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                </div>
+                <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+                    <div class="ng-select-modal">
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <label for="guilties" i18n>Coupables</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
+                    <textarea id="offence" name="offence" rows="5" class="form-control" [(ngModel)]="offence"></textarea>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <label for="offence" i18n>Délit</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                </div>
+                <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+                    <select id="court" [(ngModel)]="court" name="court" style="width:100%">
+                        <option *ngFor="let c of listCourts" [ngValue]="c.id">{{c.name}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <label for="court" i18n>tribunal</label>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <div mat-dialog-actions>
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    </div>
+</form>
