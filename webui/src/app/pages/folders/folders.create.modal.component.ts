@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {FolderService} from '../../services/api/folder.service';
 import {VictimService} from '../../services/api/victim.service';
@@ -15,6 +15,8 @@ import {CourtService} from '../../services/api/court.service';
 
 export class FoldersCreateModalComponent implements OnInit {
 
+    @ViewChild(NgForm) mf: NgForm;
+
     show = false;
 
     number: string;
@@ -28,6 +30,7 @@ export class FoldersCreateModalComponent implements OnInit {
     selectedGuilties = [];
 
     listCourts = [];
+
 
     constructor(private router: Router,
                 private folderService: FolderService,
@@ -67,6 +70,6 @@ export class FoldersCreateModalComponent implements OnInit {
     }
 
     closeModal() {
-        this.basic = false;
+        this.show = false;
     }
 }

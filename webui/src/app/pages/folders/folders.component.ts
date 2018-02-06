@@ -6,6 +6,8 @@ import {NgForm} from '@angular/forms';
 import {GuiltyService} from '../../services/api/guilty.service';
 import {Court} from '../../models/court.model';
 import {CourtService} from '../../services/api/court.service';
+import {FoldersCreateModalComponent} from "./folders.create.modal.component";
+import {MatDialog} from "@angular/material";
 
 
 @Component({
@@ -31,7 +33,7 @@ export class FoldersComponent implements OnInit {
     loadingIndicator= true;
     reorderable = false;
 
-    basic = false;
+
 
     public court: Court;
     public number: string;
@@ -48,7 +50,8 @@ export class FoldersComponent implements OnInit {
                 private folderService: FolderService,
                 private victimService: VictimService,
                 private guiltyService: GuiltyService,
-                private courtService:  CourtService) { }
+                private courtService:  CourtService,
+                private dialog: MatDialog) { }
 
     ngOnInit(): void {
         let me = this;
@@ -98,14 +101,20 @@ export class FoldersComponent implements OnInit {
         mf = me.mf;
         me.folderService.addFolder(mf.value).subscribe(function(folder) {
           alert(folder);
-          me.closeModal();
       });
     }
 
-    closeModal() {
-        this.basic = false;
-    }
+    openModal(){
+        let dialogRef = this.dialog.open(FoldersCreateModalComponent, {
+            width: '500px',
+            data: { }
+        });
 
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            //this.animal = result;
+        });
+    }
 
     parsePeople(people: any[]) {
         return people.map(function(elem) {

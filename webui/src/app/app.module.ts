@@ -22,6 +22,8 @@ import {HomeComponent} from './home.component';
 import {LoginComponent} from './pages/login/login.component';
 import {LogoutComponent} from './pages/logout/logout.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
+// Modals
+import {FoldersCreateModalComponent} from "./pages/folders/folders.create.modal.component";
 // Services
 import {AppConfig} from './app-config';
 import {UserInfoService} from './services/user-info.service';
@@ -42,6 +44,7 @@ import {CourtService} from './services/api/court.service';
 
 import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+
 
 
 
@@ -68,7 +71,9 @@ registerLocaleData(localeFr, 'fr');
 
 
   ],
-
+  entryComponents:[
+      FoldersCreateModalComponent
+  ],
   declarations: [
     // Components
     BadgeComponent,
@@ -88,6 +93,9 @@ registerLocaleData(localeFr, 'fr');
     AdvocatesComponent,
     FoldersComponent,
     FolderDetailsComponent,
+
+    // Modals
+    FoldersCreateModalComponent,
 
     // Directives
     TrackScrollDirective
