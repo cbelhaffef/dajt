@@ -28,7 +28,6 @@
     "@swimlane/ngx-charts": "^7.0.1",
     "@swimlane/ngx-datatable": "~11.1.7",
     "@webcomponents/custom-elements": "^1.0.6",
-    "angular-material": "^1.1.6",
     "clarity-angular": "^0.10.17",
     "clarity-icons": "^0.10.17",
     "clarity-ui": "^0.10.17",

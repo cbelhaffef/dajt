@@ -147,7 +147,7 @@
 
 <div id="container-floating">
 
-    <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="openModal()">
+    <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="openModalCreateFolder()">
         <span class="floating-button-label" i18n>Créer un dossier</span>
         <p class="plus">+</p>
         <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
@@ -181,3 +181,13 @@
     </ul>
 </ng-template>
 
+<clr-modal [(clrModalOpen)]="showModalCreateFolder" [clrModalSize]="'lg'">
+    <h3 class="modal-title">I have a nice title</h3>
+    <div class="modal-body">
+        <p>But not much to say...</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModalCreateFolder()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="closeModalCreateFolder()">Ok</button>
+    </div>
+</clr-modal>

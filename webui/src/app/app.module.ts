@@ -22,8 +22,6 @@ import {HomeComponent} from './home.component';
 import {LoginComponent} from './pages/login/login.component';
 import {LogoutComponent} from './pages/logout/logout.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
-// Modals
-import {FoldersCreateModalComponent} from "./pages/folders/folders.create.modal.component";
 // Services
 import {AppConfig} from './app-config';
 import {UserInfoService} from './services/user-info.service';
@@ -51,58 +49,10 @@ import {
     MatCheckboxModule,
     MatChipsModule,
     MatDatepickerModule,
-    MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule,
-    MatInputModule,
-    MatListModule, MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule, MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule, MatTextareaAutosize,
-    MatToolbarModule,
-    MatTooltipModule
-} from "@angular/material";
-
-
-// the second parameter 'fr' is optional
-registerLocaleData(localeFr, 'fr');
-
-@NgModule({
-
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-
-    // Thirdparty Module
-    NgxDatatableModule,
-    NgxChartsModule,
-    ClarityModule,
-
-    // Thirdparty Module @angular/material
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
+    MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
@@ -124,16 +74,113 @@ registerLocaleData(localeFr, 'fr');
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
+    MatTooltipModule
+} from "@angular/material";
+import {DialogOverviewExampleDialog} from "./pages/folders/DialogOverviewExampleDialog";
+
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
+
+@NgModule({
+    imports: [
+        // Thirdparty Module @angular/material
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatNativeDateModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        MatSortModule,
+        MatStepperModule,
+        MatTableModule,
+        MatTabsModule,
+        MatToolbarModule,
+        MatTooltipModule
+    ]
+})
+export class AngularMaterialModule {}
+
+@NgModule({
+
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+
+    // Thirdparty Module
+    NgxDatatableModule,
+    NgxChartsModule,
+    ClarityModule,
+    //AngularMaterialModule,
+
+      // Thirdparty Module @angular/material
+      MatAutocompleteModule,
+      MatFormFieldModule,
+      MatAutocompleteModule,
+      MatButtonModule,
+      MatButtonToggleModule,
+      MatCardModule,
+      MatCheckboxModule,
+      MatChipsModule,
+      MatDatepickerModule,
+      MatDialogModule,
+      MatDividerModule,
+      MatExpansionModule,
+      MatGridListModule,
+      MatIconModule,
+      MatInputModule,
+      MatListModule,
+      MatMenuModule,
+      MatNativeDateModule,
+      MatPaginatorModule,
+      MatProgressBarModule,
+      MatProgressSpinnerModule,
+      MatRadioModule,
+      MatRippleModule,
+      MatSelectModule,
+      MatSidenavModule,
+      MatSliderModule,
+      MatSlideToggleModule,
+      MatSnackBarModule,
+      MatSortModule,
+      MatStepperModule,
+      MatTableModule,
+      MatTabsModule,
+      MatToolbarModule,
+      MatTooltipModule,
+
 
       // Local App Modules
     AppRoutingModule
 
 
   ],
-  entryComponents:[
-      FoldersCreateModalComponent
-  ],
+  entryComponents: [DialogOverviewExampleDialog],
   declarations: [
     // Components
     BadgeComponent,
@@ -155,7 +202,7 @@ registerLocaleData(localeFr, 'fr');
     FolderDetailsComponent,
 
     // Modals
-    FoldersCreateModalComponent,
+    DialogOverviewExampleDialog,
 
     // Directives
     TrackScrollDirective
