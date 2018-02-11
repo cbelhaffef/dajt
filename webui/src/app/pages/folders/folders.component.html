@@ -183,7 +183,7 @@
 <clr-modal [(clrModalOpen)]="showCreateFolderModal" >
     <h3 class="modal-title" i18n>Création d'un dossier</h3>
     <div class="modal-body">
-        <form #createFolderForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(filterCreateFolderForm)" novalidate>
+        <form #createFolderForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(createFolderForm)" novalidate>
             <section class="form-block">
                 <div class="form-group row">
                     <div class="col-xs-9">
