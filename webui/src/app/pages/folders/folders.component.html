@@ -3,7 +3,7 @@
         <div class="col-lg-1"></div>
         <div class="col-lg-10   ">
 
-            <form #f="ngForm" (ngSubmit)="onSubmit(f)" id="folder-form-search">
+            <form #filterFoldersForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(filterFoldersForm)" id="folder-form-search">
                 <section class="form-block">
                     <div class="form-group row">
                         <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
@@ -155,7 +155,6 @@
 
 </div>
 
-
 <ng-template #folderNumberTpl let-row="row" let-value="value" let-i="index">
     <a routerLink="" attr.data-itemid="{{value}}">{{value}}</a>
 </ng-template>
@@ -181,13 +180,100 @@
     </ul>
 </ng-template>
 
-<clr-modal [(clrModalOpen)]="showModalCreateFolder" [clrModalSize]="'lg'">
-    <h3 class="modal-title">I have a nice title</h3>
+<clr-modal [(clrModalOpen)]="showCreateFolderModal" >
+    <h3 class="modal-title" i18n>Création d'un dossier</h3>
     <div class="modal-body">
-        <p>But not much to say...</p>
+        <form #createFolderForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(filterCreateFolderForm)" novalidate>
+            <section class="form-block">
+                <div class="form-group row">
+                    <div class="col-xs-9">
+                        <div class="select form-control">
+                            <select id="office" name="office" ngModel>
+                                <option *ngFor="let o of listOffices" [ngValue]="o">
+                                    {{o.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="office">Bureau</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-9">
+                        <input type="text"
+                               id="number"
+                               name="number"
+                               i18n-placeholder="Entrez le numéro du dossier"
+                               ngModel
+                               class="form-control"
+                               #numberFolder="ngModel">
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="number" i18n>Numéro Dossier</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-9">
+                        <ngx-select [multiple]="true"
+                                    [items]="listVictims"
+                                    id="victims"
+                                    name="victims"
+                                    ngModel
+                                    i18n-placeholder="Entrez le nom des victimes">
+                        </ngx-select>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="victims" i18n>Victimes</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-9">
+                        <ngx-select [multiple]="true"
+                                    [items]="listGuilties"
+                                    id="guilties"
+                                    name="guilties"
+                                    ngModel
+                                    i18n-placeholder="Entrez le nom des coupables">
+                        </ngx-select>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="guilty" i18n>Coupables</label>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-9">
+                        <textarea id="offence" name="offence" ngModel rows="4" class="form-control"></textarea>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="offence">Nature du délit</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-9">
+                        <div class="select form-control">
+                            <select id="court" name="court" ngModel>
+                                <option *ngFor="let c of listCourts" [ngValue]="c">
+                                    {{c.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="court">Court</label>
+                    </div>
+                </div>
+            </section>
+        </form>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline" (click)="closeModalCreateFolder()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="closeModalCreateFolder()">Ok</button>
+    <div class="modal-footer flexbox-align-left">
+        <button type="button" class="btn btn-primary" (click)="onSubmitCreateFolderForm(createFolderForm)" i18n>Créer</button>
+        <button type="button" class="btn btn-outline" (click)="closeCreateFolderModal()" i18n>Fermer</button>
     </div>
 </clr-modal>

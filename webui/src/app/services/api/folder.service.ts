@@ -3,7 +3,6 @@ import {Observable, Subject} from 'rxjs';
 import {ApiRequestService} from './api-request.service';
 import {TranslateService} from './translate.service';
 import {HttpParams} from '@angular/common/http';
-import {NgForm} from '@angular/forms';
 
 @Injectable()
 export class FolderService {

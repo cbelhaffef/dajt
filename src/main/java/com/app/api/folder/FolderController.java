@@ -68,7 +68,7 @@ public class FolderController {
         return resp;
     }
 
-    @RequestMapping(value="/folders", method = RequestMethod.POST)
+    @RequestMapping(value="/folders", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Folder addFolder(@RequestBody Folder folder){
         // TODO (check if fodler with same number already exist)
         Folder folderSaved = folderRepo.save(folder);

@@ -6,9 +6,8 @@ import {NgForm} from '@angular/forms';
 import {GuiltyService} from '../../services/api/guilty.service';
 import {Court} from '../../models/court.model';
 import {CourtService} from '../../services/api/court.service';
-import {MatDialog} from "@angular/material";
-import {DialogOverviewExampleDialog} from "./DialogOverviewExampleDialog";
-
+import {Folder} from '../../models/folder.model';
+import {OfficeService} from '../../services/api/office.service';
 
 @Component({
     selector   : 's-folders-pg',
@@ -21,8 +20,9 @@ export class FoldersComponent implements OnInit {
     @ViewChild('folderNumberTpl') folderNumberTpl: TemplateRef<any>;
     @ViewChild('folderVictimsTpl') folderVictimsTpl: TemplateRef<any>;
     @ViewChild('folderGuiltiesTpl') folderGuiltiesTpl: TemplateRef<any>;
-    @ViewChild(NgForm) f: NgForm;
-    @ViewChild(NgForm) mf: NgForm;
+    @ViewChild(NgForm) filterFoldersForm: NgForm;
+    @ViewChild(NgForm) createFolderForm: NgForm;
+
 
 
     rows: any[];
@@ -33,7 +33,7 @@ export class FoldersComponent implements OnInit {
     loadingIndicator= true;
     reorderable = false;
 
-    public showModalCreateFolder  = false;
+    public showCreateFolderModal  = false;
 
     public court: Court;
     public number: string;
@@ -45,16 +45,14 @@ export class FoldersComponent implements OnInit {
     public selectedGuilties = [];
 
     public listCourts = [];
-
-    animal: string;
-    name: string;
+    public listOffices = [];
 
     constructor(private router: Router,
                 private folderService: FolderService,
                 private victimService: VictimService,
                 private guiltyService: GuiltyService,
                 private courtService:  CourtService,
-                private dialog: MatDialog) { }
+                private officeService: OfficeService) { }
 
     ngOnInit(): void {
         let me = this;
@@ -63,22 +61,29 @@ export class FoldersComponent implements OnInit {
             .subscribe(function(folderStatus) {
                 me.folderStatus = folderStatus.items;
         });
+
         me.victimService.getVictims()
             .subscribe(function(victims) {
                 victims.forEach(function(v) {
-                    me.listVictims.push({id: v.id , text: v.lastName + ' ' + v.firstName});
+                    me.listVictims.push({id: v.id, text: v.lastName + ' ' + v.firstName});
                 });
         });
 
         me.guiltyService.getGuilties()
             .subscribe(function(guilties) {
                 guilties.forEach(function(g) {
-                    me.listGuilties.push({id: g.id , text : g.lastName + ' ' + g.firstName});
+                    me.listGuilties.push({id: g.id, text: g.lastName + ' ' + g.firstName});
                 });
             });
+
         me.courtService.getCourts()
             .subscribe(function(courts) {
                 me.listCourts = courts;
+            });
+
+        me.officeService.getOffices()
+            .subscribe(function(offices) {
+                me.listOffices = offices;
             });
     }
 
@@ -92,27 +97,31 @@ export class FoldersComponent implements OnInit {
             });
     }
 
-    onSubmit(f: NgForm) {
-        f = this.f;
+    onSubmitFilterFoldersForm(f: NgForm) {
+        debugger;
         console.log(f.controls['folderNumber'].value);
         console.log(f.controls['status'].value);
         this.getPageData(f.controls['folderNumber'].value, f.controls['status'].value);
     }
 
-    addFolder(mf: NgForm) {
+    onSubmitCreateFolderForm(f: NgForm) {
+        debugger;
+        this.addFolder(f);
+    }
+
+    addFolder(f: NgForm) {
         let me = this;
-        mf = me.mf;
-        me.folderService.addFolder(mf.value).subscribe(function(folder) {
+        me.folderService.addFolder(f.value).subscribe(function(folder) {
           alert(folder);
       });
     }
 
     openModalCreateFolder(): void {
-        this.showModalCreateFolder = true;
+        this.showCreateFolderModal = true;
     }
 
-    closeModalCreateFolder() : void {
-        this.showModalCreateFolder = false;
+    closeCreateFolderModal(): void {
+        this.showCreateFolderModal = false;
     }
 
     parsePeople(people: any[]) {

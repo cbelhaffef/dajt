@@ -5,6 +5,7 @@ import com.app.enums.JudgementStatus;
 import com.app.model.advocate.Advocate;
 import com.app.model.court.Court;
 import com.app.model.guilty.Guilty;
+import com.app.model.office.Office;
 import com.app.model.user.User;
 import com.app.model.victim.Victim;
 import lombok.Data;
@@ -66,6 +67,10 @@ public class Folder {
     @JoinColumn(name="user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="office_id")
+    private Office office;
+
     @ManyToMany
     @JoinTable(
         name = "folder_victim",
@@ -81,6 +86,4 @@ public class Folder {
         inverseJoinColumns = { @JoinColumn(name = "guilty_id") }
     )
     private Set<Guilty> guilties = new HashSet<>();
-
-    public Folder(){}
 }

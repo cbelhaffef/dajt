@@ -7,7 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ClarityModule} from 'clarity-angular';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {NgxSelectModule} from 'ngx-select-ex';
 // Local App Modules
 import {AppRoutingModule} from './app-routing.module';
 // Directives
@@ -42,86 +42,11 @@ import {CourtService} from './services/api/court.service';
 
 import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import {
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule
-} from "@angular/material";
-import {DialogOverviewExampleDialog} from "./pages/folders/DialogOverviewExampleDialog";
+import {OfficeService} from './services/api/office.service';
 
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
-
-@NgModule({
-    imports: [
-        // Thirdparty Module @angular/material
-        MatAutocompleteModule,
-        MatFormFieldModule,
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatChipsModule,
-        MatDatepickerModule,
-        MatDialogModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatMenuModule,
-        MatNativeDateModule,
-        MatPaginatorModule,
-        MatProgressBarModule,
-        MatProgressSpinnerModule,
-        MatRadioModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSidenavModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatSortModule,
-        MatStepperModule,
-        MatTableModule,
-        MatTabsModule,
-        MatToolbarModule,
-        MatTooltipModule
-    ]
-})
-export class AngularMaterialModule {}
 
 @NgModule({
 
@@ -136,51 +61,11 @@ export class AngularMaterialModule {}
     NgxDatatableModule,
     NgxChartsModule,
     ClarityModule,
-    //AngularMaterialModule,
+    NgxSelectModule,
 
-      // Thirdparty Module @angular/material
-      MatAutocompleteModule,
-      MatFormFieldModule,
-      MatAutocompleteModule,
-      MatButtonModule,
-      MatButtonToggleModule,
-      MatCardModule,
-      MatCheckboxModule,
-      MatChipsModule,
-      MatDatepickerModule,
-      MatDialogModule,
-      MatDividerModule,
-      MatExpansionModule,
-      MatGridListModule,
-      MatIconModule,
-      MatInputModule,
-      MatListModule,
-      MatMenuModule,
-      MatNativeDateModule,
-      MatPaginatorModule,
-      MatProgressBarModule,
-      MatProgressSpinnerModule,
-      MatRadioModule,
-      MatRippleModule,
-      MatSelectModule,
-      MatSidenavModule,
-      MatSliderModule,
-      MatSlideToggleModule,
-      MatSnackBarModule,
-      MatSortModule,
-      MatStepperModule,
-      MatTableModule,
-      MatTabsModule,
-      MatToolbarModule,
-      MatTooltipModule,
-
-
-      // Local App Modules
+    // Local App Modules
     AppRoutingModule
-
-
   ],
-  entryComponents: [DialogOverviewExampleDialog],
   declarations: [
     // Components
     BadgeComponent,
@@ -201,9 +86,6 @@ export class AngularMaterialModule {}
     FoldersComponent,
     FolderDetailsComponent,
 
-    // Modals
-    DialogOverviewExampleDialog,
-
     // Directives
     TrackScrollDirective
   ],
@@ -218,7 +100,8 @@ export class AngularMaterialModule {}
     VictimService,
     GuiltyService,
     CourtService,
-    AppConfig,
+    OfficeService,
+    AppConfig
   ],
 
   bootstrap: [AppComponent]
