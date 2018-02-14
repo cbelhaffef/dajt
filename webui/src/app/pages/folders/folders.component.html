@@ -6,43 +6,55 @@
             <form #filterFoldersForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(filterFoldersForm)" id="folder-form-search">
                 <section class="form-block">
                     <div class="form-group row">
-                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                        <div class="col-xs-1">
                             <button [clrLoading]="validateLoading"  type="submit" class="btn btn-primary" i18n>Recherche</button>
                         </div>
-                        <div class="col-lg-2 col-md-8 col-sm-12 col-xs-12">
+                        <div class="col-xs-3">
                             <div class="select form-control">
-                                <select id="status" name="status">
+                                <select id="status" name="status" ngModel>
                                     <option value=""></option>
                                     <option *ngFor="let st of folderStatus" value="{{st}}">{{st}}</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-1">
                             <label for="status" i18n>Status</label>
                         </div>
+                        <div class="col-xs-3">
+                            <div class="select form-control">
+                                <select id="officeF" name="office" ngModel>
+                                    <option value=""></option>
+                                    <option *ngFor="let o of listOffices" value="{{o.id}}">{{o.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            <label for="office" i18n>Bureau</label>
+                        </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <input class="form-control" type="text" id="folderNumber" name="folderNumber"
+
+                        <div class="col-xs-2">
+                            <input class="form-control" type="text" id="folderNumber" name="folderNumber" ngModel
                                    i18n-placeholder="Entrez le numéro ici" size="45">
                         </div>
-                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-1">
                             <label for="folderNumber" i18n>Numéro Dossier</label>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12"></div>
-                        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                            <input class="form-control" type="text" id="guilty" name="guilty"
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-3">
+                            <input class="form-control" type="text" id="guilty" name="guilty" ngModel
                                    i18n-placeholder="Entrez le nom du coupable" size="45">
                         </div>
-                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <div class=" col-xs-1">
                             <label for="guilty" i18n>Coupable</label>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                            <input class="form-control" type="text" id="victim" name="victim"
+                        <div class="col-xs-3">
+                            <input class="form-control" type="text" id="victim" name="victim" ngModel
                                    i18n-placeholder="Entrez le nom de la victim" size="45" >
                         </div>
-                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-1">
                             <label for="victim" i18n>Victime</label>
                         </div>
                     </div>
@@ -74,7 +86,7 @@
                     <ng-template #folderVictimsTpl let-row="row" let-value="value" ngx-datatable-cell-template>
                         <ul>
                             <li  *ngFor="let v of value">
-                                {{v.lastName}}&nbsp;{{v.firstName}}
+                                {{v.name}}
                             </li>
                         </ul>
                     </ng-template>
@@ -86,7 +98,7 @@
                     <ng-template #folderGuiltiesTpl let-row="row" let-value="value" ngx-datatable-cell-template>
                         <ul>
                             <li  *ngFor="let g of row.guilties">
-                                {{g.lastName}}&nbsp;{{g.firstName}}
+                                {{g.name}}
                             </li>
                         </ul>
                     </ng-template>

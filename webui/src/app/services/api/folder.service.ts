@@ -12,7 +12,7 @@ export class FolderService {
     /**
      * Gets List of folders
      */
-    getFolder(folderNumber?:string, status?:string,page?:number, size?:number): Observable<any> {
+    getFolders(folderNumber?:string, office? :number, status?:string,victim?:string, guilty?:string, page?:number, size?:number): Observable<any> {
         //Create Request URL params
         let me = this;
         let params: HttpParams = new HttpParams();
@@ -21,8 +21,17 @@ export class FolderService {
         if (folderNumber && typeof folderNumber === "string"){
             params = params.append("folderNumber",folderNumber);
         }
+        if (office && typeof office === "number"){
+            params = params.append("office",office.toString());
+        }
         if (status && typeof status === "string"){
             params = params.append("status",status);
+        }
+        if (victim && typeof victim === "string"){
+            params = params.append("victim",victim);
+        }
+        if (guilty && typeof guilty === "string"){
+            params = params.append("guilty",guilty);
         }
         let folderListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/folders',params)

@@ -5,6 +5,8 @@ import com.app.model.folder.Folder;
 import com.app.model.folder.FolderListResponse;
 import com.app.model.folder.FolderStatusResponse;
 import com.app.model.guilty.Guilty;
+import com.app.model.office.Office;
+import com.app.model.victim.Victim;
 import com.app.repo.FolderRepo;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
@@ -39,7 +41,8 @@ public class FolderController {
         @ApiParam(value = ""    )               @RequestParam(value = "page"  ,  defaultValue="0"   ,  required = false) Integer page,
         @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="20"  ,  required = false) Integer size,
         @RequestParam(value = "folderNumber"     , required = false) String folderNumber,
-        @RequestParam(value = "folderStatus"      , required = false) FolderStatus folderStatus,
+        @RequestParam(value = "office"      , required = false) Long office,
+        @RequestParam(value = "status"      , required = false) FolderStatus status,
         @RequestParam(value = "guilty"      , required = false) String guilty,
         @RequestParam(value = "victim"      , required = false) String victim,
         Pageable pageable
@@ -48,11 +51,17 @@ public class FolderController {
         FolderListResponse resp = new FolderListResponse();
         Folder qry = new Folder();
         if (folderNumber != null)  { qry.setNumber(folderNumber); }
-        if (folderStatus != null)  { qry.setStatus(folderStatus); }
+        Office officeObj = new Office();
+        officeObj.setId(office);
+        if (office != null)  { qry.setOffice(officeObj); }
+        if (status != null)  { qry.setStatus(status); }
+
+        Victim victimObj = new Victim();
+        victimObj.setName(guilty);
+        if (victim != null)        { qry.setVictims(Sets.newHashSet(victimObj)); };
 
         Guilty guiltyObj = new Guilty();
-        guiltyObj.setFirstName(guilty);
-        guiltyObj.setLastName(guilty);
+        guiltyObj.setName(guilty);
         if (guilty != null)        { qry.setGuilties(Sets.newHashSet(guiltyObj)); };
 
         ExampleMatcher matcher = ExampleMatcher.matching()
@@ -60,6 +69,9 @@ public class FolderController {
             .withIgnoreNullValues()
             .withIgnoreCase()
             .withMatcher("number", ExampleMatcher.GenericPropertyMatchers.contains())
+            .withMatcher("office", ExampleMatcher.GenericPropertyMatchers.contains())
+            .withMatcher("status", ExampleMatcher.GenericPropertyMatchers.contains())
+            .withMatcher("victims", ExampleMatcher.GenericPropertyMatchers.contains())
             .withMatcher("guilties", ExampleMatcher.GenericPropertyMatchers.contains());
 
         Page<Folder> pg = folderRepo.findAll(Example.of(qry,matcher), pageable);

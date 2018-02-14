@@ -55,7 +55,7 @@ export class FoldersComponent implements OnInit {
 
     ngOnInit(): void {
         let me = this;
-        me.getPageData();
+        me.getFolders();
         me.folderService.getFolderStatus()
             .subscribe(function(folderStatus) {
                 me.folderStatus = folderStatus.items;
@@ -64,14 +64,14 @@ export class FoldersComponent implements OnInit {
         me.victimService.getVictims()
             .subscribe(function(victims) {
                 victims.forEach(function(v) {
-                    me.listVictims.push({id: v.id, text: v.lastName + ' ' + v.firstName});
+                    me.listVictims.push({id: v.id, text: v.name});
                 });
         });
 
         me.guiltyService.getGuilties()
             .subscribe(function(guilties) {
                 guilties.forEach(function(g) {
-                    me.listGuilties.push({id: g.id, text: g.lastName + ' ' + g.firstName});
+                    me.listGuilties.push({id: g.id, text: g.name});
                 });
             });
 
@@ -86,26 +86,32 @@ export class FoldersComponent implements OnInit {
             });
     }
 
-    getPageData(folderName?: string, status?: string) {
-        let me = this;
-        me.isLoading = true;
-        me.folderService.getFolder(folderName, status)
-            .subscribe(function(folderData) {
-                me.rows = folderData;
-                me.isLoading = false;
-            });
-    }
-
     onSubmitFilterFoldersForm(f: NgForm) {
-        debugger;
-        console.log(f.controls['folderNumber'].value);
-        console.log(f.controls['status'].value);
-        this.getPageData(f.controls['folderNumber'].value, f.controls['status'].value);
+        this.getFolders(f);
     }
 
     onSubmitCreateFolderForm(f: NgForm) {
         debugger;
         this.addFolder(f);
+    }
+
+    getFolders(f?:NgForm){
+        let me = this;
+        me.isLoading = true;
+
+        let folderNumber,office,status,victim,guilty;
+        if(f && f.value){
+            folderNumber = f.value.folderNumber;
+            office = f.value.office;
+            status = f.value.status;
+            victim = f.value.victim;
+            guilty = f.value.guilty;
+        }
+        me.folderService.getFolders(folderNumber, office, status,victim, guilty)
+            .subscribe(function(folderData) {
+                me.rows = folderData;
+                me.isLoading = false;
+            });
     }
 
     addFolder(f: NgForm) {
@@ -121,11 +127,5 @@ export class FoldersComponent implements OnInit {
 
     closeCreateFolderModal(): void {
         this.showCreateFolderModal = false;
-    }
-
-    parsePeople(people: any[]) {
-        return people.map(function(elem) {
-            return elem.firstName + ' ' + elem.lastName;
-        }).join(' <br> ');
     }
 }

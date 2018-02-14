@@ -50,11 +50,9 @@ CREATE TABLE user_role (
 /* Table: advocate */
 CREATE TABLE advocate (
     advocate_id     INT NOT NULL AUTO_INCREMENT,
-    last_name       NVARCHAR(255),
-    first_name      NVARCHAR(255),
+    name       NVARCHAR(255),
     PRIMARY KEY (advocate_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE court (
     court_id INT NOT NULL AUTO_INCREMENT,
@@ -93,16 +91,14 @@ CREATE TABLE folder (
 /* Table: guilty */
 CREATE TABLE guilty (
     guilty_id INT NOT NULL AUTO_INCREMENT,
-    first_name NVARCHAR(255),
-    last_name NVARCHAR (255),
+    name NVARCHAR(255),
     PRIMARY KEY (guilty_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table: victim */
 CREATE TABLE victim (
     victim_id INT NOT NULL AUTO_INCREMENT,
-    first_name NVARCHAR(255),
-    last_name NVARCHAR(255),
+    name NVARCHAR(255),
     PRIMARY KEY (victim_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
