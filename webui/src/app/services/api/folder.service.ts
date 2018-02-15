@@ -21,8 +21,8 @@ export class FolderService {
         if (folderNumber && typeof folderNumber === "string"){
             params = params.append("folderNumber",folderNumber);
         }
-        if (office && typeof office === "number"){
-            params = params.append("office",office.toString());
+        if (office && typeof office === "string"){
+            params = params.append("office",office);
         }
         if (status && typeof status === "string"){
             params = params.append("status",status);

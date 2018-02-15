@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.transaction.annotation.*;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages ={ "com.app.repo"})
+@EnableJpaRepositories(basePackages ={ "com.app.repo"},repositoryImplementationPostfix = "CustomImpl")
 @EntityScan(basePackages ={ "com.app.model"})
 @EnableTransactionManagement
 public class MainApp {

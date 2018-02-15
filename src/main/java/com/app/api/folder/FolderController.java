@@ -49,32 +49,27 @@ public class FolderController {
     ) {
 
         FolderListResponse resp = new FolderListResponse();
-        Folder qry = new Folder();
-        if (folderNumber != null)  { qry.setNumber(folderNumber); }
-        Office officeObj = new Office();
-        officeObj.setId(office);
-        if (office != null)  { qry.setOffice(officeObj); }
-        if (status != null)  { qry.setStatus(status); }
+//        Folder qry = new Folder();
+//        if (folderNumber != null)  { qry.setNumber(folderNumber); }
+//        Office officeObj = new Office();
+//        officeObj.setId(office);
+//        if (office != null)  { qry.setOffice(officeObj); }
+//        if (status != null)  { qry.setStatus(status); }
+//
+//        Victim victimObj = new Victim();
+//        victimObj.setName(victim);
+//        if (victim != null)        { qry.setVictims(Sets.newHashSet(victimObj)); };
+//
+//        Guilty guiltyObj = new Guilty();
+//        guiltyObj.setName(guilty);
+//        if (guilty != null)        { qry.setGuilties(Sets.newHashSet(guiltyObj)); };
 
-        Victim victimObj = new Victim();
-        victimObj.setName(guilty);
-        if (victim != null)        { qry.setVictims(Sets.newHashSet(victimObj)); };
+//        ExampleMatcher matcher = ExampleMatcher.matching()
+//            .withStringMatcher(ExampleMatcher.StringMatcher.STARTING)
+//            .withIgnoreNullValues()
+//            .withIgnoreCase();
 
-        Guilty guiltyObj = new Guilty();
-        guiltyObj.setName(guilty);
-        if (guilty != null)        { qry.setGuilties(Sets.newHashSet(guiltyObj)); };
-
-        ExampleMatcher matcher = ExampleMatcher.matching()
-            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
-            .withIgnoreNullValues()
-            .withIgnoreCase()
-            .withMatcher("number", ExampleMatcher.GenericPropertyMatchers.contains())
-            .withMatcher("office", ExampleMatcher.GenericPropertyMatchers.contains())
-            .withMatcher("status", ExampleMatcher.GenericPropertyMatchers.contains())
-            .withMatcher("victims", ExampleMatcher.GenericPropertyMatchers.contains())
-            .withMatcher("guilties", ExampleMatcher.GenericPropertyMatchers.contains());
-
-        Page<Folder> pg = folderRepo.findAll(Example.of(qry,matcher), pageable);
+        Page<Folder> pg = folderRepo.findByNumberAndOfficeIdAndStatusAndVictimsNameAndGuiltiesName(folderNumber,office,status,victim,guilty,pageable);
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         return resp;
