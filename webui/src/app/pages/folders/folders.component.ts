@@ -91,7 +91,6 @@ export class FoldersComponent implements OnInit {
     }
 
     onSubmitCreateFolderForm(f: NgForm) {
-        debugger;
         this.addFolder(f);
     }
 

@@ -18,7 +18,6 @@ bower_components/
 **/.vscode
 .settings/
 **/.iml
-**/*bundle.js
 
 # misc
 **/.sass-cache
