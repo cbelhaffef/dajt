@@ -1,7 +1,7 @@
-DROP SCHEMA IF EXISTS dajt;
+#DROP SCHEMA IF EXISTS dajt;
 
-CREATE SCHEMA dajt;
-USE dajt;
+#CREATE SCHEMA dajt;
+#USE heroku_6c441d064410a7d;
 
 /* Table: user (Application Users) */
 CREATE TABLE user (
