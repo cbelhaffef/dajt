@@ -49,27 +49,23 @@ public class FolderController {
     ) {
 
         FolderListResponse resp = new FolderListResponse();
-//        Folder qry = new Folder();
-//        if (folderNumber != null)  { qry.setNumber(folderNumber); }
-//        Office officeObj = new Office();
-//        officeObj.setId(office);
-//        if (office != null)  { qry.setOffice(officeObj); }
-//        if (status != null)  { qry.setStatus(status); }
-//
-//        Victim victimObj = new Victim();
-//        victimObj.setName(victim);
-//        if (victim != null)        { qry.setVictims(Sets.newHashSet(victimObj)); };
-//
-//        Guilty guiltyObj = new Guilty();
-//        guiltyObj.setName(guilty);
-//        if (guilty != null)        { qry.setGuilties(Sets.newHashSet(guiltyObj)); };
+        Folder qry = new Folder();
+        if (folderNumber != null)  { qry.setNumber(folderNumber); }
+        Office officeObj = new Office();
+        officeObj.setId(office);
+        if (office != null)  { qry.setOffice(officeObj); }
+        if (status != null)  { qry.setStatus(status); }
 
-//        ExampleMatcher matcher = ExampleMatcher.matching()
-//            .withStringMatcher(ExampleMatcher.StringMatcher.STARTING)
-//            .withIgnoreNullValues()
-//            .withIgnoreCase();
+        Victim victimObj = new Victim();
+        victimObj.setName(victim);
+        if (victim != null)        { qry.setVictims(Sets.newHashSet(victimObj)); };
 
-        Page<Folder> pg = folderRepo.findByNumberAndOfficeIdAndStatusAndVictimsNameAndGuiltiesName(folderNumber,office,status,victim,guilty,pageable);
+        Guilty guiltyObj = new Guilty();
+        guiltyObj.setName(guilty);
+        if (guilty != null)        { qry.setGuilties(Sets.newHashSet(guiltyObj)); };
+
+
+        Page<Folder> pg = folderRepo.findByFilter(qry,pageable);
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         return resp;

@@ -7,11 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface FolderRepoCustom {
 
-    Page<Folder> findByNumberAndOfficeIdAndStatusAndVictimsNameAndGuiltiesName(String number,
-                                                                               Long officeId,
-                                                                               FolderStatus status,
-                                                                               String victimName,
-                                                                               String guiltyName,
-                                                                               Pageable pageable);
+    Page<Folder> findByFilter(Folder fQuery, Pageable pageable);
 
 }

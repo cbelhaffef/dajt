@@ -23,12 +23,7 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
     }
 
     @Override
-    public Page<Folder> findByNumberAndOfficeIdAndStatusAndVictimsNameAndGuiltiesName(String number,
-                                                                            Long officeId,
-                                                                            FolderStatus status,
-                                                                            String victimName,
-                                                                            String guiltyName,
-                                                                            Pageable pageable) {
+    public Page<Folder> findByFilter(Folder fQuery, Pageable pageable) {
 
         QFolder folder = QFolder.folder;
         QOffice office = QOffice.office;
@@ -40,29 +35,28 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
 
         query.select(folder).from(folder);
 
-        if (number != null) {
-            query.where(folder.number.like("%" + number + "%"));
+        if (fQuery.getNumber() != null) {
+            query.where(folder.number.contains(fQuery.getNumber()));
         }
 
-        if (officeId != null) {
-            query.leftJoin(folder.office(), office).where(office.id.eq(officeId));
+        if (fQuery.getOffice() != null && fQuery.getOffice().getId() != null) {
+            query.leftJoin(folder.office(), office).where(office.id.eq(fQuery.getOffice().getId()));
         }
 
-        if (status != null) {
-            query.where(folder.status.eq(status));
+        if (fQuery.getStatus() != null) {
+            query.where(folder.status.eq(fQuery.getStatus()));
         }
 
-        if (victimName != null) {
-            query.leftJoin(folder.victims, victim).where(victim.name.like("%"+victimName));
+        if (fQuery.getVictims() != null && !fQuery.getVictims().isEmpty()) {
+            query.leftJoin(folder.victims, victim).where(victim.name.contains(fQuery.getVictims().iterator().next().getName()));
         }
 
-        if (guiltyName != null ) {
-            query.leftJoin(folder.guilties, guilty).where(guilty.name.like("%"+guiltyName));
+        if (fQuery.getGuilties() != null && !fQuery.getGuilties().isEmpty() ) {
+            query.leftJoin(folder.guilties, guilty).where(guilty.name.contains(fQuery.getGuilties().iterator().next().getName()));
         }
         querydsl.applyPagination(pageable, query);
 
         Long total = query.fetchCount();
-//        ((JPAQuery<Folder>) query).setHint(QueryHints.HINT_LOADGRAPH, getEntityManager().getEntityGraph("server.site"));
 
         return new PageImpl<Folder>(query.fetch(), pageable, total);
 
