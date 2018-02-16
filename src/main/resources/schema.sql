@@ -1,7 +1,7 @@
-DROP SCHEMA IF EXISTS dajt;
+#DROP SCHEMA IF EXISTS dajt;
 
-CREATE SCHEMA dajt;
-USE dajt;
+#CREATE SCHEMA dajt;
+USE egp6cwexxvm76s5j;
 
 /* Table: user (Application Users) */
 CREATE TABLE user (
