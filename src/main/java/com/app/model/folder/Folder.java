@@ -61,8 +61,6 @@ public class Folder {
     @JoinColumn(name="advocate_id", nullable=true, updatable=true)
     private Advocate advocate;
 
-    // TODO (added office field)
-
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;

@@ -94,11 +94,11 @@ export class FoldersComponent implements OnInit {
         this.addFolder(f);
     }
 
-    getFolders(f?:NgForm){
+    getFolders(f?:NgForm) {
         let me = this;
         me.isLoading = true;
 
-        let folderNumber,office,status,victim,guilty;
+        let folderNumber, office, status, victim, guilty;
         if(f && f.value){
             folderNumber = f.value.folderNumber;
             office = f.value.office;
