@@ -1,0 +1,21 @@
+<div id="folder-content" class="pad-16">
+    <div class="row aui-page-header-inner">
+        <div class="col-xs-1 aui-page-header-image">
+            <!-- TODO adding photo of office-->
+        </div>
+        <div class="col-xs-8 aui-page-header-main">
+            <div id="folder-number">
+                <a id="project-name-val" routerLink="/home/legal_cases/offices/{{folder?.office?.id}}">{{folder?.office?.name}}</a>
+                &nbsp;/&nbsp;
+                <a class="issue-link" routerLink="/home/legal_cases/folders/{{folder?.id}}" id="key-val" rel="10049">{{folder?.number}}</a>
+            </div>
+            <h1 id="summary-val">{{folder?.offence}}</h1>
+        </div>
+        <div class="col-xs-3 aui-page-header-actions">
+            <button type="button" class="btn btn-icon" routerLink="/home/legal_cases/folders">
+                <clr-icon shape="redo"></clr-icon>
+                <span class="icon-shape-name">Retour</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -5,3 +5,56 @@
     justify-content:space-between;
     button{outline:none;}
 }
+
+.aui-page-header-image+.folder-page-header-main {
+    padding-left: 10px;
+}
+.aui-page-header-main {
+    vertical-align: middle;
+}
+.aui-page-header-image, .aui-page-header-main, .aui-page-header-actions {
+    box-sizing: border-box;
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    vertical-align: top;
+}
+
+p:first-child, ul:first-child, ol:first-child, dl:first-child, h1:first-child, h2:first-child, h3:first-child,
+h4:first-child, h5:first-child, h6:first-child, blockquote:first-child, pre:first-child, form.aui:first-child,
+table.aui:first-child, .aui-tabs:first-child, .aui-panel:first-child, .aui-group:first-child {
+    margin-top: 0;
+}
+.aui-nav, .aui-nav>li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#folder-content{
+    background-color: #fff;
+    height: 100%;
+}
+
+#folder-number {
+    text-align: right;
+}
+
+#summary-val {
+    margin-right: -30px;
+    padding: 2px 30px 2px 5px;
+    z-index: 1;
+    text-align: right;
+}
+.aui-page-header-main>h1, .aui-page-header-main>h2, .aui-page-header-main>h3, .aui-page-header-main>h4, .aui-page-header-main>h5, .aui-page-header-main>h6 {
+    margin: 0;
+}
+h1, h2, h3, h4 {
+    color: #333;
+}
+
+h1 {
+    font-size: 24px;
+    line-height: 1.25;
+}

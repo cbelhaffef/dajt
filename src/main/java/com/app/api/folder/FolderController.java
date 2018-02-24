@@ -87,9 +87,9 @@ public class FolderController {
     }
 
     @ApiOperation(value = "Order Details", response = Folder.class)
-    @RequestMapping(value = "/folders/{folderNumber}", method = RequestMethod.GET)
-    public Folder getFolderDetail( @PathVariable("folderNumber") String folderNumber) {
-        Optional<Folder> folder = folderRepo.findByNumber(folderNumber);
+    @RequestMapping(value = "/folders/{id}", method = RequestMethod.GET)
+    public Folder getFolderDetail( @PathVariable("id") Long id) {
+        Optional<Folder> folder = folderRepo.findById(id);
         return folder.isPresent() ? folder.get() : null;
     }
 }

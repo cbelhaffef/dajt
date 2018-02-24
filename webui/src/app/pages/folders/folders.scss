@@ -304,3 +304,10 @@
     padding: 0 .25rem;
 }
 
+ul{
+    padding-left:0;
+}
+
+.ngx-datatable .datatable-body-row:hover{
+    background-color: #7E7E7E;
+}

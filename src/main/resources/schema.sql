@@ -1,7 +1,7 @@
 #DROP SCHEMA IF EXISTS dajt;
 
 #CREATE SCHEMA dajt;
-#USE heroku_6c441d064410a7d;
+#USE dajt;
 
 SET FOREIGN_KEY_CHECKS = 0;
 SET @tables = NULL;

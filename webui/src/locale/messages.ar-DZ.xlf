@@ -10,6 +10,14 @@
         </context-group>
         <target>الشؤون القضائية</target>
       </trans-unit>
+      <trans-unit id="11eaa7ec39516fce9e6a67414e5157ad722a10fe" datatype="html">
+              <source>What&apos;s your name?</source>
+              <context-group purpose="location">
+                <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+                <context context-type="linenumber">9</context>
+              </context-group>
+              <target>القضائية</target>
+            </trans-unit>
       <trans-unit id="40e0bdcfee016d4bca0bd27d398456b44ac3c6d5" datatype="html">
         <source>Liste des Dossiers</source>
         <context-group purpose="location">

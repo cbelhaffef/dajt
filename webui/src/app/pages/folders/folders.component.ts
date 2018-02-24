@@ -7,6 +7,8 @@ import {GuiltyService} from '../../services/api/guilty.service';
 import {Court} from '../../models/court.model';
 import {CourtService} from '../../services/api/court.service';
 import {OfficeService} from '../../services/api/office.service';
+import {MatDialog} from '@angular/material';
+import {FoldersCreateDialogComponent} from './folders.create.dialog.component';
 
 @Component({
     selector   : 's-folders-pg',
@@ -46,12 +48,16 @@ export class FoldersComponent implements OnInit {
     public listCourts = [];
     public listOffices = [];
 
+    animal: string;
+    name: string;
+
     constructor(private router: Router,
                 private folderService: FolderService,
                 private victimService: VictimService,
                 private guiltyService: GuiltyService,
                 private courtService:  CourtService,
-                private officeService: OfficeService) { }
+                private officeService: OfficeService,
+                public dialog: MatDialog) { }
 
     ngOnInit(): void {
         let me = this;
@@ -84,6 +90,18 @@ export class FoldersComponent implements OnInit {
             .subscribe(function(offices) {
                 me.listOffices = offices;
             });
+    }
+
+    openDialog(): void {
+        let dialogRef = this.dialog.open(FoldersCreateDialogComponent, {
+            width: '250px',
+            data: { name: this.name, animal: this.animal }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            this.animal = result;
+        });
     }
 
     onSubmitFilterFoldersForm(f: NgForm) {

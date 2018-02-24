@@ -1,10 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpRequest,  HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import { UserInfoService, LoginInfoInStorage} from '../user-info.service';
-import { AppConfig } from '../../app-config';
+import {UserInfoService} from '../user-info.service';
+import {AppConfig} from '../../app-config';
 
 
 @Injectable()

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 import {ApiRequestService} from './api-request.service';
 import {TranslateService} from './translate.service';
 import {HttpParams} from '@angular/common/http';
@@ -54,7 +55,13 @@ export class FolderService {
     }
 
     getFolderDetails(number: string): Observable<any> {
-        return this.apiRequest.get('api/folders/' + number);
+        let me = this;
+        let folderSubject = new Subject<any>()
+        me.apiRequest.get('api/folders/' + number)
+            .subscribe(jsonResp => {
+                folderSubject.next(jsonResp);
+            });
+        return folderSubject;
     }
 
     addFolder(folder) {
