@@ -47,7 +47,7 @@ public class User {
     @JsonIgnore @Getter @Setter private boolean enableRenewal;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "assignTo")
+    @OneToMany(mappedBy = "assignee")
     List<Folder> folders;
 
     public User(){

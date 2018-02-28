@@ -71,6 +71,13 @@
                 </section>
             </form>
 
+            <p-dropdown [options]="operators"
+                        [(ngModel)]="selectedOperator"
+                        [style]="{'width':'150px'}"
+                        filter="true"
+                        i18n-placeholder="Assigner à">
+            </p-dropdown>
+
             <p-table [value]="rows">
                 <ng-template pTemplate="header">
                     <tr>
@@ -80,6 +87,7 @@
                         <th i18n>Coupables</th>
                         <th i18n>Justice</th>
                         <th i18n>Date modification</th>
+                        <th i18n>Assignée</th>
                         <th i18n>Status</th>
                         <th i18n>Type d'envoie</th>
                     </tr>
@@ -111,6 +119,9 @@
                         </td>
                         <td>
                             {{folder.modifDate | date : 'longDate':'':'ar'}}
+                        </td>
+                        <td>
+                            {{folder.assignee}}
                         </td>
                         <td>
                             {{folder.status}}

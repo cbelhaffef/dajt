@@ -13,7 +13,7 @@ export class Folder {
                 public office: Office,
                 public judgementStatus: string,
                 public court: Court,
-                public assignTo: User,
+                public assignee: User,
                 public victims: Victim[],
                 public guilties: Guilty[],
                 public sendingType: string) {}

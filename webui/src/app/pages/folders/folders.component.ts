@@ -47,6 +47,7 @@ export class FoldersComponent implements OnInit {
 
     public listCourts = [];
     public listOffices = [];
+    public operators = [];
 
     animal: string;
     name: string;
@@ -57,6 +58,7 @@ export class FoldersComponent implements OnInit {
                 private guiltyService: GuiltyService,
                 private courtService:  CourtService,
                 private officeService: OfficeService,
+                private userService : UserService,
                 public dialog: MatDialog) { }
 
     ngOnInit(): void {
@@ -89,6 +91,11 @@ export class FoldersComponent implements OnInit {
         me.officeService.getOffices()
             .subscribe(function(offices) {
                 me.listOffices = offices;
+            });
+
+        me.UserService.getUser()
+            .subscribe(function(users){
+               me.operators = users;
             });
     }
 
@@ -124,7 +131,7 @@ export class FoldersComponent implements OnInit {
             victim = f.value.victim;
             guilty = f.value.guilty;
         }
-        me.folderService.getFolders(folderNumber, office, status,victim, guilty)
+        me.folderService.getFolders(folderNumber, office, status, victim, guilty)
             .subscribe(function(folderData) {
                 me.rows = folderData;
                 me.isLoading = false;

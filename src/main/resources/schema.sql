@@ -86,7 +86,7 @@ CREATE TABLE folder (
     office_id       INT NOT NULL,
     court_id        INT NOT NULL,
     sending_type    VARCHAR(255) NOT NULL,
-    assign_to       INT,
+    assignee        INT,
     create_date     DATETIME DEFAULT CURRENT_TIMESTAMP,
     modif_date      DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     close_date      DATETIME,
@@ -97,7 +97,7 @@ CREATE TABLE folder (
     CONSTRAINT fk_folder__office   FOREIGN KEY (office_id)   REFERENCES office(office_id),
     CONSTRAINT fk_folder__court    FOREIGN KEY (court_id)    REFERENCES court(court_id),
     CONSTRAINT fk_folder__advocate FOREIGN KEY (advocate_id) REFERENCES advocate(advocate_id),
-    CONSTRAINT fk_folder__assign_to     FOREIGN KEY (assign_to)   REFERENCES user(user_id),
+    CONSTRAINT fk_folder__assignee     FOREIGN KEY (assignee)   REFERENCES user(user_id),
     PRIMARY KEY (folder_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

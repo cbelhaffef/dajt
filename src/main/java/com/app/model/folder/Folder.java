@@ -40,8 +40,8 @@ public class Folder {
     private Court court;
 
     @ManyToOne
-    @JoinColumn(name="assign_to", referencedColumnName = "user_id")
-    private User assignTo;
+    @JoinColumn(name="assignee", referencedColumnName = "user_id")
+    private User assignee;
 
     @ManyToOne
     @JoinColumn(name="office_id" , nullable = false)

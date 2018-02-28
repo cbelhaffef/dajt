@@ -1,6 +1,11 @@
 package com.app.api.user;
 
+import com.app.model.folder.FolderListResponse;
+import com.app.model.victim.Victim;
+import com.app.model.victim.VictimListResponse;
 import io.swagger.annotations.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.*;
@@ -74,5 +79,14 @@ public class UserController {
 		return resp;
 	}
 
+    @ApiOperation(value = "List of users", response = FolderListResponse.class)
+    @RequestMapping(value = "/users", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
+    public UserListResponse getVictims(Pageable pageable){
+        UserListResponse resp = new UserListResponse();
+        Page<User> pg = userService.find;
+        resp.setPageStats(pg, true);
+        resp.setItems(pg.getContent());
+        return resp;
+    }
 
 }

@@ -3,9 +3,12 @@ package com.app.api.user;
 import com.app.model.user.User;
 import com.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -51,4 +54,7 @@ public class UserService {
 		}
 	}
 
+	public List<User> getUsers(Pageable pageable){
+	    return userRepo.findOne(pageable);
+    }
 }

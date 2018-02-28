@@ -8,6 +8,8 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ClarityModule} from 'clarity-angular';
 import {NgxSelectModule} from 'ngx-select-ex';
+import {MatDialogModule} from '@angular/material';
+import {TableModule} from 'primeng/table';
 // Local App Modules
 import {AppRoutingModule} from './app-routing.module';
 // Directives
@@ -49,83 +51,6 @@ import localeAr from '@angular/common/locales/ar';
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
 
-import {
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-} from '@angular/material';
-import {CdkTableModule} from '@angular/cdk/table';
-
-import {TableModule} from 'primeng/table';
-
-@NgModule({
-    exports: [
-        CdkTableModule,
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatChipsModule,
-        MatStepperModule,
-        MatDatepickerModule,
-        MatDialogModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatMenuModule,
-        MatNativeDateModule,
-        MatPaginatorModule,
-        MatProgressBarModule,
-        MatProgressSpinnerModule,
-        MatRadioModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSidenavModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatSortModule,
-        MatTableModule,
-        MatTabsModule,
-        MatToolbarModule,
-        MatTooltipModule,
-    ]
-})
-export class DemoMaterialModule {}
-
 @NgModule({
 
   imports: [
@@ -134,13 +59,16 @@ export class DemoMaterialModule {}
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DemoMaterialModule,
+
 
     // Thirdparty Module
     NgxDatatableModule,
     NgxChartsModule,
     ClarityModule,
     NgxSelectModule,
+
+    // Angular Material
+    MatDialogModule,
 
     // Primeng Module
     TableModule,
