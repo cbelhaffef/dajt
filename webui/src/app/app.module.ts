@@ -44,10 +44,10 @@ import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {OfficeService} from './services/api/office.service';
 import {FoldersCreateDialogComponent} from './pages/folders/folders.create.dialog.component';
-
+import localeAr from '@angular/common/locales/ar';
 
 // the second parameter 'fr' is optional
-registerLocaleData(localeFr, 'fr');
+registerLocaleData(localeAr, 'ar');
 
 import {
     MatAutocompleteModule,
@@ -84,6 +84,8 @@ import {
     MatTooltipModule,
 } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
+
+import {TableModule} from 'primeng/table';
 
 @NgModule({
     exports: [
@@ -139,6 +141,9 @@ export class DemoMaterialModule {}
     NgxChartsModule,
     ClarityModule,
     NgxSelectModule,
+
+    // Primeng Module
+    TableModule,
 
     // Local App Modules
     AppRoutingModule

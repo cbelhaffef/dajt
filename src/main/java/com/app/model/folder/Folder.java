@@ -10,6 +10,8 @@ import com.app.model.user.User;
 import com.app.model.victim.Victim;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,24 +29,41 @@ public class Folder {
     @Column(name="folder_id")
     private Long id;
 
-    @Column(name="number")
+    @Column(name="number", nullable = false)
     private String number;
 
-    @Column(name="folder_status")
+    @Column(name="offence", nullable = false)
+    private String offence;
+
+    @ManyToOne
+    @JoinColumn(name="court_id")
+    private Court court;
+
+    @ManyToOne
+    @JoinColumn(name="assign_to", referencedColumnName = "user_id")
+    private User assignTo;
+
+    @ManyToOne
+    @JoinColumn(name="office_id" , nullable = false)
+    private Office office;
+
+    @Column(name="sending_type", nullable = false)
+    private String sendingType;
+
+    @Column(name="folder_status", nullable = false, columnDefinition = "varchar(50) default 'OPEN'")
     @Enumerated(EnumType.STRING)
     private FolderStatus status;
 
+    @CreationTimestamp
     @Column(name="create_date")
     private Date createDate;
 
-    @Column(name="last_modif_date")
-    private Date lastModifDate;
+    @UpdateTimestamp
+    @Column(name="modif_date")
+    private Date modifDate;
 
     @Column(name="close_date")
     private Date closeDate;
-
-    @Column(name="offence")
-    private String offence;
 
     @Column(name="judgement_date")
     private Date judgementDate;
@@ -54,20 +73,8 @@ public class Folder {
     private JudgementStatus judgementStatus;
 
     @ManyToOne
-    @JoinColumn(name="court_id", nullable=true, updatable=true)
-    private Court court;
-
-    @ManyToOne
-    @JoinColumn(name="advocate_id", nullable=true, updatable=true)
+    @JoinColumn(name="advocate_id")
     private Advocate advocate;
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name="office_id")
-    private Office office;
 
     @ManyToMany
     @JoinTable(

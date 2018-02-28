@@ -71,101 +71,57 @@
                 </section>
             </form>
 
-            <ngx-datatable
-                class="fixed-header"
-                [rows]='rows'
-                [columnMode]="'flex'"
-                [headerHeight]="50"
-                [footerHeight]="50"
-                [rowHeight]="'auto'">
+            <p-table [value]="rows">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th i18>Numéro</th>
+                        <th i18n>Infraction</th>
+                        <th i18n>Victimes</th>
+                        <th i18n>Coupables</th>
+                        <th i18n>Justice</th>
+                        <th i18n>Date modification</th>
+                        <th i18n>Status</th>
+                        <th i18n>Type d'envoie</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-folder>
+                    <tr>
+                        <td>
+                            <a routerLink="/home/legal_cases/folders/{{folder.id}}">{{folder.number}}</a>
+                        </td>
+                        <td>
+                            <a routerLink="/home/legal_cases/folders/{{folder.id}}">{{folder.offence}}</a>
+                        </td>
+                        <td>
+                            <ul class="list compact">
+                                <li  *ngFor="let v of folder.victims">
+                                    {{v.name}}
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list compact">
+                                <li  *ngFor="let g of folder.guilties">
+                                    {{g.name}}
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            {{folder.court.name}}
+                        </td>
+                        <td>
+                            {{folder.modifDate | date : 'longDate':'':'ar'}}
+                        </td>
+                        <td>
+                            {{folder.status}}
+                        </td>
+                        <td>
+                            <div style="white-space: pre-wrap">{{folder.sendingType}}</div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
 
-                <ngx-datatable-column name="Numéro" prop="number" [flexGrow]="1">
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <span i18n>Numéro</span>
-                    </ng-template>
-                    <ng-template #folderNumberTpl let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
-                        <a routerLink="/home/legal_cases/folders/{{row['id']}}" attr.data-itemid="{{value}}" style="margin-right: 15px">{{value}}</a>
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Offence" prop="offence" [flexGrow]="3">
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <span i18n>Insulte</span>
-                    </ng-template>
-                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                        <a routerLink="/home/legal_cases/folders/{{row['id']}}" attr.data-itemid="{{value}}" style="margin-right: 15px">{{value}}</a>
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Victimes" prop="victims" [flexGrow]="2">
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <span i18n>Victimes</span>
-                    </ng-template>
-                    <ng-template #folderVictimsTpl let-row="row" let-value="value" ngx-datatable-cell-template>
-                        <ul class="list compact">
-                            <li  *ngFor="let v of value">
-                                {{v.name}}
-                            </li>
-                        </ul>
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Coupables" prop="guilties" [flexGrow]="2">
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <span i18n>Coupables</span>
-                    </ng-template>
-                    <ng-template #folderGuiltiesTpl let-row="row" let-value="value" ngx-datatable-cell-template>
-                        <ul class="list compact">
-                            <li  *ngFor="let g of row.guilties">
-                                {{g.name}}
-                            </li>
-                        </ul>
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Court" prop="court" [flexGrow]="1">
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <span i18n>Justice</span>
-                    </ng-template>
-                    <ng-template let-value="value" ngx-datatable-cell-template>
-                        <strong>{{value.name}}</strong>
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Date modification" prop="lastModifDate" [flexGrow]="2">
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <span i18n>Date dernière modification</span>
-                    </ng-template>
-                    <ng-template let-value="value" ngx-datatable-cell-template>
-                        {{value | date : 'longDate':'':'ar'}}
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Status" prop="status" [flexGrow]="1">
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <span i18n>Status</span>
-                    </ng-template>
-                    <ng-template let-value="value" ngx-datatable-cell-template>
-                        <strong>{{value}}</strong>
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-footer>
-                    <ng-template
-                        ngx-datatable-footer-template
-                        let-rowCount="rowCount"
-                        let-pageSize="pageSize"
-                        let-selectedCount="selectedCount"
-                        let-curPage="curPage"
-                        let-offset="offset">
-                        <div style="padding: 5px 10px">
-                            <div>
-                                <strong i18n>Totale</strong>:&nbsp;{{rowCount}}
-                            </div>
-                        </div>
-                    </ng-template>
-                </ngx-datatable-footer>
-            </ngx-datatable>
 
         </div>
         <div class="col-lg-1"></div>
@@ -174,129 +130,10 @@
 
 <div id="container-floating">
 
-    <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="openModalCreateFolder()">
+    <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="openDialog()">
         <span class="floating-button-label" i18n>Créer un dossier</span>
         <p class="plus">+</p>
         <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
     </div>
 
 </div>
-
-
-<ng-template #folderStatusCellTpl let-row="row" let-value="value" let-i="index">
-    <s-badge [text]=value [badgeCls]="'s-badge-'+value.toLowerCase().replace(' ','')"></s-badge>
-</ng-template>
-
-<ng-template #folderVictimsTpl let-row="row" let-value="value">
-    <ul>
-        <li  *ngFor="let v of row.victims">
-            {{v.lastName}}&nbsp;{{v.firstName}}
-        </li>
-    </ul>
-</ng-template>
-
-<ng-template #folderGuiltiesTpl let-row="row" let-value="value">
-    <ul>
-        <li  *ngFor="let g of row.guilties">
-            {{g.lastName}}&nbsp;{{g.firstName}}
-        </li>
-    </ul>
-</ng-template>
-
-<clr-modal [(clrModalOpen)]="showCreateFolderModal" >
-    <h3 class="modal-title" i18n>Création d'un dossier</h3>
-    <div class="modal-body">
-        <form #createFolderForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(createFolderForm)" novalidate>
-            <section class="form-block">
-                <div class="form-group row">
-                    <div class="col-xs-9">
-                        <div class="select form-control">
-                            <select id="office" name="office" ngModel>
-                                <option *ngFor="let o of listOffices" [ngValue]="o">
-                                    {{o.name}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-3">
-                        <label for="office">Bureau</label>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-xs-9">
-                        <input type="text"
-                               id="number"
-                               name="number"
-                               i18n-placeholder="Entrez le numéro du dossier"
-                               ngModel
-                               class="form-control"
-                               #numberFolder="ngModel">
-                    </div>
-                    <div class="col-xs-3">
-                        <label for="number" i18n>Numéro Dossier</label>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-xs-9">
-                        <ngx-select [multiple]="true"
-                                    [items]="listVictims"
-                                    id="victims"
-                                    name="victims"
-                                    ngModel
-                                    i18n-placeholder="Entrez le nom des victimes">
-                        </ngx-select>
-                    </div>
-                    <div class="col-xs-3">
-                        <label for="victims" i18n>Victimes</label>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-xs-9">
-                        <ngx-select [multiple]="true"
-                                    [items]="listGuilties"
-                                    id="guilties"
-                                    name="guilties"
-                                    ngModel
-                                    i18n-placeholder="Entrez le nom des coupables">
-                        </ngx-select>
-                    </div>
-                    <div class="col-xs-3">
-                        <label for="guilty" i18n>Coupables</label>
-                    </div>
-
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-xs-9">
-                        <textarea id="offence" name="offence" ngModel rows="4" class="form-control"></textarea>
-                    </div>
-                    <div class="col-xs-3">
-                        <label for="offence">Nature du délit</label>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-xs-9">
-                        <div class="select form-control">
-                            <select id="court" name="court" ngModel>
-                                <option *ngFor="let c of listCourts" [ngValue]="c">
-                                    {{c.name}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-3">
-                        <label for="court">Court</label>
-                    </div>
-                </div>
-            </section>
-        </form>
-    </div>
-    <div class="modal-footer flexbox-align-left">
-        <button type="button" class="btn btn-primary" (click)="onSubmitCreateFolderForm(createFolderForm)" i18n>Créer</button>
-        <button type="button" class="btn btn-outline" (click)="closeCreateFolderModal()" i18n>Fermer</button>
-    </div>
-</clr-modal>

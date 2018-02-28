@@ -1,0 +1,8 @@
+.folder-dialog-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.folder-dialog-container > * {
+    width: 100%;
+}

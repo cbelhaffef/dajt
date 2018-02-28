@@ -1,19 +1,19 @@
-#DROP SCHEMA IF EXISTS dajt;
+DROP SCHEMA IF EXISTS dajt;
 
-#CREATE SCHEMA dajt;
-#USE dajt;
+CREATE SCHEMA dajt;
+USE dajt;
 
-SET FOREIGN_KEY_CHECKS = 0;
-SET @tables = NULL;
-SELECT GROUP_CONCAT(table_schema, '.', table_name) INTO @tables
-FROM information_schema.tables
-WHERE table_schema = 'heroku_6c441d064410a7d'; -- specify DB name here.
+#SET FOREIGN_KEY_CHECKS = 0;
+#SET @tables = NULL;
+#SELECT GROUP_CONCAT(table_schema, '.', table_name) INTO @tables
+#FROM information_schema.tables
+#WHERE table_schema = 'heroku_6c441d064410a7d'; -- specify DB name here.
 
-SET @tables = CONCAT('DROP TABLE ', @tables);
-PREPARE stmt FROM @tables;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-SET FOREIGN_KEY_CHECKS = 1;
+#SET @tables = CONCAT('DROP TABLE ', @tables);
+#PREPARE stmt FROM @tables;
+#EXECUTE stmt;
+#DEALLOCATE PREPARE stmt;
+#SET FOREIGN_KEY_CHECKS = 1;
 
 /* Table: user (Application Users) */
 CREATE TABLE user (
@@ -81,22 +81,23 @@ CREATE TABLE office (
 /* Table: folder */
 CREATE TABLE folder (
     folder_id       INT NOT NULL AUTO_INCREMENT,
-    number          VARCHAR(255),
-    create_date     DATETIME ,
-    last_modif_date DATETIME ,
+    number          VARCHAR(255) NOT NULL ,
+    offence         VARCHAR(255) NOT NULL,
+    office_id       INT NOT NULL,
+    court_id        INT NOT NULL,
+    sending_type    VARCHAR(255) NOT NULL,
+    assign_to       INT,
+    create_date     DATETIME DEFAULT CURRENT_TIMESTAMP,
+    modif_date      DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     close_date      DATETIME,
-    folder_status   VARCHAR(50),
-    offence         VARCHAR(255),
+    folder_status   VARCHAR(50) NOT NULL DEFAULT 'OPEN',
+    advocate_id     INT,
     judgement_date  DATETIME,
     judgement_status VARCHAR(255),
-    court_id        INT,
-    advocate_id     INT,
-    user_id         INT,
-    office_id       INT,
+    CONSTRAINT fk_folder__office   FOREIGN KEY (office_id)   REFERENCES office(office_id),
     CONSTRAINT fk_folder__court    FOREIGN KEY (court_id)    REFERENCES court(court_id),
     CONSTRAINT fk_folder__advocate FOREIGN KEY (advocate_id) REFERENCES advocate(advocate_id),
-    CONSTRAINT fk_folder__user     FOREIGN KEY (user_id)     REFERENCES user(user_id),
-    CONSTRAINT fk_folder__office   FOREIGN KEY (office_id)   REFERENCES office(office_id),
+    CONSTRAINT fk_folder__assign_to     FOREIGN KEY (assign_to)   REFERENCES user(user_id),
     PRIMARY KEY (folder_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

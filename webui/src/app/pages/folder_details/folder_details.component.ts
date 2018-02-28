@@ -13,8 +13,7 @@ import {Office} from '../../models/office.model';
 
 export class FolderDetailsComponent implements OnInit{
 
-    public folder: Folder = new Folder(null,"","","",
-        new Office(null,null ),"",null,null,[],[]);
+    public folder: Folder;
 
     constructor(private activateRoute: ActivatedRoute,
                 private folderService: FolderService){

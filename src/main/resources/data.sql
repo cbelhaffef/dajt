@@ -13,13 +13,12 @@ insert into office(office_id, name) VALUES
     (2, 'مكتب 2');
 
 /* Folders */
-insert into folder (folder_id, `number`, folder_status, create_date, offence,court_id,office_id) values
-    (1, '01/13'     , 'OPEN' , '2017-12-31', 'إهانـة رجال القوة العمومية',1,1),
-    (2, '01/13 bis' , 'OPEN' , '2017-07-30','اهانــــة',2,1),
-    (3, '02/13'     , 'OPEN' , '2017-07-30','اهانــــة',3,1),
-    (4, '03/13'     , 'OPEN' , '2017-05-12','اهانــــة',4,1),
-    (5, '04/13'     , 'OPEN' , '2017-06-20','إهانـة هيئة نظاميـة بالإبلاغ عن جريمة يعلم بعدم وقوعها',5,1),
-    (6, '05/13'     , 'OPEN' , '2017-05-19','إهانـة هيئة نظاميـة و السب المتبادل',6,1);
+insert into folder (folder_id, `number`, folder_status, create_date, offence,court_id,office_id, sending_type) values
+    (1, '13/01 bis' , 'OPEN' , '2017-07-30','اهانــــة',2,1,'م ع أ و n\ رقم الملف 2012/95'),
+    (2, '13/02'     , 'OPEN' , '2017-07-30','اهانــــة',3,1,'م ع أ و n\ رقم الملف 2012/95'),
+    (3, '13/03'     , 'OPEN' , '2017-05-12','اهانــــة',4,1,'م ع أ و n\ رقم الملف 2012/95'),
+    (4, '13/04'     , 'OPEN' , '2017-06-20','إهانـة هيئة نظاميـة بالإبلاغ عن جريمة يعلم بعدم وقوعها',5,1,'م ع أ و n\ رقم الملف 2012/95'),
+    (5, '13/05'     , 'OPEN' , '2017-05-19','إهانـة هيئة نظاميـة و السب المتبادل',6,1,'م ع أ و n\ رقم الملف 2012/95');
 
 insert into guilty(guilty_id, name) values
     (1, 'بسايـح يحـي'),
@@ -35,18 +34,26 @@ insert into guilty(guilty_id, name) values
     (11,'رهواج فاطمةالزهراء');
 
 insert into victim(victim_id, name) values
-    (1,'ق.خ و'),
+    (1,'ق خ و'),
     (2, 'م ط');
 
 insert into folder_guilty(folder_id,guilty_id) values
     (1, 1),
     (1, 2),
     (2, 3),
-    (4, 5);
+    (3, 4),
+    (3, 5),
+    (4, 6),
+    (5, 7);
 
 insert into folder_victim(folder_id,victim_id) values
     (1, 1),
-    (1, 2);
+    (1, 2),
+    (2, 1),
+    (3, 1),
+    (3, 2),
+    (4, 1),
+    (5, 1);
 
 
 
