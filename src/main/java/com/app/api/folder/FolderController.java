@@ -104,7 +104,7 @@ public class FolderController {
     @Transactional
     @ApiOperation(value = "Assign User", response = Folder.class)
     @RequestMapping(value="/folders/assign/{userId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Folder> assignUser(@PathVariable("userId") Long userId, @RequestBody List<Folder> folders)
+    public List<Folder> assignUser(@PathVariable("userId") Long userId, @RequestBody List<Long> foldersIds)
         throws ResourceNotFoundException, ResourceNotFoundException {
 
         User userDb = userService.getUserById(userId);
@@ -112,17 +112,17 @@ public class FolderController {
             throw new ResourceNotFoundException("l'opérateur n'a pas été trouvé. Contactez votre Administrateur.",null);
         }
 
-        if(folders == null || folders.isEmpty()){
-            throw new ResourceNotFoundException("Aucun dossier n'est séléctionné. Vérifier votre requête.",null);
+        if(foldersIds == null || foldersIds.isEmpty()){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
         }
 
-        List<Folder> foldersDb = folderRepo.findAll(folders.stream().map(f -> f.getId()).collect(Collectors.toList()));
+        List<Folder> foldersDb = folderRepo.findByIdIn(foldersIds);
 
-        for(Folder f : folders){
+        for(Folder f : foldersDb){
             f.setAssignee(userDb);
         }
-;
-        return folders;
+
+        return foldersDb;
     }
 
 

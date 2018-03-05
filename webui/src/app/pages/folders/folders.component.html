@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="col-xs-2">
-                            <button [clrLoading]="validateLoading"  type="submit" class="btn btn-primary" i18n>Recherche</button>
+                            <button type="submit" class="btn btn-primary" i18n>Recherche</button>
                         </div>
 
                         <div class="col-xs-2"></div>
@@ -127,7 +127,7 @@
                             {{folder.modifDate | date : 'longDate':'':'ar'}}
                         </td>
                         <td>
-                            {{folder.assignee}}
+                            {{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.firstName}}
                         </td>
                         <td>
                             {{folder.status}}
@@ -166,9 +166,11 @@
 
 <!-- button added folder -->
 <div id="container-floating">
-    <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="openDialog()">
+    <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="openCreateFolderDialog()">
         <span class="floating-button-label" i18n>Créer un dossier</span>
         <p class="plus">+</p>
         <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
     </div>
 </div>
+
+

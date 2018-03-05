@@ -12,6 +12,7 @@ import {FoldersCreateDialogComponent} from './folders.create.dialog.component';
 import {UserService} from '../../services/api/user.service';
 import {User} from '../../models/user.model';
 import {Folder} from '../../models/folder.model';
+import {SpinnerService} from '../../services/spinner.service';
 
 @Component({
     selector   : 's-folders-pg',
@@ -27,9 +28,6 @@ export class FoldersComponent implements OnInit {
     @ViewChild(NgForm) filterFoldersForm: NgForm;
     @ViewChild(NgForm) createFolderForm: NgForm;
 
-
-    isLoading = false;
-    validateLoading = false;
 
     public listFolders = [];
     public selectedFolders = [];
@@ -51,7 +49,9 @@ export class FoldersComponent implements OnInit {
     public listUsers = [];
     public selectedUser: User;
 
+
     constructor(private router: Router,
+                private spinnerService: SpinnerService,
                 private folderService: FolderService,
                 private victimService: VictimService,
                 private guiltyService: GuiltyService,
@@ -100,7 +100,7 @@ export class FoldersComponent implements OnInit {
             });
     }
 
-    openDialog(): void {
+    openCreateFolderDialog(): void {
         const dialogRef = this.dialog.open(FoldersCreateDialogComponent, {
             width: '60%',
             data: { name: this.name, animal: this.animal }
@@ -118,7 +118,7 @@ export class FoldersComponent implements OnInit {
 
     getFolders(f?: NgForm) {
         const me = this;
-        me.isLoading = true;
+        me.spinnerService.showSpinner();
 
         let folderNumber, office, status, victim, guilty;
         if (f && f.value) {
@@ -131,20 +131,14 @@ export class FoldersComponent implements OnInit {
         me.folderService.getFolders(folderNumber, office, status, victim, guilty)
             .subscribe(function(folderData) {
                 me.listFolders = folderData;
-                me.isLoading = false;
+                me.spinnerService.hideSpinner();
             });
-    }
-
-    addFolder(f: NgForm) {
-        const me = this;
-        me.folderService.addFolder(f.value).subscribe(function(folder) {
-          alert(folder);
-      });
     }
 
     assignUser(folders: Folder[], user: User): void {
         const me =  this;
-        this.folderService.assignUser(folders, user).subscribe(jsonResp => {
+        me.spinnerService.showSpinner();
+        this.folderService.assignUser(folders.map(f => f.id ), user).subscribe(jsonResp => {
             me.getFolders(me.filterFoldersForm);
         });
     }

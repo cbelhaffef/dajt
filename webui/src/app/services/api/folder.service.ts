@@ -76,7 +76,7 @@ export class FolderService {
         return folderSubject;
     }
 
-    assignUser(folders: Folder[], user: User): Observable<any> {
+    assignUser(folders: number[], user: User): Observable<any> {
         const me = this;
         const folderSubject = new  Subject<any>();
         this.apiRequest.post('api/folders/assign/' + user.userId, folders)

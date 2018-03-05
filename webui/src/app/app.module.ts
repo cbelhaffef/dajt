@@ -50,6 +50,8 @@ import localeAr from '@angular/common/locales/ar';
 import {DropdownModule, InputTextModule, SplitButtonModule} from 'primeng/primeng';
 import {UserService} from 'app/services/api/user.service';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
+import {SpinnerService} from './services/spinner.service';
+import {SpinnerComponent} from './components/spinner/spinner.component';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -105,7 +107,7 @@ registerLocaleData(localeAr, 'ar');
     FolderDetailsComponent,
 
     FoldersCreateDialogComponent,
-
+    SpinnerComponent,
     // Directives
     TrackScrollDirective
   ],
@@ -122,6 +124,7 @@ registerLocaleData(localeAr, 'ar');
     GuiltyService,
     CourtService,
     OfficeService,
+    SpinnerService,
     AppConfig
   ],
 
