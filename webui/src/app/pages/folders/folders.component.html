@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-xs-3">
                             <div class="select form-control">
-                                <select id="officeF" name="office" ngModel>
+                                <select id="office" name="office" ngModel>
                                     <option value=""></option>
                                     <option *ngFor="let o of listOffices" value="{{o.id}}">{{o.name}}</option>
                                 </select>
@@ -34,7 +34,7 @@
                             <div class="select form-control">
                                 <select id="status" name="status" ngModel>
                                     <option value=""></option>
-                                    <option *ngFor="let st of folderStatus" value="{{st}}">{{st}}</option>
+                                    <option *ngFor="let st of listFolderStatus" value="{{st}}">{{st}}</option>
                                 </select>
                             </div>
                         </div>
@@ -71,17 +71,20 @@
                 </section>
             </form>
 
-            <p-dropdown [options]="operators"
-                        [(ngModel)]="selectedOperator"
-                        [style]="{'width':'150px'}"
-                        filter="true"
-                        i18n-placeholder="Assigner à">
-            </p-dropdown>
+            <button type="button" pButton (click)="usersOPanel.toggle($event)" class="btn btn-sm btn-icon">
+                <clr-icon shape="add-text"></clr-icon>
+                <span i18n>Assigner</span>
+            </button>
 
-            <p-table [value]="rows">
+            <br/>
+
+            <p-table [value]="listFolders" [(selection)]="selectedFolders">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th i18>Numéro</th>
+                        <th style="width: 2.25em">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th i18n>Numéro</th>
                         <th i18n>Infraction</th>
                         <th i18n>Victimes</th>
                         <th i18n>Coupables</th>
@@ -93,7 +96,10 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-folder>
-                    <tr>
+                    <tr [pSelectableRow]="rowData">
+                        <td>
+                            <p-tableCheckbox [value]="folder"></p-tableCheckbox>
+                        </td>
                         <td>
                             <a routerLink="/home/legal_cases/folders/{{folder.id}}">{{folder.number}}</a>
                         </td>
@@ -133,18 +139,36 @@
                 </ng-template>
             </p-table>
 
-
         </div>
         <div class="col-lg-1"></div>
     </div>
 </div>
 
-<div id="container-floating">
+<!-- UsersOverlaPanel-->
+<p-overlayPanel #usersOPanel>
+    <p-dropdown [options]="listUsers"
+                [(ngModel)]="selectedUser"
+                [style]="{'width':'200px'}"
+                filter="true"
+                i18n-placeholder="Assigner à"
+                dir="rtl">
+        <ng-template let-item pTemplate="selectedUser">
+            <span style="vertical-align:middle">{{item.label}}</span>
+        </ng-template>
+        <ng-template let-user pTemplate="item">
+            <span>{{user.label}}</span>
+        </ng-template>
+    </p-dropdown>
+    <button type="button" class="btn btn-icon" (click)="assignUser(selectedFolders,selectedUser)">
+        <clr-icon shape="check"></clr-icon>
+    </button>
+</p-overlayPanel>
 
+<!-- button added folder -->
+<div id="container-floating">
     <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="openDialog()">
         <span class="floating-button-label" i18n>Créer un dossier</span>
         <p class="plus">+</p>
         <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
     </div>
-
 </div>

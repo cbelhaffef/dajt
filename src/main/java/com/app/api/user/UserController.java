@@ -1,27 +1,26 @@
 package com.app.api.user;
 
 import com.app.model.folder.FolderListResponse;
-import com.app.model.victim.Victim;
-import com.app.model.victim.VictimListResponse;
-import io.swagger.annotations.*;
+import com.app.model.response.OperationResponse;
+import com.app.model.user.User;
+import com.app.model.user.UserListResponse;
+import com.app.model.user.UserResponse;
+import com.google.common.base.Strings;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.http.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.servlet.http.HttpServletRequest;
-import com.google.common.base.Strings;
-import org.apache.commons.io.IOUtils;
-import org.json.*;
 
-import com.app.model.response.*;
-import com.app.model.user.*;
-import static com.app.model.response.OperationResponse.*;
+import static com.app.model.response.OperationResponse.ResponseStatusEnum;
 
 @RestController
-@Api(tags = {"Authentication"})
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(tags = {"User"})
 public class UserController {
 
 	@Autowired
@@ -81,9 +80,9 @@ public class UserController {
 
     @ApiOperation(value = "List of users", response = FolderListResponse.class)
     @RequestMapping(value = "/users", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
-    public UserListResponse getVictims(Pageable pageable){
+    public UserListResponse getUsers(Pageable pageable){
         UserListResponse resp = new UserListResponse();
-        Page<User> pg = userService.find;
+        Page<User> pg = userService.getUsers(pageable);
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         return resp;

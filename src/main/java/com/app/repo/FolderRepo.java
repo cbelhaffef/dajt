@@ -14,6 +14,5 @@ public interface FolderRepo extends JpaRepository<Folder, Long>, FolderRepoCusto
 
     public List<Folder> findAll();
     public Page<Folder> findAll(Pageable p);
-    public Optional<Folder> findById(Long id);
     public Optional<Folder> findByNumber(String number);
 }

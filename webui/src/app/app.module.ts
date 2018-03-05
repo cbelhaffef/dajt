@@ -47,6 +47,9 @@ import localeFr from '@angular/common/locales/fr';
 import {OfficeService} from './services/api/office.service';
 import {FoldersCreateDialogComponent} from './pages/folders/folders.create.dialog.component';
 import localeAr from '@angular/common/locales/ar';
+import {DropdownModule, InputTextModule, SplitButtonModule} from 'primeng/primeng';
+import {UserService} from 'app/services/api/user.service';
+import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -72,6 +75,10 @@ registerLocaleData(localeAr, 'ar');
 
     // Primeng Module
     TableModule,
+    DropdownModule,
+    InputTextModule,
+    OverlayPanelModule,
+    SplitButtonModule,
 
     // Local App Modules
     AppRoutingModule
@@ -106,6 +113,7 @@ registerLocaleData(localeAr, 'ar');
   providers: [
     AuthGuard,
     UserInfoService,
+    UserService,
     TranslateService,
     ApiRequestService,
     LoginService,

@@ -9,6 +9,9 @@ import {CourtService} from '../../services/api/court.service';
 import {OfficeService} from '../../services/api/office.service';
 import {MatDialog} from '@angular/material';
 import {FoldersCreateDialogComponent} from './folders.create.dialog.component';
+import {UserService} from '../../services/api/user.service';
+import {User} from '../../models/user.model';
+import {Folder} from '../../models/folder.model';
 
 @Component({
     selector   : 's-folders-pg',
@@ -25,20 +28,14 @@ export class FoldersComponent implements OnInit {
     @ViewChild(NgForm) createFolderForm: NgForm;
 
 
-
-    rows: any[];
     isLoading = false;
-    folderStatus: any[];
-
     validateLoading = false;
-    loadingIndicator= true;
-    reorderable = false;
 
-    public showCreateFolderModal  = false;
+    public listFolders = [];
+    public selectedFolders = [];
 
-    public court: Court;
-    public number: string;
-    public offence: string;
+    public listFolderStatus = [];
+
     public listVictims = [];
     public selectedVictims = [];
 
@@ -47,10 +44,12 @@ export class FoldersComponent implements OnInit {
 
     public listCourts = [];
     public listOffices = [];
-    public operators = [];
 
     animal: string;
     name: string;
+
+    public listUsers = [];
+    public selectedUser: User;
 
     constructor(private router: Router,
                 private folderService: FolderService,
@@ -58,15 +57,15 @@ export class FoldersComponent implements OnInit {
                 private guiltyService: GuiltyService,
                 private courtService:  CourtService,
                 private officeService: OfficeService,
-                private userService : UserService,
+                private userService: UserService,
                 public dialog: MatDialog) { }
 
     ngOnInit(): void {
-        let me = this;
+        const me = this;
         me.getFolders();
         me.folderService.getFolderStatus()
             .subscribe(function(folderStatus) {
-                me.folderStatus = folderStatus.items;
+                me.listFolderStatus = folderStatus.items;
         });
 
         me.victimService.getVictims()
@@ -93,14 +92,16 @@ export class FoldersComponent implements OnInit {
                 me.listOffices = offices;
             });
 
-        me.UserService.getUser()
-            .subscribe(function(users){
-               me.operators = users;
+        me.userService.getUsers()
+            .subscribe(function(users) {
+               for (const u of users) {
+                   me.listUsers.push({label: u.firstName + ' ' + u.lastName , value : u});
+               }
             });
     }
 
     openDialog(): void {
-        let dialogRef = this.dialog.open(FoldersCreateDialogComponent, {
+        const dialogRef = this.dialog.open(FoldersCreateDialogComponent, {
             width: '60%',
             data: { name: this.name, animal: this.animal }
         });
@@ -115,16 +116,12 @@ export class FoldersComponent implements OnInit {
         this.getFolders(f);
     }
 
-    onSubmitCreateFolderForm(f: NgForm) {
-        this.addFolder(f);
-    }
-
-    getFolders(f?:NgForm) {
-        let me = this;
+    getFolders(f?: NgForm) {
+        const me = this;
         me.isLoading = true;
 
         let folderNumber, office, status, victim, guilty;
-        if(f && f.value){
+        if (f && f.value) {
             folderNumber = f.value.folderNumber;
             office = f.value.office;
             status = f.value.status;
@@ -133,23 +130,22 @@ export class FoldersComponent implements OnInit {
         }
         me.folderService.getFolders(folderNumber, office, status, victim, guilty)
             .subscribe(function(folderData) {
-                me.rows = folderData;
+                me.listFolders = folderData;
                 me.isLoading = false;
             });
     }
 
     addFolder(f: NgForm) {
-        let me = this;
+        const me = this;
         me.folderService.addFolder(f.value).subscribe(function(folder) {
           alert(folder);
       });
     }
 
-    openModalCreateFolder(): void {
-        this.showCreateFolderModal = true;
-    }
-
-    closeCreateFolderModal(): void {
-        this.showCreateFolderModal = false;
+    assignUser(folders: Folder[], user: User): void {
+        const me =  this;
+        this.folderService.assignUser(folders, user).subscribe(jsonResp => {
+            me.getFolders(me.filterFoldersForm);
+        });
     }
 }

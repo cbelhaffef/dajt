@@ -1,11 +1,13 @@
 package com.app.api.folder;
 
+import com.app.api.user.UserService;
 import com.app.enums.FolderStatus;
 import com.app.model.folder.Folder;
 import com.app.model.folder.FolderListResponse;
 import com.app.model.folder.FolderStatusResponse;
 import com.app.model.guilty.Guilty;
 import com.app.model.office.Office;
+import com.app.model.user.User;
 import com.app.model.victim.Victim;
 import com.app.repo.FolderRepo;
 import com.google.common.collect.Sets;
@@ -14,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -22,10 +25,13 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.BadAttributeValueExpException;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -34,6 +40,8 @@ import java.util.Optional;
 public class FolderController {
 
     @Autowired private FolderRepo folderRepo;
+
+    @Autowired private UserService userService;
 
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
     @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
@@ -89,7 +97,33 @@ public class FolderController {
     @ApiOperation(value = "Order Details", response = Folder.class)
     @RequestMapping(value = "/folders/{id}", method = RequestMethod.GET)
     public Folder getFolderDetail( @PathVariable("id") Long id) {
-        Optional<Folder> folder = folderRepo.findById(id);
+        Optional<Folder> folder = Optional.of(folderRepo.findOne(id));
         return folder.isPresent() ? folder.get() : null;
     }
+
+    @Transactional
+    @ApiOperation(value = "Assign User", response = Folder.class)
+    @RequestMapping(value="/folders/assign/{userId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Folder> assignUser(@PathVariable("userId") Long userId, @RequestBody List<Folder> folders)
+        throws ResourceNotFoundException, ResourceNotFoundException {
+
+        User userDb = userService.getUserById(userId);
+        if(userDb == null){
+            throw new ResourceNotFoundException("l'opérateur n'a pas été trouvé. Contactez votre Administrateur.",null);
+        }
+
+        if(folders == null || folders.isEmpty()){
+            throw new ResourceNotFoundException("Aucun dossier n'est séléctionné. Vérifier votre requête.",null);
+        }
+
+        List<Folder> foldersDb = folderRepo.findAll(folders.stream().map(f -> f.getId()).collect(Collectors.toList()));
+
+        for(Folder f : folders){
+            f.setAssignee(userDb);
+        }
+;
+        return folders;
+    }
+
+
 }

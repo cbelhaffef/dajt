@@ -1,30 +1,30 @@
-<h1 mat-dialog-title i18n>Création d'un dossier</h1>
+<!--<h1 mat-dialog-title i18n>Création d'un dossier</h1>-->
 
-<div mat-dialog-content>
+<!--<div mat-dialog-content>-->
 
-    <form #createFolderForm="ngForm"  novalidate class="folder-dialog-container">
+    <!--<form #createFolderForm="ngForm"  novalidate class="folder-dialog-container">-->
 
-        <mat-form-field>
-            <mat-select [formControl]="officeControl" required>
-                <mat-option>--</mat-option>
-                <mat-option *ngFor="let off of listOffices" [value]="off">
-                    {{off.name}}
-                </mat-option>
-            </mat-select>
-            <mat-placeholder i18n >Bureau</mat-placeholder>
-            <mat-error *ngIf="officeControl.hasError('required')">Vieullez choisir un bureau</mat-error>
-            <mat-hint>{{officeControl.value?.name}}</mat-hint>
-        </mat-form-field>
+        <!--<mat-form-field>-->
+            <!--<mat-select [formControl]="officeControl" required>-->
+                <!--<mat-option>&#45;&#45;</mat-option>-->
+                <!--<mat-option *ngFor="let off of listOffices" [value]="off">-->
+                    <!--{{off.name}}-->
+                <!--</mat-option>-->
+            <!--</mat-select>-->
+            <!--<mat-placeholder i18n >Bureau</mat-placeholder>-->
+            <!--<mat-error *ngIf="officeControl.hasError('required')">Vieullez choisir un bureau</mat-error>-->
+            <!--<mat-hint>{{officeControl.value?.name}}</mat-hint>-->
+        <!--</mat-form-field>-->
 
-        <mat-form-field>
-            <input name="folderNumber" matInput  required ngModel>
-            <mat-placeholder i18n >Numéro Dossier</mat-placeholder>
-        </mat-form-field>
+        <!--<mat-form-field>-->
+            <!--<input name="folderNumber" matInput  required ngModel>-->
+            <!--<mat-placeholder i18n >Numéro Dossier</mat-placeholder>-->
+        <!--</mat-form-field>-->
 
-    </form>
-</div>
+    <!--</form>-->
+<!--</div>-->
 
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Fermer</button>
-    <button mat-button cdkFocusInitial>Créer</button>
-</div>
+<!--<div mat-dialog-actions>-->
+    <!--<button mat-button (click)="onNoClick()">Fermer</button>-->
+    <!--<button mat-button cdkFocusInitial>Créer</button>-->
+<!--</div>-->

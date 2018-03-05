@@ -58,3 +58,24 @@ h1 {
     font-size: 24px;
     line-height: 1.25;
 }
+
+.folder-body-content{
+    padding: 0 20px 20px;
+}
+
+.aui-group:first-child {
+    margin-top: 0;
+}
+
+.aui-group {
+    display: table;
+    box-sizing: border-box;
+    border-spacing: 0;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.folder-body{
+
+}
+
