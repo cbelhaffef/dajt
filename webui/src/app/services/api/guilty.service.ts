@@ -13,16 +13,13 @@ export class GuiltyService {
     /**
      * Gets List of guilties
      */
-    getGuilties(firstName?: string, lastName?: string, page?: number, size?: number): Observable<any> {
+    getGuilties(name?: string, page?: number, size?: number): Observable<any> {
         // Create Request URL params
         let params: HttpParams = new HttpParams();
-        params = params.append("page", typeof page === "number"? page.toString():"0");
-        params = params.append("size", typeof size === "number"? size.toString():"1000");
-        if (firstName && typeof firstName === "string"){
-            params = params.append("firstName", firstName);
-        }
-        if (lastName && typeof lastName === "string"){
-            params = params.append("lastName", lastName);
+        params = params.append('page', typeof page === 'number'? page.toString():'0');
+        params = params.append('size', typeof size === 'number'? size.toString():'1000');
+        if (name && typeof name === 'string') {
+            params = params.append('name', name);
         }
         let guiltyListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/guilties', params)

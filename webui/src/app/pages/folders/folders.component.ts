@@ -1,10 +1,9 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {FolderService} from '../../services/api/folder.service';
 import {VictimService} from '../../services/api/victim.service';
 import {NgForm} from '@angular/forms';
 import {GuiltyService} from '../../services/api/guilty.service';
-import {Court} from '../../models/court.model';
 import {CourtService} from '../../services/api/court.service';
 import {OfficeService} from '../../services/api/office.service';
 import {MatDialog} from '@angular/material';
@@ -13,6 +12,7 @@ import {UserService} from '../../services/api/user.service';
 import {User} from '../../models/user.model';
 import {Folder} from '../../models/folder.model';
 import {SpinnerService} from '../../services/spinner.service';
+import {OverlayPanel} from 'primeng/primeng';
 
 @Component({
     selector   : 's-folders-pg',
@@ -21,24 +21,14 @@ import {SpinnerService} from '../../services/spinner.service';
 })
 
 export class FoldersComponent implements OnInit {
-    @ViewChild('folderStatusCellTpl') folderStatusCellTpl: TemplateRef<any>;
-    @ViewChild('folderNumberTpl') folderNumberTpl: TemplateRef<any>;
-    @ViewChild('folderVictimsTpl') folderVictimsTpl: TemplateRef<any>;
-    @ViewChild('folderGuiltiesTpl') folderGuiltiesTpl: TemplateRef<any>;
     @ViewChild(NgForm) filterFoldersForm: NgForm;
+    @ViewChild(OverlayPanel) usersOPanel: OverlayPanel;
     @ViewChild(NgForm) createFolderForm: NgForm;
-
 
     public listFolders = [];
     public selectedFolders = [];
 
     public listFolderStatus = [];
-
-    public listVictims = [];
-    public selectedVictims = [];
-
-    public listGuilties = [];
-    public selectedGuilties = [];
 
     public listCourts = [];
     public listOffices = [];
@@ -68,20 +58,6 @@ export class FoldersComponent implements OnInit {
                 me.listFolderStatus = folderStatus.items;
         });
 
-        me.victimService.getVictims()
-            .subscribe(function(victims) {
-                victims.forEach(function(v) {
-                    me.listVictims.push({id: v.id, text: v.name});
-                });
-        });
-
-        me.guiltyService.getGuilties()
-            .subscribe(function(guilties) {
-                guilties.forEach(function(g) {
-                    me.listGuilties.push({id: g.id, text: g.name});
-                });
-            });
-
         me.courtService.getCourts()
             .subscribe(function(courts) {
                 me.listCourts = courts;
@@ -102,7 +78,8 @@ export class FoldersComponent implements OnInit {
 
     openCreateFolderDialog(): void {
         const dialogRef = this.dialog.open(FoldersCreateDialogComponent, {
-            width: '60%',
+            width: '40%',
+            direction: 'rtl',
             data: { name: this.name, animal: this.animal }
         });
 
@@ -139,7 +116,13 @@ export class FoldersComponent implements OnInit {
         const me =  this;
         me.spinnerService.showSpinner();
         this.folderService.assignUser(folders.map(f => f.id ), user).subscribe(jsonResp => {
+            me.usersOPanel.hide();
+            me.selectedUser = null;
             me.getFolders(me.filterFoldersForm);
         });
+    }
+
+    onAfterHideUsersOPanel(): void {
+        this.selectedUser = null;
     }
 }

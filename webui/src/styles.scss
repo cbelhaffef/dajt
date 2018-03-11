@@ -14,71 +14,6 @@ body {
     //min-height: 100vh; /* this helps with the sticky footer */
     direction: rtl; /* Right to Left - arabic*/
 }
-
-
-//Import classes from swimlane datatable
-ngx-datatable {
-  font-family: Metropolis,Avenir Next,Helvetica Neue,Arial,sans-serif;
-  font-size:13px;
-  border:1px solid #ccc;
-  border-radius: 2px;
-  padding:0;
-  background-color: #fff;
-  .datatable-header, .datatable-footer {
-    font-size:11px;
-    line-height:18px;
-    font-weight:bold;
-    background-color:#fafafa;
-  }
-  .datatable-header{
-    //border-bottom: 2px solid #ccc;
-    box-shadow: 0 2px 4px 0px #ccc;
-    .datatable-header-cell{
-      line-height:22px;
-      padding-left:10px;
-      height:22px;
-    }
-  }
-  .datatable-header .datatable-header-cell:not(:first-child) {
-      border-left:1px solid #ccc;
-  }
-
-  .datatable-footer{
-    border-top: 1px solid #ccc;
-    .page-count{
-      margin: 10px;
-    }
-    .pages a{
-      padding:8px;
-      color:inherit;
-    }
-    .pages.active a{
-      padding:8px;
-      color:#007cbb;
-      background-color:#ddd;
-      text-align: center;
-    }
-  }
-
-  .datatable-header-inner{
-    padding:12px;
-  }
-  .datatable-body-cell{
-    padding:8px 0 10px 20px;
-    border-top: 1px solid #ddd;
-  }
-  .pager i {
-    font-size:18px;
-    vertical-align: middle;
-  }
-
-}
-
-// NGX Chart Classes
-ngx-charts-advanced-pie-chart .item-value{
-  margin-top: 0 !important;
-}
-
 header.legend-title{
   background-color: transparent;
   color:#333;
@@ -120,4 +55,15 @@ header.legend-title{
         background-color: $s-bg-white;
         border:1px solid #ccc;
     }
+}
+
+input[type=text] {
+    border: 1px solid #d6d6d6 !important;
+}
+
+.ui-autocomplete-dd .ui-autocomplete-dropdown.ui-corner-all {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
 }

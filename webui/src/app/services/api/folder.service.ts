@@ -56,10 +56,10 @@ export class FolderService {
         return this.apiRequest.get('api/folders/status');
     }
 
-    getFolderDetails(number: string): Observable<any> {
+    getFolderDetails(id: string): Observable<any> {
         const me = this;
         const folderSubject = new Subject<any>();
-        me.apiRequest.get('api/folders/' + number)
+        me.apiRequest.get('api/folders/' + id)
             .subscribe(jsonResp => {
                 folderSubject.next(jsonResp);
             });

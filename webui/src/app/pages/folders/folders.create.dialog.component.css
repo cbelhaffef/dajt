@@ -6,3 +6,10 @@
 .folder-dialog-container > * {
     width: 100%;
 }
+
+.wid100 {
+    width: 100%;
+}
+.ui-float-label {
+    direction: rtl;
+}

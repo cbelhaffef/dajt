@@ -97,7 +97,7 @@ public class FolderController {
     @ApiOperation(value = "Order Details", response = Folder.class)
     @RequestMapping(value = "/folders/{id}", method = RequestMethod.GET)
     public Folder getFolderDetail( @PathVariable("id") Long id) {
-        Optional<Folder> folder = Optional.of(folderRepo.findOne(id));
+        Optional<Folder> folder = folderRepo.findById(id);
         return folder.isPresent() ? folder.get() : null;
     }
 

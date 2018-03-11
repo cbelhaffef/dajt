@@ -97,7 +97,7 @@
     height: 70px;
     bottom: 30px;
     right: 30px;
-    z-index: 50px;
+    z-index: 50;
 }
 
 #container-floating:hover{
@@ -246,73 +246,10 @@
     animation-delay: 0.2s;
 }
 
-.letter{
-    font-size: 23px;
-    font-family: 'Roboto';
-    color: white;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0;
-    top: 0;
-    bottom: 0;
-    text-align: center;
-    line-height: 40px;
-}
-
-.reminder{
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    line-height: 40px;
-}
-
-.profile{
-    border-radius: 50%;
-    width: 40px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    right: 20px;
-}
-
-.flexbox-align-left{
-    justify-content: flex-start;
-}
-
-.ngx-select_multiple[_ngcontent-c5] .ngx-select__search[_ngcontent-c5] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    -o-appearance: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    background: none;
-    height: 1rem;
-    color: #000;
-    display: inline-block;
-    min-width: 2.5rem;
-    border-bottom: 1px solid #9a9a9a;
-    padding: 0 .25rem;
-}
-
 ul{
     padding-left:0;
 }
-
-.ngx-datatable .datatable-body-row:hover{
-    background-color: #7E7E7E;
-}
-
-.adjust-right {
-    margin-right: 15px;
+.wid100.ui-autocomplete-input {
+    width: 100% !important;
 }
 

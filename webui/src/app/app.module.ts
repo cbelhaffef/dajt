@@ -4,11 +4,8 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // Third Party Modules
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ClarityModule} from 'clarity-angular';
-import {NgxSelectModule} from 'ngx-select-ex';
-import {MatDialogModule} from '@angular/material';
+import {MatDialogModule, MatProgressSpinnerModule} from '@angular/material';
 import {TableModule} from 'primeng/table';
 // Local App Modules
 import {AppRoutingModule} from './app-routing.module';
@@ -43,15 +40,15 @@ import {GuiltyService} from './services/api/guilty.service';
 import {CourtService} from './services/api/court.service';
 
 import {registerLocaleData} from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
 import {OfficeService} from './services/api/office.service';
 import {FoldersCreateDialogComponent} from './pages/folders/folders.create.dialog.component';
 import localeAr from '@angular/common/locales/ar';
-import {DropdownModule, InputTextModule, SplitButtonModule} from 'primeng/primeng';
+import {AutoCompleteModule, DropdownModule, InputTextModule, SplitButtonModule} from 'primeng/primeng';
 import {UserService} from 'app/services/api/user.service';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SpinnerService} from './services/spinner.service';
 import {SpinnerComponent} from './components/spinner/spinner.component';
+import {PanelModule} from 'primeng/panel';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -67,13 +64,11 @@ registerLocaleData(localeAr, 'ar');
 
 
     // Thirdparty Module
-    NgxDatatableModule,
-    NgxChartsModule,
     ClarityModule,
-    NgxSelectModule,
 
     // Angular Material
     MatDialogModule,
+    MatProgressSpinnerModule,
 
     // Primeng Module
     TableModule,
@@ -81,6 +76,9 @@ registerLocaleData(localeAr, 'ar');
     InputTextModule,
     OverlayPanelModule,
     SplitButtonModule,
+    AutoCompleteModule,
+    PanelModule,
+
 
     // Local App Modules
     AppRoutingModule

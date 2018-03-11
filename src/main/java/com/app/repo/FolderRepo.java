@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface FolderRepo extends JpaRepository<Folder, Long>, FolderRepoCustom {
 
     List<Folder> findAll();
+    Optional<Folder> findById(Long d);
     List<Folder> findByIdIn(Collection<Long> ids);
     Page<Folder> findAll(Pageable p);
     Optional<Folder> findByNumber(String number);

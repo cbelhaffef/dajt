@@ -12,7 +12,7 @@ export class CourtService {
     /**
      * Gets List of courts
      */
-    getCourts(): Observable<any> {
+    getCourts(name?: string): Observable<any> {
         // Create Request URL params
         let courtListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/courts')

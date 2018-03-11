@@ -1,30 +1,151 @@
-<!--<h1 mat-dialog-title i18n>Création d'un dossier</h1>-->
+<h1 mat-dialog-title style="border-bottom : 1px solid #ccc!important;" i18n>Création d'un dossier </h1>
+<div mat-dialog-content>
+    <form #createFolderForm="ngForm" (ngSubmit)="createFolder(createFolderForm)" id="create-folder-form">
 
-<!--<div mat-dialog-content>-->
+        <!-- office-->
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <label for="office" i18n>Bureau</label>
+                <p-autoComplete [suggestions]="filteredOffices"
+                                (completeMethod)="filterOffices($event)"
+                                [minLength]="1"
+                                i18n-placeholder="Bureau"
+                                field="name"
+                                id="office"
+                                name="office"
+                                ngModel
+                                required
+                                [(ngModel)]="selectedOffice"
+                                [dropdown]="true">
+                </p-autoComplete>
+            </div>
 
-    <!--<form #createFolderForm="ngForm"  novalidate class="folder-dialog-container">-->
+        </div>
 
-        <!--<mat-form-field>-->
-            <!--<mat-select [formControl]="officeControl" required>-->
-                <!--<mat-option>&#45;&#45;</mat-option>-->
-                <!--<mat-option *ngFor="let off of listOffices" [value]="off">-->
-                    <!--{{off.name}}-->
-                <!--</mat-option>-->
-            <!--</mat-select>-->
-            <!--<mat-placeholder i18n >Bureau</mat-placeholder>-->
-            <!--<mat-error *ngIf="officeControl.hasError('required')">Vieullez choisir un bureau</mat-error>-->
-            <!--<mat-hint>{{officeControl.value?.name}}</mat-hint>-->
-        <!--</mat-form-field>-->
+        <!-- folder number-->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="number" i18n>Numéro dossier</label>
+            </div>
+            <div class="ui-g-10">
+                <input pInputText id="number" name="number" class="wid100" ngModel/>
+            </div>
+        </div>
 
-        <!--<mat-form-field>-->
-            <!--<input name="folderNumber" matInput  required ngModel>-->
-            <!--<mat-placeholder i18n >Numéro Dossier</mat-placeholder>-->
-        <!--</mat-form-field>-->
+        <!-- offence-->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="offence" i18n>Infraction</label>
+            </div>
+            <div class="ui-g-10">
+                <textarea pInputTextarea id="offence" name="offence" ngModel class="wid100"></textarea>
+            </div>
+        </div>
 
-    <!--</form>-->
-<!--</div>-->
+        <!-- victims-->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="victims" i18n>Victimes</label>
+            </div>
+            <div class="ui-g-10">
+                <p-autoComplete [suggestions]="filteredVictims"
+                                (completeMethod)="filterVictims($event)"
+                                styleClass="wid100"
+                                [minLength]="1"
+                                i18n-placeholder="Liste des victimes"
+                                field="name"
+                                id="victims"
+                                name="victims"
+                                ngModel
+                                [(ngModel)]="selectedVictims"
+                                (onKeyUp)="addItem($event,queryVictim,selectedVictims,filteredVictims)"
+                                [multiple]="true">
+                </p-autoComplete>
+            </div>
+        </div>
 
-<!--<div mat-dialog-actions>-->
-    <!--<button mat-button (click)="onNoClick()">Fermer</button>-->
-    <!--<button mat-button cdkFocusInitial>Créer</button>-->
-<!--</div>-->
+        <!-- guilties-->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="guilties" i18n>Coupables</label>
+            </div>
+            <div class="ui-g-10">
+                <p-autoComplete [suggestions]="filteredGuilties"
+                                (completeMethod)="filterGuilties($event)"
+                                styleClass="wid100"
+                                [minLength]="1"
+                                i18n-placeholder="Liste des coupables"
+                                field="name"
+                                id="guilties"
+                                name="guilties"
+                                ngModel
+                                [(ngModel)]="selectedGuilties"
+                                (onKeyUp)="addItem($event,queryVictim,selectedGuilties,filteredGuilties)"
+                                [multiple]="true">
+                </p-autoComplete>
+            </div>
+        </div>
+
+        <!-- justice-->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="court" i18n>Justice</label>
+            </div>
+            <div class="ui-g-10">
+                <p-autoComplete [suggestions]="filteredCourts"
+                                (completeMethod)="filterCourts($event)"
+                                styleClass="wid100"
+                                [minLength]="1"
+                                i18n-placeholder="Palais de justice"
+                                field="name"
+                                id="court"
+                                name="court"
+                                ngModel
+                                [(ngModel)]="selectedCourt"
+                                [dropdown]="true">
+                </p-autoComplete>
+            </div>
+        </div>
+
+        <!-- assigner à -->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="assignee" i18n>Assigner à</label>
+            </div>
+            <div class="ui-g-10">
+                <p-autoComplete [suggestions]="filteredUsers"
+                                (completeMethod)="filterUsers($event)"
+                                styleClass="wid100"
+                                [minLength]="1"
+                                i18n-placeholder="Choix opérateur"
+                                field="name"
+                                id="assignee"
+                                name="assignee"
+                                ngModel
+                                [(ngModel)]="selectedUser"
+                                [dropdown]="true">
+                </p-autoComplete>
+            </div>
+        </div>
+        <!-- sending type -->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="sendingType" i18n>Type d'envoie</label>
+            </div>
+            <div class="ui-g-10">
+                <textarea pInputTextarea id="sendingType" name="sendingType" ngModel class="wid100"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div mat-dialog-actions style="border-top : 1px solid #ccc!important;">
+    <button type="button" pButton class="btn btn-sm btn-icon" (click)="createFolder(createFolderForm)">
+        <clr-icon shape="check"></clr-icon>
+        <span i18n>Créer</span>
+    </button>
+    <button type="button" pButton  class="btn btn-sm btn-icon" (click)="close()">
+        <clr-icon shape="times"></clr-icon>
+        <span i18n>Annuler</span>
+    </button>
+</div>

@@ -1,4 +1,7 @@
 <!-- spinner -->
-<span class="spinner spinner-inline" [(hidden)]="isLoading" i18n>
-    Chargement...
-</span>
+<div class="loading-indicator" [(hidden)]="!isLoading">
+    <span class="spinner spinner-md"  i18n>
+        Chargement...
+    </span>
+</div>
+

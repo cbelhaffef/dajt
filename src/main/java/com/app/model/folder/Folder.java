@@ -52,7 +52,7 @@ public class Folder {
 
     @Column(name="folder_status", nullable = false, columnDefinition = "varchar(50) default 'OPEN'")
     @Enumerated(EnumType.STRING)
-    private FolderStatus status;
+    private FolderStatus status = FolderStatus.OPEN;
 
     @CreationTimestamp
     @Column(name="create_date")
