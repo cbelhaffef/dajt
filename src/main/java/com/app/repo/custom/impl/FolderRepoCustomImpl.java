@@ -40,7 +40,7 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
         }
 
         if (fQuery.getOffice() != null && fQuery.getOffice().getId() != null) {
-            query.leftJoin(folder.office(), office).where(office.id.eq(fQuery.getOffice().getId()));
+            query.leftJoin(folder.office(), office).where(folder.office().id.eq(fQuery.getOffice().getId()));
         }
 
         if (fQuery.getStatus() != null) {
@@ -48,11 +48,11 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
         }
 
         if (fQuery.getVictims() != null && !fQuery.getVictims().isEmpty()) {
-            query.leftJoin(folder.victims, victim).where(victim.name.contains(fQuery.getVictims().iterator().next().getName()));
+            query.leftJoin(folder.victims, victim).where(folder.victims.any().name.contains(fQuery.getVictims().iterator().next().getName()));
         }
 
         if (fQuery.getGuilties() != null && !fQuery.getGuilties().isEmpty() ) {
-            query.leftJoin(folder.guilties, guilty).where(guilty.name.contains(fQuery.getGuilties().iterator().next().getName()));
+            query.leftJoin(folder.guilties, guilty).where(folder.guilties.any().name.contains(fQuery.getGuilties().iterator().next().getName()));
         }
         querydsl.applyPagination(pageable, query);
 

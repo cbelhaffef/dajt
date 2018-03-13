@@ -52,8 +52,13 @@ export class FolderService {
         return folderListSubject;
     }
 
-    getFolderStatus(): Observable<any> {
-        return this.apiRequest.get('api/folders/status');
+    getFolderStatus(name?: string): Observable<any> {
+        let params: HttpParams = new HttpParams();
+        if (name != null) {
+            params = params.append('name', name);
+        }
+
+        return this.apiRequest.get('api/folders/status', params);
     }
 
     getFolderDetails(id: string): Observable<any> {

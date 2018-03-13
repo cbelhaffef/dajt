@@ -53,7 +53,7 @@ export class FoldersComponent implements OnInit {
     ngOnInit(): void {
         const me = this;
         me.getFolders();
-        me.folderService.getFolderStatus()
+        me.folderService.getFolderStatus('')
             .subscribe(function(folderStatus) {
                 me.listFolderStatus = folderStatus.items;
         });

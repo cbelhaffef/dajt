@@ -1,6 +1,7 @@
 export class Victim {
 
-    constructor(public id: number,
-                public firstName: string,
-                public lastName: string){}
+    public id: number;
+    public name: string;
+
+    constructor() {}
 }

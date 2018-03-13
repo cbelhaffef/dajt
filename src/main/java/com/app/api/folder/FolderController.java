@@ -88,7 +88,7 @@ public class FolderController {
 
     @ApiOperation(value = "List of folders", response = FolderStatusResponse.class)
     @RequestMapping(value = "/folders/status", method = RequestMethod.GET)
-    public FolderStatusResponse getFoldersStatus() {
+    public FolderStatusResponse getFoldersStatus(@RequestParam(value="name", required = false) String name) {
         FolderStatusResponse resp = new FolderStatusResponse();
         resp.setItems(Arrays.asList(FolderStatus.values()));
         return resp;

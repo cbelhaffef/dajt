@@ -21,28 +21,177 @@
 
     <div class="ui-g">
         <div class="ui-g-8">
-            <p-panel>
-                <p-header>
-                    <div class="ui-helper-clearfix">
-                        <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">
-                            Custom Header
-                        </span>
-                    </div>
-                </p-header>
-
+            <div id="detail-module">
                 <div class="ui-g">
-                    <div class="ui-g-6">
+                    <div class="ui-g-1 toggle-title" i18n>Détail</div>
+                    <div class="ui-g-11 toggle-bar"></div>
+                </div>
+                <div class="mod-content">
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <label for="status" i18n> Statut</label>
 
+                        </div>
+                        <div class="ui-g-3 pointer" (mouseover)="showPencilStatus = true" (mouseleave)="showPencilStatus = false">
+                            <span id="status" [hidden]="showInputStatus">
+                                <span>{{folder?.status}}</span>
+                                <clr-icon shape="pencil" (click)="showInputStatus = true" [hidden]="!showPencilStatus"></clr-icon>
+                            </span>
+                            <div class="ui-inputgroup" [hidden]="!showInputStatus">
+                                <p-autoComplete [suggestions]="filteredStatus"
+                                                (completeMethod)="filterStatus($event)"
+                                                [minLength]="1"
+                                                i18n-placeholder="Status"
+                                                [size]="10"
+                                                id="statusEdit"
+                                                name="statusEdit"
+                                                [(ngModel)]="folder.status"
+                                                [dropdown]="true">
+                                </p-autoComplete>
+                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
+                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputStatus = false"></button>
+                            </div>
+                        </div>
+                        <div class="ui-g-3">
+                            <label for="court" i18n>Justice</label>
+                        </div>
+                        <div class="ui-g-3 pointer" (mouseover)="showPencilCourt = true" (mouseleave)="showPencilCourt = false">
+                            <span id="court" [hidden]="showInputCourt">
+                                <span>{{folder?.court?.name}}</span>
+                                <clr-icon shape="pencil" (click)="showInputCourt = true" [hidden]="!showPencilCourt"></clr-icon>
+                            </span>
+                            <div class="ui-inputgroup" [hidden]="!showInputCourt">
+                                <p-autoComplete [suggestions]="filteredCourts"
+                                                (completeMethod)="filterCourts($event)"
+                                                [minLength]="1"
+                                                i18n-placeholder="Court"
+                                                [size]="10"
+                                                id="courtEdit"
+                                                name="courtEdit"
+                                                [(ngModel)]="folder.court.name"
+                                                [dropdown]="true">
+                                </p-autoComplete>
+                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
+                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputCourt = false"></button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="ui-g-6">
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <label for="sendingType" i18n>Type d'envoie</label>
+                        </div>
+                        <div class="ui-g-9 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                            <span id="sendingType" [hidden]="showInputSendingType">
+                                <span>{{folder?.sendingType}}</span>
+                                <clr-icon shape="pencil" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></clr-icon>
+                            </span>
+                            <div class="ui-inputgroup" [hidden]="!showInputSendingType">
+                                <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="folder.sendingType"></textarea>
+                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
+                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputSendingType = false"></button>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
-            </p-panel>
+            </div>
+            <div id="victims-module">
+                <div class="ui-g">
+                    <div class="ui-g-1 toggle-title" i18n>Victimes</div>
+                    <div class="ui-g-10 toggle-bar"></div>
+                    <div class="ui-g-1">
+                        <clr-icon shape="plus" style="cursor: pointer"></clr-icon>
+                    </div>
+
+                </div>
+                <div class="mod-content">
+                    <p-table [value]="folder?.victims" [scrollable]="true" scrollHeight="200px">
+                        <ng-template pTemplate="body" let-v>
+                            <tr>
+                                <td>{{v.name}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div id="guilties-module">
+                <div class="ui-g">
+                    <div class="ui-g-1 toggle-title" i18n>Coupables</div>
+                    <div class="ui-g-10 toggle-bar"></div>
+                    <div class="ui-g-1">
+                        <clr-icon shape="plus"></clr-icon>
+                    </div>
+                </div>
+                <div class="mod-content">
+                    <p-table [value]="folder?.guilties" [scrollable]="true" scrollHeight="200px">
+                        <ng-template pTemplate="body" let-g>
+                            <tr>
+                                <td>{{g.name}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
         </div>
         <div class="ui-g-4">
-
+            <div id="people-module">
+                <div class="ui-g">
+                    <div class="ui-g-1 toggle-title" i18n>People</div>
+                    <div class="ui-g-11 toggle-bar"></div>
+                </div>
+                <div class="mod-content">
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <label for="assignee">Assignee:</label>
+                        </div>
+                        <div class="ui-g-9">
+                            <span id="assignee">{{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.lastName}}</span>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <label for="reporter">Auteur:</label>
+                        </div>
+                        <div class="ui-g-9">
+                            <span id="reporter">{{folder?.reporter?.firstName}}&nbsp;{{folder?.reporter?.lastName}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="date-module">
+                <div class="ui-g">
+                    <div class="ui-g-1 toggle-title" i18n>Dates</div>
+                    <div class="ui-g-11 toggle-bar"></div>
+                </div>
+                <div class="mod-content">
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                                <label for="createDate">Créer:</label>
+                        </div>
+                        <div class="ui-g-9">
+                            <span id="createDate">{{folder.createDate | date : 'longDate':'':'ar'}}</span>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <label for="modifDate">Modifier:</label>
+                        </div>
+                        <div class="ui-g-9">
+                            <span id="modifDate">{{folder.modifDate | date : 'longDate':'':'ar'}}</span>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <label for="closedDate">Clôturer:</label>
+                        </div>
+                        <div class="ui-g-9">
+                            <span id="closedDate">{{folder.closeDate | date : 'longDate':'':'ar'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
 </div>
