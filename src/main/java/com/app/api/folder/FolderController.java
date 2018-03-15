@@ -1,9 +1,11 @@
 package com.app.api.folder;
 
 import com.app.api.user.UserService;
+import com.app.enums.FolderPriority;
 import com.app.enums.FolderStatus;
 import com.app.model.folder.Folder;
 import com.app.model.folder.FolderListResponse;
+import com.app.model.folder.FolderPriorityResponse;
 import com.app.model.folder.FolderStatusResponse;
 import com.app.model.guilty.Guilty;
 import com.app.model.office.Office;
@@ -78,11 +80,19 @@ public class FolderController {
         return folderSaved;
     }
 
-    @ApiOperation(value = "List of folders", response = FolderStatusResponse.class)
+    @ApiOperation(value = "List of status", response = FolderStatusResponse.class)
     @RequestMapping(value = "/folders/status", method = RequestMethod.GET)
     public FolderStatusResponse getFoldersStatus(@RequestParam(value="name", required = false) String name) {
         FolderStatusResponse resp = new FolderStatusResponse();
         resp.setItems(Arrays.asList(FolderStatus.values()));
+        return resp;
+    }
+
+    @ApiOperation(value = "List of priorities", response = FolderStatusResponse.class)
+    @RequestMapping(value = "/folders/priorities", method = RequestMethod.GET)
+    public FolderPriorityResponse getFoldersPriorities(@RequestParam(value="name", required = false) String name) {
+        FolderPriorityResponse resp = new FolderPriorityResponse();
+        resp.setItems(Arrays.asList(FolderPriority.values()));
         return resp;
     }
 
