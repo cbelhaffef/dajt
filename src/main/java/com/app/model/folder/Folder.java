@@ -1,5 +1,6 @@
 package com.app.model.folder;
 
+import com.app.enums.FolderPriority;
 import com.app.enums.FolderStatus;
 import com.app.enums.JudgementStatus;
 import com.app.model.advocate.Advocate;
@@ -29,7 +30,7 @@ public class Folder {
     @Column(name="folder_id")
     private Long id;
 
-    @Column(name="number", nullable = false)
+    @Column(name="number", nullable = false,unique = true)
     private String number;
 
     @Column(name="offence", nullable = false)
@@ -44,6 +45,10 @@ public class Folder {
     private User assignee;
 
     @ManyToOne
+    @JoinColumn(name="reporter", referencedColumnName = "user_id")
+    private User reporter;
+
+    @ManyToOne
     @JoinColumn(name="office_id" , nullable = false)
     private Office office;
 
@@ -53,6 +58,10 @@ public class Folder {
     @Column(name="folder_status", nullable = false, columnDefinition = "varchar(50) default 'OPEN'")
     @Enumerated(EnumType.STRING)
     private FolderStatus status = FolderStatus.OPEN;
+
+    @Column(name="folder_priority", nullable = false, columnDefinition = "varchar(50) default 'MINOR'")
+    @Enumerated(EnumType.STRING)
+    private FolderPriority priority = FolderPriority.MINOR;
 
     @CreationTimestamp
     @Column(name="create_date")

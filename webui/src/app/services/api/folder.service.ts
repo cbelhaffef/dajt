@@ -61,6 +61,16 @@ export class FolderService {
         return this.apiRequest.get('api/folders/status', params);
     }
 
+    getFolderPriority(name?: string): Observable<any> {
+        let params: HttpParams = new HttpParams();
+        if (name != null) {
+            params = params.append('name', name);
+        }
+
+        return this.apiRequest.get('api/folders/priorities', params);
+    }
+
+
     getFolderDetails(id: string): Observable<any> {
         const me = this;
         const folderSubject = new Subject<any>();

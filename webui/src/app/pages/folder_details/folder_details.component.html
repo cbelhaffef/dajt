@@ -1,25 +1,70 @@
 <div id="folder-content" class="pad-16">
-    <div class="row aui-page-header-inner">
+    <div class="row aui-page-header-inner" style="border-bottom: 1px solid #7E7E7E">
         <div class="col-xs-1 aui-page-header-image">
-            <!-- TODO adding photo of office-->
+            <img src="../../../assets/images/folder_icon.jpg" width="50" height="50" style="margin-left: 20px">
         </div>
         <div class="col-xs-8 aui-page-header-main">
             <div id="folder-number">
                 <a id="project-name-val" routerLink="/home/legal_cases/offices/{{folder?.office?.id}}">{{folder?.office?.name}}</a>
-                &nbsp;/&nbsp;
+                &nbsp;&nbsp;/&nbsp;&nbsp;
                 <a class="issue-link" routerLink="/home/legal_cases/folders/{{folder?.id}}" id="key-val" rel="10049">{{folder?.number}}</a>
             </div>
             <h1 id="summary-val">{{folder?.offence}}</h1>
         </div>
         <div class="col-xs-3 aui-page-header-actions">
-            <button type="button" class="btn btn-icon" routerLink="/home/legal_cases/folders">
+            <button type="button" class="btn btn-icon" routerLink="/home/legal_cases/folders" style="margin-left: 20px">
                 <clr-icon shape="redo"></clr-icon>
                 <span class="icon-shape-name">Retour</span>
             </button>
         </div>
     </div>
 
+    <!-- actions bar-->
+    <div class="ui-g actions" style="margin-top: 5px">
+        <div class="ui-g-1"></div>
+        <div class="ui-g-6">
+            <div class="btn-group btn-primary btn-sm">
+                <button class="btn">
+                    <clr-icon shape="users"></clr-icon>
+                    <i i18n>Assigner</i>
+                </button>
+                <button class="btn" i18n>
+                    <clr-icon shape="user"></clr-icon>
+                    <i i18n>Me l'assigner</i>
+                </button>
+                <div class="btn-group-overflow" (click)="isOpen = !isOpen" [ngClass]="{'open':isOpen}">
+                    <button class="btn dropdown-toggle">
+                        <clr-icon shape="ellipsis-horizontal"></clr-icon>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="btn">Action 1</button>
+                        <button class="btn">Action 2</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-5">
+            <div class="btn-group btn-primary btn-sm">
+                <button class="btn">
+                    <i i18n>Action 1</i>
+                </button>
+                <button class="btn">
+                    <i i18n>Action 2</i>
+                </button>
+                <button class="btn">
+                    <i i18n>Action 3</i>
+                </button>
+                <button class="btn">
+                    <i i18n>Action 4</i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
     <div class="ui-g">
+        <!-- detail-->
         <div class="ui-g-8">
             <div id="detail-module">
                 <div class="ui-g">
@@ -28,13 +73,12 @@
                 </div>
                 <div class="mod-content">
                     <div class="ui-g">
-                        <div class="ui-g-3">
-                            <label for="status" i18n> Statut</label>
-
+                        <div class="ui-g-1">
+                            <label for="status" i18n>Statut:</label>
                         </div>
                         <div class="ui-g-3 pointer" (mouseover)="showPencilStatus = true" (mouseleave)="showPencilStatus = false">
                             <span id="status" [hidden]="showInputStatus">
-                                <span>{{folder?.status}}</span>
+                                <span class="badge badge-info">{{folder?.status}}</span>
                                 <clr-icon shape="pencil" (click)="showInputStatus = true" [hidden]="!showPencilStatus"></clr-icon>
                             </span>
                             <div class="ui-inputgroup" [hidden]="!showInputStatus">
@@ -52,8 +96,8 @@
                                 <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputStatus = false"></button>
                             </div>
                         </div>
-                        <div class="ui-g-3">
-                            <label for="court" i18n>Justice</label>
+                        <div class="ui-g-1">
+                            <label for="court" i18n>Tribunal:</label>
                         </div>
                         <div class="ui-g-3 pointer" (mouseover)="showPencilCourt = true" (mouseleave)="showPencilCourt = false">
                             <span id="court" [hidden]="showInputCourt">
@@ -77,8 +121,35 @@
                         </div>
                     </div>
                     <div class="ui-g">
-                        <div class="ui-g-3">
-                            <label for="sendingType" i18n>Type d'envoie</label>
+                        <div class="ui-g-1">
+                            <label for="priority" i18n>Priority:</label>
+                        </div>
+                        <div class="ui-g-3 pointer" (mouseover)="showPencilPriority = true" (mouseleave)="showPencilPriority = false">
+                            <span id="priority" [hidden]="showInputPriority">
+
+                                <img alt="" height="16" src="../../../assets/images/major.svg" width="16">&nbsp;
+                                <span>{{folder?.priority}}</span>
+                                <clr-icon shape="pencil" (click)="showInputPriority = true" [hidden]="!showPencilPriority"></clr-icon>
+                            </span>
+                            <div class="ui-inputgroup" [hidden]="!showInputPriority">
+                                <p-autoComplete [suggestions]="filteredPriority"
+                                                (completeMethod)="filterPriority($event)"
+                                                [minLength]="1"
+                                                i18n-placeholder="Priorité"
+                                                [size]="10"
+                                                id="priorityEdit"
+                                                name="priorityEdit"
+                                                [(ngModel)]="folder.priority"
+                                                [dropdown]="true">
+                                </p-autoComplete>
+                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
+                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputStatus = false"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1">
+                            <label for="sendingType" i18n>Type d'envoie:</label>
                         </div>
                         <div class="ui-g-9 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
                             <span id="sendingType" [hidden]="showInputSendingType">
@@ -133,18 +204,20 @@
                 </div>
             </div>
         </div>
+        <!-- side bar-->
         <div class="ui-g-4">
             <div id="people-module">
                 <div class="ui-g">
-                    <div class="ui-g-1 toggle-title" i18n>People</div>
-                    <div class="ui-g-11 toggle-bar"></div>
+                    <div class="ui-g-2 toggle-title" i18n>People</div>
+                    <div class="ui-g-10 toggle-bar"></div>
                 </div>
                 <div class="mod-content">
                     <div class="ui-g">
                         <div class="ui-g-3">
-                            <label for="assignee">Assignee:</label>
+                            <label for="assignee" i18n>Assignee:</label>
                         </div>
-                        <div class="ui-g-9">
+                        <div class="ui-g-3">
+                            <!--<img src="../../../assets/images/useravatar.png">&nbsp;-->
                             <span id="assignee">{{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.lastName}}</span>
                         </div>
                     </div>
@@ -160,8 +233,8 @@
             </div>
             <div id="date-module">
                 <div class="ui-g">
-                    <div class="ui-g-1 toggle-title" i18n>Dates</div>
-                    <div class="ui-g-11 toggle-bar"></div>
+                    <div class="ui-g-2 toggle-title" i18n>Dates</div>
+                    <div class="ui-g-10 toggle-bar"></div>
                 </div>
                 <div class="mod-content">
                     <div class="ui-g">

@@ -1,5 +1,22 @@
 <div class="pad-16" style="background-color: #F4F7FA">
-    <div class="row">
+
+    <div class="alert alert-success" [hidden]="hideMessage" >
+        <div class="alert-items">
+            <div class="alert-item static">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                </div>
+                <span class="alert-text">
+                    <b i18n>Le dossier</b>&nbsp;<a routerLink="/home/legal_cases/folders/{{folderCreated?.id}}">{{folderCreated?.id}}</a>&nbsp;<b i18n>a été crée.</b>
+                </span>
+            </div>
+        </div>
+        <button type="button" class="close" aria-label="Close">
+            <clr-icon aria-hidden="true" shape="close" (click)="hideMessage = true"></clr-icon>
+        </button>
+    </div>
+
+    <div class="row" style="margin-top: 5px">
         <div class="col-lg-1"></div>
         <div class="col-lg-10">
             <form #filterFoldersForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(filterFoldersForm)" id="folder-form-search">
@@ -59,7 +76,10 @@
                         </div>
 
                         <div class="col-xs-2">
-                            <button type="submit" class="btn btn-primary" i18n>Recherche</button>
+                            <button type="submit" class="btn btn-icon btn-primary btn-sm">
+                                <clr-icon shape="search"></clr-icon>
+                                <i i18n>Recherche</i>
+                            </button>
                         </div>
 
                         <div class="col-xs-2"></div>
@@ -73,14 +93,14 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <p-button (onClick)="usersOPanel.show($event)"
-                      icon="fa fa-fw fa-caret-down"
-                      i18n-label
-                      [disabled]="selectedFolders.length == 0"
-                      label="Assigner">
-            </p-button>
-
-            <br/>
+            <div id="actions" style="margin-bottom: 5px">
+                <p-button (onClick)="usersOPanel.show($event)"
+                          icon="fa fa-fw fa-caret-down"
+                          i18n-label
+                          [disabled]="selectedFolders.length == 0"
+                          label="Assigner">
+                </p-button>
+            </div>
 
             <p-table [value]="listFolders" [(selection)]="selectedFolders" i18n-emptymessage emptymessage="Aucun résultat trouvé">
                 <ng-template pTemplate="header">
@@ -92,7 +112,7 @@
                         <th width="20%" i18n>Infraction</th>
                         <th width="15%" i18n>Victimes</th>
                         <th width="15%" i18n>Coupables</th>
-                        <th width="5%"  i18n>Justice</th>
+                        <th width="5%"  i18n>Tribunal</th>
                         <th width="10%" i18n>Date modification</th>
                         <th width="10%" i18n>Assignée</th>
                         <th width="5%"  i18n>Status</th>
@@ -134,7 +154,8 @@
                             {{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.firstName}}
                         </td>
                         <td>
-                            {{folder.status}}
+
+                            <span class="badge badge-info">{{folder.status}}</span>
                         </td>
                         <td>
                             <div style="white-space: pre-wrap">{{folder.sendingType}}</div>

@@ -8,6 +8,7 @@ import {FolderService} from '../../services/api/folder.service';
 import {any} from 'codelyzer/util/function';
 import {CourtService} from '../../services/api/court.service';
 import {UserService} from '../../services/api/user.service';
+import {UserInfoService} from '../../services/user-info.service';
 
 @Component({
     selector: 'folders-create-dialog-component',
@@ -49,6 +50,7 @@ export class FoldersCreateDialogComponent implements OnInit {
         public folderService: FolderService,
         public courtService:  CourtService,
         public userService: UserService,
+        public userInfoService: UserInfoService,
         public dialogRef: MatDialogRef<FoldersCreateDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -133,10 +135,15 @@ export class FoldersCreateDialogComponent implements OnInit {
     }
 
     createFolder(f: NgForm) {
-        const me = this;
-        me.folderService.addFolder(f.value)
+        let _self = this;
+        let userStored = _self.userInfoService.getUserInfo();
+        if (userStored != null) {
+            f.value['reporter'] = { userId : _self.userInfoService.getUserInfo().userId };
+        }
+        _self.folderService.addFolder(f.value)
             .subscribe(function(folder) {
-                alert(folder);
+                _self.close();
+
             });
     }
 }

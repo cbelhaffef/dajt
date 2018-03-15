@@ -9,6 +9,7 @@ export class Folder {
     public id: number;
     public number: string;
     public status: string;
+    public priority: string;
     public offence: string;
     public office: Office;
     public judgementStatus: string;

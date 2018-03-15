@@ -13,6 +13,7 @@ import {User} from '../../models/user.model';
 import {Folder} from '../../models/folder.model';
 import {SpinnerService} from '../../services/spinner.service';
 import {OverlayPanel} from 'primeng/primeng';
+import {Message} from 'primeng/api';
 
 @Component({
     selector   : 's-folders-pg',
@@ -32,6 +33,11 @@ export class FoldersComponent implements OnInit {
 
     public listCourts = [];
     public listOffices = [];
+
+    public folderCreated: Folder;
+    public hideMessage = true;
+
+
 
     animal: string;
     name: string;
@@ -77,15 +83,20 @@ export class FoldersComponent implements OnInit {
     }
 
     openCreateFolderDialog(): void {
-        const dialogRef = this.dialog.open(FoldersCreateDialogComponent, {
+        let _self = this;
+        const dialogRef = _self.dialog.open(FoldersCreateDialogComponent, {
             width: '40%',
             direction: 'rtl',
-            data: { name: this.name, animal: this.animal }
+            data: { name: _self.name, animal: _self.animal }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe( result => {
             console.log('The dialog was closed');
-            this.animal = result;
+            if (result !== undefined && result != null) {
+                    _self.folderCreated = result;
+                    _self.hideMessage = false;
+            }
+
         });
     }
 

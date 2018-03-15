@@ -4,8 +4,10 @@
 
         <!-- office-->
         <div class="ui-g">
-            <div class="ui-g-12">
+            <div class="ui-g-2">
                 <label for="office" i18n>Bureau</label>
+            </div>
+            <div class="ui-g-10">
                 <p-autoComplete [suggestions]="filteredOffices"
                                 (completeMethod)="filterOffices($event)"
                                 [minLength]="1"
@@ -86,10 +88,10 @@
             </div>
         </div>
 
-        <!-- justice-->
+        <!-- Tribunal-->
         <div class="ui-g">
             <div class="ui-g-2">
-                <label for="court" i18n>Justice</label>
+                <label for="court" i18n>Tribunal</label>
             </div>
             <div class="ui-g-10">
                 <p-autoComplete [suggestions]="filteredCourts"

@@ -19,6 +19,9 @@ export class FolderDetailsComponent implements OnInit {
 
     public isLoading = false;
 
+    public isOpen = false;
+
+
     public filteredStatus: any[] = [];
     public selectedStatus: string;
     public queryStatus: string;
@@ -27,12 +30,22 @@ export class FolderDetailsComponent implements OnInit {
     public selectedCourt: string;
     public queryCourt: string;
 
+    public filteredPriority: any[] = [];
+    public selectedPriority: string;
+    public queryPriority: string;
+
     public showPencilStatus: boolean;
     public showInputStatus: boolean;
+
     public showPencilCourt: boolean;
     public showInputCourt: boolean;
-    public showPencilSendingType: boolean;
+
     public showInputSendingType: boolean;
+    public showPencilSendingType: boolean;
+
+    public showInputPriority = false;
+    public showPencilPriority = false;
+
 
     constructor(private activateRoute: ActivatedRoute,
                 private folderService: FolderService,
@@ -63,9 +76,18 @@ export class FolderDetailsComponent implements OnInit {
     filterStatus(event) {
         let _self = this;
         let query = event.query;
-        _self.folderService.getFolderStatus(query).subscribe(function(courts) {
-            _self.filteredCourts = _self.filterItem(query, courts);
-            _self.queryCourt = query;
+        _self.folderService.getFolderStatus(query).subscribe(function(status) {
+            _self.filteredStatus = _self.filterItem(query, status);
+            _self.queryStatus = query;
+        });
+    }
+
+    filterPriority(event) {
+        let _self = this;
+        let query = event.query;
+        _self.folderService.getFolderPriority(query).subscribe(function(priority) {
+            _self.filteredPriority = _self.filterItem(query, priority);
+            _self.queryPriority = query;
         });
     }
 

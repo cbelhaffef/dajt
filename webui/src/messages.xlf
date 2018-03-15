@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="cf6c168573b0e01b2a2cbfdfe7f5873256317984" datatype="html">
+        <source>Affaires Judiciaires</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/home.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="40e0bdcfee016d4bca0bd27d398456b44ac3c6d5" datatype="html">
+        <source>Liste des Dossiers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/home.component.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d94174db6e0e6c4948e4bf9703e28c9a81fc0951" datatype="html">
+        <source>Liste des Avocats</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/home.component.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="55a57e6165759f4c48fd86a29d674304066044e9" datatype="html">
+        <source>Connexion</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/login/login.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7a5b80bdfff39603e595a2a61d5032115874e412" datatype="html">
+        <source>Se connecter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/login/login.component.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9b3f09921bf92734c1083b71008cfe8ec71ec985" datatype="html">
+        <source>Vous êtes maintenant déconnecté</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/logout/logout.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cbd171741b18e5bbace0d7ff8e1c9b1326382b32" datatype="html">
+        <source>Vous pouvez vous</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/logout/logout.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2df060609186022adf8378aea80fb741db81bee3" datatype="html">
+        <source>connectez de nouveau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/logout/logout.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f6044ac8b92a4856e3afabe313d2abd092d85bff" datatype="html">
+        <source>Création d&apos;un dossier </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3e152aabae172d73a66504d7a5f3658dad09bb47" datatype="html">
+        <source>Bureau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="17fbfde1b03049d1743d432f3013d597f6d9d7a3" datatype="html">
+        <source>Numéro dossier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bb186f65a5b656fde34604f6eb2f413a9321b072" datatype="html">
+        <source>Infraction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="55353fbd1e4d1c8aa0b41b2039310dd5fd5f88de" datatype="html">
+        <source>Victimes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2136c374e0ee4f00bce48578c6d22b1f9d6de0c5" datatype="html">
+        <source>Coupables</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f3af6a8928f55854f95921544aecc61fc0c55535" datatype="html">
+        <source>Justice</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a215aeb834c415d6b692c68db035d9f2d9dee8f8" datatype="html">
+        <source>Assigner à</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="012f1025377b14d709f08dda3ec13f738cf53f80" datatype="html">
+        <source>Type d&apos;envoie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="30a34083240dc18e84ba37513fa6a1cf320f443c" datatype="html">
+        <source>Créer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="12380235948088ddf227ad226ce8a2ae63878fe5" datatype="html">
+        <source>Annuler</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c97a9c737cf4172db11ce7b1b99c2876e3714e92" datatype="html">
+        <source>Numéro Dossier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="99c35e3b502c177a9f4644eed2dfc8ad947eeed5" datatype="html">
+        <source>Victime</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="06cc509096d1b9e1991927a304d498445387fe6f" datatype="html">
+        <source>Coupable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
+        <source>Status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="68f804572d399e03252ce1a60c961465e1f543a5" datatype="html">
+        <source>Recherche</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6b46825b7b3d62fbed66703a0b923226199e655f" datatype="html">
+        <source>Assigner</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9562fd44bcb90e1f4c628deb32c3ae8675f43bae" datatype="html">
+        <source>Numéro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c164547e9934d6db28857a194582607cd0ff2522" datatype="html">
+        <source>Date modification</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="521fcc469ba6b1861a65fecf6591ca79ca9a8ea5" datatype="html">
+        <source>Assignée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="62980ee5e205a586a9f2c2b1755cac185504f538" datatype="html">
+        <source>Aucun résultat trouvé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="808619d769679a78cb6b2093edffb772a1f71757" datatype="html">
+        <source>Créer un dossier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="26c12affe18110d67922799a88afa09dfcf938b0" datatype="html">
+        <source>Détail</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f0f896f046a39e8a7ef77c298928df9349270c8b" datatype="html">
+        <source> Statut</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4ee30b9285d5bf3610118b8b01d1731e0c4fed05" datatype="html">
+        <source>People</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ae78cbe2e07f699217c7488237bdb79850173273" datatype="html">
+        <source>Dates</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">163</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="86a9b059bdb8f5cbe2169ecb5f8935ad1677e9c4" datatype="html">
+        <source>
+        Chargement...
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/spinner/spinner.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
