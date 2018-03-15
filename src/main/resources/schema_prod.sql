@@ -82,6 +82,7 @@ CREATE TABLE folder (
     court_id        INT NOT NULL,
     sending_type    VARCHAR(255) NOT NULL,
     assignee        INT,
+    reporter        INT,
     create_date     DATETIME DEFAULT CURRENT_TIMESTAMP,
     modif_date      DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     close_date      DATETIME,
