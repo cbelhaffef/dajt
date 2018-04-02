@@ -3,6 +3,7 @@ package com.app.model.folder;
 import com.app.enums.FolderPriority;
 import com.app.enums.FolderStatus;
 import com.app.enums.JudgementStatus;
+import com.app.model.action.Action;
 import com.app.model.advocate.Advocate;
 import com.app.model.court.Court;
 import com.app.model.guilty.Guilty;
@@ -100,4 +101,12 @@ public class Folder {
         inverseJoinColumns = { @JoinColumn(name = "guilty_id") }
     )
     private Set<Guilty> guilties = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "folder_action",
+        joinColumns = { @JoinColumn(name = "folder_id") },
+        inverseJoinColumns = { @JoinColumn(name = "action_id") }
+    )
+    private Set<Action> actions = new HashSet<>();
 }

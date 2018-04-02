@@ -93,13 +93,31 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div id="actions" style="margin-bottom: 5px">
-                <p-button (onClick)="usersOPanel.show($event)"
-                          icon="fa fa-fw fa-caret-down"
-                          i18n-label
-                          [disabled]="selectedFolders.length == 0"
-                          label="Assigner">
-                </p-button>
+            <div id="actions" class="row" style="margin-bottom: 5px">
+                <div class="col-lg-1">
+                    <p-button (onClick)="overlayPanel.show($event);showAssignUserDropdown()"
+                              icon="fa fa-fw fa-caret-down"
+                              i18n-label
+                              [disabled]="selectedFolders.length == 0"
+                              label="Assigner">
+                    </p-button>
+                </div>
+                <div class="col-lg-10">
+                    <p-button (onClick)="overlayPanel.show($event);showChangeFolderStatusDropdown()"
+                              icon="fa fa-fw fa-caret-down"
+                              i18n-label
+                              [disabled]="selectedFolders.length == 0"
+                              label="Status">
+                    </p-button>
+                </div>
+                <div clas="col-lg-1">
+                    <p-button (onClick)="overlayPanel.show($event);showAddActionDropdown()"
+                              icon="fa fa-fw fa-caret-down"
+                              i18n-label
+                              [disabled]="selectedFolders.length == 0"
+                              label="Actions">
+                    </p-button>
+                </div>
             </div>
 
             <p-table [value]="listFolders" [(selection)]="selectedFolders" i18n-emptymessage emptymessage="Aucun résultat trouvé">
@@ -110,13 +128,14 @@
                         </th>
                         <th width="10%" i18n>Numéro</th>
                         <th width="20%" i18n>Infraction</th>
-                        <th width="15%" i18n>Victimes</th>
-                        <th width="15%" i18n>Coupables</th>
+                        <th width="13%" i18n>Victimes</th>
+                        <th width="13%" i18n>Coupables</th>
                         <th width="5%"  i18n>Tribunal</th>
                         <th width="10%" i18n>Date modification</th>
-                        <th width="10%" i18n>Assignée</th>
+                        <th width="10%" i18n>Assigné</th>
+                        <th width="4%"  i18n>Actions</th>
                         <th width="5%"  i18n>Status</th>
-                        <th width="10%" i18n>Type d'envoie</th>
+                        <th width="10%" i18n>Type d'envoi</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-folder>
@@ -154,11 +173,20 @@
                             {{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.firstName}}
                         </td>
                         <td>
-
-                            <span class="badge badge-info">{{folder.status}}</span>
+                            <div role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">
+                                <span class="badge badge-purple">{{folder?.actions.length}}</span>
+                                <span class="tooltip-content" [hidden]="folder?.actions.length === 0">
+                                    <ul class="list compact">
+                                        <li *ngFor="let a of folder?.actions">{{a?.name}}</li>
+                                    </ul>
+                                </span>
+                            </div>
                         </td>
                         <td>
-                            <div style="white-space: pre-wrap">{{folder.sendingType}}</div>
+                            <span class="badge badge-info">{{folder?.status}}</span>
+                        </td>
+                        <td>
+                            <div [innerHTML]="folder?.sendingType"></div>
                         </td>
                     </tr>
                 </ng-template>
@@ -168,24 +196,70 @@
     </div>
 </div>
 
-<!-- UsersOverlaPanel-->
-<p-overlayPanel #usersOPanel (onAfterHide)="onAfterHideUsersOPanel()">
-    <p-dropdown [options]="listUsers"
-                [(ngModel)]="selectedUser"
-                [style]="{'width':'200px'}"
-                filter="true"
-                i18n-placeholder="Assigner à"
-                dir="rtl">
-        <ng-template let-item pTemplate="selectedUser">
-            <span style="vertical-align:middle">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-user pTemplate="item">
-            <span>{{user.label}}</span>
-        </ng-template>
-    </p-dropdown>
-    <button type="button" class="btn btn-icon" (click)="assignUser(selectedFolders,selectedUser)">
-        <clr-icon shape="check"></clr-icon>
-    </button>
+<!-- ActionsOverlaPanel-->
+<p-overlayPanel #overlayPanel>
+    <!-- UsersOverlayPanel-->
+    <div *ngIf="showAssignUserOPanel">
+        <p-dropdown #assignUserDropdown
+                    [options]="listUsers"
+                    [(ngModel)]="selectedUser"
+                    [style]="{'width':'200px'}"
+                    filter="true"
+                    i18n-placeholder="Assigner à"
+                    dir="rtl">
+            <ng-template let-item pTemplate="selectedUser">
+                <span style="vertical-align:middle">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-user pTemplate="item">
+                <span>{{user.label}}</span>
+            </ng-template>
+        </p-dropdown>
+        <button type="button" class="btn btn-icon" (click)="assignUser(selectedFolders,selectedUser)">
+            <clr-icon shape="check"></clr-icon>
+        </button>
+    </div>
+    <!-- ActionsOverlyPanel-->
+    <div *ngIf="showAddActionOPanel">
+        <p-dropdown #addActionDropdown
+                    [options]="listActions"
+                    [(ngModel)]="selectedAction"
+                    [style]="{'width':'300px'}"
+                    filter="true"
+                    i18n-placeholder="Choisissez votre action"
+                    dir="rtl">
+            <ng-template let-item pTemplate="selectedAction">
+                <span style="vertical-align:middle">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-action pTemplate="item">
+                <span>{{action.label}}</span>
+            </ng-template>
+        </p-dropdown>
+        <button type="button" class="btn btn-icon" (click)="addAction(selectedFolders,selectedAction)">
+            <clr-icon shape="check"></clr-icon>
+        </button>
+    </div>
+
+    <!-- ActionsOverlyPanel-->
+    <div *ngIf="showChangeStatusOPanel">
+        <p-dropdown #changeStatusDropdown
+                    [options]="listStatus"
+                    [(ngModel)]="selectedStatus"
+                    [style]="{'width':'300px'}"
+                    filter="true"
+                    i18n-placeholder="Choisissez le status"
+                    dir="rtl">
+            <ng-template let-item pTemplate="selectedStatus">
+                <span style="vertical-align:middle">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-status pTemplate="item">
+                <span>{{status.label}}</span>
+            </ng-template>
+        </p-dropdown>
+        <button type="button" class="btn btn-icon" (click)="changeStatus(selectedFolders,selectedStatus)">
+            <clr-icon shape="check"></clr-icon>
+        </button>
+    </div>
+
 </p-overlayPanel>
 
 <!-- button added folder -->

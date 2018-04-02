@@ -12,18 +12,45 @@ insert into office(office_id, name) VALUES
     (1, 'مكتب 1'),
     (2, 'مكتب 2');
 
+insert into action(action_id, name) VALUES
+    (1, 'Consitiution des Avocats'),
+    (2, 'Suites Réservées'),
+    (3, 'Suites Réservées (Avocats)'),
+    (4, 'Demandes de jugement'),
+    (5, 'Demandes de jugement (Avocats)'),
+    (6, 'Demandes de Grosses'),
+    (7, 'Demandes de Citations'),
+    (8, 'Notifications'),
+    (9, 'Demandes d\'executions'),
+    (10, 'Notes d\'honoraires'),
+    (11, 'Classé Sans Suite'),
+    (12, 'Actions Civiles'),
+    (13, 'Demande de pièces justificatifs'),
+    (14, 'Demande d\'emission d\'un état exécutaire');
+
+
 /* User */
-insert into user (user_id, username,password, first_name, last_name, email, company, phone, address1, address2, country, postal, role, is_active, is_blocked, security_provider_id, default_customer_id, secret_question, secret_answer, enable_beta_testing, enable_renewal) values
-    (1,'demo'      , 'demo'     , 'demo'  , 'demo', 'arivera2@joomla.org'    , 'Abshire Inc', '7-(740)701-4547', '80429 Garrison Crossing', '4967'               , 'USA'        , '64890', 'USER' , 1, 0, 10001, 20000, 'Diverse'       , 'Yellow' , 0, 0),
-    (2,'admin'     , 'admin'    , 'Theresa'  , 'Russell' , 'trussell1@about.me'     , 'Glover, Adams and Bins', '383-(779)851-3208', '30874 Graceland Terrace', '99152' , 'USA'        , '51065', 'ADMIN', 1, 0, 10001, 20000, 'knowledge base', 'Mauv'   , 1, 0);
+insert into user
+    (user_id, username,           password,              first_name,       last_name,                 email,                role,    is_active,   sex,      office_id) values
+    (1,       'admin',            'admin',               'admin'         ,  'admin',             'admin@dajt.gouv.dz',      'ADMIN' ,   1,        null,      null),
+    (2,       'hkharbouche',      'changeme',            'houria'       ,  'kharbouche',        'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  null),
+    (3,       'souala',          'changeme',            'soumia'       ,  'ouala',              'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  2),
+    (4,       'caouina',          'changeme',            'chafia'       ,  'aouina',            'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  2),
+    (5,       'kbenzaied',        'changeme',            'kenza'        ,  'benzaied',          'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  1),
+    (6,       'alamara',          'changeme',            'ahmed'        ,  'lamara',            'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    1),
+    (7,       'abelhaffef',       'changeme',            'abdelaziz'    ,  'belhaffef',         'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    1),
+    (8,       'rderrasechouk',    'changeme',            'rahima'       ,  'derras echouk',     'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  1),
+    (9,       'faffifchaouche',   'changeme',            'farid'        ,  'affif chaouche',    'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2),
+    (10,       'mtabel',           'changeme',            'mourad'        ,  'tabel',            'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2),
+    (11,       'omohamedbanir',    'changeme',            'omar'        ,  'mohamed banir',      'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2);
 
 /* Folders */
 insert into folder (folder_id ,`number` ,folder_status , folder_priority, create_date ,offence ,court_id ,office_id , assignee,reporter, sending_type) values
-    (1, '13/01 bis' , 'OPEN' ,'MINOR' , '2017-07-30' ,'اهانــــة' ,2 , 1, 1,1,'م ع أ و n\ رقم الملف 2012/95'),
-    (2, '13/02'     , 'OPEN' ,'MINOR' , '2017-07-30' ,'اهانــــة' ,3 , 1 , null,null,'م ع أ و n\ رقم الملف 2012/95'),
-    (3, '13/03'     , 'OPEN' ,'MINOR' , '2017-05-12' ,'اهانــــة' ,4 , 1 ,null ,null,'م ع أ و n\ رقم الملف 2012/95'),
-    (4, '13/04'     , 'OPEN' ,'MINOR' , '2017-06-20' ,'إهانـة هيئة نظاميـة بالإبلاغ عن جريمة يعلم بعدم وقوعها',5 ,1 ,null ,null,'م ع أ و n\ رقم الملف 2012/95'),
-    (5, '13/05'     , 'OPEN' ,'MINOR' , '2017-05-19' ,'إهانـة هيئة نظاميـة و السب المتبادل'                 ,6 ,1 ,null ,null,'م ع أ و n\ رقم الملف 2012/95');
+    (1, '13/01 bis' , 'OPEN' ,'MINOR' , '2017-07-30' ,'اهانــــة' ,2 , 1, 1,1,'م ع أ و <br> رقم الملف 2012/95'),
+    (2, '13/02'     , 'OPEN' ,'MINOR' , '2017-07-30' ,'اهانــــة' ,3 , 1 , null,null,'م ع أ و <br> رقم الملف 2012/95'),
+    (3, '13/03'     , 'OPEN' ,'MINOR' , '2017-05-12' ,'اهانــــة' ,4 , 1 ,null ,null,'م ع أ و <br> رقم الملف 2012/95'),
+    (4, '13/04'     , 'OPEN' ,'MINOR' , '2017-06-20' ,'إهانـة هيئة نظاميـة بالإبلاغ عن جريمة يعلم بعدم وقوعها',5 ,1 ,null ,null,'م ع أ و <br> رقم الملف 2012/95'),
+    (5, '13/05'     , 'OPEN' ,'MINOR' , '2017-05-19' ,'إهانـة هيئة نظاميـة و السب المتبادل'                 ,6 ,1 ,null ,null,'م ع أ و <br> رقم الملف 2012/95');
 
 insert into guilty(guilty_id, name) values
     (1, 'بسايـح يحـي'),

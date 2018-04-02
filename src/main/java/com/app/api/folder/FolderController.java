@@ -3,6 +3,8 @@ package com.app.api.folder;
 import com.app.api.user.UserService;
 import com.app.enums.FolderPriority;
 import com.app.enums.FolderStatus;
+import com.app.exception.ResourceAlreadyAddedException;
+import com.app.model.action.Action;
 import com.app.model.folder.Folder;
 import com.app.model.folder.FolderListResponse;
 import com.app.model.folder.FolderPriorityResponse;
@@ -11,6 +13,7 @@ import com.app.model.guilty.Guilty;
 import com.app.model.office.Office;
 import com.app.model.user.User;
 import com.app.model.victim.Victim;
+import com.app.repo.ActionRepo;
 import com.app.repo.FolderRepo;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
@@ -24,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +41,8 @@ public class FolderController {
     @Autowired private FolderRepo folderRepo;
 
     @Autowired private UserService userService;
+
+    @Autowired private ActionRepo actionRepo;
 
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
     @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
@@ -53,6 +59,8 @@ public class FolderController {
 
         FolderListResponse resp = new FolderListResponse();
         Folder qry = new Folder();
+        qry.setStatus(null);
+        qry.setPriority(null);
         if (folderNumber != null)  { qry.setNumber(folderNumber); }
         Office officeObj = new Office();
         officeObj.setId(office);
@@ -104,7 +112,7 @@ public class FolderController {
     }
 
     @Transactional
-    @ApiOperation(value = "Assign User", response = Folder.class)
+    @ApiOperation(value = "Assign user to list of folder", response = Folder.class)
     @RequestMapping(value="/folders/assign/{userId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Folder> assignUser(@PathVariable("userId") Long userId, @RequestBody List<Long> foldersIds)
         throws ResourceNotFoundException, ResourceNotFoundException {
@@ -127,5 +135,79 @@ public class FolderController {
         return foldersDb;
     }
 
+    @Transactional
+    @RequestMapping(value="/folders/{folderId}/actions", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder addAction(@PathVariable("folderId") Long folderId, @RequestBody Action action)
+        throws ResourceNotFoundException{
+        //check if actions is not already added
+        //if not then added to list actions of folders and then leave;
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
+        }
+
+        Optional<Folder> optionalFolderDb = folderRepo.findById(folderId);
+        if(!optionalFolderDb.isPresent()){
+            throw new ResourceNotFoundException("Aucun dossier trouvé. Contactez votre administrateur.",null);
+        }
+
+        Folder folderDb = optionalFolderDb.get();
+        if (folderDb.getActions().contains(action)) {
+            throw new ResourceAlreadyAddedException("L'action à déja été traiter sur ce dossier");
+        }
+        folderDb.getActions().add(action);
+
+        return folderDb;
+    }
+
+    @Transactional
+    @ApiOperation(value = "Add action to list of folders", response = Folder.class)
+    @RequestMapping(value="/folders/addAction/{actionId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Folder> addActionToListOfFolders(@PathVariable("actionId") Long actionId, @RequestBody List<Long> foldersIds)
+        throws ResourceNotFoundException {
+
+        Action actionDb = actionRepo.findOne(actionId);
+        if(actionDb == null){
+            throw new ResourceNotFoundException("l'action n'a pas été trouvée. Contactez votre Administrateur.",null);
+        }
+
+        if(foldersIds == null || foldersIds.isEmpty()){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
+        }
+
+        List<Folder> foldersDb = folderRepo.findByIdIn(foldersIds);
+
+        for(Folder f : foldersDb){
+            f.getActions().add(actionDb);
+            folderRepo.save(f);
+        }
+
+        return foldersDb;
+    }
+
+    @Transactional
+    @ApiOperation(value = "Change  status to list of folders", response = Folder.class)
+    @RequestMapping(value="/folders/changeStatus/{status}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Folder> changeStatusToListOfFolders(@PathVariable("status") String status, @RequestBody List<Long> foldersIds)
+        throws ResourceNotFoundException {
+
+        FolderStatus statusEnum = FolderStatus.valueOf(status);
+
+        if(statusEnum == null){
+            throw new ResourceNotFoundException("le status n'a pas été trouvée. Contactez votre Administrateur.",null);
+        }
+
+        if(foldersIds == null || foldersIds.isEmpty()){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
+        }
+
+        List<Folder> foldersDb = folderRepo.findByIdIn(foldersIds);
+
+        for(Folder f : foldersDb){
+            f.setStatus(statusEnum);
+            folderRepo.save(f);
+        }
+
+        return foldersDb;
+    }
 
 }

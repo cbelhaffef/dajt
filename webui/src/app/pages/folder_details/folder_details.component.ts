@@ -6,6 +6,9 @@ import {Folder} from '../../models/folder.model';
 import {Office} from '../../models/office.model';
 import {NgForm} from '@angular/forms';
 import {CourtService} from '../../services/api/court.service';
+import {VictimService} from '../../services/api/victim.service';
+import {GuiltyService} from '../../services/api/guilty.service';
+import {ActionService} from '../../services/api/action.service';
 
 @Component({
     selector   : 's-folders-pg',
@@ -34,6 +37,18 @@ export class FolderDetailsComponent implements OnInit {
     public selectedPriority: string;
     public queryPriority: string;
 
+    public filteredVictims: any[] = [];
+    public selectedVictim: string;
+    public queryVictim: string;
+
+    public filteredGuilties: any[] = [];
+    public selectedGuilty: string;
+    public queryGuilty: string;
+
+    public filteredActions: any[] = [];
+    public selectedAction: string;
+    public queryAction: string;
+
     public showPencilStatus: boolean;
     public showInputStatus: boolean;
 
@@ -46,9 +61,15 @@ export class FolderDetailsComponent implements OnInit {
     public showInputPriority = false;
     public showPencilPriority = false;
 
+    public showInputVicitm = false;
+    public showInputGuilty = false;
+    public showInputAction = false;
 
     constructor(private activateRoute: ActivatedRoute,
                 private folderService: FolderService,
+                private victimService: VictimService,
+                private guiltyService: GuiltyService,
+                private actionService: ActionService,
                 private courtService: CourtService) {
     }
 
@@ -60,7 +81,6 @@ export class FolderDetailsComponent implements OnInit {
                 me.folder = folder;
                 me.isLoading = false;
             });
-
     }
 
     addFolder(f: NgForm) {
@@ -97,6 +117,33 @@ export class FolderDetailsComponent implements OnInit {
         _self.courtService.getCourts(query).subscribe(function(courts) {
             _self.filteredCourts = _self.filterItem(query, courts);
             _self.queryCourt = query;
+        });
+    }
+
+    filterVictims(event) {
+        let _self = this;
+        let query = event.query;
+        _self.victimService.getVictims(query).subscribe(function(victims) {
+            _self.filteredVictims = _self.filterItem(query, victims);
+            _self.queryVictim = query;
+        });
+    }
+
+    filterGuilties(event) {
+        let _self = this;
+        let query = event.query;
+        _self.guiltyService.getGuilties(query).subscribe(function(guilties) {
+            _self.filteredGuilties = _self.filterItem(query, guilties);
+            _self.queryGuilty = query;
+        });
+    }
+
+    filterActions(event) {
+        let _self = this;
+        let query = event.query;
+        _self.actionService.getActions(query).subscribe(function(actions) {
+            _self.filteredActions = _self.filterItem(query, actions);
+            _self.queryAction = query;
         });
     }
 

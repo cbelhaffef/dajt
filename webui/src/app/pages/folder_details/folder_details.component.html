@@ -5,11 +5,11 @@
         </div>
         <div class="col-xs-8 aui-page-header-main">
             <div id="folder-number">
-                <a id="project-name-val" routerLink="/home/legal_cases/offices/{{folder?.office?.id}}">{{folder?.office?.name}}</a>
+                <a id="project-name-val" routerLink="/home/legal_cases/offices/{{folder.office.id}}">{{folder.office.name}}</a>
                 &nbsp;&nbsp;/&nbsp;&nbsp;
-                <a class="issue-link" routerLink="/home/legal_cases/folders/{{folder?.id}}" id="key-val" rel="10049">{{folder?.number}}</a>
+                <a class="issue-link" routerLink="/home/legal_cases/folders/{{folder.id}}" id="key-val" rel="10049">{{folder.number}}</a>
             </div>
-            <h1 id="summary-val">{{folder?.offence}}</h1>
+            <h1 id="summary-val">{{folder.offence}}</h1>
         </div>
         <div class="col-xs-3 aui-page-header-actions">
             <button type="button" class="btn btn-icon" routerLink="/home/legal_cases/folders" style="margin-left: 20px">
@@ -32,31 +32,6 @@
                     <clr-icon shape="user"></clr-icon>
                     <i i18n>Me l'assigner</i>
                 </button>
-                <div class="btn-group-overflow" (click)="isOpen = !isOpen" [ngClass]="{'open':isOpen}">
-                    <button class="btn dropdown-toggle">
-                        <clr-icon shape="ellipsis-horizontal"></clr-icon>
-                    </button>
-                    <div class="dropdown-menu">
-                        <button class="btn">Action 1</button>
-                        <button class="btn">Action 2</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui-g-5">
-            <div class="btn-group btn-primary btn-sm">
-                <button class="btn">
-                    <i i18n>Action 1</i>
-                </button>
-                <button class="btn">
-                    <i i18n>Action 2</i>
-                </button>
-                <button class="btn">
-                    <i i18n>Action 3</i>
-                </button>
-                <button class="btn">
-                    <i i18n>Action 4</i>
-                </button>
             </div>
         </div>
 
@@ -73,12 +48,12 @@
                 </div>
                 <div class="mod-content">
                     <div class="ui-g">
-                        <div class="ui-g-1">
+                        <div class="ui-g-2">
                             <label for="status" i18n>Statut:</label>
                         </div>
                         <div class="ui-g-3 pointer" (mouseover)="showPencilStatus = true" (mouseleave)="showPencilStatus = false">
                             <span id="status" [hidden]="showInputStatus">
-                                <span class="badge badge-info">{{folder?.status}}</span>
+                                <span class="badge badge-info">{{folder.status}}</span>
                                 <clr-icon shape="pencil" (click)="showInputStatus = true" [hidden]="!showPencilStatus"></clr-icon>
                             </span>
                             <div class="ui-inputgroup" [hidden]="!showInputStatus">
@@ -96,12 +71,12 @@
                                 <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputStatus = false"></button>
                             </div>
                         </div>
-                        <div class="ui-g-1">
+                        <div class="ui-g-2">
                             <label for="court" i18n>Tribunal:</label>
                         </div>
                         <div class="ui-g-3 pointer" (mouseover)="showPencilCourt = true" (mouseleave)="showPencilCourt = false">
                             <span id="court" [hidden]="showInputCourt">
-                                <span>{{folder?.court?.name}}</span>
+                                <span>{{folder.court.name}}</span>
                                 <clr-icon shape="pencil" (click)="showInputCourt = true" [hidden]="!showPencilCourt"></clr-icon>
                             </span>
                             <div class="ui-inputgroup" [hidden]="!showInputCourt">
@@ -121,14 +96,14 @@
                         </div>
                     </div>
                     <div class="ui-g">
-                        <div class="ui-g-1">
+                        <div class="ui-g-2">
                             <label for="priority" i18n>Priority:</label>
                         </div>
                         <div class="ui-g-3 pointer" (mouseover)="showPencilPriority = true" (mouseleave)="showPencilPriority = false">
                             <span id="priority" [hidden]="showInputPriority">
 
                                 <img alt="" height="16" src="../../../assets/images/major.svg" width="16">&nbsp;
-                                <span>{{folder?.priority}}</span>
+                                <span>{{folder.priority}}</span>
                                 <clr-icon shape="pencil" (click)="showInputPriority = true" [hidden]="!showPencilPriority"></clr-icon>
                             </span>
                             <div class="ui-inputgroup" [hidden]="!showInputPriority">
@@ -148,16 +123,17 @@
                         </div>
                     </div>
                     <div class="ui-g">
-                        <div class="ui-g-1">
-                            <label for="sendingType" i18n>Type d'envoie:</label>
+                        <div class="ui-g-2">
+                            <label for="sendingType" i18n>Type d'envoi:</label>
                         </div>
                         <div class="ui-g-9 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
                             <span id="sendingType" [hidden]="showInputSendingType">
-                                <span>{{folder?.sendingType}}</span>
+                                <div [innerHTML]="folder.sendingType"></div>
                                 <clr-icon shape="pencil" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></clr-icon>
                             </span>
                             <div class="ui-inputgroup" [hidden]="!showInputSendingType">
-                                <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="folder.sendingType"></textarea>
+                                <!--<textarea rows="5" cols="30" pInputTextarea [(ngModel)]="folder.sendingType"></textarea>-->
+                                <p-editor [(ngModel)]="folder.sendingType"  class="wid100" [style]="{'height':'320px'}"></p-editor>
                                 <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
                                 <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputSendingType = false"></button>
                             </div>
@@ -166,39 +142,98 @@
                     </div>
                 </div>
             </div>
+
             <div id="victims-module">
                 <div class="ui-g">
                     <div class="ui-g-1 toggle-title" i18n>Victimes</div>
-                    <div class="ui-g-10 toggle-bar"></div>
-                    <div class="ui-g-1">
+                    <div class="ui-g-10 toggle-bar" style="width:90%"></div>
+                    <div class="ui-g-1" style="width:2%">
                         <clr-icon shape="plus" style="cursor: pointer"></clr-icon>
                     </div>
 
                 </div>
                 <div class="mod-content">
-                    <p-table [value]="folder?.victims" [scrollable]="true" scrollHeight="200px">
+                    <div class="ui-inputgroup" [hidden]="!showInputVicitm">
+                        <p-autoComplete [suggestions]="filteredVictims"
+                                        (completeMethod)="filterVictims($event)"
+                                        [minLength]="1"
+                                        i18n-placeholder="Victimes"
+                                        [size]="10"
+                                        id="victimEdit"
+                                        name="victimEdit"
+                                        [(ngModel)]="selectedVictim"
+
+                                        [dropdown]="true">
+                        </p-autoComplete>
+                        <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
+                        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputVicitm = false"></button>
+                    </div>
+                    <p-table [value]="folder.victims" [scrollable]="true" scrollHeight="200px">
                         <ng-template pTemplate="body" let-v>
                             <tr>
                                 <td>{{v.name}}</td>
+                                <td><clr-icon shape="trash" (click)="removeVictim(v.id)"></clr-icon></td>
                             </tr>
                         </ng-template>
                     </p-table>
                 </div>
             </div>
+
             <div id="guilties-module">
                 <div class="ui-g">
                     <div class="ui-g-1 toggle-title" i18n>Coupables</div>
-                    <div class="ui-g-10 toggle-bar"></div>
-                    <div class="ui-g-1">
+                    <div class="ui-g-10 toggle-bar" style="width:90%"></div>
+                    <div class="ui-g-1" style="width:2%">
                         <clr-icon shape="plus"></clr-icon>
                     </div>
                 </div>
                 <div class="mod-content">
-                    <p-table [value]="folder?.guilties" [scrollable]="true" scrollHeight="200px">
+                    <div class="ui-inputgroup" [hidden]="!showInputGuilty">
+                        <p-autoComplete [suggestions]="filteredGuilties"
+                                        (completeMethod)="filterGuilties($event)"
+                                        [minLength]="1"
+                                        i18n-placeholder="Coupables"
+                                        [size]="10"
+                                        id="guiltyEdit"
+                                        name="guiltyEdit"
+                                        [(ngModel)]="selectedGuilty"
+                                        [dropdown]="true">
+                        </p-autoComplete>
+                        <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
+                        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputGuilty = false"></button>
+                    </div>
+                    <p-table [value]="folder.guilties" [scrollable]="true" scrollHeight="200px">
                         <ng-template pTemplate="body" let-g>
                             <tr>
                                 <td>{{g.name}}</td>
+                                <td><clr-icon shape="trash" (click)="removeGuilty(g.id)"></clr-icon></td>
                             </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+
+            <div id="actions-module">
+                <div class="ui-g">
+                    <div class="ui-g-1 toggle-title" i18n>Actions</div>
+                    <div class="ui-g-10 toggle-bar" style="width:90%"></div>
+                    <div class="ui-g-1" style="width:2%">
+                        <clr-icon shape="plus"></clr-icon>
+                    </div>
+                </div>
+                <div class="mod-content">
+                    <div class="ui-inputgroup" [hidden]="!showInputAction">
+
+                        <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
+                        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputAction = false"></button>
+                    </div>
+                    <p-table [value]="folder.actions" [scrollable]="true" scrollHeight="200px">
+                        <ng-template pTemplate="body" let-a>
+                            <tr>
+                                <td>{{a.name}}</td>
+                                <td><clr-icon shape="trash" (click)="removeAction(a.id)"></clr-icon></td>
+                            </tr>
+
                         </ng-template>
                     </p-table>
                 </div>
@@ -218,7 +253,7 @@
                         </div>
                         <div class="ui-g-3">
                             <!--<img src="../../../assets/images/useravatar.png">&nbsp;-->
-                            <span id="assignee">{{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.lastName}}</span>
+                            <span id="assignee">{{folder.assignee.firstName}}&nbsp;{{folder.assignee.lastName}}</span>
                         </div>
                     </div>
                     <div class="ui-g">
@@ -226,7 +261,7 @@
                             <label for="reporter">Auteur:</label>
                         </div>
                         <div class="ui-g-9">
-                            <span id="reporter">{{folder?.reporter?.firstName}}&nbsp;{{folder?.reporter?.lastName}}</span>
+                            <span id="reporter">{{folder.reporter.firstName}}&nbsp;{{folder.reporter.lastName}}</span>
                         </div>
                     </div>
                 </div>

@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class UserService {
 
-  @Autowired
-  private UserRepo userRepo;
+    @Autowired
+    private UserRepo userRepo;
 
 	public String getLoggedInUsername(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

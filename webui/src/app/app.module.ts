@@ -43,12 +43,14 @@ import {registerLocaleData} from '@angular/common';
 import {OfficeService} from './services/api/office.service';
 import {FoldersCreateDialogComponent} from './pages/folders/folders.create.dialog.component';
 import localeAr from '@angular/common/locales/ar';
-import {AutoCompleteModule, DropdownModule, InputTextModule, SplitButtonModule} from 'primeng/primeng';
+import {AutoCompleteModule, DropdownModule, InputTextModule, SplitButtonModule, TooltipModule} from 'primeng/primeng';
 import {UserService} from 'app/services/api/user.service';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SpinnerService} from './services/spinner.service';
 import {SpinnerComponent} from './components/spinner/spinner.component';
 import {PanelModule} from 'primeng/panel';
+import {ActionService} from './services/api/action.service';
+import {EditorModule} from 'primeng/editor';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -78,6 +80,8 @@ registerLocaleData(localeAr, 'ar');
     SplitButtonModule,
     AutoCompleteModule,
     PanelModule,
+    TooltipModule,
+    EditorModule,
 
 
     // Local App Modules
@@ -122,6 +126,7 @@ registerLocaleData(localeAr, 'ar');
     GuiltyService,
     CourtService,
     OfficeService,
+    ActionService,
     SpinnerService,
     AppConfig
   ],

@@ -135,7 +135,8 @@
                 <label for="sendingType" i18n>Type d'envoie</label>
             </div>
             <div class="ui-g-10">
-                <textarea pInputTextarea id="sendingType" name="sendingType" ngModel class="wid100"></textarea>
+                <p-editor id="sendingType" name="sendingType" ngModel class="wid100" [style]="{'height':'320px'}"></p-editor>
+                <!--<textarea pInputTextarea id="sendingType" name="sendingType" ngModel class="wid100"></textarea>-->
             </div>
         </div>
     </form>

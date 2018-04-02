@@ -3,6 +3,7 @@ import {Victim} from './victim.model';
 import {Guilty} from './guilty.model';
 import {User} from './user.model';
 import {Office} from './office.model';
+import {Action} from './action.model';
 
 export class Folder {
 
@@ -18,6 +19,7 @@ export class Folder {
     public reporter: User;
     public victims: Victim[];
     public guilties: Guilty[];
+    public actions: Action[];
     public sendingType: string;
     public createDate: Date;
     public modifDate: Date;

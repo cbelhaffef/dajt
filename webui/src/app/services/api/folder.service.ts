@@ -6,6 +6,7 @@ import {TranslateService} from './translate.service';
 import {HttpParams} from '@angular/common/http';
 import {Folder} from '../../models/folder.model';
 import {User} from '../../models/user.model';
+import {Action} from '../../models/action.model';
 
 @Injectable()
 export class FolderService {
@@ -97,6 +98,26 @@ export class FolderService {
         this.apiRequest.post('api/folders/assign/' + user.userId, folders)
             .subscribe(jsonResp => {
                folderSubject.next(jsonResp);
+            });
+        return folderSubject;
+    }
+
+    addActionToListOfFolders(folders: number[], action: Action): Observable<any> {
+        const me = this;
+        const folderSubject = new  Subject<any>();
+        this.apiRequest.post('api/folders/addAction/' + action.id, folders)
+            .subscribe(jsonResp => {
+                folderSubject.next(jsonResp);
+            });
+        return folderSubject;
+    }
+
+    changeStatusToListOfFolders(folders: number[], status: string): Observable<any> {
+        const me = this;
+        const folderSubject = new  Subject<any>();
+        this.apiRequest.post('api/folders/changeStatus/' + status, folders)
+            .subscribe(jsonResp => {
+                folderSubject.next(jsonResp);
             });
         return folderSubject;
     }

@@ -1,9 +1,9 @@
 package com.app.model.user;
 
 import com.app.model.folder.Folder;
+import com.app.model.office.Office;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
@@ -11,64 +11,47 @@ import java.util.List;
 
 @Entity
 @Table(name="user")
+@Data
 public class User {
     @Id
-    @Getter @Setter
     @GeneratedValue
     @Column(name="user_id")
     private Long userId;
 
-    @Getter @Setter private String username = "";
-    @Getter @Setter private String password = "";
-    @Getter @Setter private String company;
-    @Getter @Setter private String firstName;
-    @Getter @Setter private String lastName;
-    @Getter @Setter private String email;
-
-    @JsonIgnore @Getter @Setter private int    securityProviderId;
-    @JsonIgnore @Getter @Setter private int    defaultCustomerId;
-
-    @JsonIgnore @Getter @Setter private String phone;
-    @JsonIgnore @Getter @Setter private String address1;
-    @JsonIgnore @Getter @Setter private String address2;
-    @JsonIgnore @Getter @Setter private String country;
-    @JsonIgnore @Getter @Setter private String postal;
+    private String username = "";
+    private String password = "";
+    private String firstName;
+    private String lastName;
+    private String email;
 
     @Enumerated(EnumType.STRING)
-    @Getter @Setter private Role role;
+    private Role role;
 
     //@JsonIgnore
-    @JsonIgnore @Getter @Setter private boolean isActive;
-    //@JsonIgnore
-    @JsonIgnore @Getter @Setter private boolean isBlocked;
-    @JsonIgnore @Getter @Setter private String  secretQuestion;
-    @JsonIgnore @Getter @Setter private String  secretAnswer;
-    @JsonIgnore @Getter @Setter private boolean enableBetaTesting;
-    @JsonIgnore @Getter @Setter private boolean enableRenewal;
+    @JsonIgnore
+    private boolean isActive;
+
+    @ManyToOne
+    @JoinColumn(name="office_id")
+    private Office office;
 
     @JsonIgnore
     @OneToMany(mappedBy = "assignee")
     List<Folder> folders;
 
     public User(){
-        this("new", "PASSWORD", Role.USER, "new", "new", true, "", "", "", "", "", "", "", "", true, false);
+        this("new", "PASSWORD", Role.USER, "new", "new", true);
     }
 
     public User(String username, String password, String firstName, String lastName){
-        this(username, password, Role.USER, firstName, lastName, true, "", "", "", "", "", "", "", "", true, false);
+        this(username, password, Role.USER, firstName, lastName, true);
     }
 
     public User(String username, String password, Role role, String firstName, String lastName){
-        this(username, password, role, firstName, lastName, true, "", "", "", "", "", "", "", "", true, false);
+        this(username, password, role, firstName, lastName, true);
     }
 
     public User(String username, String password, Role role, String firstName, String lastName, boolean isActive){
-        this(username, password, role, firstName, lastName, isActive, "", "", "", "", "", "", "", "", true, false);
-    }
-
-    public User(String username, String password, Role role, String firstName, String lastName, boolean isActive,
-         String company, String phone, String address1, String address2, String country, String postal,
-         String secretQuestion, String secretAnswer, boolean enableRenewal, boolean enableBetaTesting){
         this.setUsername(username);
         this.setEmail(username);
         this.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -76,19 +59,9 @@ public class User {
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setActive(isActive);
-        this.setCompany(company);
-        this.setPhone(phone);
-        this.setAddress1(address1);
-        this.setAddress2(address2);
-        this.setCountry(country);
-        this.setPostal(postal);
-        this.setSecretQuestion(secretQuestion);
-        this.setSecretAnswer(secretAnswer);
-        this.setEnableRenewal(enableRenewal);
-        this.setEnableBetaTesting(enableBetaTesting);
     }
 
     public String getFullName(){
-        return this.firstName + this.lastName;
+        return this.firstName + " " + this.lastName;
     }
 }
