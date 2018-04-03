@@ -18,22 +18,10 @@ CREATE TABLE user (
     first_name  NVARCHAR(50) ,
     last_name   NVARCHAR(50) ,
     email       NVARCHAR(70) ,
-    security_provider_id INT ,
-    default_customer_id  INT ,
-    company     NVARCHAR(50) ,
-    phone       NVARCHAR(20) ,
-    address1    NVARCHAR(100),
-    address2    NVARCHAR(100),
-    country     NVARCHAR(20) ,
-    postal      NVARCHAR(20) ,
     role        NVARCHAR(20) ,
-    other_roles NVARCHAR(80) ,
+    sex         NVARCHAR(20) ,
+    office_id   INT ,
     is_active   TINYINT  ,
-    is_blocked  TINYINT  ,
-    secret_question     NVARCHAR(100),
-    secret_answer       NVARCHAR(100),
-    enable_beta_testing TINYINT,
-    enable_renewal      TINYINT,
     CONSTRAINT user_id PRIMARY KEY(user_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;;
 
@@ -71,12 +59,12 @@ CREATE TABLE office (
     office_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
     PRIMARY KEY (office_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table: folder */
 CREATE TABLE folder (
     folder_id       INT NOT NULL AUTO_INCREMENT,
-    number          VARCHAR(255) NOT NULL ,
+    number          VARCHAR(255) NOT NULL UNIQUE,
     offence         VARCHAR(255) NOT NULL,
     office_id       INT NOT NULL,
     court_id        INT NOT NULL,
@@ -113,12 +101,19 @@ CREATE TABLE victim (
     PRIMARY KEY (victim_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/* Table: action */
+CREATE TABLE action (
+    action_id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(255),
+    PRIMARY KEY (action_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /* Table: folder_guilty */
 CREATE TABLE folder_guilty(
     folder_id INT NOT NULL,
     guilty_id INT NOT NULL,
     PRIMARY KEY (`folder_id`,`guilty_id`),
-   /* KEY `guilty_id` (`guilty_id`),*/
+    /* KEY `guilty_id` (`guilty_id`),*/
     CONSTRAINT fk_folder__guilty FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
     CONSTRAINT fk_guilty__folder FOREIGN KEY (guilty_id) REFERENCES guilty(guilty_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -133,16 +128,25 @@ CREATE TABLE folder_victim(
     CONSTRAINT fk_victim__folder FOREIGN KEY (victim_id) REFERENCES victim(victim_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/* Table: folder_action */
+CREATE TABLE folder_action(
+    folder_id INT NOT NULL,
+    action_id INT NOT NULL,
+    PRIMARY KEY (`folder_id`,`action_id`),
+    CONSTRAINT fk_folder__action FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
+    CONSTRAINT fk_action__folder FOREIGN KEY (action_id) REFERENCES action(action_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /* Table : Transmission */
 CREATE TABLE transmission (
-  transmission_id  INT NOT NULL AUTO_INCREMENT,
-  work_done        VARCHAR(255) ,
-  note             VARCHAR(255) ,
-  send_number      VARCHAR(250),
-  send_date        DATETIME,
-  amount           INT,
-  folder_id        INT,
-  transmitted      BOOLEAN NOT NULL DEFAULT FALSE,
-  CONSTRAINT fk_transmission__folder FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
-  PRIMARY KEY (transmission_id)
+    transmission_id  INT NOT NULL AUTO_INCREMENT,
+    work_done        VARCHAR(255) ,
+    note             VARCHAR(255) ,
+    send_number      VARCHAR(250),
+    send_date        DATETIME,
+    amount           INT,
+    folder_id        INT,
+    transmitted      BOOLEAN NOT NULL DEFAULT FALSE,
+    CONSTRAINT fk_transmission__folder FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
+    PRIMARY KEY (transmission_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
