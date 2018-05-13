@@ -17,17 +17,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
 @Table(name="folder")
-public class Folder {
+public class Folder implements Comparable<Folder>{
 
     @Id
     @GeneratedValue
@@ -36,6 +38,9 @@ public class Folder {
 
     @Column(name="number", nullable = false,unique = true)
     private String number;
+
+    @Column(name="direction_number", nullable = true, unique = true)
+    private String directionNumber;
 
     @Column(name="offence", nullable = false)
     private String offence;
@@ -112,4 +117,9 @@ public class Folder {
         inverseJoinColumns = { @JoinColumn(name = "action_id") }
     )
     private Set<Action> actions = new HashSet<>();
+
+    @Override
+    public int compareTo(@NotNull Folder o) {
+        return this.getNumber().compareTo(o.getNumber());
+    }
 }

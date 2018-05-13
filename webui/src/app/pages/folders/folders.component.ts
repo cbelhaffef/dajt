@@ -105,7 +105,7 @@ export class FoldersComponent implements OnInit {
     openCreateFolderDialog(): void {
         let _self = this;
         let dialogRef = _self.dialog.open(FoldersCreateDialogComponent, {
-            width: '40%',
+            width: '60%',
             direction: 'rtl',
             data: { name: _self.name, animal: _self.animal }
         });

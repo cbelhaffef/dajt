@@ -58,6 +58,7 @@ CREATE TABLE office (
 CREATE TABLE folder (
     folder_id       INT NOT NULL AUTO_INCREMENT,
     number          VARCHAR(255) NOT NULL UNIQUE,
+    direction_number VARCHAR(255) UNIQUE,
     offence         VARCHAR(255) NOT NULL,
     office_id       INT NOT NULL,
     court_id        INT NOT NULL,

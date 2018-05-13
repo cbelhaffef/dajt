@@ -1,15 +1,18 @@
-<div class="s-login-pg">
-    <div class="s-login-pg-head">
-        <h3 i18n>Connexion</h3>
-    </div>
-    <form class="s-login-pg-form" name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
+<div class="s-login-logo"></div>
+<div class="s-login-container">
+    <div class="s-login-pg">
+        <div class="s-login-pg-head">
+            <h3 i18n>Connexion</h3>
+        </div>
+        <form class="s-login-pg-form" name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
+            <input type="text"     i18n-placeholder="Identifiant (admin)" name="username" [(ngModel)]="model.username" #username="ngModel" required/>
+            <input type="password" i18n-placeholder="Mot de passe (admin)" name="password" [(ngModel)]="model.password" #password="ngModel" required/>
+            <button type="submit" class="btn btn-primary" i18n>Se connecter</button>
+        </form>
+        <div class="s-login-pg-foot">
+            <div *ngIf="errMsg" style="color:indianred; font-weight: bold">{{errMsg}}</div>
+        </div>
 
-        <input type="text"     i18n-placeholder="Identifiant (demo)" name="username" [(ngModel)]="model.username" #username="ngModel" required/>
-        <input type="password" placeholder="Mot de passe (demo)" name="password" [(ngModel)]="model.password" #password="ngModel" required/>
-        <button type="submit" class="btn btn-primary" i18n>Se connecter</button>
-    </form>
-    <div class="s-login-pg-foot">
-        <div *ngIf="errMsg" style="color:indianred; font-weight: bold">{{errMsg}}</div>
     </div>
-
 </div>
+

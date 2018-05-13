@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
     model: any = {};
-    errMsg:string = '';
+    errMsg: string = '';
     constructor(
         private router: Router,
         private loginService: LoginService) { }

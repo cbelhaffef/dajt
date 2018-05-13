@@ -1,27 +1,34 @@
 package com.cbelhaffef.dajt.service.impl;
 
+import com.cbelhaffef.dajt.model.court.Court;
 import com.cbelhaffef.dajt.model.folder.Folder;
+import com.cbelhaffef.dajt.model.guilty.Guilty;
+import com.cbelhaffef.dajt.model.victim.Victim;
+import com.cbelhaffef.dajt.repo.FolderRepo;
 import com.cbelhaffef.dajt.service.FolderExelImporterService;
 import com.cbelhaffef.dajt.service.model.FolderExel;
+import com.google.common.collect.Sets;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FolderExelImporterServiceImpl implements FolderExelImporterService{
 
+    @Autowired
+    private FolderRepo folderRepo;
 
     @Override
     public Set<Folder> doImport(File fileExel) throws FileNotFoundException {
-        Set<Folder> folders = new HashSet<>();
+        Set<Folder> folders = new TreeSet<>();
         try {
             FileInputStream excelFile = new FileInputStream(fileExel);
             Workbook workbook = new XSSFWorkbook(excelFile);
@@ -39,17 +46,58 @@ public class FolderExelImporterServiceImpl implements FolderExelImporterService{
 
                 Folder folder = new Folder();
 
-                while (cellIterator.hasNext()) {
+
+                for(int i = 0 ; cellIterator.hasNext() ; i++){
 
                     Cell currentCell = cellIterator.next();
                     //getCellTypeEnum shown as deprecated for version 3.15
                     //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
-                    if (currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == 0 && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setNumber(currentCell.getStringCellValue());
                     }
-                    break; // FIXME get first cell, it's temporary
+
+                    if (i == 1 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                        folder.setDirectionNumber(currentCell.getStringCellValue());
+                    }
+
+                    if (i == 2 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                        String stringVictims = currentCell.getStringCellValue();
+                        Set<Victim> victims;
+                        if(stringVictims.contains("\n")){
+                            String[] arr = stringVictims.split("\n");
+                            victims = Arrays.stream(arr).map(a -> new Victim(a)).collect(Collectors.toSet());
+                        }else{
+                            victims = Sets.newHashSet(new Victim(stringVictims));
+                        }
+                        folder.setVictims(victims);
+                    }
+
+                    if (i == 3 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                        String stringGuilties = currentCell.getStringCellValue();
+                        Set<Guilty> guilties;
+                        if(stringGuilties.contains("\n")){
+                            String[] arr = stringGuilties.split("\n");
+                            guilties = Arrays.stream(arr).map(a -> new Guilty(a)).collect(Collectors.toSet());
+                        }else{
+                            guilties = Sets.newHashSet(new Guilty(stringGuilties));
+                        }
+                        folder.setGuilties(guilties);
+                    }
+
+                    if (i == 4 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                        folder.setOffence(currentCell.getStringCellValue());
+                    }
+
+                    if (i == 5 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                        folder.setCourt(new Court(currentCell.getStringCellValue()));
+                    }
+
+                    if (i == 6 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                        folder.setSendingType(currentCell.getStringCellValue());
+                    }
                 }
-                folders.add(folder);
+                folderRepo.save(folder);
+                //folders.add(folder);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

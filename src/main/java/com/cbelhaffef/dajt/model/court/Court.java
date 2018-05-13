@@ -26,4 +26,12 @@ public class Court {
     @JsonIgnore
     @OneToMany(mappedBy="court")
     List<Folder> folders;
+
+    public Court() {
+        super();
+    }
+
+    public Court(String name) {
+        this.name = name;
+    }
 }

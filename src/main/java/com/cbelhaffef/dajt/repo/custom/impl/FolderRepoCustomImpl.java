@@ -16,7 +16,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 import org.springframework.data.jpa.repository.support.Querydsl;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements FolderRepoCustom {
 
     public FolderRepoCustomImpl() {

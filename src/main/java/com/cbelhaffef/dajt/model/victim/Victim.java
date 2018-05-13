@@ -18,4 +18,12 @@ public class Victim {
 
     @Column(name="name")
     private String name;
+
+    public Victim() {
+        super();
+    }
+
+    public Victim(String name) {
+        this.name = name;
+    }
 }

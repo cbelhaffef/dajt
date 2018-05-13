@@ -23,4 +23,12 @@ public class Guilty {
 
     @Column(name="name")
     private String name;
+
+    public Guilty() {
+        super();
+    }
+
+    public Guilty(String name) {
+        this.name = name;
+    }
 }
