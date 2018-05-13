@@ -1,4 +1,9 @@
 @import '../../../assets/scss/var';
+
+.s-folders-pg{
+    margin-top: 67px;
+}
+
 .s-info-bar{
     display:flex;
     flex-direction: row;
@@ -52,12 +57,19 @@
 }
 
 #folder-form-search{
-    text-align: center;
+    text-align: left;
     border: 1px solid #ccc;
     border-radius: 2px;
     padding: 0;
     background-color: #fff;
-    margin-bottom: 10px;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.text-left{
+    text-align: left;
 }
 
 #floating-button{

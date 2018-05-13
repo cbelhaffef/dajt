@@ -1,5 +1,5 @@
 <div class="mat-dialog-header">
-    <h1 mat-dialog-title style="border-bottom : 1px solid #ccc!important;" i18n>Création d'un dossier </h1>
+    <h1 mat-dialog-title i18n>Création d'un dossier </h1>
 </div>
 
 <div mat-dialog-content>
@@ -146,12 +146,6 @@
 </div>
 
 <div mat-dialog-actions style="border-top : 1px solid #ccc!important;">
-    <button type="button" pButton class="btn btn-sm btn-icon" (click)="createFolder(createFolderForm)">
-        <clr-icon shape="check"></clr-icon>
-        <span i18n>Créer</span>
-    </button>
-    <button type="button" pButton  class="btn btn-sm btn-icon" (click)="close()">
-        <clr-icon shape="times"></clr-icon>
-        <span i18n>Annuler</span>
-    </button>
+    <p-button (click)="createFolder(createFolderForm)" icon="fa fa-fw fa-check" i18n-label label="Créer"></p-button>
+    <p-button (click)="close()" icon="fa fa-fw fa-close" i18n-label label="Annuler"></p-button>
 </div>

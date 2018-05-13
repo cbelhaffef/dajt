@@ -1,23 +1,29 @@
-<div class="no-margin">  <!-- class="main-container" will create fixed height container -->
+<div class="no-margin">
+    <div  id="layout-topbar">
+        <a class="menu-button" href="#">
+            <i class="fa fa-bars"></i>
+        </a>
 
-    <!-- Main App Header -->
-    <header class="header header-2" style="color: #FFFFFF;background-color: #0667D0;">
-        <div class="branding dajt-logo">
-            <!--<span class="title">DAJT</span>-->
-        </div>
-        <div class="header-nav">
-            <!--<a *ngFor="let header of appHeaderItems let idx = index" class="nav-link" [routerLink]="header.href" routerLinkActive="active" >-->
-                <!--<span class="nav-text">{{ header.label }}</span>-->
-            <!--</a>-->
-            <a class="nav-link" routerLink="/home/legal_cases" routerLinkActive="active" >
-                <span class="nav-text" i18n>Affaires Judiciaires</span>
-            </a>
-        </div>
-        <div class="header-actions">
-            <label style="line-height: 60px;"><clr-icon shape="user"></clr-icon> &nbsp;{{userName}}</label>
-            <a [routerLink]="'/logout'" class="nav-link nav-text"> <clr-icon shape="power"></clr-icon></a>
-        </div>
-    </header>
+        <a class="logo" href="#/">
+           <img class="ng-tns-c0-0" alt="logo" src="../assets/images/dajt-logo-mini.jpg">
+        </a>
+
+        <ul class="topbar-menu">
+            <li class="ng-tns-c0-0">
+                <a routerLink="/home/legal_cases/folders" routerLinkActive="active" i18n>Affaires Judiciaires</a>
+            </li>
+        </ul>
+    </div>
+    <div  class="subnav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home/legal_cases/folders" routerLinkActive="active" i18n>Liste des Dossiers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home/legal_cases/advocates" routerLinkActive="active" i18n>Liste des Avocats</a>
+            </li>
+        </ul>
+    </div>
 
     <nav class="subnav" >
         <ul class="nav">
@@ -29,7 +35,6 @@
             </li>
         </ul>
     </nav>
-
 
     <router-outlet></router-outlet>
     <app-spinner></app-spinner>

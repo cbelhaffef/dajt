@@ -18,8 +18,6 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-          "../node_modules/clarity-ui/clarity-ui.min.css",
-          "../node_modules/clarity-icons/clarity-icons.min.css",
           "../node_modules/primeng/resources/themes/omega/theme.css",
           "../node_modules/primeng/resources/primeng.min.css",
           "../node_modules/quill/dist/quill.core.css",
@@ -27,7 +25,6 @@
       ],
       "scripts": [
         "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-        "../node_modules/clarity-icons/clarity-icons.min.js",
         "../node_modules/quill/dist/quill.js"
       ],
       "environmentSource": "environments/environment.ts",

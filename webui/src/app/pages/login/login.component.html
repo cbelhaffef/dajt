@@ -4,10 +4,42 @@
         <div class="s-login-pg-head">
             <h3 i18n>Connexion</h3>
         </div>
-        <form class="s-login-pg-form" name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
-            <input type="text"     i18n-placeholder="Identifiant (admin)" name="username" [(ngModel)]="model.username" #username="ngModel" required/>
-            <input type="password" i18n-placeholder="Mot de passe (admin)" name="password" [(ngModel)]="model.password" #password="ngModel" required/>
-            <button type="submit" class="btn btn-primary" i18n>Se connecter</button>
+        <form class="s-login-form" name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
+            <div class="ui-g">
+                <div class="ui-g-2"></div>
+                <div class="ui-g-8">
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" pInputText id="username" name="username"
+                               size="30"
+                               i18n-placeholder="Identifiant (admin)"
+                               [(ngModel)]="model.username" #username="ngModel" required/>
+                    </div>
+                </div>
+                <div class="ui-g-2"></div>
+            </div>
+
+            <div class="ui-g">
+                <div class="ui-g-2"></div>
+                <div class="ui-g-8">
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+                        <input type="password" pInputText id="password" name="password"
+                               size="30"
+                               i18n-placeholder="Mot de passe (admin)"
+                               [(ngModel)]="model.password" #password="ngModel" required/>
+                    </div>
+                </div>
+                <div class="ui-g-2"></div>
+            </div>
+
+            <div class="ui-g">
+                <div class="ui-g-4"></div>
+                <div class="ui-g-4" style="text-align: center;margin-top: 10px">
+                    <button type="submit" pButton i18n-label label="Se connecter"></button>
+                </div>
+                <div class="ui-g-4"></div>
+            </div>
         </form>
         <div class="s-login-pg-foot">
             <div *ngIf="errMsg" style="color:indianred; font-weight: bold">{{errMsg}}</div>

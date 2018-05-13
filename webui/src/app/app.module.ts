@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // Third Party Modules
-import {ClarityModule} from 'clarity-angular';
 import {MatDialogModule, MatProgressSpinnerModule} from '@angular/material';
 import {TableModule} from 'primeng/table';
 // Local App Modules
@@ -51,6 +50,7 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
 import {PanelModule} from 'primeng/panel';
 import {ActionService} from './services/api/action.service';
 import {EditorModule} from 'primeng/editor';
+import {CardModule} from 'primeng/card';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -64,16 +64,13 @@ registerLocaleData(localeAr, 'ar');
     ReactiveFormsModule,
     HttpClientModule,
 
-
-    // Thirdparty Module
-    ClarityModule,
-
     // Angular Material
     MatDialogModule,
     MatProgressSpinnerModule,
 
     // Primeng Module
     TableModule,
+    CardModule,
     DropdownModule,
     InputTextModule,
     OverlayPanelModule,
