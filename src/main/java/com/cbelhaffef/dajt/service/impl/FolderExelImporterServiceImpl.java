@@ -1,12 +1,12 @@
 package com.cbelhaffef.dajt.service.impl;
 
+import com.cbelhaffef.dajt.enums.FolderColumnImport;
 import com.cbelhaffef.dajt.model.court.Court;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.guilty.Guilty;
 import com.cbelhaffef.dajt.model.victim.Victim;
 import com.cbelhaffef.dajt.repo.FolderRepo;
 import com.cbelhaffef.dajt.service.FolderExelImporterService;
-import com.cbelhaffef.dajt.service.model.FolderExel;
 import com.google.common.collect.Sets;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -52,15 +52,15 @@ public class FolderExelImporterServiceImpl implements FolderExelImporterService{
                     Cell currentCell = cellIterator.next();
                     //getCellTypeEnum shown as deprecated for version 3.15
                     //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
-                    if (i == 0 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == FolderColumnImport.NUMBER.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setNumber(currentCell.getStringCellValue());
                     }
 
-                    if (i == 1 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == FolderColumnImport.DIRECTION_NUMBER.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setDirectionNumber(currentCell.getStringCellValue());
                     }
 
-                    if (i == 2 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == FolderColumnImport.VICTIMS.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         String stringVictims = currentCell.getStringCellValue();
                         Set<Victim> victims;
                         if(stringVictims.contains("\n")){
@@ -72,7 +72,7 @@ public class FolderExelImporterServiceImpl implements FolderExelImporterService{
                         folder.setVictims(victims);
                     }
 
-                    if (i == 3 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == FolderColumnImport.GUILTIES.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         String stringGuilties = currentCell.getStringCellValue();
                         Set<Guilty> guilties;
                         if(stringGuilties.contains("\n")){
@@ -84,20 +84,20 @@ public class FolderExelImporterServiceImpl implements FolderExelImporterService{
                         folder.setGuilties(guilties);
                     }
 
-                    if (i == 4 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == FolderColumnImport.OFFENCE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setOffence(currentCell.getStringCellValue());
                     }
 
-                    if (i == 5 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == FolderColumnImport.COURT.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setCourt(new Court(currentCell.getStringCellValue()));
                     }
 
-                    if (i == 6 && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    if (i == FolderColumnImport.SENDING_TYPE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setSendingType(currentCell.getStringCellValue());
                     }
                 }
                 folderRepo.save(folder);
-                //folders.add(folder);
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

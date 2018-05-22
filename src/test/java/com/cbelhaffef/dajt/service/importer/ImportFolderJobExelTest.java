@@ -3,12 +3,10 @@ package com.cbelhaffef.dajt.service.importer;
 import com.cbelhaffef.dajt.dataset.FoldersDS;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.service.impl.FolderExelImporterServiceImpl;
-import com.cbelhaffef.dajt.service.model.FolderExel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -16,8 +14,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import static java.util.function.Predicate.isEqual;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
