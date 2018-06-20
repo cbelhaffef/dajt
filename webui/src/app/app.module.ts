@@ -42,7 +42,10 @@ import {registerLocaleData} from '@angular/common';
 import {OfficeService} from './services/api/office.service';
 import {FoldersCreateDialogComponent} from './pages/folders/folders.create.dialog.component';
 import localeAr from '@angular/common/locales/ar';
-import {AutoCompleteModule, DropdownModule, InputTextModule, SplitButtonModule, TooltipModule} from 'primeng/primeng';
+import {
+    AutoCompleteModule, CheckboxModule, DropdownModule, InputTextModule, SplitButtonModule,
+    TooltipModule
+} from 'primeng/primeng';
 import {UserService} from 'app/services/api/user.service';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SpinnerService} from './services/spinner.service';
@@ -79,6 +82,7 @@ registerLocaleData(localeAr, 'ar');
     PanelModule,
     TooltipModule,
     EditorModule,
+    CheckboxModule,
 
 
     // Local App Modules

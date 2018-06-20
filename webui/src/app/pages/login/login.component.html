@@ -6,7 +6,6 @@
         </div>
         <form class="s-login-form" name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
             <div class="ui-g">
-                <div class="ui-g-2"></div>
                 <div class="ui-g-8">
                     <div class="ui-inputgroup">
                         <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
@@ -16,29 +15,38 @@
                                [(ngModel)]="model.username" #username="ngModel" required/>
                     </div>
                 </div>
-                <div class="ui-g-2"></div>
             </div>
 
             <div class="ui-g">
-                <div class="ui-g-2"></div>
                 <div class="ui-g-8">
                     <div class="ui-inputgroup">
                         <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
-                        <input type="password" pInputText id="password" name="password"
+                        <input type="password" pInputText
+                               id="password"
+                               name="password"
                                size="30"
                                i18n-placeholder="Mot de passe (admin)"
                                [(ngModel)]="model.password" #password="ngModel" required/>
                     </div>
                 </div>
-                <div class="ui-g-2"></div>
             </div>
 
             <div class="ui-g">
-                <div class="ui-g-4"></div>
-                <div class="ui-g-4" style="text-align: center;margin-top: 10px">
+                <div class="ui-g-6">
+                    <p-checkbox i18n-label
+                                label="Maintenir la connexion"
+                                binary="true"
+                                id="keepConnection"
+                                name="keepConnection"
+                                [(ngModel)]="model.keepConnection">
+                    </p-checkbox>
+                </div>
+            </div>
+
+            <div class="ui-g submitMargin">
+                <div class="ui-g-4">
                     <button type="submit" pButton i18n-label label="Se connecter"></button>
                 </div>
-                <div class="ui-g-4"></div>
             </div>
         </form>
         <div class="s-login-pg-foot">

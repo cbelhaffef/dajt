@@ -52,35 +52,34 @@
                     <div class="ui-g-1  text-left">
                         <label for="office" i18n>Bureau</label>
                     </div>
-                    <div class="ui-g-3  text-right">
-                        <div class="select ">
-                            <select id="office" name="office" ngModel>
-                                <option value=""></option>
-                                <option *ngFor="let o of listOffices" value="{{o.id}}">{{o.name}}</option>
-                            </select>
-                        </div>
+                    <div class="ui-g-2  text-right">
+                        <select id="office" name="office" class="select-basic" ngModel>
+                            <option value=""></option>
+                            <option *ngFor="let o of listOffices" value="{{o.id}}">{{o.name}}</option>
+                        </select>
                     </div>
 
                     <div class="ui-g-1  text-left">
                         <label for="status" i18n>Status</label>
                     </div>
-                    <div class="ui-g-2  text-right">
-                        <div class="select ">
-                            <select id="status" name="status" ngModel>
-                                <option value=""></option>
-                                <option *ngFor="let st of listFolderStatus" value="{{st}}">{{st}}</option>
-                            </select>
-                        </div>
+                    <div class="ui-g-3  text-right">
+                        <select id="status" name="status" class="select-basic" ngModel>
+                            <option value=""></option>
+                            <option *ngFor="let st of listFolderStatus" value="{{st}}">{{st}}</option>
+                        </select>
                     </div>
 
-                    <div class="ui-g-2">
+                    <div class="ui-g-1  text-left">
+                    </div>
+
+                    <div class="ui-g-3 text-right">
                         <button type="submit" class="btn btn-icon btn-primary btn-sm">
                             <i class="fa fa-search"></i>
                             <i i18n>Recherche</i>
                         </button>
                     </div>
 
-                    <div class="ui-g-2  text-left"></div>
+                    <div class="ui-g-1  text-left"></div>
                 </div>
             </form>
         </div>

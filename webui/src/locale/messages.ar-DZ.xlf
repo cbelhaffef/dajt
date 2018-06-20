@@ -27,12 +27,12 @@
 		<target>قائمة المحامين</target>
       </trans-unit>
       <trans-unit id="55a57e6165759f4c48fd86a29d674304066044e9" datatype="html">
-        <source>Connexion</source>
+        <source>Veuillez vous connecter s'il vous plaît</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/login/login.component.ts</context>
           <context context-type="linenumber">3</context>
         </context-group>
-		<target>تسجيل الدخول</target>
+		<target>الرجاء تسجيل الدخول من فضلك</target>
       </trans-unit>
       <trans-unit id="7a5b80bdfff39603e595a2a61d5032115874e412" datatype="html">
         <source>Se connecter</source>

@@ -11,20 +11,13 @@
                 <label for="office" i18n>Bureau</label>
             </div>
             <div class="ui-g-10">
-                <p-autoComplete [suggestions]="filteredOffices"
-                                (completeMethod)="filterOffices($event)"
-                                [minLength]="1"
-                                i18n-placeholder="Bureau"
-                                field="name"
-                                id="office"
-                                name="office"
-                                ngModel
-                                required
-                                [(ngModel)]="selectedOffice"
-                                [dropdown]="true">
-                </p-autoComplete>
+                <div class="select ">
+                    <select id="office" name="office" ngModel>
+                        <option value=""></option>
+                        <option *ngFor="let o of listOffices" value="{{o.id}}">{{o.name}}</option>
+                    </select>
+                </div>
             </div>
-
         </div>
 
         <!-- folder number-->
@@ -33,7 +26,7 @@
                 <label for="number" i18n>Numéro dossier</label>
             </div>
             <div class="ui-g-10">
-                <input pInputText id="number" name="number" class="wid100" ngModel/>
+                <input pInputText id="number" name="number" size="20" ngModel/>
             </div>
         </div>
 
@@ -66,6 +59,19 @@
                                 (onKeyUp)="addItem($event,queryVictim,selectedVictims,filteredVictims)"
                                 [multiple]="true">
                 </p-autoComplete>
+
+                <table class="table">
+                    <tbody>
+                    <tr *ngFor="let v of selectedVictims">
+                        <td>{{v.name}}</td>
+                        <td>
+                            <p-button (click)="removeVictim(v)" icon="fa fa-fw fa-trash"></p-button>
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -88,6 +94,18 @@
                                 (onKeyUp)="addItem($event,queryVictim,selectedGuilties,filteredGuilties)"
                                 [multiple]="true">
                 </p-autoComplete>
+                <table class="table">
+                    <tbody>
+                    <tr *ngFor="let g of selectedGuilties">
+                        <td>{{g.name}}</td>
+                        <td>
+                            <p-button (click)="removeGuilty(g)" icon="fa fa-fw fa-trash"></p-button>
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
             </div>
         </div>
 
