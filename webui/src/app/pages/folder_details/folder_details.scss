@@ -61,6 +61,21 @@ h1 {
 
 .folder-body-content{
     padding: 0 20px 20px;
+    margin-top: -10px;
+}
+
+.property-list{
+    margin: 0;
+    padding: 0 20px 0 0;
+    display: block;
+}
+
+.property-list .item{
+    margin-left: 0;
+    margin-top : 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #dfe1e5;
+    position: relative;
 }
 
 .aui-group:first-child {
@@ -76,7 +91,8 @@ h1 {
 }
 
 .mod-content{
-    margin-left: 10px;
+    margin-top: 5px;
+    padding-right: 20px;
 }
 
 .toggle-bar {
@@ -103,4 +119,51 @@ h1 {
 }
 .pointer {
     cursor: pointer;
+}
+
+.detail-name{
+    color:#7a869a;
+}
+
+.detail-value{
+    float:right;
+}
+
+.pencil-update {
+    margin-right : 13px;
+    position: relative;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+    cursor: pointer;
+}
+
+.trash-update {
+    margin-right : 13px;
+    position: relative;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+.item {
+    margin-bottom: -5px;
+}
+
+.wrap:hover .pencil-update{
+    visibility: visible;
+    opacity: 1;
+}
+
+.wrap:hover .trash-update{
+    visibility: visible;
+    opacity: 1;
+}
+
+.icon-value {
+    margin-right : 7px;
+    margin-top : 3px;
+    position: inherit;
 }

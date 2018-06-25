@@ -1,5 +1,6 @@
 package com.cbelhaffef.dajt.service.importer;
 
+import com.cbelhaffef.dajt.MainApp;
 import com.cbelhaffef.dajt.dataset.FoldersDS;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.service.impl.FolderExelImporterServiceImpl;
@@ -21,7 +22,8 @@ import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FolderExelImporterServiceImpl.class,FoldersDS.class})
+//@ContextConfiguration(classes = {FolderExelImporterServiceImpl.class,FoldersDS.class})
+@ContextConfiguration(classes = {MainApp.class})
 public class ImportFolderJobExelTest {
 
     @Autowired

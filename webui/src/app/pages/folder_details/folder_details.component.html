@@ -1,9 +1,11 @@
-<div id="folder-content" class="pad-16">
-    <div class="row aui-page-header-inner" style="border-bottom: 1px solid #7E7E7E">
-        <div class="col-xs-1 aui-page-header-image">
+<div id="folder-content" class="header-margin-top pad-16">
+
+    <!-- title -->
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-1 aui-page-header-image">
             <img src="../../../assets/images/folder_icon.jpg" width="50" height="50" style="margin-left: 20px">
         </div>
-        <div class="col-xs-8 aui-page-header-main">
+        <div class="ui-g-12 ui-md-10 aui-page-header-main">
             <div id="folder-number">
                 <a id="project-name-val" routerLink="/home/legal_cases/offices/{{folder.office.id}}">{{folder.office.name}}</a>
                 &nbsp;&nbsp;/&nbsp;&nbsp;
@@ -11,7 +13,7 @@
             </div>
             <h1 id="summary-val">{{folder.offence}}</h1>
         </div>
-        <div class="col-xs-3 aui-page-header-actions">
+        <div class="ui-g-12 ui-md-1 aui-page-header-actions">
             <button type="button" class="btn btn-icon" routerLink="/home/legal_cases/folders" style="margin-left: 20px">
                 <i class="fa fa-retweet"></i>
                 <span class="icon-shape-name" i18n>Retour</span>
@@ -20,9 +22,9 @@
     </div>
 
     <!-- actions bar-->
-    <div class="ui-g actions" style="margin-top: 5px">
-        <div class="ui-g-1"></div>
-        <div class="ui-g-6">
+    <div class="ui-g actions">
+        <div class="ui-g-12 ui-md-6"></div>
+        <div class="ui-g-12 ui-md-6" style="text-align: left;">
             <div class="btn-group btn-primary btn-sm">
                 <button class="btn">
                     <i class="fa fa-users"></i>
@@ -34,11 +36,11 @@
                 </button>
             </div>
         </div>
-
     </div>
 
 
-    <div class="ui-g">
+    <!-- body -->
+    <div class="ui-g folder-body-content">
         <!-- detail-->
         <div class="ui-g-8">
             <div id="detail-module">
@@ -47,99 +49,71 @@
                     <div class="ui-g-11 toggle-bar"></div>
                 </div>
                 <div class="mod-content">
-                    <div class="ui-g">
-                        <div class="ui-g-2">
-                            <label for="status" i18n>Statut:</label>
-                        </div>
-                        <div class="ui-g-3 pointer" (mouseover)="showPencilStatus = true" (mouseleave)="showPencilStatus = false">
-                            <span id="status" [hidden]="showInputStatus">
-                                <span class="badge badge-info">{{folder.status}}</span>
-                                <i class="fa fa-pencil" (click)="showInputStatus = true" [hidden]="!showPencilStatus"></i>
-                            </span>
-                            <div class="ui-inputgroup" [hidden]="!showInputStatus">
-                                <p-autoComplete [suggestions]="filteredStatus"
-                                                (completeMethod)="filterStatus($event)"
-                                                [minLength]="1"
-                                                i18n-placeholder="Status"
-                                                [size]="10"
-                                                id="statusEdit"
-                                                name="statusEdit"
-                                                [(ngModel)]="folder.status"
-                                                [dropdown]="true">
-                                </p-autoComplete>
-                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
-                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputStatus = false"></button>
-                            </div>
-                        </div>
-                        <div class="ui-g-2">
-                            <label for="court" i18n>Tribunal:</label>
-                        </div>
-                        <div class="ui-g-3 pointer" (mouseover)="showPencilCourt = true" (mouseleave)="showPencilCourt = false">
-                            <span id="court" [hidden]="showInputCourt">
-                                <span>{{folder.court.name}}</span>
-                                <i class="fa fa-pencil" (click)="showInputCourt = true" [hidden]="!showPencilCourt"></i>
-                            </span>
-                            <div class="ui-inputgroup" [hidden]="!showInputCourt">
-                                <p-autoComplete [suggestions]="filteredCourts"
-                                                (completeMethod)="filterCourts($event)"
-                                                [minLength]="1"
-                                                i18n-placeholder="Court"
-                                                [size]="10"
-                                                id="courtEdit"
-                                                name="courtEdit"
-                                                [(ngModel)]="folder.court.name"
-                                                [dropdown]="true">
-                                </p-autoComplete>
-                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
-                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputCourt = false"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-g">
-                        <div class="ui-g-2">
-                            <label for="priority" i18n>Priority:</label>
-                        </div>
-                        <div class="ui-g-3 pointer" (mouseover)="showPencilPriority = true" (mouseleave)="showPencilPriority = false">
-                            <span id="priority" [hidden]="showInputPriority">
 
-                                <img alt="" height="16" src="../../../assets/images/major.svg" width="16">&nbsp;
-                                <span>{{folder.priority}}</span>
-                                <i class="fa fa-pencil" (click)="showInputPriority = true" [hidden]="!showPencilPriority"></i>
-                            </span>
-                            <div class="ui-inputgroup" [hidden]="!showInputPriority">
-                                <p-autoComplete [suggestions]="filteredPriority"
-                                                (completeMethod)="filterPriority($event)"
-                                                [minLength]="1"
-                                                i18n-placeholder="Priorité"
-                                                [size]="10"
-                                                id="priorityEdit"
-                                                name="priorityEdit"
-                                                [(ngModel)]="folder.priority"
-                                                [dropdown]="true">
-                                </p-autoComplete>
-                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
-                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputStatus = false"></button>
-                            </div>
-                        </div>
-                    </div>
                     <div class="ui-g">
-                        <div class="ui-g-2">
-                            <label for="sendingType" i18n>Type d'envoi:</label>
-                        </div>
-                        <div class="ui-g-9 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
-                            <span id="sendingType" [hidden]="showInputSendingType">
-                                <div [innerHTML]="folder.sendingType"></div>
-                                <i class="fa fa-pencil" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
-                            </span>
-                            <div class="ui-inputgroup" [hidden]="!showInputSendingType">
-                                <!--<textarea rows="5" cols="30" pInputTextarea [(ngModel)]="folder.sendingType"></textarea>-->
-                                <p-editor [(ngModel)]="folder.sendingType"  class="wid100" [style]="{'height':'320px'}"></p-editor>
-                                <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
-                                <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputSendingType = false"></button>
-                            </div>
-                        </div>
+                        <!--detail right-->
+                        <div class="ui-g-6">
+                            <!-- Status -->
+                            <div class="ui-g item">
+                                <div class="ui-g-4">
+                                    <label class="detail-name" for="status" i18n>Statut:</label>
+                                </div>
+                                <div class="ui-g-8 pointer" (mouseover)="showPencilStatus = true" (mouseleave)="showPencilStatus = false">
+                                    <span class="wrap" id="status" [hidden]="showInputStatus">
+                                        <span class="badge badge-info detail-value">{{folder.status}}</span>
+                                        <i class="fa fa-pencil pencil-update" (click)="showInputStatus = true" [hidden]="!showPencilStatus"></i>
+                                    </span>
 
+                                </div>
+                            </div>
+
+                            <!--Priority-->
+                            <div class="ui-g item">
+                                <div class="ui-g-4">
+                                    <label class="detail-name" for="priority" i18n>Priority:</label>
+                                </div>
+                                <div class="ui-g-8 pointer" (mouseover)="showPencilPriority = true" (mouseleave)="showPencilPriority = false">
+                                    <span class="wrap" id="priority" [hidden]="showInputPriority">
+                                        <img alt="" height="16" src="../../../assets/images/major.svg" width="16" class="icon-value">&nbsp;
+                                        <span class="detail-value">{{folder.priority}}</span>
+                                        <i class="fa fa-pencil pencil-update" (click)="showInputPriority = true" [hidden]="!showPencilPriority"></i>
+                                    </span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--detail left-->
+                        <div class="ui-g-6">
+
+                            <div class="ui-g item">
+                                <div class="ui-g-4">
+                                    <label class="detail-name" for="court" i18n>Tribunal:</label>
+                                </div>
+                                <div class="ui-g-8 pointer" (mouseover)="showPencilCourt = true" (mouseleave)="showPencilCourt = false">
+                                    <span class="wrap" id="court" [hidden]="showInputCourt">
+                                        <span class="detail-value">{{folder.court.name}}</span>
+                                        <i class="fa fa-pencil pencil-update" (click)="showInputCourt = true" [hidden]="!showPencilCourt"></i>
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="ui-g item">
+                                <div class="ui-g-4">
+                                    <label class="detail-name" for="sendingType" i18n>Type d'envoi:</label>
+                                </div>
+                                <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                                    <span class="wrap" [hidden]="showInputSendingType" id="sendingType">
+                                        <div class="detail-value" [innerHTML]="folder.sendingType"></div>
+                                        <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
+
                 </div>
             </div>
 
@@ -153,29 +127,12 @@
 
                 </div>
                 <div class="mod-content">
-                    <div class="ui-inputgroup" [hidden]="!showInputVicitm">
-                        <p-autoComplete [suggestions]="filteredVictims"
-                                        (completeMethod)="filterVictims($event)"
-                                        [minLength]="1"
-                                        i18n-placeholder="Victimes"
-                                        [size]="10"
-                                        id="victimEdit"
-                                        name="victimEdit"
-                                        [(ngModel)]="selectedVictim"
-
-                                        [dropdown]="true">
-                        </p-autoComplete>
-                        <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
-                        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputVicitm = false"></button>
-                    </div>
-                    <p-table [value]="folder.victims" [scrollable]="true" scrollHeight="200px">
-                        <ng-template pTemplate="body" let-v>
-                            <tr>
-                                <td>{{v.name}}</td>
-                                <td><i class="fa fa-trash" (click)="removeVictim(v.id)"></i></td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
+                    <ul class="property-list">
+                        <li class="list-item wrap" *ngFor="let v of folder.victims">
+                            <span class="detail-value">{{v.name}}</span>
+                            <i class="fa fa-trash trash-update" (click)="removeVictim(v.id)"></i>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -188,28 +145,12 @@
                     </div>
                 </div>
                 <div class="mod-content">
-                    <div class="ui-inputgroup" [hidden]="!showInputGuilty">
-                        <p-autoComplete [suggestions]="filteredGuilties"
-                                        (completeMethod)="filterGuilties($event)"
-                                        [minLength]="1"
-                                        i18n-placeholder="Coupables"
-                                        [size]="10"
-                                        id="guiltyEdit"
-                                        name="guiltyEdit"
-                                        [(ngModel)]="selectedGuilty"
-                                        [dropdown]="true">
-                        </p-autoComplete>
-                        <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
-                        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputGuilty = false"></button>
-                    </div>
-                    <p-table [value]="folder.guilties" [scrollable]="true" scrollHeight="200px">
-                        <ng-template pTemplate="body" let-g>
-                            <tr>
-                                <td>{{g.name}}</td>
-                                <td><i class="fa fa-trash" (click)="removeGuilty(g.id)"></i></td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
+                    <ul class="property-list">
+                        <li class="list-item wrap" *ngFor="let g of folder.guilties">
+                            <span class="detail-value">{{g.name}}</span>
+                            <i class="fa fa-trash trash-update" (click)="removeGuilty(g.id)"></i>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -222,20 +163,12 @@
                     </div>
                 </div>
                 <div class="mod-content">
-                    <div class="ui-inputgroup" [hidden]="!showInputAction">
-
-                        <button pButton type="button" icon="fa-check" class="ui-button-success"></button>
-                        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="showInputAction = false"></button>
-                    </div>
-                    <p-table [value]="folder.actions" [scrollable]="true" scrollHeight="200px">
-                        <ng-template pTemplate="body" let-a>
-                            <tr>
-                                <td>{{a.name}}</td>
-                                <td><i class="fa fa-trash" (click)="removeAction(a.id)"></i></td>
-                            </tr>
-
-                        </ng-template>
-                    </p-table>
+                    <ul class="property-list">
+                        <li class="list-item wrap" *ngFor="let a of folder.actions">
+                            <span class="detail-value">{{a.name}}</span>
+                            <i class="fa fa-trash trash-update" (click)="removeAction(a.id)"></i>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -248,20 +181,25 @@
                 </div>
                 <div class="mod-content">
                     <div class="ui-g">
-                        <div class="ui-g-3">
-                            <label for="assignee" i18n>Assigner:</label>
+                        <div class="ui-g-4">
+                            <label class="detail-name" for="assignee" i18n>Assigner:</label>
                         </div>
-                        <div class="ui-g-3">
-                            <!--<img src="../../../assets/images/useravatar.png">&nbsp;-->
-                            <span id="assignee">{{folder.assignee.firstName}}&nbsp;{{folder.assignee.lastName}}</span>
+                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                                <span class="wrap" [hidden]="showInputSendingType" id="assignee">
+                                    <div class="detail-value">{{folder.assignee.firstName}}&nbsp;{{folder.assignee.lastName}}</div>
+                                    <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
+                                </span>
                         </div>
                     </div>
                     <div class="ui-g">
-                        <div class="ui-g-3">
-                            <label for="reporter">Auteur:</label>
+                        <div class="ui-g-4">
+                            <label class="detail-name" for="reporter">Auteur:</label>
                         </div>
-                        <div class="ui-g-9">
-                            <span id="reporter">{{folder.reporter.firstName}}&nbsp;{{folder.reporter.lastName}}</span>
+                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                            <span class="wrap" [hidden]="showInputSendingType" id="reporter">
+                                <div class="detail-value">{{folder.reporter.firstName}}&nbsp;{{folder.reporter.lastName}}</div>
+                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -273,27 +211,36 @@
                 </div>
                 <div class="mod-content">
                     <div class="ui-g">
-                        <div class="ui-g-3">
-                                <label for="createDate">Créer:</label>
+                        <div class="ui-g-4">
+                            <label class="detail-name" for="createDate">Créer:</label>
                         </div>
-                        <div class="ui-g-9">
-                            <span id="createDate">{{folder.createDate | date : 'longDate':'':'ar'}}</span>
-                        </div>
-                    </div>
-                    <div class="ui-g">
-                        <div class="ui-g-3">
-                            <label for="modifDate">Modifier:</label>
-                        </div>
-                        <div class="ui-g-9">
-                            <span id="modifDate">{{folder.modifDate | date : 'longDate':'':'ar'}}</span>
+                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                            <span class="wrap" [hidden]="showInputSendingType" id="createDate">
+                                <div class="detail-value">{{folder.createDate | date : 'longDate':'':'ar'}}</div>
+                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
+                            </span>
                         </div>
                     </div>
                     <div class="ui-g">
-                        <div class="ui-g-3">
-                            <label for="closedDate">Clôturer:</label>
+                        <div class="ui-g-4">
+                            <label  class="detail-name" for="modifDate">Modifier:</label>
                         </div>
-                        <div class="ui-g-9">
-                            <span id="closedDate">{{folder.closeDate | date : 'longDate':'':'ar'}}</span>
+                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                            <span class="wrap" [hidden]="showInputSendingType" id="modifDate">
+                                <div class="detail-value">{{folder.modifDate | date : 'longDate':'':'ar'}}</div>
+                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-4">
+                            <label class="detail-name" for="closedDate">Clôturer:</label>
+                        </div>
+                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                            <span class="wrap" [hidden]="showInputSendingType" id="closedDate">
+                                <div class="detail-value">{{folder.closeDate | date : 'longDate':'':'ar'}}</div>
+                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
+                            </span>
                         </div>
                     </div>
                 </div>

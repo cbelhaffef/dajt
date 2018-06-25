@@ -16,11 +16,20 @@
         <mysql.driver.version>5.1.45</mysql.driver.version>
         <querydsl.version>4.1.2</querydsl.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>Maven Central</id>
+            <url>http://repo1.maven.org/maven/</url>
+        </repository>
+    </repositories>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
 	</parent>
+
 	<build>
         <!--
              For Importing project into eclipse uncomment <pluginManagement> tag.
@@ -128,6 +137,13 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- plugin -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.6</version>
             </plugin>
 
         </plugins>
