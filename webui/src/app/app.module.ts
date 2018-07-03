@@ -26,7 +26,7 @@ import {UserInfoService} from './services/user-info.service';
 import {AuthGuard} from './services/auth_guard.service';
 import {ApiRequestService} from './services/api/api-request.service';
 import {TranslateService} from './services/api/translate.service';
-import {LoginService} from './services/api/login.service';
+import {AuthService} from './services/api/auth.service';
 import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
 import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
 import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
@@ -58,9 +58,9 @@ import {CardModule} from 'primeng/card';
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
 
-@NgModule({
+@NgModule( {
 
-  imports: [
+  imports:  [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -88,8 +88,8 @@ registerLocaleData(localeAr, 'ar');
     // Local App Modules
     AppRoutingModule
   ],
-  entryComponents: [FoldersCreateDialogComponent],
-  declarations: [
+  entryComponents:  [FoldersCreateDialogComponent],
+  declarations:  [
     // Components
     BadgeComponent,
     LegendComponent,
@@ -115,13 +115,13 @@ registerLocaleData(localeAr, 'ar');
     TrackScrollDirective
   ],
 
-  providers: [
+  providers:  [
     AuthGuard,
     UserInfoService,
     UserService,
     TranslateService,
     ApiRequestService,
-    LoginService,
+    AuthService,
     FolderService,
     VictimService,
     GuiltyService,
@@ -132,7 +132,7 @@ registerLocaleData(localeAr, 'ar');
     AppConfig
   ],
 
-  bootstrap: [AppComponent]
+  bootstrap:  [AppComponent]
 })
 
 export class AppModule {}

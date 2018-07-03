@@ -7,12 +7,12 @@ import {TranslateService} from './translate.service';
 @Injectable()
 export class CourtService {
 
-    constructor( private apiRequest: ApiRequestService, private translate: TranslateService) {}
+    constructor( private apiRequest:  ApiRequestService, private translate:  TranslateService) {}
 
     /**
      * Gets List of courts
      */
-    getCourts(name?: string): Observable<any> {
+    getCourts(name?:  string):  Observable<any> {
         // Create Request URL params
         let courtListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/courts')

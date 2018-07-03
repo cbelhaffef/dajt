@@ -3,77 +3,67 @@ import 'rxjs/add/operator/switchMap';
 import {ActivatedRoute} from '@angular/router';
 import {FolderService} from '../../services/api/folder.service';
 import {Folder} from '../../models/folder.model';
-import {Office} from '../../models/office.model';
-import {NgForm} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {CourtService} from '../../services/api/court.service';
 import {VictimService} from '../../services/api/victim.service';
 import {GuiltyService} from '../../services/api/guilty.service';
 import {ActionService} from '../../services/api/action.service';
+import {Message, SelectItem} from 'primeng/api';
 
-@Component({
-    selector   : 's-folders-pg',
-    templateUrl: './folder_details.component.html',
-    styleUrls  : [ './folder_details.scss'],
+@Component( {
+    selector   :  's-folders-pg',
+    templateUrl:  './folder_details.component.html',
+    styleUrls  :  [ './folder_details.scss'],
 })
 
 export class FolderDetailsComponent implements OnInit {
 
-    public folder: Folder = new Folder();
+    public folder:  Folder = new Folder();
+
+    public detailForm:  FormGroup;
+
+    public submitted:  boolean;
+
+    public genders:  SelectItem[];
+
+    msgs:  Message[] = [];
 
     public isLoading = false;
 
-    public isOpen = false;
+    public showUpdateDetail = false;
 
+    public filteredStatus:  any[] = [];
+    public queryStatus:  string;
 
-    public filteredStatus: any[] = [];
-    public selectedStatus: string;
-    public queryStatus: string;
+    public filteredCourts:  any[] = [];
+    public queryCourt:  string;
 
-    public filteredCourts: any[] = [];
-    public selectedCourt: string;
-    public queryCourt: string;
+    public filteredPriority:  any[] = [];
+    public queryPriority:  string;
 
-    public filteredPriority: any[] = [];
-    public selectedPriority: string;
-    public queryPriority: string;
+    public filteredVictims:  any[] = [];
+    public queryVictim:  string;
 
-    public filteredVictims: any[] = [];
-    public selectedVictim: string;
-    public queryVictim: string;
+    public filteredGuilties:  any[] = [];
+    public queryGuilty:  string;
 
-    public filteredGuilties: any[] = [];
-    public selectedGuilty: string;
-    public queryGuilty: string;
+    public filteredActions:  any[] = [];
+    public queryAction:  string;
 
-    public filteredActions: any[] = [];
-    public selectedAction: string;
-    public queryAction: string;
+    public showPencilCourt:  boolean;
 
-    public showPencilStatus: boolean;
-    public showInputStatus: boolean;
+    public showPencilSendingType:  boolean;
 
-    public showPencilCourt: boolean;
-    public showInputCourt: boolean;
-
-    public showInputSendingType: boolean;
-    public showPencilSendingType: boolean;
-
-    public showInputPriority = false;
-    public showPencilPriority = false;
-
-    public showInputVicitm = false;
-    public showInputGuilty = false;
-    public showInputAction = false;
-
-    constructor(private activateRoute: ActivatedRoute,
-                private folderService: FolderService,
-                private victimService: VictimService,
-                private guiltyService: GuiltyService,
-                private actionService: ActionService,
-                private courtService: CourtService) {
+    constructor(private activateRoute:  ActivatedRoute,
+                private folderService:  FolderService,
+                private victimService:  VictimService,
+                private guiltyService:  GuiltyService,
+                private actionService:  ActionService,
+                private courtService:  CourtService,
+                private fb:  FormBuilder) {
     }
 
-    ngOnInit(): void {
+    ngOnInit():  void {
         const me = this;
         me.isLoading = true;
         me.folderService.getFolderDetails(me.activateRoute.snapshot.params.id)
@@ -81,9 +71,27 @@ export class FolderDetailsComponent implements OnInit {
                 me.folder = folder;
                 me.isLoading = false;
             });
+        this.detailForm = this.fb.group( {
+            'firstname':  new FormControl('', Validators.required),
+            'lastname':  new FormControl('', Validators.required),
+            'password':  new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
+            'description':  new FormControl(''),
+            'gender':  new FormControl('', Validators.required)
+        });
+
     }
 
-    addFolder(f: NgForm) {
+    updateDetail() {
+        this.showUpdateDetail = !this.showUpdateDetail;
+    }
+
+    onSubmit(value:  string) {
+        this.submitted = true;
+        this.msgs = [];
+        this.msgs.push( {severity: 'info', summary: 'Success', detail: 'Form Submitted'});
+    }
+
+    addFolder(f:  NgForm) {
         const me = this;
         me.isLoading = true;
         me.folderService.addFolder(f.value)
@@ -147,8 +155,8 @@ export class FolderDetailsComponent implements OnInit {
         });
     }
 
-    filterItem(query, items: any[]): any[] {
-        let filtered: any[] = [];
+    filterItem(query, items:  any[]):  any[] {
+        let filtered:  any[] = [];
         for (let i = 0; i < items.length; i++) {
             let guilty = items[i];
             if (guilty.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {

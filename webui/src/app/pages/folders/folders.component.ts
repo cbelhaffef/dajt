@@ -16,19 +16,19 @@ import {Dropdown, OverlayPanel} from 'primeng/primeng';
 import {Action} from 'app/models/action.model';
 import {ActionService} from '../../services/api/action.service';
 
-@Component({
-    selector   : 's-folders-pg',
-    templateUrl: './folders.component.html',
-    styleUrls  : [ './folders.scss'],
+@Component( {
+    selector   :  's-folders-pg',
+    templateUrl:  './folders.component.html',
+    styleUrls  :  [ './folders.scss'],
 })
 
 export class FoldersComponent implements OnInit {
-    @ViewChild(NgForm) filterFoldersForm: NgForm;
-    @ViewChild(OverlayPanel) overlayPanel: OverlayPanel;
-    @ViewChild('assignUserDropdown') assignUserDropdown: Dropdown;
-    @ViewChild('addActionDropdown')  addActionDropdown: Dropdown;
-    @ViewChild('changeStatusDropdown')  changeStatusDropdown: Dropdown;
-    @ViewChild(NgForm) createFolderForm: NgForm;
+    @ViewChild(NgForm) filterFoldersForm:  NgForm;
+    @ViewChild(OverlayPanel) overlayPanel:  OverlayPanel;
+    @ViewChild('assignUserDropdown') assignUserDropdown:  Dropdown;
+    @ViewChild('addActionDropdown')  addActionDropdown:  Dropdown;
+    @ViewChild('changeStatusDropdown')  changeStatusDropdown:  Dropdown;
+    @ViewChild(NgForm) createFolderForm:  NgForm;
 
     public listFolders = [];
     public selectedFolders = [];
@@ -38,43 +38,43 @@ export class FoldersComponent implements OnInit {
     public listCourts = [];
     public listOffices = [];
 
-    public folderCreated: Folder;
+    public folderCreated:  Folder;
     public hideMessage = true;
 
-    animal: string;
-    name: string;
+    animal:  string;
+    name:  string;
 
     public listUsers = [];
-    public selectedUser: User;
+    public selectedUser:  User;
     public showAssignUserOPanel = false;
 
     public listActions = [];
-    public selectedAction: Action;
+    public selectedAction:  Action;
     public showAddActionOPanel = false;
 
     public listStatus = [];
-    public selectedStatus: string;
+    public selectedStatus:  string;
     public showChangeStatusOPanel = false;
 
-    constructor(private router: Router,
-                private spinnerService: SpinnerService,
-                private folderService: FolderService,
-                private victimService: VictimService,
-                private guiltyService: GuiltyService,
-                private courtService:  CourtService,
-                private officeService: OfficeService,
-                private userService: UserService,
-                private actionService: ActionService,
-                public dialog: MatDialog) { }
+    constructor(private router:  Router,
+                private spinnerService:  SpinnerService,
+                private folderService:  FolderService,
+                private victimService:  VictimService,
+                private guiltyService:  GuiltyService,
+                private courtService:   CourtService,
+                private officeService:  OfficeService,
+                private userService:  UserService,
+                private actionService:  ActionService,
+                public dialog:  MatDialog) { }
 
-    ngOnInit(): void {
+    ngOnInit():  void {
         let _self = this;
         _self.getFolders();
         _self.folderService.getFolderStatus('')
             .subscribe(function(folderStatus) {
                 _self.listFolderStatus = folderStatus.items;
                 for (let s of folderStatus.items) {
-                    _self.listStatus.push({label: s , value: s});
+                    _self.listStatus.push( {label:  s , value:  s});
                 }
         });
 
@@ -91,23 +91,23 @@ export class FoldersComponent implements OnInit {
         _self.userService.getUsers()
             .subscribe(function(users) {
                for (let u of users) {
-                   _self.listUsers.push({label: u.firstName + ' ' + u.lastName , value : u});
+                   _self.listUsers.push( {label:  u.firstName + ' ' + u.lastName , value :  u});
                }
             });
         _self.actionService.getActions()
             .subscribe(function(actions) {
                 for (let a of actions) {
-                    _self.listActions.push({label: a.name , value : a});
+                    _self.listActions.push( {label:  a.name , value :  a});
                 }
             });
     }
 
-    openCreateFolderDialog(): void {
+    openCreateFolderDialog():  void {
         let _self = this;
         let dialogRef = _self.dialog.open(FoldersCreateDialogComponent, {
-            width: '60%',
-            direction: 'rtl',
-            data: { name: _self.name, animal: _self.animal }
+            width:  '60%',
+            direction:  'rtl',
+            data:   { name:  _self.name, animal:  _self.animal }
         });
 
         dialogRef.afterClosed().subscribe( result => {
@@ -120,11 +120,11 @@ export class FoldersComponent implements OnInit {
         });
     }
 
-    onSubmitFilterFoldersForm(f: NgForm) {
+    onSubmitFilterFoldersForm(f:  NgForm) {
         this.getFolders(f);
     }
 
-    getFolders(f?: NgForm) {
+    getFolders(f?:  NgForm) {
         let _self = this;
         _self.spinnerService.showSpinner();
 
@@ -144,7 +144,7 @@ export class FoldersComponent implements OnInit {
             });
     }
 
-    assignUser(folders: Folder[], user: User): void {
+    assignUser(folders:  Folder[], user:  User):  void {
         let _self =  this;
         _self.spinnerService.showSpinner();
         this.folderService.assignUser(folders.map(f => f.id ), user).subscribe(jsonResp => {
@@ -153,7 +153,7 @@ export class FoldersComponent implements OnInit {
         });
     }
 
-    addAction(folders: Folder[], action: Action): void {
+    addAction(folders:  Folder[], action:  Action):  void {
         let _self =  this;
         _self.spinnerService.showSpinner();
         this.folderService.addActionToListOfFolders(folders.map(f => f.id ), action).subscribe(jsonResp => {
@@ -162,7 +162,7 @@ export class FoldersComponent implements OnInit {
         });
     }
 
-    changeStatus(folders: Folder[], status: string): void {
+    changeStatus(folders:  Folder[], status:  string):  void {
         let _self =  this;
         _self.spinnerService.showSpinner();
         this.folderService.changeStatusToListOfFolders(folders.map(f => f.id ), status).subscribe(jsonResp => {
@@ -171,7 +171,7 @@ export class FoldersComponent implements OnInit {
         });
     }
 
-    showAssignUserDropdown(): void {
+    showAssignUserDropdown():  void {
        this.selectedUser = null;
        this.showAssignUserOPanel = true;
        if (this.assignUserDropdown) {
@@ -181,7 +181,7 @@ export class FoldersComponent implements OnInit {
        this.showChangeStatusOPanel = false;
     }
 
-    showAddActionDropdown(): void {
+    showAddActionDropdown():  void {
         this.selectedAction = null;
         this.showAddActionOPanel = true;
         if (this.addActionDropdown) {
@@ -191,7 +191,7 @@ export class FoldersComponent implements OnInit {
         this.showChangeStatusOPanel = false;
     }
 
-    showChangeFolderStatusDropdown(): void {
+    showChangeFolderStatusDropdown():  void {
         this.selectedStatus = null;
         this.showChangeStatusOPanel = true;
         if (this.changeStatusDropdown) {

@@ -4,12 +4,16 @@ import com.cbelhaffef.dajt.enums.FolderColumnImport;
 import com.cbelhaffef.dajt.model.court.Court;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.guilty.Guilty;
+import com.cbelhaffef.dajt.model.office.Office;
 import com.cbelhaffef.dajt.model.victim.Victim;
 import com.cbelhaffef.dajt.repo.FolderRepo;
-import com.cbelhaffef.dajt.service.FolderExelImporterService;
+import com.cbelhaffef.dajt.repo.OfficeRepo;
+import com.cbelhaffef.dajt.service.ExelFileImporterService;
 import com.google.common.collect.Sets;
+import com.google.j2objc.annotations.AutoreleasePool;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xmlbeans.impl.piccolo.io.FileFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +25,33 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class FolderExelImporterServiceImpl implements FolderExelImporterService{
+public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
     @Autowired
     private FolderRepo folderRepo;
+
+    @Autowired
+    private OfficeRepo officeRepo;
 
     @Override
     public Set<Folder> doImport(File fileExel) throws FileNotFoundException {
         Set<Folder> folders = new TreeSet<>();
         try {
+            String fileName = fileExel.getName();
+            String[] args = fileName.split("_");
+            if(args.length < 3 ){
+                throw new FileFormatException("Nom du fichier ne respecte pas le pattenr : type_numéroDossier_annee_numberFile");
+            }
+            String desktopNumber = args[1];
+
+            if(desktopNumber.length() > 2){
+                throw new FileFormatException("le nom du bureau n'est pas conforme");
+            }
+
+            Long OfficeId = new Long(desktopNumber.substring(1));
+
+            Office office = officeRepo.getOne(OfficeId);
+
             FileInputStream excelFile = new FileInputStream(fileExel);
             Workbook workbook = new XSSFWorkbook(excelFile);
             Sheet datatypeSheet = workbook.getSheetAt(0); // choose year on sheet
@@ -50,8 +72,7 @@ public class FolderExelImporterServiceImpl implements FolderExelImporterService{
                 for(int i = 0 ; cellIterator.hasNext() ; i++){
 
                     Cell currentCell = cellIterator.next();
-                    //getCellTypeEnum shown as deprecated for version 3.15
-                    //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
+
                     if (i == FolderColumnImport.NUMBER.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setNumber(currentCell.getStringCellValue());
                     }
@@ -95,6 +116,8 @@ public class FolderExelImporterServiceImpl implements FolderExelImporterService{
                     if (i == FolderColumnImport.SENDING_TYPE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
                         folder.setSendingType(currentCell.getStringCellValue());
                     }
+                    //TODO office null
+                    folder.setOffice(office);
                 }
                 folderRepo.save(folder);
 

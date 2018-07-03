@@ -14,25 +14,32 @@
             <h1 id="summary-val">{{folder.offence}}</h1>
         </div>
         <div class="ui-g-12 ui-md-1 aui-page-header-actions">
-            <button type="button" class="btn btn-icon" routerLink="/home/legal_cases/folders" style="margin-left: 20px">
-                <i class="fa fa-retweet"></i>
-                <span class="icon-shape-name" i18n>Retour</span>
+            <button pButton type="button"
+                    routerLink="/home/legal_cases/folders"
+                    i18n-label
+                    label="Retour"
+                    icon="fa fa-undo"
+                    class="ui-button-secondary margin-top-10">
             </button>
         </div>
     </div>
 
     <!-- actions bar-->
-    <div class="ui-g actions">
+    <div class="ui-g btn-actions">
         <div class="ui-g-12 ui-md-6"></div>
-        <div class="ui-g-12 ui-md-6" style="text-align: left;">
+        <div class="ui-g-12 ui-md-6 align-left">
             <div class="btn-group btn-primary btn-sm">
-                <button class="btn">
-                    <i class="fa fa-users"></i>
-                    <i i18n>Assigner</i>
+                <button pButton type="button"
+                        i18n-label
+                        label="Assigner"
+                        icon="fa fa-users"
+                        class="ui-button-secondary">
                 </button>
-                <button class="btn">
-                    <i class="fa fa-user"></i>
-                    <span i18n>Me l'assigner</span>
+                <button pButton type="button"
+                        i18n-label
+                        label="Me l'assigner"
+                        icon="fa fa-users"
+                        class="ui-button-secondary">
                 </button>
             </div>
         </div>
@@ -41,59 +48,62 @@
 
     <!-- body -->
     <div class="ui-g folder-body-content">
-        <!-- detail-->
+        <!-- right-panel-->
         <div class="ui-g-8">
             <div id="detail-module">
                 <div class="ui-g">
                     <div class="ui-g-1 toggle-title" i18n>Détail</div>
-                    <div class="ui-g-11 toggle-bar"></div>
+                    <div class="ui-g-10 toggle-bar" style="width:90%"></div>
+                    <div class="ui-g-1" style="width:2%">
+                        <i class="fa fa-pencil" style="cursor: pointer"
+                           (click)="updateDetail()">
+                        </i>
+                    </div>
                 </div>
                 <div class="mod-content">
 
-                    <div class="ui-g">
-                        <!--detail right-->
-                        <div class="ui-g-6">
-                            <!-- Status -->
-                            <div class="ui-g item">
-                                <div class="ui-g-4">
-                                    <label class="detail-name" for="status" i18n>Statut:</label>
+                    <!-- detail values -->
+                    <div id="detailValues" [hidden]="showUpdateDetail">
+                        <div class="ui-g">
+                            <!--detail right-->
+                            <div class="ui-g-6">
+                                <!-- Status -->
+                                <div class="ui-g item">
+                                    <div class="ui-g-4">
+                                        <label class="detail-name" for="status" i18n>Statut:</label>
+                                    </div>
+                                    <div class="ui-g-8 pointer">
+                                        <span class="wrap" id="status">
+                                            <span class="badge badge-info detail-value">{{folder.status}}</span>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="ui-g-8 pointer" (mouseover)="showPencilStatus = true" (mouseleave)="showPencilStatus = false">
-                                    <span class="wrap" id="status" [hidden]="showInputStatus">
-                                        <span class="badge badge-info detail-value">{{folder.status}}</span>
-                                        <i class="fa fa-pencil pencil-update" (click)="showInputStatus = true" [hidden]="!showPencilStatus"></i>
-                                    </span>
 
+                                <!--Priority-->
+                                <div class="ui-g item">
+                                    <div class="ui-g-4">
+                                        <label class="detail-name" for="priority" i18n>Priority:</label>
+                                    </div>
+                                    <div class="ui-g-8 pointer">
+                                        <span class="wrap" id="priority">
+                                            <img alt="" height="16" src="../../../assets/images/major.svg" width="16" class="icon-value">&nbsp;
+                                            <span class="detail-value">{{folder.priority}}</span>
+                                        </span>
+
+                                    </div>
                                 </div>
+
                             </div>
-
-                            <!--Priority-->
-                            <div class="ui-g item">
-                                <div class="ui-g-4">
-                                    <label class="detail-name" for="priority" i18n>Priority:</label>
-                                </div>
-                                <div class="ui-g-8 pointer" (mouseover)="showPencilPriority = true" (mouseleave)="showPencilPriority = false">
-                                    <span class="wrap" id="priority" [hidden]="showInputPriority">
-                                        <img alt="" height="16" src="../../../assets/images/major.svg" width="16" class="icon-value">&nbsp;
-                                        <span class="detail-value">{{folder.priority}}</span>
-                                        <i class="fa fa-pencil pencil-update" (click)="showInputPriority = true" [hidden]="!showPencilPriority"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <!--detail left-->
-                        <div class="ui-g-6">
+                            <!--detail left-->
+                            <div class="ui-g-6">
 
                             <div class="ui-g item">
                                 <div class="ui-g-4">
                                     <label class="detail-name" for="court" i18n>Tribunal:</label>
                                 </div>
                                 <div class="ui-g-8 pointer" (mouseover)="showPencilCourt = true" (mouseleave)="showPencilCourt = false">
-                                    <span class="wrap" id="court" [hidden]="showInputCourt">
+                                    <span class="wrap" id="court" >
                                         <span class="detail-value">{{folder.court.name}}</span>
-                                        <i class="fa fa-pencil pencil-update" (click)="showInputCourt = true" [hidden]="!showPencilCourt"></i>
                                     </span>
                                 </div>
 
@@ -103,16 +113,102 @@
                                 <div class="ui-g-4">
                                     <label class="detail-name" for="sendingType" i18n>Type d'envoi:</label>
                                 </div>
-                                <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
-                                    <span class="wrap" [hidden]="showInputSendingType" id="sendingType">
+                                <div class="ui-g-8 pointer">
+                                    <span class="wrap"  id="sendingType">
                                         <div class="detail-value" [innerHTML]="folder.sendingType"></div>
-                                        <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
                                     </span>
                                 </div>
                             </div>
 
                         </div>
+                        </div>
                     </div>
+
+                    <!-- detail updating -->
+                    <form id="detailUpdating" [hidden]="!showUpdateDetail" [formGroup]="detailForm" (ngSubmit)="onSubmit(detailForm.value)">
+                        <!--<p-panel header="Validate">-->
+                            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        First Name *:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <input pInputText type="text" formControlName="firstname" placeholder="Required"/>
+                                    </div>
+                                    <div class="ui-grid-col-4">
+                                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['firstname'].valid&&detailForm.controls['firstname'].dirty">
+                                            <i class="fa fa-close"></i>
+                                            Firstname is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Last Name *:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <input pInputText type="text" formControlName="lastname" placeholder="Required"/>
+                                    </div>
+                                    <div class="ui-grid-col-4">
+                                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['lastname'].valid&&detailForm.controls['lastname'].dirty">
+                                            <i class="fa fa-close"></i>
+                                            Lastname is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Password *:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <input pInputText type="password" formControlName="password" placeholder="Required - Min(6)"/>
+                                    </div>
+                                    <div class="ui-grid-col-4">
+                                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['password'].valid&&detailForm.controls['password'].dirty">
+                                            <i class="fa fa-close"></i>
+                                            <span *ngIf="detailForm.controls['password'].errors['required']">Password is required</span>
+                                            <span *ngIf="detailForm.controls['password'].errors['minlength']">Must be longer than 6 characters</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Description:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <textarea pInputTextarea type="text" formControlName="description"></textarea>
+                                    </div>
+                                    <div class="ui-grid-col-4"></div>
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Gender *:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <p-dropdown [options]="genders" formControlName="gender" [autoWidth]="false"></p-dropdown>
+                                    </div>
+                                    <div class="ui-grid-col-4">
+                                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['gender'].valid&&detailForm.controls['gender'].dirty">
+                                            <i class="fa fa-close"></i>
+                                            Gender is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2"></div>
+                                    <div class="ui-grid-col-6">
+                                        <button pButton type="submit" label="Submit" [disabled]="!detailForm.valid"></button>
+                                    </div>
+                                    <div class="ui-grid-col-4"></div>
+                                </div>
+                                <div style="text-align:center;margin-top:20px" *ngIf="submitted">
+                                    Form Submitted
+                                    <br>
+                                    {{diagnostic}}
+                                </div>
+                            </div>
+                       <!-- </p-panel> -->
+                    </form>
 
                 </div>
             </div>
@@ -172,7 +268,7 @@
                 </div>
             </div>
         </div>
-        <!-- side bar-->
+        <!-- left panel-->
         <div class="ui-g-4">
             <div id="people-module">
                 <div class="ui-g">
@@ -184,10 +280,9 @@
                         <div class="ui-g-4">
                             <label class="detail-name" for="assignee" i18n>Assigner:</label>
                         </div>
-                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
-                                <span class="wrap" [hidden]="showInputSendingType" id="assignee">
+                        <div class="ui-g-8 pointer">
+                                <span class="wrap" id="assignee">
                                     <div class="detail-value">{{folder.assignee.firstName}}&nbsp;{{folder.assignee.lastName}}</div>
-                                    <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
                                 </span>
                         </div>
                     </div>
@@ -196,9 +291,8 @@
                             <label class="detail-name" for="reporter">Auteur:</label>
                         </div>
                         <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
-                            <span class="wrap" [hidden]="showInputSendingType" id="reporter">
+                            <span class="wrap" id="reporter">
                                 <div class="detail-value">{{folder.reporter.firstName}}&nbsp;{{folder.reporter.lastName}}</div>
-                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
                             </span>
                         </div>
                     </div>
@@ -214,10 +308,9 @@
                         <div class="ui-g-4">
                             <label class="detail-name" for="createDate">Créer:</label>
                         </div>
-                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
-                            <span class="wrap" [hidden]="showInputSendingType" id="createDate">
+                        <div class="ui-g-8 pointer">
+                            <span class="wrap" id="createDate">
                                 <div class="detail-value">{{folder.createDate | date : 'longDate':'':'ar'}}</div>
-                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
                             </span>
                         </div>
                     </div>
@@ -225,10 +318,9 @@
                         <div class="ui-g-4">
                             <label  class="detail-name" for="modifDate">Modifier:</label>
                         </div>
-                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
-                            <span class="wrap" [hidden]="showInputSendingType" id="modifDate">
+                        <div class="ui-g-8 pointer">
+                            <span class="wrap"  id="modifDate">
                                 <div class="detail-value">{{folder.modifDate | date : 'longDate':'':'ar'}}</div>
-                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
                             </span>
                         </div>
                     </div>
@@ -236,10 +328,9 @@
                         <div class="ui-g-4">
                             <label class="detail-name" for="closedDate">Clôturer:</label>
                         </div>
-                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
-                            <span class="wrap" [hidden]="showInputSendingType" id="closedDate">
+                        <div class="ui-g-8 pointer">
+                            <span class="wrap" id="closedDate">
                                 <div class="detail-value">{{folder.closeDate | date : 'longDate':'':'ar'}}</div>
-                                <i class="fa fa-pencil pencil-update" (click)="showInputSendingType = true" [hidden]="!showPencilSendingType"></i>
                             </span>
                         </div>
                     </div>

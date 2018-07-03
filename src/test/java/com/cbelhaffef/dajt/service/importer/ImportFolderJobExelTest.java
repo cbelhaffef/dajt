@@ -3,7 +3,7 @@ package com.cbelhaffef.dajt.service.importer;
 import com.cbelhaffef.dajt.MainApp;
 import com.cbelhaffef.dajt.dataset.FoldersDS;
 import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.service.impl.FolderExelImporterServiceImpl;
+import com.cbelhaffef.dajt.service.impl.ExelFileImporterServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 public class ImportFolderJobExelTest {
 
     @Autowired
-    private FolderExelImporterServiceImpl importerService;
+    private ExelFileImporterServiceImpl importerService;
 
     @Autowired
     private FoldersDS foldersDS;

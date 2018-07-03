@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.Set;
 
 
-public interface FolderExelImporterService {
+public interface ExelFileImporterService {
 
     Set<Folder> doImport(File fileExel) throws FileNotFoundException;
 

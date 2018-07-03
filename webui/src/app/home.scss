@@ -56,6 +56,10 @@ body{
     height: 100%;
 }
 
+.actions {
+    float: left;
+    margin-left: 5px;
+}
 .topbar-menu>li {
     display: inline-block;
     height: 100%;
@@ -160,4 +164,11 @@ body{
 
 .header-margin-top{
     margin-top: 67px;
+}
+
+.align-left{
+    text-align: left;
+}
+.margin-top-10{
+    margin-top: 10px;
 }

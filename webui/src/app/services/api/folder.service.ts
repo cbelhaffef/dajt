@@ -11,17 +11,17 @@ import {Action} from '../../models/action.model';
 @Injectable()
 export class FolderService {
 
-    constructor( private apiRequest: ApiRequestService, private translate: TranslateService) {}
+    constructor( private apiRequest:  ApiRequestService, private translate:  TranslateService) {}
 
     /**
      * Gets List of folders
      */
-    getFolders(folderNumber?: string, office?: number, status?: string, victim?: string, guilty?: string, page?: number, size?: number): Observable<any> {
+    getFolders(folderNumber?:  string, office?:  number, status?:  string, victim?:  string, guilty?:  string, page?:  number, size?:  number):  Observable<any> {
         // Create Request URL params
         const me = this;
-        let params: HttpParams = new HttpParams();
-        params = params.append('page', typeof page === 'number' ? page.toString() : '0');
-        params = params.append('size', typeof size === 'number' ? size.toString() : '1000');
+        let params:  HttpParams = new HttpParams();
+        params = params.append('page', typeof page === 'number' ? page.toString() :  '0');
+        params = params.append('size', typeof size === 'number' ? size.toString() :  '1000');
         if (folderNumber && typeof folderNumber === 'string') {
             params = params.append('folderNumber', folderNumber);
         }
@@ -41,10 +41,10 @@ export class FolderService {
         this.apiRequest.get('api/folders', params)
             .subscribe(jsonResp => {
                 const returnObj = jsonResp.items.map(function(v, i, a) {
-                    const newRow = Object.assign({}, v, {
-                        createDate  : me.translate.getDateString(v.createDate),
-                        modifDate   : me.translate.getDateString(v.modifDate),
-                        closeDate: (v.closeDate != null ? me.translate.getDateString(v.closeDate) : '')
+                    const newRow = Object.assign( {}, v, {
+                        createDate  :  me.translate.getDateString(v.createDate),
+                        modifDate   :  me.translate.getDateString(v.modifDate),
+                        closeDate:  (v.closeDate != null ? me.translate.getDateString(v.closeDate) :  '')
                     });
                     return newRow;
                 });
@@ -53,8 +53,8 @@ export class FolderService {
         return folderListSubject;
     }
 
-    getFolderStatus(name?: string): Observable<any> {
-        let params: HttpParams = new HttpParams();
+    getFolderStatus(name?:  string):  Observable<any> {
+        let params:  HttpParams = new HttpParams();
         if (name != null) {
             params = params.append('name', name);
         }
@@ -62,8 +62,8 @@ export class FolderService {
         return this.apiRequest.get('api/folders/status', params);
     }
 
-    getFolderPriority(name?: string): Observable<any> {
-        let params: HttpParams = new HttpParams();
+    getFolderPriority(name?:  string):  Observable<any> {
+        let params:  HttpParams = new HttpParams();
         if (name != null) {
             params = params.append('name', name);
         }
@@ -72,7 +72,7 @@ export class FolderService {
     }
 
 
-    getFolderDetails(id: string): Observable<any> {
+    getFolderDetails(id:  string):  Observable<any> {
         const me = this;
         const folderSubject = new Subject<any>();
         me.apiRequest.get('api/folders/' + id)
@@ -92,7 +92,7 @@ export class FolderService {
         return folderSubject;
     }
 
-    assignUser(folders: number[], user: User): Observable<any> {
+    assignUser(folders:  number[], user:  User):  Observable<any> {
         const me = this;
         const folderSubject = new  Subject<any>();
         this.apiRequest.post('api/folders/assign/' + user.userId, folders)
@@ -102,7 +102,7 @@ export class FolderService {
         return folderSubject;
     }
 
-    addActionToListOfFolders(folders: number[], action: Action): Observable<any> {
+    addActionToListOfFolders(folders:  number[], action:  Action):  Observable<any> {
         const me = this;
         const folderSubject = new  Subject<any>();
         this.apiRequest.post('api/folders/addAction/' + action.id, folders)
@@ -112,7 +112,7 @@ export class FolderService {
         return folderSubject;
     }
 
-    changeStatusToListOfFolders(folders: number[], status: string): Observable<any> {
+    changeStatusToListOfFolders(folders:  number[], status:  string):  Observable<any> {
         const me = this;
         const folderSubject = new  Subject<any>();
         this.apiRequest.post('api/folders/changeStatus/' + status, folders)

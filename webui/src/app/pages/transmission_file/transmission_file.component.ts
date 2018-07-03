@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
-@Component({
-	selector: 's-transmission_file-pg',
-	templateUrl: './transmission_file.component.html',
-    styleUrls: [ './transmission_file.scss'],
+@Component( {
+	selector:  's-transmission_file-pg',
+	templateUrl:  './transmission_file.component.html',
+    styleUrls:  [ './transmission_file.scss'],
 })
 
 export class TransmissionFileComponent {
@@ -12,11 +12,11 @@ export class TransmissionFileComponent {
     submitted = false;
 
     subjects = [
-        {id : '1' , name : 'اهانة'}
+         {id :  '1' , name :  'اهانة'}
     ];
 
     professors = [
-        {id : '1' , name : 'بن براح عبد اللطيف'}
+         {id :  '1' , name :  'بن براح عبد اللطيف'}
     ];
 
     onSubmit() {

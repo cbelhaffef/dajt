@@ -14,7 +14,7 @@ export class SpinnerService {
         this.loading.next(false);
     }
 
-    getLoading(): Observable<boolean> {
+    getLoading():  Observable<boolean> {
         return this.loading.asObservable();
     }
 }

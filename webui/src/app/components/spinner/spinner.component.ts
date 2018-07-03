@@ -2,17 +2,17 @@ import {Component, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {SpinnerService} from '../../services/spinner.service';
 
-@Component({
-    selector: 'app-spinner',
-    styleUrls  : ['./spinner.component.scss'],
-    templateUrl: 'spinner.component.html'
+@Component( {
+    selector:  'app-spinner',
+    styleUrls  :  ['./spinner.component.scss'],
+    templateUrl:  'spinner.component.html'
 })
 
 export class SpinnerComponent implements OnDestroy {
-    public isLoading: boolean;
-    public subscription: Subscription;
+    public isLoading:  boolean;
+    public subscription:  Subscription;
 
-    constructor(private spinnerService: SpinnerService) {
+    constructor(private spinnerService:  SpinnerService) {
         const me = this;
         me.subscription = this.spinnerService.getLoading()
             .subscribe(loading => {

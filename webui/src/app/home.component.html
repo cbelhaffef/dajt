@@ -10,7 +10,25 @@
 
         <ul class="topbar-menu">
             <li class="ng-tns-c0-0">
-                <a routerLink="/home/legal_cases/folders" routerLinkActive="active" i18n>Affaires Judiciaires</a>
+                <a class="active" routerLink="/home/legal_cases/folders" routerLinkActive="active" i18n>Affaires Judiciaires</a>
+            </li>
+        </ul>
+
+        <ul class="topbar-menu actions">
+            <li class="ng-tns-c0-0">
+                <a class="nav-link nav-text" routerLink="/administration">
+                    <i class="fa fa-cog"></i>
+                    <span style="line-height: 50px;" i18n>
+                        Administration
+                    </span>
+                </a>
+            </li>
+            <li class="ng-tns-c0-0">
+                <a class="nav-link nav-text" routerLink="/logout" i18n-pToolTip pTooltip="Déconnexion">
+                    <span style="line-height: 50px;"><i class="fa fa-power-off"></i>
+                        &nbsp;{{userName}}
+                    </span>
+                </a>
             </li>
         </ul>
     </div>
@@ -20,12 +38,31 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/home/legal_cases/folders" routerLinkActive="active" i18n>Liste des Dossiers</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/home/legal_cases/advocates" routerLinkActive="active" i18n>Liste des Avocats</a>
-            </li>
+
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" routerLink="/home/legal_cases/advocates" routerLinkActive="active" i18n>Liste des Avocats</a>-->
+            <!--</li>-->
         </ul>
     </nav>
 
     <router-outlet></router-outlet>
     <app-spinner></app-spinner>
 </div>
+
+<p-overlayPanel #userDetailMenu>
+    <div class="ui-listbox ui-inputtext ui-widget ui-widget-content ui-corner-all" style="width: 190px;">
+        <div class="ui-helper-hidden-accessible">
+            <input readonly="readonly" type="text">
+        </div><!----><!---->
+        <div class="ui-listbox-list-wrapper" style="max-height: 250px;">
+            <ul class="ui-listbox-list"><!---->
+                <li class="ng-star-inserted ui-listbox-item ui-corner-all " style="display: block;"><!----><!----><!---->
+                    <div class="ui-helper-clearfix ng-star-inserted">
+                        <!--<img style="display:inline-block;margin:5px 0 0 5px" width="48" src="assets/showcase/images/demo/car/Audi.png">-->
+                        <span style="float:right;margin:20px 10px 0 0" i18n>Déconnexion</span>
+                    </div>
+                </li>
+            </ul>
+        </div><!---->
+    </div>
+</p-overlayPanel>

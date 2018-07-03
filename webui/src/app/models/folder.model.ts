@@ -7,23 +7,23 @@ import {Action} from './action.model';
 
 export class Folder {
 
-    public id: number;
-    public number: string;
-    public status: string;
-    public priority: string;
-    public offence: string;
-    public office: Office;
-    public judgementStatus: string;
-    public court: Court;
-    public assignee: User;
-    public reporter: User;
-    public victims: Victim[];
-    public guilties: Guilty[];
-    public actions: Action[];
-    public sendingType: string;
-    public createDate: Date;
-    public modifDate: Date;
-    public closeDate: Date;
+    public id:  number;
+    public number:  string;
+    public status:  string;
+    public priority:  string;
+    public offence:  string;
+    public office:  Office;
+    public judgementStatus:  string;
+    public court:  Court;
+    public assignee:  User;
+    public reporter:  User;
+    public victims:  Victim[];
+    public guilties:  Guilty[];
+    public actions:  Action[];
+    public sendingType:  string;
+    public createDate:  Date;
+    public modifDate:  Date;
+    public closeDate:  Date;
 
     constructor() {
         this.court = new Court();

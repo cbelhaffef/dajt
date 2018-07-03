@@ -8,16 +8,16 @@ import {HttpParams} from '@angular/common/http';
 @Injectable()
 export class GuiltyService {
 
-    constructor( private apiRequest: ApiRequestService, private translate: TranslateService) {}
+    constructor( private apiRequest:  ApiRequestService, private translate:  TranslateService) {}
 
     /**
      * Gets List of guilties
      */
-    getGuilties(name?: string, page?: number, size?: number): Observable<any> {
+    getGuilties(name?:  string, page?:  number, size?:  number):  Observable<any> {
         // Create Request URL params
-        let params: HttpParams = new HttpParams();
-        params = params.append('page', typeof page === 'number'? page.toString():'0');
-        params = params.append('size', typeof size === 'number'? size.toString():'1000');
+        let params:  HttpParams = new HttpParams();
+        params = params.append('page', typeof page === 'number'? page.toString(): '0');
+        params = params.append('size', typeof size === 'number'? size.toString(): '1000');
         if (name && typeof name === 'string') {
             params = params.append('name', name);
         }

@@ -10,51 +10,51 @@ import {CourtService} from '../../services/api/court.service';
 import {UserService} from '../../services/api/user.service';
 import {UserInfoService} from '../../services/user-info.service';
 
-@Component({
-    selector: 'folders-create-dialog-component',
-    templateUrl: 'folders.create.dialog.component.html',
-    styleUrls : ['./folders.create.dialog.component.css']
+@Component( {
+    selector:  'folders-create-dialog-component',
+    templateUrl:  'folders.create.dialog.component.html',
+    styleUrls :  ['./folders.create.dialog.component.css']
 })
 export class FoldersCreateDialogComponent implements OnInit {
 
-    @ViewChild(NgForm) createFolderForm: NgForm;
+    @ViewChild(NgForm) createFolderForm:  NgForm;
 
     public listOffices = [];
 
-    public filteredOffices: any[] = [];
-    public selectedOffice: string;
-    public queryOffice: string;
+    public filteredOffices:  any[] = [];
+    public selectedOffice:  string;
+    public queryOffice:  string;
 
-    public filteredVictims: any[] = [];
-    public selectedVictims: any[] = [];
-    public queryVictim: string;
+    public filteredVictims:  any[] = [];
+    public selectedVictims:  any[] = [];
+    public queryVictim:  string;
 
-    public filteredGuilties: any[] = [];
-    public selectedGuilties: any[] = [];
-    public queryGuilty: string;
+    public filteredGuilties:  any[] = [];
+    public selectedGuilties:  any[] = [];
+    public queryGuilty:  string;
 
-    public filteredCourts: any[] = [];
-    public selectedCourt: string;
-    public queryCourt: string;
+    public filteredCourts:  any[] = [];
+    public selectedCourt:  string;
+    public queryCourt:  string;
 
-    public filteredUsers: any[] = [];
-    public selectedUser: string;
-    public queryUser: string;
+    public filteredUsers:  any[] = [];
+    public selectedUser:  string;
+    public queryUser:  string;
 
     officeControl = new FormControl('', [Validators.required]);
 
     constructor(
-        public officeService: OfficeService,
-        public victimService: VictimService,
-        public guiltyService: GuiltyService,
-        public folderService: FolderService,
-        public courtService:  CourtService,
-        public userService: UserService,
-        public userInfoService: UserInfoService,
-        public dialogRef: MatDialogRef<FoldersCreateDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        public officeService:  OfficeService,
+        public victimService:  VictimService,
+        public guiltyService:  GuiltyService,
+        public folderService:  FolderService,
+        public courtService:   CourtService,
+        public userService:  UserService,
+        public userInfoService:  UserInfoService,
+        public dialogRef:  MatDialogRef<FoldersCreateDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data:  any) { }
 
-    ngOnInit(): void {
+    ngOnInit():  void {
         let _self = this;
         _self.officeService.getOffices()
             .subscribe(function(offices) {
@@ -62,7 +62,7 @@ export class FoldersCreateDialogComponent implements OnInit {
             });
     }
 
-    close(): void {
+    close():  void {
         this.dialogRef.close();
     }
 
@@ -107,18 +107,18 @@ export class FoldersCreateDialogComponent implements OnInit {
         let query = event.query;
         let queryArr = query.split(' ');
         let lastName = queryArr[0];
-        let firstName = queryArr.length > 1 ? queryArr[1] : null;
+        let firstName = queryArr.length > 1 ? queryArr[1] :  null;
         _self.userService.getUsers(lastName, firstName).subscribe(function(users) {
             _self.filteredUsers = [];
             for (let u of users) {
-                _self.filteredUsers.push({name: u.lastName + ' ' + u.firstName , id: u.userId});
+                _self.filteredUsers.push( {name:  u.lastName + ' ' + u.firstName , id:  u.userId});
             }
             _self.queryUser = query;
         });
     }
 
-    filterItem(query, items: any[]): any[] {
-        let filtered: any[] = [];
+    filterItem(query, items:  any[]):  any[] {
+        let filtered:  any[] = [];
         for (let i = 0; i < items.length; i++) {
             let guilty = items[i];
             if (guilty.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
@@ -128,17 +128,17 @@ export class FoldersCreateDialogComponent implements OnInit {
         return filtered;
     }
 
-    addItem(event: KeyboardEvent, item: string, selectedItems: any[], filterdItems: any[]) {
+    addItem(event:  KeyboardEvent, item:  string, selectedItems:  any[], filterdItems:  any[]) {
         if (event.code === 'Enter' && filterdItems.length === 0) {
-            selectedItems.push({ name: item });
+            selectedItems.push( { name:  item });
         }
     }
 
-    createFolder(f: NgForm) {
+    createFolder(f:  NgForm) {
         let _self = this;
         let userStored = _self.userInfoService.getUserInfo();
         if (userStored != null) {
-            f.value['reporter'] = { userId : _self.userInfoService.getUserInfo().userId };
+            f.value['reporter'] = { userId :  _self.userInfoService.getUserInfo().userId };
         }
         _self.folderService.addFolder(f.value)
             .subscribe(function(folder) {
