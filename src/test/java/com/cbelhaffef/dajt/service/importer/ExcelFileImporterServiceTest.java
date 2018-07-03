@@ -24,19 +24,18 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(classes = {FolderExelImporterServiceImpl.class,FoldersDS.class})
 @ContextConfiguration(classes = {MainApp.class})
-public class ImportFolderJobExelTest {
+public class ExcelFileImporterServiceTest {
 
     @Autowired
     private ExelFileImporterServiceImpl importerService;
 
-    @Autowired
-    private FoldersDS foldersDS;
-
     File exelForTest;
+
+    private final String EXCEL_FILE_TO_TEST = "/exelForTest.xlsx";
 
     @Before
     public void setUp(){
-        exelForTest = new File (getClass().getResource("/exelForTest.xlsx").getFile());
+        exelForTest = new File (getClass().getResource(EXCEL_FILE_TO_TEST).getFile());
         assertNotNull(exelForTest);
         assertTrue(exelForTest.exists());
     }
@@ -47,11 +46,12 @@ public class ImportFolderJobExelTest {
         assertNotNull(folders);
         assertFalse(folders.isEmpty());
         List<Folder> listFolders = new ArrayList<>(folders);
-        List<Folder> expectedFolders = foldersDS.getAll();
-        for(int i = 0; i< listFolders.size() ; i++){
-            assertThat("test folder" + i, listFolders.get(i),is(equalTo(expectedFolders.get(i))));
-            //assertEquals(listFolders.get(i),samePropertyValuesAs(expectedFolders.get(i)));
-        }
+
+        assertEquals(15, listFolders.size());
+
+        Folder folder = listFolders.get(5);
+        assertNotNull(folder.getGuilties());
+        assertEquals(2,folder.getGuilties().size());
 
     }
 

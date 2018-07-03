@@ -40,7 +40,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             String fileName = fileExel.getName();
             String[] args = fileName.split("_");
             if(args.length < 3 ){
-                throw new FileFormatException("Nom du fichier ne respecte pas le pattenr : type_numéroDossier_annee_numberFile");
+                throw new FileFormatException("Nom du fichier ne respecte pas le pattern : type_numDossier_annee_numbFile");
             }
             String desktopNumber = args[1];
 
