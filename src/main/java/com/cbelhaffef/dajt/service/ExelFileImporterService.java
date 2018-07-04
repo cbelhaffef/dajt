@@ -4,11 +4,12 @@ import com.cbelhaffef.dajt.model.folder.Folder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Set;
 
 
 public interface ExelFileImporterService {
 
-    Set<Folder> doImport(File fileExel) throws FileNotFoundException;
+    Set<Folder> doImport(File fileExel) throws IOException;
 
 }

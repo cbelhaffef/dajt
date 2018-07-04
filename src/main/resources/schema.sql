@@ -4,6 +4,41 @@ CREATE SCHEMA dajt;
 USE dajt;
 
 /* Table: user (Application Users) */
+CREATE TABLE import (
+    imp_id     INT NOT NULL,
+    start_date    NVARCHAR(20) NOT NULL,
+    end_date    NVARCHAR(20) NOT NULL,
+    imp_process_date  NVARCHAR(50) ,
+    imp_status   NVARCHAR(50) ,
+    email       NVARCHAR(70) ,
+    role        NVARCHAR(20) ,
+    sex         NVARCHAR(20) ,
+    office_id   INT ,
+    is_active   TINYINT  ,
+    CONSTRAINT user_id PRIMARY KEY(user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+
+
+
+
+
+
+imp_status
+
+
+imp_message
+
+
+imp_file_name,
+imp_file_size
+
+
+/* Table: user (Application Users) */
 CREATE TABLE user (
     user_id     INT NOT NULL,
     username    NVARCHAR(20) NOT NULL,
@@ -16,7 +51,7 @@ CREATE TABLE user (
     office_id   INT ,
     is_active   TINYINT  ,
     CONSTRAINT user_id PRIMARY KEY(user_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table : role  */
 CREATE TABLE role (
