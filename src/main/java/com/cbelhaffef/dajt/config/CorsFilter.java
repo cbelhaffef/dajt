@@ -1,9 +1,9 @@
 package com.cbelhaffef.dajt.config;
 
-import java.io.IOException;
 import javax.servlet.*;
-import javax.servlet.http.*;
-import org.springframework.stereotype.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class CorsFilter implements javax.servlet.Filter {
 	@Override
@@ -13,14 +13,14 @@ public class CorsFilter implements javax.servlet.Filter {
 
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
-	    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Host, Referer, Connection, User-Agent, authorization, sw-useragent, sw-version");
+	    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Host, Referer, Connection, User-Agent, authorization, sw-useragent, sw-version, authorization");
 
 		// Just REPLY OK if request method is OPTIONS for CORS (pre-flight)
-		if ( req.getMethod().equals("OPTIONS") ) {
-        res.setStatus(HttpServletResponse.SC_OK);
-        return;
-    }
-		chain.doFilter(request, response);
+        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+            res.setStatus(HttpServletResponse.SC_OK);
+        }else{
+            chain.doFilter(request, response);
+        }
 	}
 
 	@Override

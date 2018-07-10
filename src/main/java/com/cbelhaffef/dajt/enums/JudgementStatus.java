@@ -1,7 +1,8 @@
 package com.cbelhaffef.dajt.enums;
 
 public enum JudgementStatus {
+
+    PENDING,
     DONE,
-    NOT_DONE,
     SUSPENDED
 }

@@ -16,7 +16,7 @@ export class FolderService {
     /**
      * Gets List of folders
      */
-    getFolders(folderNumber?:  string, office?:  number, status?:  string, victim?:  string, guilty?:  string, page?:  number, size?:  number):  Observable<any> {
+    getFolders(folderNumber?:  string, office?:  number, status?:  string, victim?:  string, accused?:  string, page?:  number, size?:  number):  Observable<any> {
         // Create Request URL params
         const me = this;
         let params:  HttpParams = new HttpParams();
@@ -34,21 +34,22 @@ export class FolderService {
         if (victim && typeof victim === 'string') {
             params = params.append('victim', victim);
         }
-        if (guilty && typeof guilty === 'string') {
-            params = params.append('guilty', guilty);
+        if (accused && typeof accused === 'string') {
+            params = params.append('accused', accused);
         }
         const folderListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/folders', params)
             .subscribe(jsonResp => {
-                const returnObj = jsonResp.items.map(function(v, i, a) {
-                    const newRow = Object.assign( {}, v, {
-                        createDate  :  me.translate.getDateString(v.createDate),
-                        modifDate   :  me.translate.getDateString(v.modifDate),
-                        closeDate:  (v.closeDate != null ? me.translate.getDateString(v.closeDate) :  '')
-                    });
-                    return newRow;
-                });
-                folderListSubject.next(returnObj); // incidentList is a Subject and emits an event thats being listened to by the components
+                // const returnObj = jsonResp.items.map(function(v, i, a) {
+                //     const newRow = Object.assign( {}, v, {
+                //         created  :  me.translate.getDateString(v.created),
+                //         updated   :  me.translate.getDateString(v.updated),
+                //         closed:  (v.closed != null ? me.translate.getDateString(v.closed) :  '')
+                //     });
+                //     return newRow;
+                // });
+
+                folderListSubject.next(jsonResp); // incidentList is a Subject and emits an event thats being listened to by the components
             });
         return folderListSubject;
     }

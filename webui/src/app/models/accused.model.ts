@@ -1,4 +1,4 @@
-export class Guilty {
+export class Accused {
 
     public id:  number;
     public name:  string;

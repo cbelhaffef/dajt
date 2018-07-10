@@ -12,7 +12,7 @@ import com.cbelhaffef.dajt.model.VersionModel;
 @RestController
 @RequestMapping(value = "/version", produces = { "application/json" })
 @Api(tags = {"Common"})
-public class Version {
+public class VersionController {
   @ApiOperation(value = "Gets the version of the REST API", notes = "", response = VersionModel.class)
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Returns the version info for the REST API.", response = VersionModel.class) })
   @RequestMapping( method = RequestMethod.GET)

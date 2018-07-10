@@ -20,7 +20,7 @@ public class Court {
     @Column(name="court_id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name="name", unique = true, nullable = false)
     private String name;
 
     @JsonIgnore

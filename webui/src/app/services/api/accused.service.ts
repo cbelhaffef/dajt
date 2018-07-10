@@ -6,7 +6,7 @@ import {TranslateService} from './translate.service';
 import {HttpParams} from '@angular/common/http';
 
 @Injectable()
-export class GuiltyService {
+export class AccusedService {
 
     constructor( private apiRequest:  ApiRequestService, private translate:  TranslateService) {}
 

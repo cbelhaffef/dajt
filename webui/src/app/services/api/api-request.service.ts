@@ -7,6 +7,7 @@ import 'rxjs/observable/throw';
 import 'rxjs/add/observable/of';
 import {UserInfoService} from '../user-info.service';
 import {AppConfig} from '../../app-config';
+import {RequestOptions} from '@angular/http';
 
 
 @Injectable()

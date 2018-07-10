@@ -30,3 +30,41 @@ html, body{
     border-bottom-right-radius: 0 !important;
     border-right: 0 none !important;
 }
+
+.badge {
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    min-width: .625rem;
+    height: .80rem;
+    line-height: normal;
+    border-radius: .516667rem;
+    font-size: .75rem;
+    padding: 0 .266667rem;
+    margin-right: .25rem;
+    white-space: nowrap;
+    text-align: center;
+}
+.badge.badge-info {
+    background: #007cbb;
+    color: #fff;
+}
+.badge.badge-danger {
+    background: #c92100;
+    color: #fff;
+}
+.badge.badge-success {
+    background: #318700;
+    color: #fff;
+}
+.badge.badge-warning {
+    background: #ffdc0b;
+    color: #000;
+}
+
+.ui-tooltip {
+    position: absolute;
+    max-width: 400px;
+    white-space: pre-wrap;
+}

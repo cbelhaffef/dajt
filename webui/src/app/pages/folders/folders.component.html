@@ -38,10 +38,10 @@
                     </div>
 
                     <div class=" ui-g-1  text-left">
-                        <label for="guilty" i18n>Coupable</label>
+                        <label for="accused" i18n>Coupable</label>
                     </div>
                     <div class="ui-g-3  text-right">
-                        <input type="text" pInputText id="guilty" name="guilty" ngModel
+                        <input type="text" pInputText id="accused" name="accused" ngModel
                                i18n-placeholder="Entrez le nom du coupable" size="35">
                     </div>
                     <div class="ui-g-1">
@@ -112,7 +112,7 @@
                 </div>
             </div>
 
-            <p-table [value]="listFolders" [(selection)]="selectedFolders" i18n-emptymessage emptymessage="Aucun résultat trouvé">
+            <p-table [value]="listFolders?.items" [(selection)]="selectedFolders" [paginator]="true" [rows]="listFolders?.pageSize" i18n-emptymessage emptymessage="Aucun résultat trouvé">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 2.25em">
@@ -150,7 +150,7 @@
                         </td>
                         <td>
                             <ul class="list compact">
-                                <li  *ngFor="let g of folder.guilties">
+                                <li  *ngFor="let g of folder.accused">
                                     {{g.name}}
                                 </li>
                             </ul>
@@ -159,26 +159,23 @@
                             {{folder.court.name}}
                         </td>
                         <td>
-                            {{folder.modifDate | date : 'longDate':'':'ar'}}
+                            {{folder.updated | date : 'longDate':'':'ar'}}
                         </td>
                         <td>
                             {{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.firstName}}
                         </td>
                         <td>
-                            <div role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">
-                                <span class="badge badge-purple">{{folder?.actions.length}}</span>
-                                <span class="tooltip-content" [hidden]="folder?.actions.length === 0">
-                                    <ul class="list compact">
-                                        <li *ngFor="let a of folder?.actions">{{a?.name}}</li>
-                                    </ul>
-                                </span>
-                            </div>
+                            <span class="badge badge-info" dir="rtl"
+                                  [tooltipDisabled]="folder?.actions === 0"
+                                  [pTooltip]="getToolTipActionValue(folder?.actions)">
+                                {{folder?.actions.length}}
+                            </span>
                         </td>
                         <td>
                             <span class="badge badge-info">{{folder?.status}}</span>
                         </td>
                         <td>
-                            <div [innerHTML]="folder?.sendingType"></div>
+                            <div [innerHTML]="folder?.administrationConcerned"></div>
                         </td>
                     </tr>
                 </ng-template>
@@ -190,6 +187,7 @@
 
 <!-- ActionsOverlaPanel-->
 <p-overlayPanel #overlayPanel>
+
     <!-- UsersOverlayPanel-->
     <div *ngIf="showAssignUserOPanel">
         <p-dropdown #assignUserDropdown
@@ -210,6 +208,7 @@
             <i class="fa fa-check"></i>
         </button>
     </div>
+
     <!-- ActionsOverlyPanel-->
     <div *ngIf="showAddActionOPanel">
         <p-dropdown #addActionDropdown
@@ -231,7 +230,7 @@
         </button>
     </div>
 
-    <!-- ActionsOverlyPanel-->
+    <!-- ChangeStatusPanel-->
     <div *ngIf="showChangeStatusOPanel">
         <p-dropdown #changeStatusDropdown
                     [options]="listStatus"

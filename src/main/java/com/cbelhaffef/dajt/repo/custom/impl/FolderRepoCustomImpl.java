@@ -1,16 +1,12 @@
 package com.cbelhaffef.dajt.repo.custom.impl;
 
-import com.cbelhaffef.dajt.enums.FolderStatus;
+import com.cbelhaffef.dajt.model.accused.QAccused;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.folder.QFolder;
-import com.cbelhaffef.dajt.model.guilty.QGuilty;
 import com.cbelhaffef.dajt.model.office.QOffice;
 import com.cbelhaffef.dajt.model.victim.QVictim;
 import com.cbelhaffef.dajt.repo.custom.FolderRepoCustom;
-import com.cbelhaffef.dajt.repo.custom.FolderRepoCustom;
 import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQuery;
-import org.hibernate.jpa.QueryHints;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +27,7 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
         QFolder folder = QFolder.folder;
         QOffice office = QOffice.office;
         QVictim victim = QVictim.victim;
-        QGuilty guilty = QGuilty.guilty;
+        QAccused accused = QAccused.accused;
 
         Querydsl querydsl = getQuerydsl();
         JPQLQuery<Folder> query = querydsl.createQuery();
@@ -54,8 +50,8 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
             query.leftJoin(folder.victims, victim).where(folder.victims.any().name.contains(fQuery.getVictims().iterator().next().getName()));
         }
 
-        if (fQuery.getGuilties() != null && !fQuery.getGuilties().isEmpty() ) {
-            query.leftJoin(folder.guilties, guilty).where(folder.guilties.any().name.contains(fQuery.getGuilties().iterator().next().getName()));
+        if (fQuery.getAccused() != null && !fQuery.getAccused().isEmpty() ) {
+            query.leftJoin(folder.accused, accused).where(folder.accused.any().name.contains(fQuery.getAccused().iterator().next().getName()));
         }
         querydsl.applyPagination(pageable, query);
 

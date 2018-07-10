@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.*;
 @EnableJpaRepositories(basePackages ={ "com.cbelhaffef.dajt.repo"},repositoryImplementationPostfix = "CustomImpl")
 @EntityScan(basePackages ={ "com.cbelhaffef.dajt.model"})
 @EnableTransactionManagement
-@ComponentScan({"com.cbelhaffef.dajt.service","com.cbelhaffef.dajt.threads"})
+@ComponentScan({"com.cbelhaffef.dajt"})
 public class MainApp {
 	public static void main(String[] args) throws Exception {
 		new SpringApplication(MainApp.class).run(args);

@@ -1,18 +1,18 @@
 package com.cbelhaffef.dajt.enums;
 
-public enum FolderColumnImport {
+public enum FolderColumnImportEnum {
 
-    NUMBER(0),
-    DIRECTION_NUMBER(1),
+    KEY(0),
+    DIRECTORATE_KEY(1),
     VICTIMS(2),
-    GUILTIES(3),
+    ACCUSED(3),
     OFFENCE(4),
     COURT(5),
-    SENDING_TYPE(6);
+    ADMINSTRATION_CONCERNED(6);
 
     private int value;
 
-    FolderColumnImport(int value) {
+    FolderColumnImportEnum(int value) {
         this.value = value;
     }
 

@@ -1,9 +1,9 @@
 package com.cbelhaffef.dajt.service.impl;
 
-import com.cbelhaffef.dajt.enums.FolderColumnImport;
+import com.cbelhaffef.dajt.enums.FolderColumnImportEnum;
+import com.cbelhaffef.dajt.model.accused.Accused;
 import com.cbelhaffef.dajt.model.court.Court;
 import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.guilty.Guilty;
 import com.cbelhaffef.dajt.model.importfile.Import;
 import com.cbelhaffef.dajt.model.importfile.ImportStatusEnum;
 import com.cbelhaffef.dajt.model.office.Office;
@@ -14,24 +14,21 @@ import com.cbelhaffef.dajt.repo.ImportRepo;
 import com.cbelhaffef.dajt.repo.OfficeRepo;
 import com.cbelhaffef.dajt.service.ExelFileImporterService;
 import com.google.common.collect.Sets;
-import com.google.j2objc.annotations.AutoreleasePool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.xmlbeans.impl.piccolo.io.FileFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import javax.management.BadAttributeValueExpException;
+import java.io.*;
+import java.nio.file.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.cbelhaffef.dajt.model.importfile.ImportStatusEnum.IN_PROGRESS;
@@ -55,68 +52,72 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
     private final static String ARCHIVE_DIRECTORY = "/mnt/import/archives";
 
+    private final static String TAG_DATE_OF_OFFENCE = "بتاريـخ";
+    private final static String TAG_BIS_AR = "مكرر";
+    private final static String TAG_BIS_FR = "BIS";
+
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat formatterArch = new SimpleDateFormat("dd-MM-yyyy");
+
+    @Override
+    public Set<Folder> doImport(File fileExel) throws IOException {
+        return doImport(fileExel, false);
+    }
+
     @Override
     @Transactional
-    public Set<Folder> doImport(File fileExel) throws IOException {
+    public Set<Folder> doImport(File fileExel , boolean reversedKey) throws IOException {
 
         Set<Folder> folders = new TreeSet<>();
-        Path filePath = null;
-        Path filePathTemp = null;
 
         Import imp = new Import();
-        imp.setStartDate(new Date());
         imp.setFileName(fileExel.getAbsolutePath());
+        try{
+            if(!fileExel.exists()) {
+                String msg = "Le fichier n'existe pas";
+                throw new FileNotFoundException(msg);
+            }
 
-        Optional<Import> importDb = importRepo.findByFileName(fileExel.getAbsolutePath());
+            Optional<Import> importDb = importRepo.findByFileName(fileExel.getAbsolutePath());
 
-        if(importDb.isPresent()){
-            imp.setStatus(ON_ERROR);
-            imp.setEndDate(new Date());
-            String msg = "Import a échoué - le fichier a été déja importé dans le system.";
-            imp.setMessage(msg);
-            imp = importRepo.save(imp);
-            throw  new FileAlreadyExistsException(msg);
-        }
+            if(importDb.isPresent()){
+                String msg = "le fichier a été déja importé dans le system.";
+                throw new FileAlreadyExistsException(msg);
+            }
 
-        if(!fileExel.exists()) {
-            imp.setStatus(ON_ERROR);
-            imp.setEndDate(new Date());
-            String msg = "Import a échoué -  Le fichier n'existe pas";
-            imp.setMessage(msg);
-            imp = importRepo.save(imp);
-            throw  new FileNotFoundException(msg);
-        }else {
+            // start import
             imp.setStatus(IN_PROGRESS);
-            filePath = fileExel.toPath();
+            Path filePath = fileExel.toPath();
+            Path filePathTemp = null;
             imp.setFileSize(Files.size(filePath));
             imp = importRepo.save(imp);
-        }
 
-        try {
+
             // fileName
             String fileName = fileExel.getName();
             String[] args = fileName.split("_");
             if(args.length < 3 ){
-                throw new FileFormatException("Nom du fichier ne respecte pas le pattern : type_numDossier_annee_numbFile");
+                String msg = "Nom du fichier ne respecte pas le pattern : type_numDossier_annee_numbFile";
+                throw new BadAttributeValueExpException(msg);
             }
             // officeNumber
             String officeNumber = args[1];
             if(officeNumber.length() > 2){
-                throw new FileFormatException("le nom du bureau n'est pas conforme");
+                String msg = "le nom du bureau n'est pas conforme";
+                throw new BadAttributeValueExpException(msg);
             }
+
             Long OfficeId = new Long(officeNumber.substring(1));
             Office office = officeRepo.getOne(OfficeId);
 
-            log.info("=============Debut de l'importation pour le bureau '" + office.getName()+ "' du fichier : " + fileExel.getAbsolutePath());
+            log.info("============= Debut de l'importation pour le bureau '" + office.getName()+ "' du fichier : " + fileExel.getAbsolutePath());
 
-
-            FileInputStream excelFile = new FileInputStream(fileExel);
+            InputStream streamExel = new ByteArrayInputStream(convertFileIntoByteArray(fileExel));
 
             //change file to temp
-            filePathTemp = filePath.resolveSibling(filePath.getFileName()+"Temp");
-            Files.move(filePath, filePathTemp);
+            filePathTemp = renameFileWhen(filePath.toFile(),IN_PROGRESS).toPath();
 
-            Workbook workbook = new XSSFWorkbook(excelFile);
+            Workbook workbook = new XSSFWorkbook(streamExel);
             Sheet datatypeSheet = workbook.getSheetAt(0); // choose year on sheet
             Iterator<Row> iterator = datatypeSheet.iterator();
 
@@ -130,54 +131,77 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
                 Folder folder = new Folder();
 
+                // treatment of the boxes of the current line
                 for(int i = 0 ; cellIterator.hasNext() ; i++){
-
                     Cell currentCell = cellIterator.next();
 
-                    if (i == FolderColumnImport.NUMBER.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
-                        String number = currentCell.getStringCellValue();
+                    // key
+                    if (i == FolderColumnImportEnum.KEY.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
+                        // format Key
+                        // first tag BIS
+                        String key = currentCell.getStringCellValue().replace(TAG_BIS_AR, TAG_BIS_FR);
+                        // second \n to " "
+                        key = key.replace("\n" , " ");
+                        // reverse if it given
+                        key = reverseKey(key,reversedKey);
 
-                        Optional<Folder> folderDb = folderRepo.findByNumber(number);
+                        Optional<Folder> folderDb = folderRepo.findByNumber(key);
                         if(folderDb.isPresent()){
+                            log.info( "Le dossier numéro : " + key + " à déja été importé.");
                             break;
                         }
-
-                        folder.setNumber(number);
+                        folder.setNumber(key);
                     }
 
-                    if (i == FolderColumnImport.DIRECTION_NUMBER.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
-                        folder.setDirectionNumber(currentCell.getStringCellValue());
+                    // direcotrateKey
+                    if (i == FolderColumnImportEnum.DIRECTORATE_KEY.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()){
+                        folder.setDirectorateNumber(currentCell.getStringCellValue());
                     }
 
-                    if (i == FolderColumnImport.VICTIMS.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    // Victims
+                    if (i == FolderColumnImportEnum.VICTIMS.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
                         String stringVictims = currentCell.getStringCellValue();
-                        Set<Victim> victims;
+                        Set<Victim> victims = new HashSet<>();
                         if(stringVictims.contains("\n")){
                             String[] arr = stringVictims.split("\n");
-                            victims = Arrays.stream(arr).map(a -> new Victim(a)).collect(Collectors.toSet());
+                            for(String a : arr){
+                                if(!a.isEmpty()){
+                                    Victim v = new Victim(a, folder);
+                                    victims.add(v);
+                                }
+                            }
                         }else{
-                            victims = Sets.newHashSet(new Victim(stringVictims));
+                            victims = Sets.newHashSet(new Victim(stringVictims,folder));
                         }
                         folder.setVictims(victims);
                     }
 
-                    if (i == FolderColumnImport.GUILTIES.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    // Accused
+                    if (i == FolderColumnImportEnum.ACCUSED.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
                         String stringGuilties = currentCell.getStringCellValue();
-                        Set<Guilty> guilties;
+                        Set<Accused> accused = new HashSet<>();
                         if(stringGuilties.contains("\n")){
                             String[] arr = stringGuilties.split("\n");
-                            guilties = Arrays.stream(arr).map(a -> new Guilty(a)).collect(Collectors.toSet());
+                            for(String a : arr){
+                                if(!a.isEmpty()){
+                                    Accused ac = new Accused(a, folder);
+                                    accused.add(ac);
+                                }
+                            }
                         }else{
-                            guilties = Sets.newHashSet(new Guilty(stringGuilties));
+                            accused = Sets.newHashSet(new Accused(stringGuilties,folder));
                         }
-                        folder.setGuilties(guilties);
+                        folder.setAccused(accused);
                     }
 
-                    if (i == FolderColumnImport.OFFENCE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    // Offence
+                    if (i == FolderColumnImportEnum.OFFENCE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
+                        folder.setOffenceDate(extractDateFromString(currentCell.getStringCellValue()));
                         folder.setOffence(currentCell.getStringCellValue());
                     }
 
-                    if (i == FolderColumnImport.COURT.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
+                    // Court
+                    if (i == FolderColumnImportEnum.COURT.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
                         String courtName = currentCell.getStringCellValue();
                         Optional<Court> court = courtRepo.findByName(courtName);
                          if(!court.isPresent()){
@@ -186,16 +210,22 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                         folder.setCourt(court.get());
                     }
 
-                    if (i == FolderColumnImport.SENDING_TYPE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
-                        folder.setSendingType(currentCell.getStringCellValue());
+                    // ADMINISTRATION_CONCERNED
+                    if (i == FolderColumnImportEnum.ADMINSTRATION_CONCERNED.getValue() &&
+                        currentCell.getCellTypeEnum() == CellType.STRING &&
+                        !currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().equals("//")) {
+                        folder.setAdministrationConcerned(currentCell.getStringCellValue());
                     }
 
                     folder.setOffice(office);
                 }
-                folderRepo.save(folder);
+
+
+                folder = folderRepo.save(folder);
+                folders.add(folder);
             }
 
-            imp.setEndDate(new Date());
+            imp.setEnded(new Date());
             imp.setMessage("le fichier " + filePath.getFileName() + " a été importé avec succées");
             imp.setStatus(ImportStatusEnum.FINICHED);
             imp = importRepo.save(imp);
@@ -203,21 +233,102 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             if(!dirArchive.exists()){
                 dirArchive.mkdirs() ;
             }
-            // Move import file into archive directory when finished
-            Files.move(filePathTemp,  Paths.get(dirArchive.getAbsolutePath() + File.separator + filePathTemp.getFileName()));
+            String toDayString = formatterArch.format(new Date());
 
-        } catch ( IOException e ) {
-            log.error("============Import fichier " + fileExel.getAbsolutePath() + "a échoué." ,e);
-            imp.setStatus(ImportStatusEnum.ON_ERROR);
-            imp.setEndDate(new Date());
-            Path fileError = Paths.get(filePath.toString() + "ERROR");
-            if(filePathTemp != null){
-                Files.move(filePathTemp, fileError);
-            }else{
-                Files.move(filePath, fileError);
+            File direArchiveToDay = new File(ARCHIVE_DIRECTORY + File.separator + toDayString);
+            if(!direArchiveToDay.exists()){
+                direArchiveToDay.mkdirs() ;
             }
-            imp = importRepo.save(imp);
+            // Move import file into archive directory when finished
+            Path target = Paths.get(direArchiveToDay.getAbsolutePath());
+            Files.move(filePathTemp, target.resolve(filePath.getFileName()) );
+
+        } catch ( Exception e ) {
+            endImportOnError(fileExel,imp,e.toString() + " - " + e.getMessage());
+            e.printStackTrace();
         }
+
         return folders;
+    }
+
+    /**
+     * Reverse key
+     * @param key
+     * @param reversedKey
+     * @return
+     */
+    public String reverseKey(String key, boolean reversedKey){
+        if(reversedKey){
+            String n1,n2,n3 = null;
+            StringBuilder keyBuilder = new StringBuilder();
+            String[] arrayKey = key.split("/");
+            n2 = arrayKey[0];
+            if(arrayKey.length > 1){
+                String[] yearOrNumber = arrayKey[1].split(" ");
+                n1 = yearOrNumber[0];
+                keyBuilder.append(n1);
+                if(yearOrNumber.length > 2){
+                    n3 = yearOrNumber[1];
+                }
+                keyBuilder.append("/");
+                keyBuilder.append(n2);
+                if(n3 != null){
+                    keyBuilder.append(" ");
+                    keyBuilder.append(n3);
+                }
+
+            }else{
+                throw new IllegalArgumentException("Le numéro du dossier " +  key + "est mal formé");
+            }
+            return keyBuilder.toString();
+        }
+        return key;
+    }
+
+    public File renameFileWhen(File fileToRename, ImportStatusEnum status) throws IOException {
+        if(fileToRename == null || !fileToRename.exists()){
+            throw new FileNotFoundException("le fichier n'exite pas");
+        }
+        String fileName = fileToRename.getName();
+        if(status.equals(ON_ERROR) && fileName.endsWith(IN_PROGRESS.name())){
+            fileName = fileName.substring(0,fileName.indexOf(IN_PROGRESS.name()));
+        }
+        File fileRenamed = new File(fileToRename.getParent(), fileName + status.name());
+        Files.copy(fileToRename.toPath(),fileRenamed.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        fileToRename.delete();
+        return fileRenamed;
+    };
+
+    public byte[] convertFileIntoByteArray(File file) throws IOException {
+        FileInputStream fis = new FileInputStream(file);
+        byte[] data = new byte[fis.available()];
+        fis.read(data);
+        fis.close();
+        return data;
+    }
+
+    public void endImportOnError(File file, Import imp, String message) throws IOException {
+        String msg = "L'import du fichier : " + file.getName() +" a échoué - " + message;
+        log.error(msg);
+        imp.setStatus(ON_ERROR);
+        imp.setEnded(new Date());
+        imp.setMessage(msg);
+        importRepo.save(imp);
+        String fileName = file.getName();
+        if (!file.exists() && !fileName.endsWith(IN_PROGRESS.name())){
+            fileName += IN_PROGRESS.name();
+        }
+        file = new File(file.getParent() + File.separator + fileName);
+        renameFileWhen(file,ON_ERROR);
+    }
+
+    public Date extractDateFromString(String text) throws ParseException {
+
+        String regex = "\\d{2}/\\d{2}/\\d{4}";
+        Matcher m = Pattern.compile(regex).matcher(text);
+        if (m.find()) {
+            return formatter.parse(m.group(0));
+        }
+        return null;
     }
 }

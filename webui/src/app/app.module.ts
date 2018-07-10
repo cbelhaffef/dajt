@@ -35,7 +35,7 @@ import {FoldersComponent} from './pages/folders/folders.component';
 import {FolderDetailsComponent} from './pages/folder_details/folder_details.component';
 import {FolderService} from './services/api/folder.service';
 import {VictimService} from './services/api/victim.service';
-import {GuiltyService} from './services/api/guilty.service';
+import {AccusedService} from './services/api/accused.service';
 import {CourtService} from './services/api/court.service';
 
 import {registerLocaleData} from '@angular/common';
@@ -124,7 +124,7 @@ registerLocaleData(localeAr, 'ar');
     AuthService,
     FolderService,
     VictimService,
-    GuiltyService,
+    AccusedService,
     CourtService,
     OfficeService,
     ActionService,

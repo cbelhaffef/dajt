@@ -6,7 +6,7 @@ import {Folder} from '../../models/folder.model';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {CourtService} from '../../services/api/court.service';
 import {VictimService} from '../../services/api/victim.service';
-import {GuiltyService} from '../../services/api/guilty.service';
+import {AccusedService} from '../../services/api/accused.service';
 import {ActionService} from '../../services/api/action.service';
 import {Message, SelectItem} from 'primeng/api';
 
@@ -57,7 +57,7 @@ export class FolderDetailsComponent implements OnInit {
     constructor(private activateRoute:  ActivatedRoute,
                 private folderService:  FolderService,
                 private victimService:  VictimService,
-                private guiltyService:  GuiltyService,
+                private guiltyService:  AccusedService,
                 private actionService:  ActionService,
                 private courtService:  CourtService,
                 private fb:  FormBuilder) {
@@ -158,9 +158,9 @@ export class FolderDetailsComponent implements OnInit {
     filterItem(query, items:  any[]):  any[] {
         let filtered:  any[] = [];
         for (let i = 0; i < items.length; i++) {
-            let guilty = items[i];
-            if (guilty.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-                filtered.push(guilty);
+            let accused = items[i];
+            if (accused.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
+                filtered.push(accused);
             }
         }
         return filtered;

@@ -261,3 +261,8 @@ ul{
     width: 100% !important;
 }
 
+.ui-tooltip {
+    position: absolute;
+    max-width: 400px;
+    white-space: pre-wrap;
+}

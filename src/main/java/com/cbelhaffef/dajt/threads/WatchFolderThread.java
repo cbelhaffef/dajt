@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @Component
 @Scope("prototype")
@@ -21,6 +22,8 @@ public class WatchFolderThread implements Runnable{
         try {
             watcherFolderService.initWatch(PATH_FOLDER_TO_WATCH);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

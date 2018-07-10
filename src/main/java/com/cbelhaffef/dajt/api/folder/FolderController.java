@@ -4,20 +4,17 @@ import com.cbelhaffef.dajt.api.user.UserService;
 import com.cbelhaffef.dajt.enums.FolderPriority;
 import com.cbelhaffef.dajt.enums.FolderStatus;
 import com.cbelhaffef.dajt.exception.ResourceAlreadyAddedException;
+import com.cbelhaffef.dajt.model.accused.Accused;
 import com.cbelhaffef.dajt.model.action.Action;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.folder.FolderListResponse;
 import com.cbelhaffef.dajt.model.folder.FolderPriorityResponse;
 import com.cbelhaffef.dajt.model.folder.FolderStatusResponse;
-import com.cbelhaffef.dajt.model.guilty.Guilty;
 import com.cbelhaffef.dajt.model.office.Office;
 import com.cbelhaffef.dajt.model.user.User;
 import com.cbelhaffef.dajt.model.victim.Victim;
 import com.cbelhaffef.dajt.repo.ActionRepo;
 import com.cbelhaffef.dajt.repo.FolderRepo;
-import com.cbelhaffef.dajt.model.action.Action;
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.office.Office;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +27,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -51,11 +47,11 @@ public class FolderController {
     @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
     public FolderListResponse getFoldersByPage(
         @ApiParam(value = ""    )               @RequestParam(value = "page"  ,  defaultValue="0"   ,  required = false) Integer page,
-        @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="20"  ,  required = false) Integer size,
+        @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="10"  ,  required = false) Integer size,
         @RequestParam(value = "folderNumber"     , required = false) String folderNumber,
         @RequestParam(value = "office"      , required = false) Long office,
         @RequestParam(value = "status"      , required = false) FolderStatus status,
-        @RequestParam(value = "guilty"      , required = false) String guilty,
+        @RequestParam(value = "accused"      , required = false) String accused,
         @RequestParam(value = "victim"      , required = false) String victim,
         Pageable pageable
     ) {
@@ -74,14 +70,14 @@ public class FolderController {
         victimObj.setName(victim);
         if (victim != null)        { qry.setVictims(Sets.newHashSet(victimObj)); };
 
-        Guilty guiltyObj = new Guilty();
-        guiltyObj.setName(guilty);
-        if (guilty != null)        { qry.setGuilties(Sets.newHashSet(guiltyObj)); };
-
+        Accused guiltyObj = new Accused();
+        guiltyObj.setName(accused);
+        if (accused != null)        { qry.setAccused(Sets.newHashSet(guiltyObj)); };
 
         Page<Folder> pg = folderRepo.findByFilter(qry,pageable);
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
+        resp.setPageSize(size);
         return resp;
     }
 

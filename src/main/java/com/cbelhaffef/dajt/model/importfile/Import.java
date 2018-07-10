@@ -2,10 +2,10 @@ package com.cbelhaffef.dajt.model.importfile;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import java.util.Date;
-
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -18,25 +18,29 @@ public class Import {
     @Column(name="imp_id")
     private Long id;
 
-    @Column(name="start_date")
-    private Date startDate;
 
-    @Column(name="end_date")
-    private Date endDate;
+    @Column(name="started")
+    private Date started;
 
-    @Column(name="imp_process_date")
-    private Date processDate;
+    @Column(name="ended")
+    private Date ended;
 
-    @Column(name="imp_status")
+    @Column(name="status")
     @Enumerated(EnumType.STRING)
     private ImportStatusEnum status;
 
-    @Column(name="imp_message")
+    @Column(name="message")
     private String message;
 
-    @Column(name="imp_file_name")
+    @Column(name="file_name")
     private String fileName;
 
-    @Column(name="imp_file_size")
+    @Column(name="file_size")
     private Long fileSize;
+
+    @PrePersist
+    public void prePersist() {
+        started = new Date();
+    }
+
 }

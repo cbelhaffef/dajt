@@ -1,9 +1,9 @@
-package com.cbelhaffef.dajt.api.court;
+package com.cbelhaffef.dajt.api.accused;
 
-import com.cbelhaffef.dajt.model.court.Court;
-import com.cbelhaffef.dajt.model.court.CourtListResponse;
 import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.repo.CourtRepo;
+import com.cbelhaffef.dajt.model.accused.Accused;
+import com.cbelhaffef.dajt.model.accused.AccusedListResponse;
+import com.cbelhaffef.dajt.repo.AccusedRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = {"Accused"})
-public class CourtController {
+public class AccusedController {
 
-    @Autowired private CourtRepo courtRepo;
+    @Autowired private AccusedRepo accusedRepo;
 
-    @ApiOperation(value = "List of courts", response = FolderListResponse.class)
-    @RequestMapping(value = "/courts", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
-    public CourtListResponse getVictims(Pageable pageable){
-        CourtListResponse resp = new CourtListResponse();
-        Page<Court> pg = courtRepo.findAll(pageable);
+    @ApiOperation(value = "List of accused", response = FolderListResponse.class)
+    @RequestMapping(value = "/accused", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
+    public AccusedListResponse getVictims(Pageable pageable){
+        AccusedListResponse resp = new AccusedListResponse();
+        Page<Accused> pg = accusedRepo.findAll(pageable);
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         return resp;

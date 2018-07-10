@@ -1,7 +1,5 @@
-package com.cbelhaffef.dajt.model.user;
+package com.cbelhaffef.dajt.model.accused;
 
-import com.cbelhaffef.dajt.model.accused.Accused;
-import com.cbelhaffef.dajt.model.response.PageResponse;
 import com.cbelhaffef.dajt.model.response.PageResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,7 +10,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class UserListResponse extends PageResponse {
+public class AccusedListResponse extends PageResponse{
     @ApiModelProperty(required = true, value = "")
-    private List<User> items;
+    private List<Accused> items;
 }

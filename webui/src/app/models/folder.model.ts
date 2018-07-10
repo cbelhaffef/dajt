@@ -1,6 +1,6 @@
 import {Court} from './court.model';
 import {Victim} from './victim.model';
-import {Guilty} from './guilty.model';
+import {Accused} from './accused.model';
 import {User} from './user.model';
 import {Office} from './office.model';
 import {Action} from './action.model';
@@ -18,12 +18,12 @@ export class Folder {
     public assignee:  User;
     public reporter:  User;
     public victims:  Victim[];
-    public guilties:  Guilty[];
+    public accused:  Accused[];
     public actions:  Action[];
-    public sendingType:  string;
-    public createDate:  Date;
-    public modifDate:  Date;
-    public closeDate:  Date;
+    public administrationConcerned:  string;
+    public created:  Date;
+    public updated:  Date;
+    public closed:  Date;
 
     constructor() {
         this.court = new Court();

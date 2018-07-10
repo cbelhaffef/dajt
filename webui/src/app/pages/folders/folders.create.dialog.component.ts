@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {FormControl, NgForm, Validators} from '@angular/forms';
 import {OfficeService} from '../../services/api/office.service';
 import {VictimService} from '../../services/api/victim.service';
-import {GuiltyService} from '../../services/api/guilty.service';
+import {AccusedService} from '../../services/api/accused.service';
 import {FolderService} from '../../services/api/folder.service';
 import {any} from 'codelyzer/util/function';
 import {CourtService} from '../../services/api/court.service';
@@ -46,7 +46,7 @@ export class FoldersCreateDialogComponent implements OnInit {
     constructor(
         public officeService:  OfficeService,
         public victimService:  VictimService,
-        public guiltyService:  GuiltyService,
+        public guiltyService:  AccusedService,
         public folderService:  FolderService,
         public courtService:   CourtService,
         public userService:  UserService,
@@ -120,9 +120,9 @@ export class FoldersCreateDialogComponent implements OnInit {
     filterItem(query, items:  any[]):  any[] {
         let filtered:  any[] = [];
         for (let i = 0; i < items.length; i++) {
-            let guilty = items[i];
-            if (guilty.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-                filtered.push(guilty);
+            let accused = items[i];
+            if (accused.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
+                filtered.push(accused);
             }
         }
         return filtered;

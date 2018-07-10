@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {FolderService} from '../../services/api/folder.service';
 import {VictimService} from '../../services/api/victim.service';
 import {NgForm} from '@angular/forms';
-import {GuiltyService} from '../../services/api/guilty.service';
+import {AccusedService} from '../../services/api/accused.service';
 import {CourtService} from '../../services/api/court.service';
 import {OfficeService} from '../../services/api/office.service';
 import {MatDialog} from '@angular/material';
@@ -15,6 +15,7 @@ import {SpinnerService} from '../../services/spinner.service';
 import {Dropdown, OverlayPanel} from 'primeng/primeng';
 import {Action} from 'app/models/action.model';
 import {ActionService} from '../../services/api/action.service';
+import {FolderResponse} from '../../models/folder.response.model';
 
 @Component( {
     selector   :  's-folders-pg',
@@ -30,7 +31,7 @@ export class FoldersComponent implements OnInit {
     @ViewChild('changeStatusDropdown')  changeStatusDropdown:  Dropdown;
     @ViewChild(NgForm) createFolderForm:  NgForm;
 
-    public listFolders = [];
+    public listFolders: FolderResponse = new FolderResponse();
     public selectedFolders = [];
 
     public listFolderStatus = [];
@@ -60,7 +61,7 @@ export class FoldersComponent implements OnInit {
                 private spinnerService:  SpinnerService,
                 private folderService:  FolderService,
                 private victimService:  VictimService,
-                private guiltyService:  GuiltyService,
+                private guiltyService:  AccusedService,
                 private courtService:   CourtService,
                 private officeService:  OfficeService,
                 private userService:  UserService,
@@ -128,15 +129,15 @@ export class FoldersComponent implements OnInit {
         let _self = this;
         _self.spinnerService.showSpinner();
 
-        let folderNumber, office, status, victim, guilty;
+        let folderNumber, office, status, victim, accused;
         if (f && f.value) {
             folderNumber = f.value.folderNumber;
             office = f.value.office;
             status = f.value.status;
             victim = f.value.victim;
-            guilty = f.value.guilty;
+            accused = f.value.accused;
         }
-        _self.folderService.getFolders(folderNumber, office, status, victim, guilty)
+        _self.folderService.getFolders(folderNumber, office, status, victim, accused)
             .subscribe(function(folderData) {
                 _self.listFolders = folderData;
                 _self.selectedFolders = [];
@@ -201,4 +202,14 @@ export class FoldersComponent implements OnInit {
         this.showAddActionOPanel = false;
     }
 
+    public getToolTipActionValue(listAction: Action[]): string {
+        let actionValue = '';
+        listAction.forEach(function (a: Action , i) {
+            actionValue += a.name
+            if (i < listAction.length) {
+                actionValue += ' \n';
+            }
+        });
+        return actionValue;
+    }
 }

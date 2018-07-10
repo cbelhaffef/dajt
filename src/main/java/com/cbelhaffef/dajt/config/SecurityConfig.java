@@ -23,9 +23,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // Filters will not get executed for the resources
-        web.ignoring().antMatchers("/", "/resources/**", "/static/**", "/public/**", "/webui/**", "/h2-console/**"
-            , "/configuration/**", "/swagger-ui/**", "/swagger-resources/**", "/api-docs", "/api-docs/**", "/v2/api-docs/**"
-            , "/*.html", "/**/*.html" ,"/**/*.css","/**/*.js","/**/*.png","/**/*.jpg", "/**/*.gif", "/**/*.svg", "/**/*.ico", "/**/*.ttf","/**/*.woff");
+        web.ignoring().antMatchers(
+            "/",
+            "/resources/**",
+            "/static/**",
+            "/public/**",
+            "/webui/**",
+            "/h2-console/**",
+            "/configuration/**",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/api-docs",
+            "/api-docs/**",
+            "/v2/api-docs/**"
+            , "/*.html",
+            "/**/*.html" ,
+            "/**/*.css",
+            "/**/*.js",
+            "/**/*.png",
+            "/**/*.jpg",
+            "/**/*.gif",
+            "/**/*.svg",
+            "/**/*.ico",
+            "/**/*.ttf",
+            "/**/*.woff");
     }
 
     //If Security is not working check application.properties if it is set to ignore
@@ -43,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // custom JSON based authentication by POST of {"username":"<name>","password":"<password>"} which sets the token header upon authentication
         .addFilterBefore(new GenerateTokenForUserFilter ("/session", authenticationManager(), tokenUtil), UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
+        .antMatchers("/version").permitAll()
         .anyRequest().authenticated()
         ;
     }

@@ -10,6 +10,13 @@ EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 SET FOREIGN_KEY_CHECKS = 1;
 
+
+CREATE TABLE office (
+    office_id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255),
+    PRIMARY KEY (office_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /* Table: user (Application Users) */
 CREATE TABLE user (
     user_id     INT NOT NULL,
@@ -22,8 +29,9 @@ CREATE TABLE user (
     sex         NVARCHAR(20) ,
     office_id   INT ,
     is_active   TINYINT  ,
+    CONSTRAINT fk_user__office FOREIGN KEY (office_id) REFERENCES office(office_id),
     CONSTRAINT user_id PRIMARY KEY(user_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table : role  */
 CREATE TABLE role (
@@ -55,31 +63,26 @@ CREATE TABLE court (
     PRIMARY KEY (court_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE office (
-    office_id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255),
-    PRIMARY KEY (office_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 /* Table: folder */
 CREATE TABLE folder (
     folder_id       INT NOT NULL AUTO_INCREMENT,
-    number          VARCHAR(255) NOT NULL UNIQUE,
-    direction_number VARCHAR(255) UNIQUE,
+    number           VARCHAR(255) NOT NULL UNIQUE,
+    directorate_key VARCHAR(255) UNIQUE,
     offence         VARCHAR(255) NOT NULL,
+    offence_date    TIMESTAMP,
     office_id       INT NOT NULL,
     court_id        INT NOT NULL,
-    sending_type    VARCHAR(255) NOT NULL,
+    administration_concerned LONGTEXT NOT NULL,
     assignee        INT,
     reporter        INT,
-    create_date     DATETIME DEFAULT CURRENT_TIMESTAMP,
-    modif_date      DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    close_date      DATETIME,
+    created         DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated         DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    closed          TIMESTAMP,
+    judged          TIMESTAMP,
+    judgement_status VARCHAR(255),
     folder_status   VARCHAR(50) NOT NULL DEFAULT 'OPEN',
     folder_priority VARCHAR(50) NOT NULL DEFAULT 'MINOR',
     advocate_id     INT,
-    judgement_date  DATETIME,
-    judgement_status VARCHAR(255),
     CONSTRAINT fk_folder__office   FOREIGN KEY (office_id)   REFERENCES office(office_id),
     CONSTRAINT fk_folder__court    FOREIGN KEY (court_id)    REFERENCES court(court_id),
     CONSTRAINT fk_folder__advocate FOREIGN KEY (advocate_id) REFERENCES advocate(advocate_id),
@@ -88,17 +91,21 @@ CREATE TABLE folder (
     PRIMARY KEY (folder_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/* Table: guilty */
-CREATE TABLE guilty (
-    guilty_id INT NOT NULL AUTO_INCREMENT,
-    name NVARCHAR(255),
-    PRIMARY KEY (guilty_id)
+/* Table: accused */
+CREATE TABLE accused (
+    accused_id INT NOT NULL AUTO_INCREMENT,
+    name       NVARCHAR(255),
+    folder_id  INT,
+    CONSTRAINT fk_accused__folder   FOREIGN KEY (folder_id)   REFERENCES folder(folder_id),
+    PRIMARY KEY (accused_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table: victim */
 CREATE TABLE victim (
     victim_id INT NOT NULL AUTO_INCREMENT,
     name NVARCHAR(255),
+    folder_id  INT,
+    CONSTRAINT fk_victim__folder   FOREIGN KEY (folder_id)   REFERENCES folder(folder_id),
     PRIMARY KEY (victim_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -107,26 +114,6 @@ CREATE TABLE action (
     action_id INT NOT NULL AUTO_INCREMENT,
     name NVARCHAR(255),
     PRIMARY KEY (action_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/* Table: folder_guilty */
-CREATE TABLE folder_guilty(
-    folder_id INT NOT NULL,
-    guilty_id INT NOT NULL,
-    PRIMARY KEY (`folder_id`,`guilty_id`),
-    /* KEY `guilty_id` (`guilty_id`),*/
-    CONSTRAINT fk_folder__guilty FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
-    CONSTRAINT fk_guilty__folder FOREIGN KEY (guilty_id) REFERENCES guilty(guilty_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/* Table: folder_victim */
-CREATE TABLE folder_victim(
-    folder_id INT NOT NULL,
-    victim_id INT NOT NULL,
-    PRIMARY KEY (`folder_id`,`victim_id`),
-    /*KEY `guilty_id` (`victim_id`),*/
-    CONSTRAINT fk_folder__victim FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
-    CONSTRAINT fk_victim__folder FOREIGN KEY (victim_id) REFERENCES victim(victim_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table: folder_action */
@@ -144,10 +131,38 @@ CREATE TABLE transmission (
     work_done        VARCHAR(255) ,
     note             VARCHAR(255) ,
     send_number      VARCHAR(250),
-    send_date        DATETIME,
+    send_date        TIMESTAMP,
     amount           INT,
     folder_id        INT,
     transmitted      BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT fk_transmission__folder FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
     PRIMARY KEY (transmission_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/* Table : Import */
+CREATE TABLE `import` (
+    imp_id       bigint(20) NOT NULL AUTO_INCREMENT,
+    start_date   DATETIME DEFAULT NULL,
+    end_date     DATETIME DEFAULT NULL,
+    process_date DATETIME DEFAULT NULL,
+    status       varchar(45) DEFAULT NULL,
+    message      longtext,
+    file_name    varchar(256) DEFAULT NULL,
+    file_size    bigint(20) DEFAULT NULL,
+    PRIMARY KEY (imp_id)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/* Table : Import */
+CREATE TABLE `comment` (
+    comment_id   bigint(20) NOT NULL AUTO_INCREMENT,
+    created      DATETIME DEFAULT NULL,
+    updated      DATETIME DEFAULT NULL,
+    body           LONGTEXT DEFAULT NULL,
+    author         INT,
+    author_updated INT,
+    folder_id      INT,
+    CONSTRAINT fk_comment__folder FOREIGN KEY (folder_id) REFERENCES folder(folder_id),
+    CONSTRAINT fk_comment__user FOREIGN KEY (author) REFERENCES user(user_id),
+    CONSTRAINT fk_comment__user_updated FOREIGN KEY (author_updated) REFERENCES user(user_id),
+    PRIMARY KEY (comment_id)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

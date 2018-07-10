@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model.victim;
+package com.cbelhaffef.dajt.model.accused;
 
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,12 +10,12 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name="victim")
-public class Victim {
+@Table(name="accused")
+public class Accused {
 
     @Id
     @GeneratedValue
-    @Column(name="victim_id")
+    @Column(name="accused_id")
     private Long id;
 
     @Column(name="name")
@@ -26,11 +26,11 @@ public class Victim {
     @JoinColumn(name="folder_id")
     private Folder folder;
 
-    public Victim() {
+    public Accused() {
         super();
     }
 
-    public Victim(String name,Folder folder) {
+    public Accused(String name,Folder folder) {
         this.name = name;
         this.folder = folder;
     }
@@ -40,9 +40,9 @@ public class Victim {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Victim victim = (Victim) o;
-        return Objects.equals(id, victim.id) &&
-            Objects.equals(name, victim.name);
+        Accused accused = (Accused) o;
+        return Objects.equals(id, accused.id) &&
+            Objects.equals(name, accused.name);
     }
 
     @Override
