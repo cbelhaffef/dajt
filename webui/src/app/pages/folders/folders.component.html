@@ -72,11 +72,10 @@
                     <div class="ui-g-1  text-left">
                     </div>
 
-                    <div class="ui-g-3 text-right">
-                        <button type="submit" pButton i18n-label label="Recherche" class="pi pi-search"></button>
+                    <div class="ui-g-4 text-right">
+                        <button type="submit" pButton i18n-label label="Recherche" icon="fa fa-fw fa-search"></button>
                     </div>
 
-                    <div class="ui-g-1  text-left"></div>
                 </div>
             </form>
         </div>
@@ -91,7 +90,7 @@
                               icon="fa fa-fw fa-caret-down"
                               i18n-label
                               [disabled]="selectedFolders.length == 0"
-                              label="Assigner">
+                              label="Assigné a">
                     </p-button>
                 </div>
                 <div class="ui-g-10">
@@ -112,7 +111,15 @@
                 </div>
             </div>
 
-            <p-table [value]="listFolders?.items" [(selection)]="selectedFolders" [paginator]="true" [rows]="listFolders?.pageSize" i18n-emptymessage emptymessage="Aucun résultat trouvé">
+            <p-table [value]="listFolders?.items" [(selection)]="selectedFolders"
+                     [lazy]="true" (onLazyLoad)="loadFoldersLazy($event)" [paginator]="true"
+                     [rows]="10" [totalRecords]="listFolders?.totalItems" [loading]="loading"
+                     i18n-emptymessage emptymessage="Aucun résultat trouvé">
+                <ng-template pTemplate="caption" >
+                    <span i18n>Dossiers</span>
+                    <span class="badge badge-success">{{listFolders?.totalItems}}</span>&nbsp;
+                    <span i18n>Il y'a</span>&nbsp;
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 2.25em">

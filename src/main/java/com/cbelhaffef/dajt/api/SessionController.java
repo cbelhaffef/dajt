@@ -51,6 +51,7 @@ public class SessionController {
             sessionItem.setFirstName(user.getFirstName());
             sessionItem.setLastName(user.getLastName());
             sessionItem.setEmail(user.getEmail());
+            sessionItem.setUserId(user.getUserId());
             //sessionItem.setRole(user.getRole());
 
             resp.setOperationStatus(OperationResponse.ResponseStatusEnum.SUCCESS);

@@ -16,6 +16,7 @@ import {Dropdown, OverlayPanel} from 'primeng/primeng';
 import {Action} from 'app/models/action.model';
 import {ActionService} from '../../services/api/action.service';
 import {FolderResponse} from '../../models/folder.response.model';
+import {LazyLoadEvent} from 'primeng/api';
 
 @Component( {
     selector   :  's-folders-pg',
@@ -56,6 +57,8 @@ export class FoldersComponent implements OnInit {
     public listStatus = [];
     public selectedStatus:  string;
     public showChangeStatusOPanel = false;
+
+    public loading: boolean;
 
     constructor(private router:  Router,
                 private spinnerService:  SpinnerService,
@@ -103,6 +106,11 @@ export class FoldersComponent implements OnInit {
             });
     }
 
+    loadFoldersLazy(event: LazyLoadEvent) {
+        let _self =  this;
+        _self.getFolders(_self.filterFoldersForm, event.first);
+    }
+
     openCreateFolderDialog():  void {
         let _self = this;
         let dialogRef = _self.dialog.open(FoldersCreateDialogComponent, {
@@ -122,14 +130,16 @@ export class FoldersComponent implements OnInit {
     }
 
     onSubmitFilterFoldersForm(f:  NgForm) {
-        this.getFolders(f);
+        let _self = this;
+        _self.getFolders(f);
     }
 
-    getFolders(f?:  NgForm) {
+    getFolders(f?:  NgForm, p?: number) {
         let _self = this;
         _self.spinnerService.showSpinner();
+        _self.loading = true;
 
-        let folderNumber, office, status, victim, accused;
+        let folderNumber, office, status, victim, accused, page;
         if (f && f.value) {
             folderNumber = f.value.folderNumber;
             office = f.value.office;
@@ -137,18 +147,25 @@ export class FoldersComponent implements OnInit {
             victim = f.value.victim;
             accused = f.value.accused;
         }
-        _self.folderService.getFolders(folderNumber, office, status, victim, accused)
+        if (p) {
+            if (p > 0) {
+                p = Math.floor(_self.listFolders.totalItems / p);
+            }
+            page = p;
+        }
+        _self.folderService.getFolders(folderNumber, office, status, victim, accused, page)
             .subscribe(function(folderData) {
                 _self.listFolders = folderData;
                 _self.selectedFolders = [];
                 _self.spinnerService.hideSpinner();
+                _self.loading = false;
             });
     }
 
     assignUser(folders:  Folder[], user:  User):  void {
         let _self =  this;
         _self.spinnerService.showSpinner();
-        this.folderService.assignUser(folders.map(f => f.id ), user).subscribe(jsonResp => {
+        _self.folderService.assignUser(folders.map(f => f.id ), user).subscribe(jsonResp => {
             _self.overlayPanel.hide();
             _self.getFolders(_self.filterFoldersForm);
         });
@@ -157,7 +174,7 @@ export class FoldersComponent implements OnInit {
     addAction(folders:  Folder[], action:  Action):  void {
         let _self =  this;
         _self.spinnerService.showSpinner();
-        this.folderService.addActionToListOfFolders(folders.map(f => f.id ), action).subscribe(jsonResp => {
+        _self.folderService.addActionToListOfFolders(folders.map(f => f.id ), action).subscribe(jsonResp => {
             _self.overlayPanel.hide();
             _self.getFolders(_self.filterFoldersForm);
         });
@@ -166,40 +183,43 @@ export class FoldersComponent implements OnInit {
     changeStatus(folders:  Folder[], status:  string):  void {
         let _self =  this;
         _self.spinnerService.showSpinner();
-        this.folderService.changeStatusToListOfFolders(folders.map(f => f.id ), status).subscribe(jsonResp => {
+        _self.folderService.changeStatusToListOfFolders(folders.map(f => f.id ), status).subscribe(jsonResp => {
             _self.overlayPanel.hide();
             _self.getFolders(_self.filterFoldersForm);
         });
     }
 
     showAssignUserDropdown():  void {
-       this.selectedUser = null;
-       this.showAssignUserOPanel = true;
-       if (this.assignUserDropdown) {
-           this.assignUserDropdown.value = null;
+       let _self = this;
+       _self.selectedUser = null;
+       _self.showAssignUserOPanel = true;
+       if (_self.assignUserDropdown) {
+           _self.assignUserDropdown.value = null;
        }
-       this.showAddActionOPanel = false;
-       this.showChangeStatusOPanel = false;
+       _self.showAddActionOPanel = false;
+       _self.showChangeStatusOPanel = false;
     }
 
     showAddActionDropdown():  void {
-        this.selectedAction = null;
-        this.showAddActionOPanel = true;
-        if (this.addActionDropdown) {
-            this.addActionDropdown.value = null;
+        let _self = this;
+        _self.selectedAction = null;
+        _self.showAddActionOPanel = true;
+        if (_self.addActionDropdown) {
+            _self.addActionDropdown.value = null;
         }
-        this.showAssignUserOPanel = false;
-        this.showChangeStatusOPanel = false;
+        _self.showAssignUserOPanel = false;
+        _self.showChangeStatusOPanel = false;
     }
 
     showChangeFolderStatusDropdown():  void {
-        this.selectedStatus = null;
-        this.showChangeStatusOPanel = true;
-        if (this.changeStatusDropdown) {
-            this.changeStatusDropdown.value = null;
+        let _self = this;
+        _self.selectedStatus = null;
+        _self.showChangeStatusOPanel = true;
+        if (_self.changeStatusDropdown) {
+            _self.changeStatusDropdown.value = null;
         }
-        this.showAssignUserOPanel = false;
-        this.showAddActionOPanel = false;
+        _self.showAssignUserOPanel = false;
+        _self.showAddActionOPanel = false;
     }
 
     public getToolTipActionValue(listAction: Action[]): string {

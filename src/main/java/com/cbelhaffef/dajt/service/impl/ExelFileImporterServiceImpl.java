@@ -107,6 +107,8 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                 throw new BadAttributeValueExpException(msg);
             }
 
+            String yearOfFolders = args[2];
+
             Long OfficeId = new Long(officeNumber.substring(1));
             Office office = officeRepo.getOne(OfficeId);
 
@@ -130,7 +132,9 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                 Iterator<Cell> cellIterator = currentRow.iterator();
 
                 Folder folder = new Folder();
-
+                Date date = formatter.parse("01/01/"+yearOfFolders);
+                folder.setCreated(date);
+                folder.setUpdated(date);
                 // treatment of the boxes of the current line
                 for(int i = 0 ; cellIterator.hasNext() ; i++){
                     Cell currentCell = cellIterator.next();

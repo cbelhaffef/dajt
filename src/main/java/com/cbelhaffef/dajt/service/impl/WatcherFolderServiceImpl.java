@@ -37,7 +37,7 @@ public class WatcherFolderServiceImpl implements WatcherFolderService {
     public void initWatch(String path) throws IOException {
         Path dir = Paths.get(path);
         if(!Files.exists(dir)){
-            throw new FileNotFoundException("Le dossier d'import n'existe pas.");
+            dir.toFile().mkdirs();
         }
 
         // detect of files already on import directory

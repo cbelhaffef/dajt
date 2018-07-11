@@ -9,6 +9,8 @@ import {any} from 'codelyzer/util/function';
 import {CourtService} from '../../services/api/court.service';
 import {UserService} from '../../services/api/user.service';
 import {UserInfoService} from '../../services/user-info.service';
+import {Victim} from '../../models/victim.model';
+import {Accused} from '../../models/accused.model';
 
 @Component( {
     selector:  'folders-create-dialog-component',
@@ -22,16 +24,11 @@ export class FoldersCreateDialogComponent implements OnInit {
     public listOffices = [];
 
     public filteredOffices:  any[] = [];
-    public selectedOffice:  string;
     public queryOffice:  string;
 
-    public filteredVictims:  any[] = [];
-    public selectedVictims:  any[] = [];
-    public queryVictim:  string;
+    public selectedVictims:  Victim[] = [];
 
-    public filteredGuilties:  any[] = [];
-    public selectedGuilties:  any[] = [];
-    public queryGuilty:  string;
+    public selectedAccused:  Accused[] = [];
 
     public filteredCourts:  any[] = [];
     public selectedCourt:  string;
@@ -41,12 +38,13 @@ export class FoldersCreateDialogComponent implements OnInit {
     public selectedUser:  string;
     public queryUser:  string;
 
+    public vict: string;
+    public acc: string;
+
     officeControl = new FormControl('', [Validators.required]);
 
     constructor(
         public officeService:  OfficeService,
-        public victimService:  VictimService,
-        public guiltyService:  AccusedService,
         public folderService:  FolderService,
         public courtService:   CourtService,
         public userService:  UserService,
@@ -72,24 +70,6 @@ export class FoldersCreateDialogComponent implements OnInit {
         _self.officeService.getOffices(query).subscribe(function(offices) {
             _self.filteredOffices = offices;
             _self.queryOffice = query;
-        });
-    }
-
-    filterVictims(event) {
-        let _self = this;
-        let query = event.query;
-        _self.victimService.getVictims(query).subscribe(function(victims) {
-            _self.filteredVictims = _self.filterItem(query, victims);
-            _self.queryVictim = query;
-        });
-    }
-
-    filterGuilties(event) {
-        let _self = this;
-        let query = event.query;
-        _self.guiltyService.getGuilties(query).subscribe(function(guilties) {
-            _self.filteredGuilties = _self.filterItem(query, guilties);
-            _self.queryGuilty = query;
         });
     }
 
@@ -134,12 +114,32 @@ export class FoldersCreateDialogComponent implements OnInit {
         }
     }
 
+    addToVictim(v: any, collection: Victim[]) {
+        if (collection.find(c => c.name === v ) === undefined) {
+            collection.push(new Victim(v));
+            this.vict = '';
+        }
+    }
+
+    addToAccused(v: any, collection: Accused[]) {
+        if (collection.find(c => c.name === v ) === undefined) {
+                collection.push(new Accused(v));
+                this.acc = '';
+        }
+    }
+
+    removeFromCollection(index: number, collection: any[]) {
+        collection.splice(index, 1);
+    }
+
     createFolder(f:  NgForm) {
         let _self = this;
         let userStored = _self.userInfoService.getUserInfo();
         if (userStored != null) {
-            f.value['reporter'] = { userId :  _self.userInfoService.getUserInfo().userId };
+            f.value['reporter'] = { userId :  userStored.userId };
         }
+        f.value['victims'] = _self.selectedVictims;
+        f.value['accused'] = _self.selectedAccused;
         _self.folderService.addFolder(f.value)
             .subscribe(function(folder) {
                 _self.close();

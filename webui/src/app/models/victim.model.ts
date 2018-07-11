@@ -3,5 +3,8 @@ export class Victim {
     public id:  number;
     public name:  string;
 
-    constructor() {}
+    constructor(name?: string) {
+        this.name = name;
+    }
+
 }

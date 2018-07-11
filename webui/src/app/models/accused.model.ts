@@ -3,6 +3,8 @@ export class Accused {
     public id:  number;
     public name:  string;
 
-    constructor() {}
+    constructor(name?: string) {
+        this.name = name;
+    }
 
 }

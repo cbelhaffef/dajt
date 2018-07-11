@@ -46,12 +46,12 @@ public class FolderController {
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
     @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
     public FolderListResponse getFoldersByPage(
-        @ApiParam(value = ""    )               @RequestParam(value = "page"  ,  defaultValue="0"   ,  required = false) Integer page,
-        @ApiParam(value = "between 1 to 1000" ) @RequestParam(value = "size"  ,  defaultValue="10"  ,  required = false) Integer size,
-        @RequestParam(value = "folderNumber"     , required = false) String folderNumber,
+        @ApiParam(value = "0 as default value")@RequestParam(value = "page",  defaultValue="0" ,  required = false) Integer page,
+        @ApiParam(value = "between 1 to 1000") @RequestParam(value = "size"  ,  defaultValue="10",  required = false) Integer size,
+        @RequestParam(value = "folderNumber", required = false) String folderNumber,
         @RequestParam(value = "office"      , required = false) Long office,
         @RequestParam(value = "status"      , required = false) FolderStatus status,
-        @RequestParam(value = "accused"      , required = false) String accused,
+        @RequestParam(value = "accused"     , required = false) String accused,
         @RequestParam(value = "victim"      , required = false) String victim,
         Pageable pageable
     ) {
@@ -78,6 +78,7 @@ public class FolderController {
         resp.setPageStats(pg, true);
         resp.setItems(pg.getContent());
         resp.setPageSize(size);
+        resp.setCurrentPageNumber(page);
         return resp;
     }
 

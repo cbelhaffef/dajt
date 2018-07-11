@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SessionItem {
     private String  token;
     private String  username;
+    private Long    userId;
     private String  firstName;
     private String  lastName;
     private String  email;

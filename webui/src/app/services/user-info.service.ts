@@ -22,44 +22,42 @@ export class UserInfoService {
 
     constructor() {}
 
-    //Store userinfo from session storage
+    // Store userinfo from session storage
     storeUserInfo(userInfoString: string) {
         this.storage.setItem(this.currentUserKey, userInfoString);
     }
 
-    //Remove userinfo from session storage
+    // Remove userinfo from session storage
     removeUserInfo() {
         this.storage.removeItem(this.currentUserKey);
     }
 
-    //Get userinfo from session storage
+    // Get userinfo from session storage
     getUserInfo(): UserInStorage|null {
         try {
             let userInfoString: string = this.storage.getItem(this.currentUserKey);
             if (userInfoString) {
                 let userObj: UserInStorage = JSON.parse(this.storage.getItem(this.currentUserKey));
                 return userObj;
-            }
-            else {
+            } else {
                 return null;
             }
-        }
-        catch (e) {
+        } catch (e) {
             return null;
         }
     }
 
     isLoggedIn(): boolean {
-        return this.storage.getItem(this.currentUserKey)?true: false;
+        return this.storage.getItem(this.currentUserKey) ? true : false;
     }
 
-    //Get User's Display name from session storage
+    // Get User's Display name from session storage
     getUserName(): string {
         let userObj: UserInStorage = this.getUserInfo();
-        if (userObj!== null) {
-            return userObj.displayName
+        if (userObj !== null) {
+            return userObj.displayName;
         }
-        return "no-user";
+        return 'no-user';
     }
 
     getStoredToken(): string|null {

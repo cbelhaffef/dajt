@@ -33,7 +33,7 @@ export const routes:  Routes = [
             children :  [
                  { path:  ''                  , redirectTo:  '/home/legal_cases/folders', pathMatch:  'full'},
                  { path:  'folders'           , component:  FoldersComponent          , data:  [ {selectedHeaderItemIndex:  0, selectedSubNavItemIndex:  0 }] },
-                 { path:  'folders/: id'        , component:  FolderDetailsComponent    , data:  [ {selectedHeaderItemIndex:  0, selectedSubNavItemIndex:  0 }]  },
+                 { path:  'folders/:id'        , component:  FolderDetailsComponent    , data:  [ {selectedHeaderItemIndex:  0, selectedSubNavItemIndex:  0 }]  },
                  { path:  'advocates'         , component:  AdvocatesComponent        , data:  [ {selectedHeaderItemIndex:  0, selectedSubNavItemIndex:  1 }] },
                  { path:  'transmission_file' , component:  TransmissionFileComponent , data:  [ {selectedHeaderItemIndex:  0, selectedSubNavItemIndex:  2 }] },
 

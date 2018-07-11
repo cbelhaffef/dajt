@@ -64,7 +64,7 @@
           <context context-type="sourcefile">app/pages/logout/logout.component.ts</context>
           <context context-type="linenumber">3</context>
         </context-group>
-		<target>التسجيل الدخول مرة أخرى</target>
+		<target>تسجيل الدخول مرة أخرى</target>
       </trans-unit>
       <trans-unit id="f6044ac8b92a4856e3afabe313d2abd092d85bff" datatype="html">
         <source>Création d&apos;un dossier </source>
@@ -84,7 +84,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">55</context>
         </context-group>
-		<target>مكتب</target>
+		<target>المكتب</target>
       </trans-unit>
       <trans-unit id="17fbfde1b03049d1743d432f3013d597f6d9d7a3" datatype="html">
         <source>Numéro dossier</source>
@@ -104,7 +104,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">130</context>
         </context-group>
-		<target>مخالفة</target>
+		<target>المخالفة</target>
       </trans-unit>
       <trans-unit id="55353fbd1e4d1c8aa0b41b2039310dd5fd5f88de" datatype="html">
         <source>Victimes</source>
@@ -120,7 +120,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">148</context>
         </context-group>
-		<target>ضحايا</target>
+		<target>الضحايا</target>
       </trans-unit>
       <trans-unit id="2136c374e0ee4f00bce48578c6d22b1f9d6de0c5" datatype="html">
         <source>Coupables</source>
@@ -136,7 +136,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">184</context>
         </context-group>
-		<target>مذنبين</target>
+		<target>المتهمين</target>
       </trans-unit>
       <trans-unit id="1317300569bab42eb2e7b19b2e296fd416050e81" datatype="html">
         <source>Tribunal</source>
@@ -148,7 +148,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">133</context>
         </context-group>
-		<target>محكمة</target>
+		<target>المحكمة</target>
       </trans-unit>
       <trans-unit id="a215aeb834c415d6b692c68db035d9f2d9dee8f8" datatype="html">
         <source>Assigner à</source>
@@ -156,7 +156,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
           <context context-type="linenumber">115</context>
         </context-group>
-		<target>تعيين عامل</target>
+		<target>تعيين موظف</target>
       </trans-unit>
       <trans-unit id="012f1025377b14d709f08dda3ec13f738cf53f80" datatype="html">
         <source>Type d&apos;envoie</source>
@@ -212,7 +212,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
-		<target>ضحية</target>
+		<target>الضحية</target>
       </trans-unit>
       <trans-unit id="06cc509096d1b9e1991927a304d498445387fe6f" datatype="html">
         <source>Coupable</source>
@@ -220,7 +220,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">43</context>
         </context-group>
-		<target>مذنب</target>
+		<target>المتهم</target>
       </trans-unit>
       <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
         <source>Status</source>
@@ -236,7 +236,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">137</context>
         </context-group>
-		<target>حالة</target>
+		<target>الحالة</target>
       </trans-unit>
       <trans-unit id="68f804572d399e03252ce1a60c961465e1f543a5" datatype="html">
         <source>Recherche</source>
@@ -256,7 +256,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">29</context>
         </context-group>
-		<target>المعين</target>
+		<target>تعين موضف</target>
       </trans-unit>
       <trans-unit id="030b4423b92167200e39519599f9b863b4f7c62c" datatype="html">
         <source>Actions</source>
@@ -272,7 +272,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">218</context>
         </context-group>
-		<target>أفعال</target>
+		<target>الأفعال</target>
       </trans-unit>
       <trans-unit id="9562fd44bcb90e1f4c628deb32c3ae8675f43bae" datatype="html">
         <source>Numéro</source>
@@ -296,7 +296,7 @@
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
           <context context-type="linenumber">135</context>
         </context-group>
-		<target>معين</target>
+		<target>المعين</target>
       </trans-unit>
       <trans-unit id="9202766c29aaa216f157bd5419c7fcf3e9472d6c" datatype="html">
         <source>Type d&apos;envoi</source>
@@ -344,7 +344,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
-		<target>:حالة</target>
+		<target>:الحالة</target>
       </trans-unit>
       <trans-unit id="aaa926b822ff0c14a6160c727c167e0ce4dc96d6" datatype="html">
         <source>Tribunal:</source>
@@ -352,7 +352,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">75</context>
         </context-group>
-		<target>محكمة:</target>
+		<target>:المحكمة</target>
       </trans-unit>
       <trans-unit id="4193c9eb868aeec119b78a14795241e0aa5e8b60" datatype="html">
         <source>Priority:</source>
@@ -360,7 +360,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">100</context>
         </context-group>
-		<target>أولية</target>
+		<target>الأولوية</target>
       </trans-unit>
       <trans-unit id="879dacf6a129a28d0909db1addd5693cff90b039" datatype="html">
         <source>Type d&apos;envoi:</source>
@@ -376,7 +376,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">246</context>
         </context-group>
-		<target>اشخاص</target>
+		<target>الأشخاص</target>
       </trans-unit>
       <trans-unit id="cb1b286d9e2e10db8f3ee4d22b535943b61b0a02" datatype="html">
         <source>Assigner:</source>
@@ -384,7 +384,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">252</context>
         </context-group>
-		<target>المعين</target>
+		<target>:المعين</target>
       </trans-unit>
       <trans-unit id="ae78cbe2e07f699217c7488237bdb79850173273" datatype="html">
         <source>Dates</source>
@@ -392,7 +392,7 @@
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
           <context context-type="linenumber">271</context>
         </context-group>
-		<target>تواريخ</target>
+		<target>التواريخ</target>
       </trans-unit>
       <trans-unit id="86a9b059bdb8f5cbe2169ecb5f8935ad1677e9c4" datatype="html">
         <source>

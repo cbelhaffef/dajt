@@ -21,7 +21,7 @@ export class FolderService {
         const me = this;
         let params:  HttpParams = new HttpParams();
         params = params.append('page', typeof page === 'number' ? page.toString() :  '0');
-        params = params.append('size', typeof size === 'number' ? size.toString() :  '1000');
+        params = params.append('size', typeof size === 'number' ? size.toString() :  '10');
         if (folderNumber && typeof folderNumber === 'string') {
             params = params.append('folderNumber', folderNumber);
         }

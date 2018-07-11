@@ -54,6 +54,7 @@ import {PanelModule} from 'primeng/panel';
 import {ActionService} from './services/api/action.service';
 import {EditorModule} from 'primeng/editor';
 import {CardModule} from 'primeng/card';
+import {ChipsModule} from 'primeng/chips';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -83,6 +84,7 @@ registerLocaleData(localeAr, 'ar');
     TooltipModule,
     EditorModule,
     CheckboxModule,
+    ChipsModule,
 
 
     // Local App Modules

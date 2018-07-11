@@ -46,30 +46,24 @@
                 <label for="victims" i18n>Victimes</label>
             </div>
             <div class="ui-g-10">
-                <p-autoComplete [suggestions]="filteredVictims"
-                                (completeMethod)="filterVictims($event)"
-                                styleClass="wid100"
-                                [minLength]="1"
-                                i18n-placeholder="Liste des victimes"
-                                field="name"
-                                id="victims"
-                                name="victims"
-                                ngModel
-                                [(ngModel)]="selectedVictims"
-                                (onKeyUp)="addItem($event,queryVictim,selectedVictims,filteredVictims)"
-                                [multiple]="true">
-                </p-autoComplete>
-
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <form class="ui-inputgroup" (submit)="addToVictim(vict,selectedVictims)">
+                            <input type="text" id="victims" pInputText [(ngModel)]="vict" [ngModelOptions]="{standalone: true}">
+                            <p-button type="submit" icon="fa fa-fw fa-check" ></p-button>
+                            <p-button type="button" icon="fa fa-fw fa-trash" (click)="vict = ''"></p-button>
+                        </form>
+                    </div>
+                </div>
                 <table class="table">
                     <tbody>
-                    <tr *ngFor="let v of selectedVictims">
-                        <td>{{v.name}}</td>
-                        <td>
-                            <p-button (click)="removeVictim(v)" icon="fa fa-fw fa-trash"></p-button>
-                        </td>
+                        <tr *ngFor="let v of selectedVictims; let i = index">
+                            <td>{{v.name}}</td>
+                            <td>
+                                <p-button (click)="removeFromCollection(i,selectedVictims)" icon="fa fa-fw fa-trash"></p-button>
+                            </td>
 
-                    </tr>
-
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -81,25 +75,21 @@
                 <label for="accused" i18n>Coupables</label>
             </div>
             <div class="ui-g-10">
-                <p-autoComplete [suggestions]="filteredGuilties"
-                                (completeMethod)="filterGuilties($event)"
-                                styleClass="wid100"
-                                [minLength]="1"
-                                i18n-placeholder="Liste des coupables"
-                                field="name"
-                                id="accused"
-                                name="accused"
-                                ngModel
-                                [(ngModel)]="selectedGuilties"
-                                (onKeyUp)="addItem($event,queryVictim,selectedGuilties,filteredGuilties)"
-                                [multiple]="true">
-                </p-autoComplete>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <form class="ui-inputgroup" (submit)="addToAccused(acc,selectedAccused)">
+                            <input type="text" id="accused" pInputText [(ngModel)]="acc" [ngModelOptions]="{standalone: true}">
+                            <p-button type="submit" icon="fa fa-fw fa-check"></p-button>
+                            <p-button type="button" icon="fa fa-fw fa-trash" (click)="acc = ''"></p-button>
+                        </form>
+                    </div>
+                </div>
                 <table class="table">
                     <tbody>
-                    <tr *ngFor="let g of selectedGuilties">
-                        <td>{{g.name}}</td>
+                    <tr *ngFor="let a of selectedAccused">
+                        <td>{{a.name}}</td>
                         <td>
-                            <p-button (click)="removeGuilty(g)" icon="fa fa-fw fa-trash"></p-button>
+                            <p-button (click)="removeFromCollection(a,selectedAccused)" icon="fa fa-fw fa-trash"></p-button>
                         </td>
 
                     </tr>
@@ -150,14 +140,13 @@
                 </p-autoComplete>
             </div>
         </div>
-        <!-- sending type -->
+        <!-- administration concerned -->
         <div class="ui-g">
             <div class="ui-g-2">
                 <label for="administrationConcerned" i18n>Type d'envoie</label>
             </div>
             <div class="ui-g-10">
-                <p-editor id="administrationConcerned" name="administrationConcerned" ngModel class="wid100" [style]="{'height':'320px'}"></p-editor>
-                <!--<textarea pInputTextarea id="administrationConcerned" name="administrationConcerned" ngModel class="wid100"></textarea>-->
+                <textarea pInputTextarea id="administrationConcerned" name="administrationConcerned" ngModel class="wid100"></textarea>
             </div>
         </div>
     </form>
