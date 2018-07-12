@@ -84,6 +84,8 @@ public class FolderController {
 
     @RequestMapping(value="/folders", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Folder addFolder(@RequestBody Folder folder){
+        folder.getVictims().forEach(v -> v.setFolder(folder));
+        folder.getAccused().forEach(a -> a.setFolder(folder));
         Folder folderSaved = folderRepo.save(folder);
         return folderSaved;
     }

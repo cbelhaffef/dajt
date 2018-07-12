@@ -12,7 +12,7 @@ import java.util.Set;
 
 public interface ExelFileImporterService {
 
-    Set<Folder> doImport(File fileExel) throws IOException;
-    Set<Folder> doImport(File fileExel, boolean reversedKey) throws IOException;
+    Set<Folder> doImport(File fileExel);
+    Set<Folder> doImport(File fileExel, boolean reversedKey);
 
 }

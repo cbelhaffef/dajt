@@ -8,13 +8,13 @@
         <!-- office-->
         <div class="ui-g">
             <div class="ui-g-2">
-                <label for="office" i18n>Bureau</label>
+                <label for="office" i18n>Bureau</label><span class="red">*</span>
             </div>
             <div class="ui-g-10">
                 <div class="select ">
-                    <select id="office" name="office" ngModel>
+                    <select id="office" name="office" class="select-basic" ngModel>
                         <option value=""></option>
-                        <option *ngFor="let o of listOffices" value="{{o.id}}">{{o.name}}</option>
+                        <option *ngFor="let o of listOffices" [ngValue]="o">{{o.name}}</option>
                     </select>
                 </div>
             </div>
@@ -23,7 +23,7 @@
         <!-- folder number-->
         <div class="ui-g">
             <div class="ui-g-2">
-                <label for="number" i18n>Numéro dossier</label>
+                <label for="number" i18n>Numéro dossier</label><span class="red">*</span>
             </div>
             <div class="ui-g-10">
                 <input pInputText id="number" name="number" size="20" ngModel/>
@@ -33,7 +33,7 @@
         <!-- offence-->
         <div class="ui-g">
             <div class="ui-g-2">
-                <label for="offence" i18n>Infraction</label>
+                <label for="offence" i18n>Infraction</label><span class="red">*</span>
             </div>
             <div class="ui-g-10">
                 <textarea pInputTextarea id="offence" name="offence" ngModel class="wid100"></textarea>
@@ -46,26 +46,11 @@
                 <label for="victims" i18n>Victimes</label>
             </div>
             <div class="ui-g-10">
-                <div class="ui-g">
-                    <div class="ui-g-12">
-                        <form class="ui-inputgroup" (submit)="addToVictim(vict,selectedVictims)">
-                            <input type="text" id="victims" pInputText [(ngModel)]="vict" [ngModelOptions]="{standalone: true}">
-                            <p-button type="submit" icon="fa fa-fw fa-check" ></p-button>
-                            <p-button type="button" icon="fa fa-fw fa-trash" (click)="vict = ''"></p-button>
-                        </form>
-                    </div>
-                </div>
-                <table class="table">
-                    <tbody>
-                        <tr *ngFor="let v of selectedVictims; let i = index">
-                            <td>{{v.name}}</td>
-                            <td>
-                                <p-button (click)="removeFromCollection(i,selectedVictims)" icon="fa fa-fw fa-trash"></p-button>
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
+                <p-chips id="victims" name="victims"
+                         [allowDuplicate]="false"
+                         (onAdd)="addToVictims($event)"
+                         (onRemove)="removeFromVictims($event)">
+                </p-chips>
             </div>
         </div>
 
@@ -75,27 +60,11 @@
                 <label for="accused" i18n>Coupables</label>
             </div>
             <div class="ui-g-10">
-                <div class="ui-g">
-                    <div class="ui-g-12">
-                        <form class="ui-inputgroup" (submit)="addToAccused(acc,selectedAccused)">
-                            <input type="text" id="accused" pInputText [(ngModel)]="acc" [ngModelOptions]="{standalone: true}">
-                            <p-button type="submit" icon="fa fa-fw fa-check"></p-button>
-                            <p-button type="button" icon="fa fa-fw fa-trash" (click)="acc = ''"></p-button>
-                        </form>
-                    </div>
-                </div>
-                <table class="table">
-                    <tbody>
-                    <tr *ngFor="let a of selectedAccused">
-                        <td>{{a.name}}</td>
-                        <td>
-                            <p-button (click)="removeFromCollection(a,selectedAccused)" icon="fa fa-fw fa-trash"></p-button>
-                        </td>
-
-                    </tr>
-
-                    </tbody>
-                </table>
+                <p-chips id="accused" name="accused"
+                         [allowDuplicate]="false"
+                         (onAdd)="addToAccused($event)"
+                         (onRemove)="removeFromAccused($event)">
+                </p-chips>
             </div>
         </div>
 
@@ -126,18 +95,12 @@
                 <label for="assignee" i18n>Assigner à</label>
             </div>
             <div class="ui-g-10">
-                <p-autoComplete [suggestions]="filteredUsers"
-                                (completeMethod)="filterUsers($event)"
-                                styleClass="wid100"
-                                [minLength]="1"
-                                i18n-placeholder="Choix opérateur"
-                                field="name"
-                                id="assignee"
-                                name="assignee"
-                                ngModel
-                                [(ngModel)]="selectedUser"
-                                [dropdown]="true">
-                </p-autoComplete>
+                <div class="select">
+                    <select id="assignee" name="assignee" class="select-basic" ngModel>
+                        <option value=""></option>
+                        <option *ngFor="let u of listUsers" [ngValue]="u">{{u.firstName}}&nbsp;{{u.lastName}}</option>
+                    </select>
+                </div>
             </div>
         </div>
         <!-- administration concerned -->
@@ -153,6 +116,6 @@
 </div>
 
 <div mat-dialog-actions style="border-top : 1px solid #ccc!important;">
-    <p-button (click)="createFolder(createFolderForm)" icon="fa fa-fw fa-check" i18n-label label="Créer"></p-button>
+    <p-button (click)="createFolder(createFolderForm)" icon="fa fa-fw fa-check" i18n-label label="Créer" style="margin-left:10px"></p-button>
     <p-button (click)="close()" icon="fa fa-fw fa-close" i18n-label label="Annuler"></p-button>
 </div>

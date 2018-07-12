@@ -37,10 +37,10 @@ public class Folder implements Comparable<Folder>{
     @Column(name="number", nullable = false, unique = true)
     private String number;
 
-    @Column(name="directorate_number", nullable = true, unique = false)
+    @Column(name="directorate_number")
     private String directorateNumber;
 
-    @Column(name="offence", nullable = false)
+    @Column(name="offence")
     private String offence;
 
     @Column(name="offence_date")
@@ -59,10 +59,10 @@ public class Folder implements Comparable<Folder>{
     private User reporter;
 
     @ManyToOne
-    @JoinColumn(name="office_id" , nullable = false)
+    @JoinColumn(name="office_id")
     private Office office;
 
-    @Column(name="administration_concerned", nullable = false)
+    @Column(name="administration_concerned")
     private String administrationConcerned;
 
     @Column(name="folder_status", nullable = false, columnDefinition = "varchar(50) default 'OPEN'")

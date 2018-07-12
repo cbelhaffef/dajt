@@ -21,11 +21,12 @@ public class WatchFolderThread implements Runnable{
     public void run() {
         try {
             watcherFolderService.initWatch(PATH_FOLDER_TO_WATCH);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
 
 }

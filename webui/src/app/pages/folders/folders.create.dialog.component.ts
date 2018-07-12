@@ -11,6 +11,7 @@ import {UserService} from '../../services/api/user.service';
 import {UserInfoService} from '../../services/user-info.service';
 import {Victim} from '../../models/victim.model';
 import {Accused} from '../../models/accused.model';
+import {Court} from '../../models/court.model';
 
 @Component( {
     selector:  'folders-create-dialog-component',
@@ -22,6 +23,7 @@ export class FoldersCreateDialogComponent implements OnInit {
     @ViewChild(NgForm) createFolderForm:  NgForm;
 
     public listOffices = [];
+    public listUsers = [];
 
     public filteredOffices:  any[] = [];
     public queryOffice:  string;
@@ -57,6 +59,10 @@ export class FoldersCreateDialogComponent implements OnInit {
         _self.officeService.getOffices()
             .subscribe(function(offices) {
                 _self.listOffices = offices;
+            });
+        _self.userService.getUsers()
+            .subscribe(function(users) {
+                _self.listUsers = users;
             });
     }
 
@@ -114,22 +120,36 @@ export class FoldersCreateDialogComponent implements OnInit {
         }
     }
 
-    addToVictim(v: any, collection: Victim[]) {
-        if (collection.find(c => c.name === v ) === undefined) {
-            collection.push(new Victim(v));
-            this.vict = '';
+    addToVictims(event) {
+        let _self = this;
+        if (_self.selectedVictims.find(c => c.name === event.value ) === undefined) {
+            _self.selectedVictims.push(new Victim(event.value));
         }
     }
 
-    addToAccused(v: any, collection: Accused[]) {
-        if (collection.find(c => c.name === v ) === undefined) {
-                collection.push(new Accused(v));
-                this.acc = '';
+    removeFromVictims(event) {
+        let _self = this;
+        let index = _self.selectedVictims.findIndex(c => c.name === event.value);
+        if (index !== -1) {
+            _self.selectedVictims.splice(index, 1);
         }
     }
 
-    removeFromCollection(index: number, collection: any[]) {
-        collection.splice(index, 1);
+    addToAccused(event) {
+        let _self = this;
+        if (_self.selectedAccused.find(c => c.name === event.value ) === undefined) {
+            _self.selectedAccused.push(new Accused(event.value));
+        }
+    }
+
+
+
+    removeFromAccused(event) {
+        let _self = this;
+        let index = _self.selectedAccused.findIndex(c => c.name === event.value);
+        if (index !== -1) {
+            _self.selectedAccused.splice(index, 1);
+        }
     }
 
     createFolder(f:  NgForm) {
@@ -140,6 +160,10 @@ export class FoldersCreateDialogComponent implements OnInit {
         }
         f.value['victims'] = _self.selectedVictims;
         f.value['accused'] = _self.selectedAccused;
+        if (typeof f.value['court'] === 'string') {
+            let c = new Court(f.value['court']);
+            f.value['court'] = c;
+        }
         _self.folderService.addFolder(f.value)
             .subscribe(function(folder) {
                 _self.close();

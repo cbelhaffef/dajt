@@ -53,6 +53,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
     private final static String ARCHIVE_DIRECTORY = "/mnt/import/archives";
 
     private final static String TAG_DATE_OF_OFFENCE = "بتاريـخ";
+    private final static String TAG_UNKOWN = "مجهول";
     private final static String TAG_BIS_AR = "مكرر";
     private final static String TAG_BIS_FR = "BIS";
 
@@ -60,13 +61,13 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
     private SimpleDateFormat formatterArch = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
-    public Set<Folder> doImport(File fileExel) throws IOException {
+    public Set<Folder> doImport(File fileExel) {
         return doImport(fileExel, false);
     }
 
     @Override
     @Transactional
-    public Set<Folder> doImport(File fileExel , boolean reversedKey) throws IOException {
+    public Set<Folder> doImport(File fileExel , boolean reversedKey) {
 
         Set<Folder> folders = new TreeSet<>();
 
@@ -125,7 +126,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
             //Skip the header (first row)
             if (iterator.hasNext()) iterator.next();
-
+            Folder previousFolder = null;
             while (iterator.hasNext()) {
 
                 Row currentRow = iterator.next();
@@ -140,7 +141,11 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                     Cell currentCell = cellIterator.next();
 
                     // key
-                    if (i == FolderColumnImportEnum.KEY.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
+                    if (i == FolderColumnImportEnum.KEY.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
+                        if(currentCell.getStringCellValue().isEmpty()){
+                            log.warn("la ligne " + i + " du fichier d'import " + fileExel.getName() + " à été ignorée");
+                            continue;
+                        }
                         // format Key
                         // first tag BIS
                         String key = currentCell.getStringCellValue().replace(TAG_BIS_AR, TAG_BIS_FR);
@@ -170,6 +175,9 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                             String[] arr = stringVictims.split("\n");
                             for(String a : arr){
                                 if(!a.isEmpty()){
+                                    if(a.matches("(\\?){2,}")){
+                                        a = TAG_UNKOWN;
+                                    }
                                     Victim v = new Victim(a, folder);
                                     victims.add(v);
                                 }
@@ -188,6 +196,9 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                             String[] arr = stringGuilties.split("\n");
                             for(String a : arr){
                                 if(!a.isEmpty()){
+                                    if(a.matches("(\\?){2,}")){
+                                        a = TAG_UNKOWN;
+                                    }
                                     Accused ac = new Accused(a, folder);
                                     accused.add(ac);
                                 }
@@ -200,18 +211,26 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
                     // Offence
                     if (i == FolderColumnImportEnum.OFFENCE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
-                        folder.setOffenceDate(extractDateFromString(currentCell.getStringCellValue()));
-                        folder.setOffence(currentCell.getStringCellValue());
+                        String offenceValue = currentCell.getStringCellValue();
+                        if(offenceValue.matches("(/){2,}") && i > 0 && previousFolder.getOffence() != null && !previousFolder.getOffence().isEmpty()){
+                            offenceValue = previousFolder.getOffence();
+                        }
+                        folder.setOffenceDate(extractDateFromString(offenceValue));
+                        folder.setOffence(offenceValue);
                     }
 
                     // Court
                     if (i == FolderColumnImportEnum.COURT.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
                         String courtName = currentCell.getStringCellValue();
-                        Optional<Court> court = courtRepo.findByName(courtName);
-                         if(!court.isPresent()){
-                             court = Optional.of(new Court(currentCell.getStringCellValue()));
-                         }
-                        folder.setCourt(court.get());
+                        if(courtName.matches("(/){2,}") && i > 0 && previousFolder.getCourt() != null){
+                            folder.setCourt(previousFolder.getCourt());
+                        }else{
+                            Optional<Court> court = courtRepo.findByName(courtName);
+                            if(!court.isPresent()){
+                                court = Optional.of(new Court(currentCell.getStringCellValue()));
+                            }
+                            folder.setCourt(court.get());
+                        }
                     }
 
                     // ADMINISTRATION_CONCERNED
@@ -226,6 +245,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
 
                 folder = folderRepo.save(folder);
+                previousFolder = folder;
                 folders.add(folder);
             }
 
@@ -245,7 +265,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             }
             // Move import file into archive directory when finished
             Path target = Paths.get(direArchiveToDay.getAbsolutePath());
-            Files.move(filePathTemp, target.resolve(filePath.getFileName()) );
+            Files.move(filePathTemp,target.resolve(filePathTemp.getFileName()));
 
         } catch ( Exception e ) {
             endImportOnError(fileExel,imp,e.toString() + " - " + e.getMessage());
@@ -311,7 +331,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
         return data;
     }
 
-    public void endImportOnError(File file, Import imp, String message) throws IOException {
+    public void endImportOnError(File file, Import imp, String message) {
         String msg = "L'import du fichier : " + file.getName() +" a échoué - " + message;
         log.error(msg);
         imp.setStatus(ON_ERROR);
@@ -319,11 +339,19 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
         imp.setMessage(msg);
         importRepo.save(imp);
         String fileName = file.getName();
-        if (!file.exists() && !fileName.endsWith(IN_PROGRESS.name())){
+        if (file.exists() && !fileName.endsWith(IN_PROGRESS.name())){
             fileName += IN_PROGRESS.name();
         }
         file = new File(file.getParent() + File.separator + fileName);
-        renameFileWhen(file,ON_ERROR);
+
+        try {
+            if(file.exists()) {
+                renameFileWhen(file, ON_ERROR);
+            }
+        } catch (IOException e) {
+            log.error("Le fichier : " + file.getName() + " n'existe pas.");
+            e.printStackTrace();
+        }
     }
 
     public Date extractDateFromString(String text) throws ParseException {
