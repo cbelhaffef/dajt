@@ -1,6 +1,5 @@
-package com.cbelhaffef.dajt.model.folder;
+package com.cbelhaffef.dajt.model.priority;
 
-import com.cbelhaffef.dajt.enums.StatusFolder;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +8,9 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class FolderStatusResponse {
+public class PriorityListResponse {
+
     @ApiModelProperty(required = true, value = "")
-    private List<StatusFolder> items;
+    private List<Priority> items;
+
 }

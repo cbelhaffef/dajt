@@ -1,17 +1,18 @@
 package com.cbelhaffef.dajt.service.impl;
 
 import com.cbelhaffef.dajt.enums.FolderColumnImportEnum;
+import com.cbelhaffef.dajt.enums.FolderPriority;
+import com.cbelhaffef.dajt.enums.StatusFolder;
 import com.cbelhaffef.dajt.model.accused.Accused;
 import com.cbelhaffef.dajt.model.court.Court;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.importfile.Import;
-import com.cbelhaffef.dajt.model.importfile.ImportStatusEnum;
+import com.cbelhaffef.dajt.model.importfile.StatusImport;
 import com.cbelhaffef.dajt.model.office.Office;
+import com.cbelhaffef.dajt.model.priority.Priority;
+import com.cbelhaffef.dajt.model.status.Status;
 import com.cbelhaffef.dajt.model.victim.Victim;
-import com.cbelhaffef.dajt.repo.CourtRepo;
-import com.cbelhaffef.dajt.repo.FolderRepo;
-import com.cbelhaffef.dajt.repo.ImportRepo;
-import com.cbelhaffef.dajt.repo.OfficeRepo;
+import com.cbelhaffef.dajt.repo.*;
 import com.cbelhaffef.dajt.service.ExelFileImporterService;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
@@ -29,10 +30,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-import static com.cbelhaffef.dajt.model.importfile.ImportStatusEnum.IN_PROGRESS;
-import static com.cbelhaffef.dajt.model.importfile.ImportStatusEnum.ON_ERROR;
+import static com.cbelhaffef.dajt.model.importfile.StatusImport.IN_PROGRESS;
+import static com.cbelhaffef.dajt.model.importfile.StatusImport.ON_ERROR;
 
 @Service
 @Slf4j
@@ -49,6 +49,12 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
     @Autowired
     private ImportRepo importRepo;
+
+    @Autowired
+    private StatusRepo statusRepo;
+
+    @Autowired
+    private PriorityRepo priorityRepo;
 
     private final static String ARCHIVE_DIRECTORY = "/mnt/import/archives";
 
@@ -68,6 +74,10 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
     @Override
     @Transactional
     public Set<Folder> doImport(File fileExel , boolean reversedKey) {
+
+        Optional<Status> statusOpen = statusRepo.findByCode(StatusFolder.OPEN.name());
+
+        Optional<Priority> priortyMinor = priorityRepo.findByCode(FolderPriority.MINOR.name());
 
         Set<Folder> folders = new TreeSet<>();
 
@@ -136,6 +146,8 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                 Date date = formatter.parse("01/01/"+yearOfFolders);
                 folder.setCreated(date);
                 folder.setUpdated(date);
+                folder.setStatus(statusOpen.isPresent() ? statusOpen.get() : null);
+                folder.setPriority(priortyMinor.isPresent() ? priortyMinor.get() : null);
                 // treatment of the boxes of the current line
                 for(int i = 0 ; cellIterator.hasNext() ; i++){
                     Cell currentCell = cellIterator.next();
@@ -251,7 +263,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
 
             imp.setEnded(new Date());
             imp.setMessage("le fichier " + filePath.getFileName() + " a été importé avec succées");
-            imp.setStatus(ImportStatusEnum.FINICHED);
+            imp.setStatus(StatusImport.FINICHED);
             imp = importRepo.save(imp);
             File dirArchive = new File(ARCHIVE_DIRECTORY);
             if(!dirArchive.exists()){
@@ -265,7 +277,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             }
             // Move import file into archive directory when finished
             Path target = Paths.get(direArchiveToDay.getAbsolutePath());
-            Files.move(filePathTemp,target.resolve(filePathTemp.getFileName()));
+            Files.move(filePathTemp,target.resolve(filePath.getFileName()));
 
         } catch ( Exception e ) {
             endImportOnError(fileExel,imp,e.toString() + " - " + e.getMessage());
@@ -309,7 +321,7 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
         return key;
     }
 
-    public File renameFileWhen(File fileToRename, ImportStatusEnum status) throws IOException {
+    public File renameFileWhen(File fileToRename, StatusImport status) throws IOException {
         if(fileToRename == null || !fileToRename.exists()){
             throw new FileNotFoundException("le fichier n'exite pas");
         }

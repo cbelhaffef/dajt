@@ -4,6 +4,7 @@ import com.cbelhaffef.dajt.model.accused.QAccused;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.folder.QFolder;
 import com.cbelhaffef.dajt.model.office.QOffice;
+import com.cbelhaffef.dajt.model.status.QStatus;
 import com.cbelhaffef.dajt.model.victim.QVictim;
 import com.cbelhaffef.dajt.repo.custom.FolderRepoCustom;
 import com.querydsl.jpa.JPQLQuery;
@@ -28,6 +29,7 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
         QOffice office = QOffice.office;
         QVictim victim = QVictim.victim;
         QAccused accused = QAccused.accused;
+        QStatus status = QStatus.status;
 
         Querydsl querydsl = getQuerydsl();
         JPQLQuery<Folder> query = querydsl.createQuery();
@@ -43,7 +45,7 @@ public class FolderRepoCustomImpl extends QueryDslRepositorySupport implements F
         }
 
         if (fQuery.getStatus() != null) {
-            query.where(folder.status.eq(fQuery.getStatus()));
+            query.leftJoin(folder.status(), status).where(folder.status().id.eq(fQuery.getStatus().getId()));
         }
 
         if (fQuery.getVictims() != null && !fQuery.getVictims().isEmpty()) {

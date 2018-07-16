@@ -39,7 +39,6 @@
                 <textarea pInputTextarea id="offence" name="offence" ngModel class="wid100"></textarea>
             </div>
         </div>
-
         <!-- victims-->
         <div class="ui-g">
             <div class="ui-g-2">
@@ -52,6 +51,7 @@
                          (onRemove)="removeFromVictims($event)">
                 </p-chips>
             </div>
+
         </div>
 
         <!-- accused-->
@@ -98,7 +98,7 @@
                 <div class="select">
                     <select id="assignee" name="assignee" class="select-basic" ngModel>
                         <option value=""></option>
-                        <option *ngFor="let u of listUsers" [ngValue]="u">{{u.firstName}}&nbsp;{{u.lastName}}</option>
+                        <option *ngFor="let u of listUsers" [ngValue]="u">{{u.firstname}}&nbsp;{{u.lastname}}</option>
                     </select>
                 </div>
             </div>
@@ -116,6 +116,6 @@
 </div>
 
 <div mat-dialog-actions style="border-top : 1px solid #ccc!important;">
-    <p-button (click)="createFolder(createFolderForm)" icon="fa fa-fw fa-check" i18n-label label="Créer" style="margin-left:10px"></p-button>
+    <p-button type="submit" icon="fa fa-fw fa-check" i18n-label label="Créer" style="margin-left:10px"></p-button>
     <p-button (click)="close()" icon="fa fa-fw fa-close" i18n-label label="Annuler"></p-button>
 </div>

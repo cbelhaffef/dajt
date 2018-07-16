@@ -43,6 +43,7 @@ public class TokenUtil {
 
         User user = new User();
         user.setUsername( (String)claims.get("username"));
+        user.setUserId( new Long((Integer)claims.get("userId")));
         return new TokenUser(user);
     }
 
@@ -55,6 +56,7 @@ public class TokenUtil {
         .setExpiration(new Date(System.currentTimeMillis() + VALIDITY_TIME_MS))
         .setSubject(user.getFullName())
         .claim("username", user.getUsername())
+        .claim("userId", user.getUserId())
         .claim("role", user.getRole())
         .signWith(SignatureAlgorithm.HS256, secret)
         .compact();

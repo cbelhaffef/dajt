@@ -45,11 +45,11 @@ public class SessionController {
         SessionResponse resp = new SessionResponse();
         SessionItem sessionItem = new SessionItem();
         if (user != null){
-            System.out.format("\n /User Details=%s\n", user.getFirstName());
+            System.out.format("\n /User Details=%s\n", user.getFirstname());
             sessionItem.setToken("xxx.xxx.xxx");
             sessionItem.setUsername(user.getUsername());
-            sessionItem.setFirstName(user.getFirstName());
-            sessionItem.setLastName(user.getLastName());
+            sessionItem.setFirstname(user.getFirstname());
+            sessionItem.setLastname(user.getLastname());
             sessionItem.setEmail(user.getEmail());
             sessionItem.setUserId(user.getUserId());
             //sessionItem.setRole(user.getRole());
@@ -57,12 +57,12 @@ public class SessionController {
             resp.setOperationStatus(OperationResponse.ResponseStatusEnum.SUCCESS);
             resp.setOperationMessage("Dummy Login Success");
             resp.setItem(sessionItem);
-      }
-      else{
+        }
+        else{
             resp.setOperationStatus(OperationResponse.ResponseStatusEnum.ERROR);
             resp.setOperationMessage("Login Failed");
-      }
-      return resp;
-  }
+        }
+        return resp;
+    }
 
 }

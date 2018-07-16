@@ -2,6 +2,7 @@
 
     <!-- title -->
     <div class="ui-g">
+        <!-- folder icon -->
         <div class="ui-g-12 ui-md-1 aui-page-header-image">
             <img src="../../../assets/images/folder_icon.jpg" width="50" height="50" style="margin-left: 20px">
         </div>
@@ -13,6 +14,7 @@
             </div>
             <h1 id="summary-val">{{folder.offence}}</h1>
         </div>
+        <!-- return button-->
         <div class="ui-g-12 ui-md-1 aui-page-header-actions">
             <button pButton type="button"
                     routerLink="/home/legal_cases/folders"
@@ -29,16 +31,18 @@
         <div class="ui-g-12 ui-md-6"></div>
         <div class="ui-g-12 ui-md-6 align-left">
             <div class="btn-group btn-primary btn-sm">
+                <!-- assigne to someone -->
                 <button pButton type="button"
                         i18n-label
                         label="Assigner"
                         icon="fa fa-users"
                         class="ui-button-secondary">
                 </button>
+                <!-- assigne to me -->
                 <button pButton type="button"
                         i18n-label
                         label="Me l'assigner"
-                        icon="fa fa-users"
+                        icon="fa fa-child"
                         class="ui-button-secondary">
                 </button>
             </div>
@@ -50,18 +54,18 @@
     <div class="ui-g folder-body-content">
         <!-- right-panel-->
         <div class="ui-g-8">
+            <!-- detail panel -->
             <div id="detail-module">
                 <div class="ui-g">
                     <div class="ui-g-1 toggle-title" i18n>Détail</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
                         <i class="fa fa-pencil" style="cursor: pointer"
-                           (click)="updateDetail()">
+                           (click)="showHideUpdateDetail()">
                         </i>
                     </div>
                 </div>
                 <div class="mod-content">
-
                     <!-- detail values -->
                     <div id="detailValues" [hidden]="showUpdateDetail">
                         <div class="ui-g">
@@ -70,11 +74,12 @@
                                 <!-- Status -->
                                 <div class="ui-g item">
                                     <div class="ui-g-4">
-                                        <label class="detail-name" for="status" i18n>Statut:</label>
+                                        <label class="detail-name" for="statusValue" i18n>Statut:</label>
                                     </div>
-                                    <div class="ui-g-8 pointer">
-                                        <span class="wrap" id="status">
-                                            <span class="badge badge-info detail-value">{{folder.status}}</span>
+                                    <div class="ui-g-8">
+                                        <span class="wrap" id="statusValue">
+                                            <span class="detail-value">{{folder?.status?.name}}</span>
+                                            <img alt="" height="16" src="{{folder?.status?.icon}}" width="16" class="icon-value">&nbsp;
                                         </span>
                                     </div>
                                 </div>
@@ -82,12 +87,13 @@
                                 <!--Priority-->
                                 <div class="ui-g item">
                                     <div class="ui-g-4">
-                                        <label class="detail-name" for="priority" i18n>Priority:</label>
+                                        <label class="detail-name" for="priorityValue" i18n>Priority:</label>
                                     </div>
-                                    <div class="ui-g-8 pointer">
-                                        <span class="wrap" id="priority">
-                                            <img alt="" height="16" src="../../../assets/images/major.svg" width="16" class="icon-value">&nbsp;
-                                            <span class="detail-value">{{folder.priority}}</span>
+                                    <div class="ui-g-8">
+                                        <span class="wrap" id="priorityValue">
+                                            <span class="detail-value">{{folder.priority?.name}}</span>
+                                            <img alt="" height="16" [src]="folder.priority?.icon" width="16" class="icon-value">&nbsp;
+
                                         </span>
 
                                     </div>
@@ -97,238 +103,378 @@
                             <!--detail left-->
                             <div class="ui-g-6">
 
-                            <div class="ui-g item">
-                                <div class="ui-g-4">
-                                    <label class="detail-name" for="court" i18n>Tribunal:</label>
+                                <!-- court value-->
+                                <div class="ui-g item">
+                                    <div class="ui-g-4">
+                                        <label class="detail-name" for="courtValue" i18n>Tribunal:</label>
+                                    </div>
+                                    <div class="ui-g-8">
+                                        <span class="wrap" id="courtValue" >
+                                            <span class="detail-value">{{folder.court.name}}</span>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="ui-g-8 pointer" (mouseover)="showPencilCourt = true" (mouseleave)="showPencilCourt = false">
-                                    <span class="wrap" id="court" >
-                                        <span class="detail-value">{{folder.court.name}}</span>
-                                    </span>
+                                <!-- administrationConcerned value-->
+                                <div class="ui-g item">
+                                    <div class="ui-g-4">
+                                        <label class="detail-name" for="administrationConcernedValue" i18n>Type d'envoi:</label>
+                                    </div>
+                                    <div class="ui-g-8">
+                                        <span class="wrap"  id="administrationConcernedValue">
+                                            <div class="detail-value" [innerHTML]="displayBreakLine(folder.administrationConcerned)"></div>
+                                        </span>
+                                    </div>
                                 </div>
 
                             </div>
-
-                            <div class="ui-g item">
-                                <div class="ui-g-4">
-                                    <label class="detail-name" for="administrationConcerned" i18n>Type d'envoi:</label>
-                                </div>
-                                <div class="ui-g-8 pointer">
-                                    <span class="wrap"  id="administrationConcerned">
-                                        <div class="detail-value" [innerHTML]="folder.administrationConcerned"></div>
-                                    </span>
-                                </div>
-                            </div>
-
-                        </div>
                         </div>
                     </div>
 
                     <!-- detail updating -->
-                    <form id="detailUpdating" [hidden]="!showUpdateDetail" [formGroup]="detailForm" (ngSubmit)="onSubmit(detailForm.value)">
-                        <!--<p-panel header="Validate">-->
-                            <!--<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">-->
-                                <!--<div class="ui-grid-row">-->
-                                    <!--<div class="ui-grid-col-2" i18n>-->
-                                        <!--Statut:-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-6">-->
-                                        <!--<input pInputText type="text" formControlName="firstname" placeholder="Required"/>-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-4">-->
-                                        <!--<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['firstname'].valid&&detailForm.controls['firstname'].dirty">-->
-                                            <!--<i class="fa fa-close"></i>-->
-                                            <!--Statut is required-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="ui-grid-row">-->
-                                    <!--<div class="ui-grid-col-2">-->
-                                        <!--Last Name *:-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-6">-->
-                                        <!--<input pInputText type="text" formControlName="lastname" placeholder="Required"/>-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-4">-->
-                                        <!--<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['lastname'].valid&&detailForm.controls['lastname'].dirty">-->
-                                            <!--<i class="fa fa-close"></i>-->
-                                            <!--Lastname is required-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="ui-grid-row">-->
-                                    <!--<div class="ui-grid-col-2">-->
-                                        <!--Password *:-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-6">-->
-                                        <!--<input pInputText type="password" formControlName="password" placeholder="Required - Min(6)"/>-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-4">-->
-                                        <!--<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['password'].valid&&detailForm.controls['password'].dirty">-->
-                                            <!--<i class="fa fa-close"></i>-->
-                                            <!--<span *ngIf="detailForm.controls['password'].errors['required']">Password is required</span>-->
-                                            <!--<span *ngIf="detailForm.controls['password'].errors['minlength']">Must be longer than 6 characters</span>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="ui-grid-row">-->
-                                    <!--<div class="ui-grid-col-2">-->
-                                        <!--Description:-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-6">-->
-                                        <!--<textarea pInputTextarea type="text" formControlName="description"></textarea>-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-4"></div>-->
-                                <!--</div>-->
-                                <!--<div class="ui-grid-row">-->
-                                    <!--<div class="ui-grid-col-2">-->
-                                        <!--Gender *:-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-6">-->
-                                        <!--<p-dropdown [options]="genders" formControlName="gender" [autoWidth]="false"></p-dropdown>-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-4">-->
-                                        <!--<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailForm.controls['gender'].valid&&detailForm.controls['gender'].dirty">-->
-                                            <!--<i class="fa fa-close"></i>-->
-                                            <!--Gender is required-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="ui-grid-row">-->
-                                    <!--<div class="ui-grid-col-2"></div>-->
-                                    <!--<div class="ui-grid-col-6">-->
-                                        <!--<button pButton type="submit" label="Submit" [disabled]="!detailForm.valid"></button>-->
-                                    <!--</div>-->
-                                    <!--<div class="ui-grid-col-4"></div>-->
-                                <!--</div>-->
-                                <!--<div style="text-align:center;margin-top:20px" *ngIf="submitted">-->
-                                    <!--Form Submitted-->
-                                    <!--<br>-->
-                                    <!--{{diagnostic}}-->
-                                <!--</div>-->
-                            <!--</div>-->
-                       <!-- </p-panel> -->
+                    <form id="detailUpdating" [hidden]="!showUpdateDetail"
+                          #updateDetailFolderForm="ngForm"
+                          (ngSubmit)="updateDetailFolder(updateDetailFolderForm)" class="wid96">
+                        <p-panel i18n-header header="Modification des détails">
+                            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" >
+                                <!-- status update-->
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2" for="status" i18n>
+                                        Statut:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <select id="status" name="status" #status="ngModel" ngModel required>
+                                            <option *ngFor="let s of statusList" [value]="s">{{s.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="ui-grid-col-4">
+                                        <div class="ui-message ui-messages-error ui-corner-all" [hidden]="status.valid ||  status.pristine" i18n>
+                                            le statut est requie
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- priority update-->
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2" for="priority" i18n>
+                                         Priority:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <select id="priority" name="priority" #priority="ngModel" ngModel>
+                                            <option *ngFor="let p of prioritiesList" [value]="p">{{p.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="ui-grid-col-4">
+                                        <div class="ui-message ui-messages-error ui-corner-all"
+                                             *ngIf="!priority.valid && priority.dirty">
+                                            <i class="fa fa-close"></i>
+                                            Priority is required
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- court update-->
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2" for="court" i18n>
+                                        Tribunal
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <p-autoComplete [suggestions]="filteredCourts"
+                                                        (completeMethod)="filterCourts($event)"
+                                                        styleClass="wid100"
+                                                        [minLength]="1"
+                                                        i18n-placeholder="Palais de justice"
+                                                        field="name"
+                                                        id="court"
+                                                        name="court"
+                                                        ngModel
+                                                        #court="ngModel"
+                                                        [dropdown]="true">
+                                        </p-autoComplete>
+                                    </div>
+                                    <div class="ui-grid-col-4">
+                                        <div class="ui-message ui-messages-error ui-corner-all"
+                                            *ngIf="!court.valid && court.dirty">
+                                            <i class="fa fa-close"></i>
+                                            Tribunal is required
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--  administrationConcerned update-->
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2" for="administrationConcerned" i18n>
+                                        Type d'envoie:
+                                    </div>
+                                    <div class="ui-grid-col-6">
+                                        <textarea pInputTextarea type="text"
+                                                  id="administrationConcerned"
+                                                  name="administrationConcerned"
+                                                  #administrationConcerned="ngModel"
+                                                  ngModel>
+                                        </textarea>
+                                    </div>
+                                    <div class="ui-grid-col-4"></div>
+                                </div>
+
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2"></div>
+                                    <div class="ui-grid-col-3">
+                                        <button pButton type="submit"
+                                                i18n-label label="valider"
+                                                icon="fa fa-check"
+                                                [disabled]="!updateDetailFolderForm.valid"
+                                                class="ui-button-info">
+                                        </button>
+                                    </div>
+                                    <div class="ui-grid-col-3">
+                                         <button pButton type="butotn"
+                                                 i18n-label label="Annuler"
+                                                 icon="fa fa-close"
+                                                 (click)="closeDetailUpdating()"
+                                                 class="ui-button-danger">
+                                         </button>
+                                     </div>
+                                    <div class="ui-grid-col-4"></div>
+                                </div>
+                            </div>
+                        </p-panel>
                     </form>
 
                 </div>
             </div>
 
+            <!-- victims panel -->
             <div id="victims-module">
                 <div class="ui-g">
                     <div class="ui-g-1 toggle-title" i18n>Victimes</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-plus" style="cursor: pointer"></i>
+                        <i class="fa fa-pencil pointer"
+                           (click)="showHideUpdateVictims()">
+                        </i>
                     </div>
 
                 </div>
                 <div class="mod-content">
-                    <ul class="property-list">
-                        <li class="list-item wrap" *ngFor="let v of folder.victims">
-                            <span class="detail-value">{{v.name}}</span>
-                            <i class="fa fa-trash trash-update" (click)="removeVictim(v.id)"></i>
-                        </li>
-                    </ul>
+                    <!--  victims values -->
+                    <div id="victimsUpdating" [hidden]="!showUpdateVictims">
+                        <input id="victims" name="victims" [(ngModel)]="victim">
+                        <button pButton type="button"
+                                (click)="addVictim(victim)"
+                                class="btn btn-icon"
+                                icon="fa fa-check">
+                        </button>
+                        <button pButton type="button"
+                                icon="fa fa-close"
+                                (click)="closeVictimsUpdating()">
+                        </button>
+                    </div>
+                    <div id="victimsValues">
+                        <ul class="property-list">
+                            <li class="list-item wrap" *ngFor="let v of folder.victims">
+                                <span class="detail-value">{{v.name}}</span>
+                                &nbsp;
+                                <i class="fa fa-trash trash-update"
+                                    [hidden]="!showUpdateVictims"
+                                    (click)="removeVictims(v.id)">
+                                </i>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
+            <!-- accused panel-->
             <div id="accused-module">
                 <div class="ui-g">
                     <div class="ui-g-1 toggle-title" i18n>Coupables</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-pencil" (click)="showHideUpdateAccused()"></i>
                     </div>
                 </div>
                 <div class="mod-content">
-                    <ul class="property-list">
-                        <li class="list-item wrap" *ngFor="let g of folder.accused">
-                            <span class="detail-value">{{g.name}}</span>
-                            <i class="fa fa-trash trash-update" (click)="removeGuilty(g.id)"></i>
-                        </li>
-                    </ul>
+                    <!--  accused values -->
+                    <div id="accusedUpdating" [hidden]="!showUpdateAccused">
+                        <input id="accused" name="accused" [(ngModel)]="accused">
+                        <button pButton type="button"
+                                (click)="addAccused(accused)"
+                                class="btn btn-icon"
+                                icon="fa fa-check">
+                        </button>
+                        <button pButton type="button"
+                                icon="fa fa-close"
+                                class="btn btn-icon"
+                                (click)="closeAccusedUpdating()">
+                        </button>
+                    </div>
+                    <div id="AccusedValues">
+                        <ul class="property-list">
+                            <li class="list-item wrap" *ngFor="let a of folder.accused">
+                                <span class="detail-value">{{a.name}}</span>
+                                &nbsp;
+                                <i class="fa fa-trash trash-update"
+                                   [hidden]="!showUpdateAccused"
+                                   (click)="removeAccused(a.id)">
+                                </i>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
+            <!-- actions panel-->
             <div id="actions-module">
                 <div class="ui-g">
                     <div class="ui-g-1 toggle-title" i18n>Actions</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-pencil" (click)="showHideUpdateActions()">
+
+                        </i>
                     </div>
                 </div>
                 <div class="mod-content">
-                    <ul class="property-list">
-                        <li class="list-item wrap" *ngFor="let a of folder.actions">
-                            <span class="detail-value">{{a.name}}</span>
-                            <i class="fa fa-trash trash-update" (click)="removeAction(a.id)"></i>
-                        </li>
-                    </ul>
+                    <div id="actionsUpdating" [hidden]="!showUpdateActions">
+                        <p-dropdown #addActionDropdown
+                                    [options]="actionsList"
+                                    [(ngModel)]="selectedAction"
+                                    [style]="{'width':'300px'}"
+                                    filter="true"
+                                    i18n-placeholder="Choisissez votre action"
+                                    dir="rtl">
+                            <ng-template let-item pTemplate="selectedAction">
+                                <span style="vertical-align:middle">{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-action pTemplate="item">
+                                <span>{{action.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                        <button pButton type="submit"
+                                class="btn btn-icon"
+                                icon="fa fa-check">
+                        </button>
+                        <button pButton type="button"
+                                icon="fa fa-close"
+                                (click)="closeActionsUpdating()">
+                        </button>
+                    </div>
+                    <div id="actionsValues">
+                        <ul class="property-list">
+                            <li class="list-item wrap" *ngFor="let ac of folder.actions">
+                                <span class="detail-value">{{ac.name}}</span>
+                                <i class="fa fa-trash trash-update" [hidden]="!showUpdateActions" (click)="removeAction(ac.id)"></i>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
+
+            <!-- comments panel -->
+            <div id="comments-module">
+                <div class="ui-g">
+                    <div class="ui-g-1 toggle-title" i18n>Commentaires</div>
+                    <div class="ui-g-10 toggle-bar" style="width:90%"></div>
+                    <div class="ui-g-1" style="width:2%">
+                        <i class="fa fa-plus" (click)="showHideUpdateComments()">
+                        </i>
+                    </div>
+                </div>
+                <div class="mod-content">
+                  <form id="commentsUpdating" [hidden]="!showUpdateComments">
+
+                  </form>
+                  <div id="commentsValues">
+
+
+
+                  </div>
+                </div>
+            </div>
+
         </div>
+
         <!-- left panel-->
         <div class="ui-g-4">
+            <!-- people panel -->
             <div id="people-module">
                 <div class="ui-g">
-                    <div class="ui-g-2 toggle-title" i18n>People</div>
+                    <div class="ui-g-2 toggle-title" i18n>Personnes</div>
                     <div class="ui-g-10 toggle-bar"></div>
                 </div>
                 <div class="mod-content">
+                    <!-- assignee -->
                     <div class="ui-g">
                         <div class="ui-g-4">
                             <label class="detail-name" for="assignee" i18n>Assigner:</label>
                         </div>
-                        <div class="ui-g-8 pointer">
-                                <span class="wrap" id="assignee">
-                                    <div class="detail-value">{{folder.assignee.firstName}}&nbsp;{{folder.assignee.lastName}}</div>
-                                </span>
+                        <div class="ui-g-8">
+                            <span class="wrap" id="assignee">
+                                <div class="detail-value">{{folder?.assignee?.firstname}}&nbsp;{{folder?.assignee?.lastname}}</div>
+                            </span>
                         </div>
                     </div>
+                    <!-- reporter -->
                     <div class="ui-g">
                         <div class="ui-g-4">
                             <label class="detail-name" for="reporter">Auteur:</label>
                         </div>
-                        <div class="ui-g-8 pointer" (mouseover)="showPencilSendingType = true" (mouseleave)="showPencilSendingType = false">
+                        <div class="ui-g-8">
                             <span class="wrap" id="reporter">
-                                <div class="detail-value">{{folder.reporter.firstName}}&nbsp;{{folder.reporter.lastName}}</div>
+                                <div class="detail-value">{{folder?.reporter?.firstname}}&nbsp;{{folder?.reporter?.lastname}}</div>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- updater -->
+                    <div class="ui-g">
+                        <div class="ui-g-4">
+                            <label class="detail-name" for="updater">Updater:</label>
+                        </div>
+                        <div class="ui-g-8">
+                            <span class="wrap" id="updater">
+                                <div class="detail-value">{{folder?.updater?.firstname}}&nbsp;{{folder?.updater?.lastname}}</div>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- date panel-->
             <div id="date-module">
                 <div class="ui-g">
                     <div class="ui-g-2 toggle-title" i18n>Dates</div>
                     <div class="ui-g-10 toggle-bar"></div>
                 </div>
+
                 <div class="mod-content">
+                    <!-- create date -->
                     <div class="ui-g">
                         <div class="ui-g-4">
                             <label class="detail-name" for="created">Créer:</label>
                         </div>
-                        <div class="ui-g-8 pointer">
+                        <div class="ui-g-8">
                             <span class="wrap" id="created">
                                 <div class="detail-value">{{folder.created | date : 'longDate':'':'ar'}}</div>
                             </span>
                         </div>
                     </div>
+                    <!-- update date -->
                     <div class="ui-g">
                         <div class="ui-g-4">
                             <label  class="detail-name" for="updated">Modifier:</label>
                         </div>
-                        <div class="ui-g-8 pointer">
+                        <div class="ui-g-8">
                             <span class="wrap"  id="updated">
                                 <div class="detail-value">{{folder.updated | date : 'longDate':'':'ar'}}</div>
                             </span>
                         </div>
                     </div>
+                    <!-- close date -->
                     <div class="ui-g">
                         <div class="ui-g-4">
                             <label class="detail-name" for="closed">Clôturer:</label>
                         </div>
-                        <div class="ui-g-8 pointer">
+                        <div class="ui-g-8">
                             <span class="wrap" id="closed">
                                 <div class="detail-value">{{folder.closed | date : 'longDate':'':'ar'}}</div>
                             </span>

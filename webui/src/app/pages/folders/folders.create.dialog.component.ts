@@ -29,7 +29,6 @@ export class FoldersCreateDialogComponent implements OnInit {
     public queryOffice:  string;
 
     public selectedVictims:  Victim[] = [];
-
     public selectedAccused:  Accused[] = [];
 
     public filteredCourts:  any[] = [];
@@ -92,12 +91,12 @@ export class FoldersCreateDialogComponent implements OnInit {
         let _self = this;
         let query = event.query;
         let queryArr = query.split(' ');
-        let lastName = queryArr[0];
-        let firstName = queryArr.length > 1 ? queryArr[1] :  null;
-        _self.userService.getUsers(lastName, firstName).subscribe(function(users) {
+        let firstname = queryArr[0];
+        let lastname = queryArr.length > 1 ? queryArr[1] :  null;
+        _self.userService.getUsers(firstname, lastname).subscribe(function(users) {
             _self.filteredUsers = [];
             for (let u of users) {
-                _self.filteredUsers.push( {name:  u.lastName + ' ' + u.firstName , id:  u.userId});
+                _self.filteredUsers.push( {name:  u.firstname + ' ' + u.lastname , id:  u.userId});
             }
             _self.queryUser = query;
         });
@@ -141,8 +140,6 @@ export class FoldersCreateDialogComponent implements OnInit {
             _self.selectedAccused.push(new Accused(event.value));
         }
     }
-
-
 
     removeFromAccused(event) {
         let _self = this;

@@ -19,4 +19,6 @@ public class Action {
     @Column(name="name")
     private String name;
 
+
+
 }

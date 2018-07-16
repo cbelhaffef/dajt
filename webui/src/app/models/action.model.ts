@@ -1,7 +1,7 @@
 export class Action {
 
     public id:  number;
-    public name:  number;
+    public name:  string;
 
     constructor() {}
 

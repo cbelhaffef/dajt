@@ -7,6 +7,7 @@ import {HttpParams} from '@angular/common/http';
 import {Folder} from '../../models/folder.model';
 import {User} from '../../models/user.model';
 import {Action} from '../../models/action.model';
+import {Status} from '../../models/status.model';
 
 @Injectable()
 export class FolderService {
@@ -40,36 +41,9 @@ export class FolderService {
         const folderListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/folders', params)
             .subscribe(jsonResp => {
-                // const returnObj = jsonResp.items.map(function(v, i, a) {
-                //     const newRow = Object.assign( {}, v, {
-                //         created  :  me.translate.getDateString(v.created),
-                //         updated   :  me.translate.getDateString(v.updated),
-                //         closed:  (v.closed != null ? me.translate.getDateString(v.closed) :  '')
-                //     });
-                //     return newRow;
-                // });
-
                 folderListSubject.next(jsonResp); // incidentList is a Subject and emits an event thats being listened to by the components
             });
         return folderListSubject;
-    }
-
-    getFolderStatus(name?:  string):  Observable<any> {
-        let params:  HttpParams = new HttpParams();
-        if (name != null) {
-            params = params.append('name', name);
-        }
-
-        return this.apiRequest.get('api/folders/status', params);
-    }
-
-    getFolderPriority(name?:  string):  Observable<any> {
-        let params:  HttpParams = new HttpParams();
-        if (name != null) {
-            params = params.append('name', name);
-        }
-
-        return this.apiRequest.get('api/folders/priorities', params);
     }
 
 
@@ -113,10 +87,10 @@ export class FolderService {
         return folderSubject;
     }
 
-    changeStatusToListOfFolders(folders:  number[], status:  string):  Observable<any> {
+    changeStatusToListOfFolders(folders:  number[], status:  Status):  Observable<any> {
         const me = this;
         const folderSubject = new  Subject<any>();
-        this.apiRequest.post('api/folders/changeStatus/' + status, folders)
+        this.apiRequest.post('api/folders/changeStatus/' + status.code, folders)
             .subscribe(jsonResp => {
                 folderSubject.next(jsonResp);
             });

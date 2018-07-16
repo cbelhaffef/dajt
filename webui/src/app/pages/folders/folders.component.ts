@@ -16,7 +16,10 @@ import {Dropdown, OverlayPanel} from 'primeng/primeng';
 import {Action} from 'app/models/action.model';
 import {ActionService} from '../../services/api/action.service';
 import {FolderResponse} from '../../models/folder.response.model';
-import {LazyLoadEvent} from 'primeng/api';
+import {LazyLoadEvent, Message} from 'primeng/api';
+import {StatusService} from '../../services/api/status.service';
+import {Status} from '../../models/status.model';
+import {MessageService} from 'primeng/components/common/messageservice';
 
 @Component( {
     selector   :  's-folders-pg',
@@ -35,13 +38,12 @@ export class FoldersComponent implements OnInit {
     public listFolders: FolderResponse = new FolderResponse();
     public selectedFolders = [];
 
-    public listFolderStatus = [];
-
     public listCourts = [];
     public listOffices = [];
 
     public folderCreated:  Folder;
-    public hideMessage = true;
+
+    public  msgs: Message[] = [];
 
     animal:  string;
     name:  string;
@@ -54,19 +56,21 @@ export class FoldersComponent implements OnInit {
     public selectedAction:  Action;
     public showAddActionOPanel = false;
 
-    public listStatus = [];
-    public selectedStatus:  string;
+    public statusList = [];
+    public selectedStatus: any;
     public showChangeStatusOPanel = false;
 
     public loading: boolean;
 
     constructor(private router:  Router,
+                private messageService: MessageService,
                 private spinnerService:  SpinnerService,
                 private folderService:  FolderService,
                 private victimService:  VictimService,
                 private guiltyService:  AccusedService,
                 private courtService:   CourtService,
                 private officeService:  OfficeService,
+                private statusService:  StatusService,
                 private userService:  UserService,
                 private actionService:  ActionService,
                 public dialog:  MatDialog) { }
@@ -74,12 +78,9 @@ export class FoldersComponent implements OnInit {
     ngOnInit():  void {
         let _self = this;
         _self.getFolders();
-        _self.folderService.getFolderStatus('')
-            .subscribe(function(folderStatus) {
-                _self.listFolderStatus = folderStatus.items;
-                for (let s of folderStatus.items) {
-                    _self.listStatus.push( {label:  s , value:  s});
-                }
+        _self.statusService.getStatus()
+            .subscribe(function(statusList) {
+                _self.statusList = statusList;
         });
 
         _self.courtService.getCourts()
@@ -95,7 +96,7 @@ export class FoldersComponent implements OnInit {
         _self.userService.getUsers()
             .subscribe(function(users) {
                for (let u of users) {
-                   _self.listUsers.push( {label:  u.firstName + ' ' + u.lastName , value :  u});
+                   _self.listUsers.push( {label:  u.firstname + ' ' + u.lastname , value :  u});
                }
             });
         _self.actionService.getActions()
@@ -123,7 +124,7 @@ export class FoldersComponent implements OnInit {
             console.log('The dialog was closed');
             if (result !== undefined && result != null) {
                     _self.folderCreated = result;
-                    _self.hideMessage = false;
+                    _self.showMessage('success', '', '');
             }
 
         });
@@ -180,7 +181,7 @@ export class FoldersComponent implements OnInit {
         });
     }
 
-    changeStatus(folders:  Folder[], status:  string):  void {
+    changeStatus(folders:  Folder[], status:  Status):  void {
         let _self =  this;
         _self.spinnerService.showSpinner();
         _self.folderService.changeStatusToListOfFolders(folders.map(f => f.id ), status).subscribe(jsonResp => {
@@ -225,11 +226,17 @@ export class FoldersComponent implements OnInit {
     public getToolTipActionValue(listAction: Action[]): string {
         let actionValue = '';
         listAction.forEach(function (a: Action , i) {
-            actionValue += a.name
+            actionValue += a.name;
             if (i < listAction.length) {
                 actionValue += ' \n';
             }
         });
         return actionValue;
     }
+
+    showMessage(type: string, summary: string, detail: string) {
+        this.msgs = [];
+        this.msgs.push({severity: type, summary: summary, detail: detail});
+    }
+
 }

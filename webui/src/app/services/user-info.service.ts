@@ -4,6 +4,9 @@ export interface UserInStorage {
     userId:  string;
     email:  string;
     displayName:  string;
+    username: string;
+    firstname: string;
+    lastname: string;
     token:  string;
 }
 

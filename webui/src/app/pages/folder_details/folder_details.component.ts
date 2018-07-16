@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import 'rxjs/add/operator/switchMap';
 import {ActivatedRoute} from '@angular/router';
 import {FolderService} from '../../services/api/folder.service';
@@ -8,7 +8,16 @@ import {CourtService} from '../../services/api/court.service';
 import {VictimService} from '../../services/api/victim.service';
 import {AccusedService} from '../../services/api/accused.service';
 import {ActionService} from '../../services/api/action.service';
-import {Message, SelectItem} from 'primeng/api';
+import {Message} from 'primeng/api';
+import {Court} from '../../models/court.model';
+import {UserInfoService} from '../../services/user-info.service';
+import {StatusService} from '../../services/api/status.service';
+import {PriorityService} from '../../services/api/priority.service';
+import {CommonService} from '../../services/common.service';
+import {Status} from '../../models/status.model';
+import {Priority} from '../../models/priority.model';
+import {Victim} from '../../models/victim.model';
+import {Accused} from '../../models/accused.model';
 
 @Component( {
     selector   :  's-folders-pg',
@@ -18,151 +27,210 @@ import {Message, SelectItem} from 'primeng/api';
 
 export class FolderDetailsComponent implements OnInit {
 
-    public folder:  Folder = new Folder();
-
-    public detailForm:  FormGroup;
-
-    public submitted:  boolean;
-
-    public genders:  SelectItem[];
+    @ViewChild(NgForm) updateDetailfolderForm:  NgForm;
 
     msgs:  Message[] = [];
 
+    public folder:  Folder = new Folder();
+
+    public submitted:  boolean;
     public isLoading = false;
 
     public showUpdateDetail = false;
+    public showUpdateVictims = false;
+    public showUpdateAccused = false;
+    public showUpdateActions = false;
+    public showUpdateComments = false;
 
-    public filteredStatus:  any[] = [];
-    public queryStatus:  string;
+
+    public statusList: Status[] = [];
+    public prioritiesList: Priority[] = [];
+    public actionsList: any[] = [];
+
+    public victim: string;
+    public accused: string;
+
+    public selectedVictims:  Victim[] = [];
+    public selectedAccused:  Accused[] = [];
+    public selectedAction: any;
 
     public filteredCourts:  any[] = [];
     public queryCourt:  string;
+    public selectedCourt: Court;
 
-    public filteredPriority:  any[] = [];
-    public queryPriority:  string;
-
-    public filteredVictims:  any[] = [];
-    public queryVictim:  string;
-
-    public filteredGuilties:  any[] = [];
-    public queryGuilty:  string;
-
-    public filteredActions:  any[] = [];
-    public queryAction:  string;
-
-    public showPencilCourt:  boolean;
-
-    public showPencilSendingType:  boolean;
 
     constructor(private activateRoute:  ActivatedRoute,
                 private folderService:  FolderService,
                 private victimService:  VictimService,
                 private guiltyService:  AccusedService,
                 private actionService:  ActionService,
+                private statusService:  StatusService,
+                private priorityService: PriorityService,
                 private courtService:  CourtService,
+                private commonService: CommonService,
+                private userInfoService: UserInfoService,
                 private fb:  FormBuilder) {
     }
 
     ngOnInit():  void {
         const me = this;
         me.isLoading = true;
+
         me.folderService.getFolderDetails(me.activateRoute.snapshot.params.id)
             .subscribe(function(folder) {
                 me.folder = folder;
                 me.isLoading = false;
             });
-        this.detailForm = this.fb.group( {
-            'firstname':  new FormControl('', Validators.required),
-            'lastname':  new FormControl('', Validators.required),
-            'password':  new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
-            'description':  new FormControl(''),
-            'gender':  new FormControl('', Validators.required)
-        });
-
-    }
-
-    updateDetail() {
-        this.showUpdateDetail = !this.showUpdateDetail;
-    }
-
-    onSubmit(value:  string) {
-        this.submitted = true;
-        this.msgs = [];
-        this.msgs.push( {severity: 'info', summary: 'Success', detail: 'Form Submitted'});
-    }
-
-    addFolder(f:  NgForm) {
-        const me = this;
-        me.isLoading = true;
-        me.folderService.addFolder(f.value)
-            .subscribe(function(folder) {
-                alert(folder);
-                me.isLoading = false;
+        me.statusService.getStatus()
+            .subscribe(function(statusList) {
+                me.statusList = statusList;
+            });
+        me.priorityService.getPriorities()
+            .subscribe(function(prioritiesList) {
+                me.prioritiesList = prioritiesList;
+            });
+        me.actionService.getActions()
+            .subscribe(function(actionsList) {
+                me.actionsList = actionsList;
             });
     }
 
-    filterStatus(event) {
+    showHideUpdateDetail(): void {
         let _self = this;
-        let query = event.query;
-        _self.folderService.getFolderStatus(query).subscribe(function(status) {
-            _self.filteredStatus = _self.filterItem(query, status);
-            _self.queryStatus = query;
-        });
+        _self.showUpdateDetail = !_self.showUpdateDetail;
+        if (_self.showUpdateDetail) {
+            _self.updateDetailfolderForm.setValue({
+                status   : _self.folder.status,
+                priority : _self.folder.priority,
+                court    : _self.folder.court,
+                administrationConcerned : _self.folder.administrationConcerned
+            });
+        } else {
+            _self.updateDetailfolderForm.resetForm();
+        }
     }
 
-    filterPriority(event) {
+    showHideUpdateVictims(): void {
         let _self = this;
-        let query = event.query;
-        _self.folderService.getFolderPriority(query).subscribe(function(priority) {
-            _self.filteredPriority = _self.filterItem(query, priority);
-            _self.queryPriority = query;
-        });
+        _self.showUpdateVictims = !_self.showUpdateVictims;
+        if (_self.showUpdateVictims) {
+            _self.victim = '';
+        }
+    }
+
+    showHideUpdateAccused(): void {
+        let _self = this;
+        _self.showUpdateAccused = !_self.showUpdateAccused;
+        if (_self.showUpdateAccused) {
+            _self.accused = '';
+        }
+    }
+
+    showHideUpdateActions(): void {
+        let _self = this;
+        _self.showUpdateActions = !_self.showUpdateActions;
+    }
+
+    updateDetailFolder(f:  NgForm) {
+        let _self = this;
+        let userStored = _self.userInfoService.getUserInfo();
+        if (userStored != null) {
+            f.value['updater'] = { userId :  userStored.userId };
+        }
+        if (typeof f.value['court'] === 'string') {
+            let c = new Court(f.value['court']);
+            f.value['court'] = c;
+        }
+        _self.folderService.addFolder(f.value)
+            .subscribe(function(folder) {
+                alert('dossier crée');
+                // _self.close();
+            });
+    }
+
+    updateVictimsFolder(f: NgForm) {
+        let _self = this;
+        let userStored = _self.userInfoService.getUserInfo();
+        if (userStored != null) {
+            f.value['updater'] = { userId :  userStored.userId };
+        }
+        f.value['victims'] = _self.selectedVictims;
+    }
+
+    updateAccusedFolder(f: NgForm) {
+        let _self = this;
+        let userStored = _self.userInfoService.getUserInfo();
+        if (userStored != null) {
+            f.value['updater'] = { userId :  userStored.userId };
+        }
+        f.value['accused'] = _self.selectedAccused;
+    }
+
+    updatePeopleFolder(f: NgForm) {
+        let _self = this;
+        let userStored = _self.userInfoService.getUserInfo();
+        if (userStored != null) {
+            f.value['updater'] = { userId :  userStored.userId };
+        }
+        f.value['created'] = _self.selectedAccused;
+    }
+
+    addVictim(victim: string) {
+        let _self = this;
+    }
+
+    removeVictim(AccusedId: number) {
+        let _self = this;
+    }
+
+    addAccused(accused: string) {
+        let _self = this;
+    }
+
+    removeAccused(accusedId: number) {
+        let _self = this;
+    }
+
+    closeDetailUpdating() {
+        let _self = this;
+        _self.showUpdateDetail = false;
+    }
+
+    closeVictimsUpdating() {
+        let _self = this;
+        _self.showUpdateVictims = false;
+    }
+
+    closeAccusedUpdating() {
+        let _self = this;
+        _self.showUpdateAccused = false;
+    }
+
+    closeActionsUpdating() {
+        let _self = this;
+        _self.showUpdateActions = false;
     }
 
     filterCourts(event) {
         let _self = this;
         let query = event.query;
         _self.courtService.getCourts(query).subscribe(function(courts) {
-            _self.filteredCourts = _self.filterItem(query, courts);
+            _self.filteredCourts = _self.commonService.filterItem(query, courts);
             _self.queryCourt = query;
         });
     }
 
-    filterVictims(event) {
-        let _self = this;
-        let query = event.query;
-        _self.victimService.getVictims(query).subscribe(function(victims) {
-            _self.filteredVictims = _self.filterItem(query, victims);
-            _self.queryVictim = query;
-        });
-    }
-
-    filterGuilties(event) {
-        let _self = this;
-        let query = event.query;
-        _self.guiltyService.getGuilties(query).subscribe(function(guilties) {
-            _self.filteredGuilties = _self.filterItem(query, guilties);
-            _self.queryGuilty = query;
-        });
-    }
-
-    filterActions(event) {
-        let _self = this;
-        let query = event.query;
-        _self.actionService.getActions(query).subscribe(function(actions) {
-            _self.filteredActions = _self.filterItem(query, actions);
-            _self.queryAction = query;
-        });
-    }
-
-    filterItem(query, items:  any[]):  any[] {
-        let filtered:  any[] = [];
-        for (let i = 0; i < items.length; i++) {
-            let accused = items[i];
-            if (accused.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-                filtered.push(accused);
-            }
+    displayBreakLine(value: string): string {
+        if (value) {
+            return value.replace(/(?:\\[rn]|[\r\n]+|↵)+/g, '<br\>');
         }
-        return filtered;
+        return value;
+    }
+
+    removeBreakLine(value: string): string {
+        if (value) {
+            return value.replace('<br/>', '\n');
+        }
+        return value;
     }
 }

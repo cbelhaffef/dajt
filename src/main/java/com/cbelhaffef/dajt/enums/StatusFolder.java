@@ -1,8 +1,8 @@
 package com.cbelhaffef.dajt.enums;
 
-public enum FolderStatus {
+public enum StatusFolder {
     OPEN,
     IN_PROGRESS,
-    AWATING_SIGNATURE,
+    AWAITING_SIGNATURE,
     CLOSE;
 }

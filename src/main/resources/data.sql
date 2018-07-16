@@ -10,6 +10,18 @@ insert into office(office_id, name) VALUES
 #     (5 , 'ورقلـة'),
 #     (6 , 'باب الـوادي');
 
+insert into status(status_id, code, name,icon) VALUES
+    (1,'OPEN','مفتوح','../../../assets/images/status/open.png'),
+    (2,'IN_PROGRESS','جاري','../../../assets/images/status/in_progress.png'),
+    (3,'AWAiTING_SIGNATURE','في انتظار التوقيع','../../../assets/images/status/awaiting_signature.png'),
+    (4,'CLOSE','مغلق','../../../assets/images/status/close.svg');
+
+insert into priority(priority_id, code, name,icon) VALUES
+    (1,'MINOR','ثانوي','../../../assets/images/priorities/minir.svg'),
+    (2,'MAJOR','اولوي','../../../assets/images/priorities/major.svg'),
+    (23,'URGENT','عاجل','../../../assets/images/priorities/urgent.svg');
+
+
 insert into action(action_id, name) VALUES
     (1, 'Consitiution des Avocats'),
     (2, 'Suites Réservées'),
@@ -29,7 +41,7 @@ insert into action(action_id, name) VALUES
 
 /* User */
 insert into user
-    (user_id, username,           password,              first_name,       last_name,                 email,                role,    is_active,   sex,      office_id) values
+    (user_id, username,           password,              firstname,       lastname,                 email,                role,    is_active,   sex,      office_id) values
     (1,       'admin',            'admin',               'admin'         ,  'admin',             'admin@dajt.gouv.dz',      'ADMIN' ,   1,        null,      null),
     (2,       'hkharbouche',      'changeme',            'houria'       ,  'kharbouche',        'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  null),
     (3,       'souala',          'changeme',            'soumia'       ,  'ouala',              'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  2),

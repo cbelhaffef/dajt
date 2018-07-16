@@ -14,8 +14,8 @@ CREATE TABLE user (
     user_id     INT NOT NULL,
     username    NVARCHAR(20) NOT NULL,
     password    NVARCHAR(20) NOT NULL,
-    first_name  NVARCHAR(50) ,
-    last_name   NVARCHAR(50) ,
+    firstname  NVARCHAR(50) ,
+    lastname   NVARCHAR(50) ,
     email       NVARCHAR(70) ,
     role        NVARCHAR(20) ,
     sex         NVARCHAR(20) ,
@@ -45,8 +45,8 @@ CREATE TABLE user_role (
 /* Table: advocate */
 CREATE TABLE advocate (
     advocate_id     INT NOT NULL AUTO_INCREMENT,
-    first_name       NVARCHAR(255),
-    last_name       NVARCHAR(255),
+    firstame       NVARCHAR(255),
+    lastame       NVARCHAR(255),
     PRIMARY KEY (advocate_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -54,6 +54,24 @@ CREATE TABLE court (
     court_id INT NOT NULL AUTO_INCREMENT,
     name NVARCHAR(255) UNIQUE NOT NULL,
     PRIMARY KEY (court_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE status (
+    status_id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(255) UNIQUE NOT NULL,
+    code NVARCHAR (50) UNIQUE NOT NULL,
+    icon NVARCHAR (255),
+    description NVARCHAR (255),
+    PRIMARY KEY (status_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE priority (
+    priority_id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(255) UNIQUE NOT NULL,
+    code NVARCHAR (50) UNIQUE NOT NULL,
+    icon NVARCHAR (255),
+    description NVARCHAR (255),
+    PRIMARY KEY (priority_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Table: folder */
@@ -64,23 +82,27 @@ CREATE TABLE folder (
     offence         VARCHAR(255) NOT NULL,
     offence_date    DATETIME NULL DEFAULT NULL,
     office_id       INT NOT NULL,
-    court_id        INT NOT NULL,
+    court_id        INT,
     administration_concerned LONGTEXT,
     assignee        INT,
     reporter        INT,
+    updater         INT,
     created         DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated         DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     closed          DATETIME NULL DEFAULT NULL,
     judged          DATETIME NULL DEFAULT NULL,
     judgement_status VARCHAR(255),
-    folder_status   VARCHAR(50) NOT NULL DEFAULT 'OPEN',
-    folder_priority VARCHAR(50) NOT NULL DEFAULT 'MINOR',
+    status_id       INT,
+    priority_id     INT,
     advocate_id     INT,
     CONSTRAINT fk_folder__office   FOREIGN KEY (office_id)   REFERENCES office(office_id),
     CONSTRAINT fk_folder__court    FOREIGN KEY (court_id)    REFERENCES court(court_id),
+    CONSTRAINT fk_folder__status    FOREIGN KEY (status_id)    REFERENCES status(status_id),
+    CONSTRAINT fk_folder__priority   FOREIGN KEY (priority_id)    REFERENCES priority(priority_id),
     CONSTRAINT fk_folder__advocate FOREIGN KEY (advocate_id) REFERENCES advocate(advocate_id),
     CONSTRAINT fk_folder__assignee     FOREIGN KEY (assignee)   REFERENCES user(user_id),
     CONSTRAINT fk_folder__reporter     FOREIGN KEY (reporter)   REFERENCES user(user_id),
+    CONSTRAINT fk_folder__updater      FOREIGN KEY (updater)   REFERENCES user(user_id),
     PRIMARY KEY (folder_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

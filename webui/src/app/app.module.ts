@@ -37,13 +37,18 @@ import {FolderService} from './services/api/folder.service';
 import {VictimService} from './services/api/victim.service';
 import {AccusedService} from './services/api/accused.service';
 import {CourtService} from './services/api/court.service';
+import {StatusService} from './services/api/status.service';
+import {PriorityService} from './services/api/priority.service';
+import {ActionService} from './services/api/action.service';
+
+import {CommonService} from './services/common.service';
 
 import {registerLocaleData} from '@angular/common';
 import {OfficeService} from './services/api/office.service';
 import {FoldersCreateDialogComponent} from './pages/folders/folders.create.dialog.component';
 import localeAr from '@angular/common/locales/ar';
 import {
-    AutoCompleteModule, CheckboxModule, DropdownModule, InputTextModule, SplitButtonModule,
+    AutoCompleteModule, CheckboxModule, DropdownModule, InputTextModule, MessagesModule, SplitButtonModule,
     TooltipModule
 } from 'primeng/primeng';
 import {UserService} from 'app/services/api/user.service';
@@ -51,10 +56,10 @@ import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SpinnerService} from './services/spinner.service';
 import {SpinnerComponent} from './components/spinner/spinner.component';
 import {PanelModule} from 'primeng/panel';
-import {ActionService} from './services/api/action.service';
 import {EditorModule} from 'primeng/editor';
 import {CardModule} from 'primeng/card';
 import {ChipsModule} from 'primeng/chips';
+import {MessageService} from 'primeng/components/common/messageservice';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -85,6 +90,7 @@ registerLocaleData(localeAr, 'ar');
     EditorModule,
     CheckboxModule,
     ChipsModule,
+    MessagesModule,
 
 
     // Local App Modules
@@ -130,7 +136,11 @@ registerLocaleData(localeAr, 'ar');
     CourtService,
     OfficeService,
     ActionService,
+    StatusService,
+    PriorityService,
     SpinnerService,
+    CommonService,
+    MessageService,
     AppConfig
   ],
 

@@ -13,16 +13,16 @@ export class UserService {
     /**
      * Gets List of operators
      */
-    getUsers(firstName?:  string, lastName?:  string, page?:  number, size?:  number):  Observable<any> {
+    getUsers(firstname?:  string, lastname?:  string, page?:  number, size?:  number):  Observable<any> {
         // Create Request URL params
         let params:  HttpParams = new HttpParams();
         params = params.append('page', typeof page === 'number' ? page.toString() :  '0');
         params = params.append('size', typeof size === 'number' ? size.toString() :  '1000');
-        if (firstName && typeof firstName === 'string') {
-            params = params.append('firstName', firstName);
+        if (firstname && typeof firstname === 'string') {
+            params = params.append('firstname', firstname);
         }
-        if (lastName && typeof lastName === 'string') {
-            params = params.append('lastName', lastName);
+        if (lastname && typeof lastname === 'string') {
+            params = params.append('lastname', lastname);
         }
         const usersListSubject = new Subject<any>(); // Will use this subject to emit data that we want
         this.apiRequest.get('api/users', params)

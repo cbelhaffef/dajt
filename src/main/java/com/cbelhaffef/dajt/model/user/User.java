@@ -2,10 +2,10 @@ package com.cbelhaffef.dajt.model.user;
 
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.office.Office;
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.office.Office;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
@@ -21,9 +21,10 @@ public class User {
     private Long userId;
 
     private String username = "";
+    @JsonIgnore
     private String password = "";
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -45,25 +46,25 @@ public class User {
         this("new", "PASSWORD", Role.USER, "new", "new", true);
     }
 
-    public User(String username, String password, String firstName, String lastName){
-        this(username, password, Role.USER, firstName, lastName, true);
+    public User(String username, String password, String firstname, String lastname){
+        this(username, password, Role.USER, firstname, lastname, true);
     }
 
-    public User(String username, String password, Role role, String firstName, String lastName){
-        this(username, password, role, firstName, lastName, true);
+    public User(String username, String password, Role role, String firstname, String lastname){
+        this(username, password, role, firstname, lastname, true);
     }
 
-    public User(String username, String password, Role role, String firstName, String lastName, boolean isActive){
+    public User(String username, String password, Role role, String firstname, String lastname, boolean isActive){
         this.setUsername(username);
         this.setEmail(username);
         this.setPassword(new BCryptPasswordEncoder().encode(password));
         this.setRole(role);
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
+        this.setFirstname(firstname);
+        this.setLastname(lastname);
         this.setActive(isActive);
     }
 
     public String getFullName(){
-        return this.firstName + " " + this.lastName;
+        return this.firstname + " " + this.lastname;
     }
 }

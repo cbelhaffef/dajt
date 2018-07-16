@@ -1,6 +1,6 @@
 package com.cbelhaffef.dajt.model.importfile;
 
-public enum ImportStatusEnum {
+public enum StatusImport {
 
     ON_ERROR,
     FINICHED,

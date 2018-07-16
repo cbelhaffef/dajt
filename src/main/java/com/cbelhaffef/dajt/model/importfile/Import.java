@@ -27,7 +27,7 @@ public class Import {
 
     @Column(name="status")
     @Enumerated(EnumType.STRING)
-    private ImportStatusEnum status;
+    private StatusImport status;
 
     @Column(name="message")
     private String message;

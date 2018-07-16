@@ -1,20 +1,6 @@
 <div class="header-margin-top pad-16">
 
-    <div class="alert alert-success" [hidden]="hideMessage" >
-        <div class="alert-items">
-            <div class="alert-item static">
-                <div class="alert-icon-wrapper">
-                    <i class="fa fa-bell"></i>
-                </div>
-                <span class="alert-text">
-                    <b i18n>Le dossier</b>&nbsp;<a routerLink="/home/legal_cases/folders/{{folderCreated?.id}}">{{folderCreated?.id}}</a>&nbsp;<b i18n>a été crée.</b>
-                </span>
-            </div>
-        </div>
-        <button type="button" class="close" aria-label="Close">
-            <i class="fa fa-close"></i>
-        </button>
-    </div>
+    <!--<b i18n>Le dossier</b>&nbsp;<a routerLink="/home/legal_cases/folders/{{folderCreated?.id}}">{{folderCreated?.id}}</a>&nbsp;<b i18n>a été crée.</b>-->
 
     <div class="ui-g" >
         <div class="ui-g-1"></div>
@@ -65,7 +51,7 @@
                     <div class="ui-g-3  text-right">
                         <select id="status" name="status" class="select-basic" ngModel>
                             <option value=""></option>
-                            <option *ngFor="let st of listFolderStatus" value="{{st}}">{{st}}</option>
+                            <option *ngFor="let st of statusList" value="{{st.id}}">{{st.name}}</option>
                         </select>
                     </div>
 
@@ -125,11 +111,11 @@
                         <th style="width: 2.25em">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th width="10%" i18n>Numéro</th>
-                        <th width="20%" i18n>Infraction</th>
+                        <th width="5%" i18n>Numéro</th>
+                        <th width="22%" i18n>Infraction</th>
                         <th width="13%" i18n>Victimes</th>
                         <th width="13%" i18n>Coupables</th>
-                        <th width="5%"  i18n>Tribunal</th>
+                        <th width="7%"  i18n>Tribunal</th>
                         <th width="10%" i18n>Date modification</th>
                         <th width="10%" i18n>Assigné</th>
                         <th width="4%"  i18n>Actions</th>
@@ -166,20 +152,24 @@
                             {{folder.court.name}}
                         </td>
                         <td>
-                            {{folder.updated | date : 'longDate':'':'ar'}}
+                            {{folder.updated | date : 'longDate':'':'ar-DZ'}}
                         </td>
                         <td>
-                            {{folder?.assignee?.firstName}}&nbsp;{{folder?.assignee?.firstName}}
+                            {{folder?.assignee?.firstname}}&nbsp;{{folder?.assignee?.lastname}}
                         </td>
-                        <td>
+                        <td align="center">
                             <span class="badge badge-info" dir="rtl"
                                   [tooltipDisabled]="folder?.actions === 0"
                                   [pTooltip]="getToolTipActionValue(folder?.actions)">
                                 {{folder?.actions.length}}
                             </span>
                         </td>
-                        <td>
-                            <span class="badge badge-info">{{folder?.status}}</span>
+                        <td align="center">
+                            <img alt="" height="20"
+                                 src="{{folder.status?.icon}}"
+                                 [pTooltip]="folder?.status?.name"
+                                 width="20"
+                                 class="icon-value">
                         </td>
                         <td>
                             <div [innerHTML]="folder?.administrationConcerned"></div>
@@ -239,20 +229,9 @@
 
     <!-- ChangeStatusPanel-->
     <div *ngIf="showChangeStatusOPanel">
-        <p-dropdown #changeStatusDropdown
-                    [options]="listStatus"
-                    [(ngModel)]="selectedStatus"
-                    [style]="{'width':'300px'}"
-                    filter="true"
-                    i18n-placeholder="Choisissez le status"
-                    dir="rtl">
-            <ng-template let-item pTemplate="selectedStatus">
-                <span style="vertical-align:middle">{{item.label}}</span>
-            </ng-template>
-            <ng-template let-status pTemplate="item">
-                <span>{{status.label}}</span>
-            </ng-template>
-        </p-dropdown>
+        <select [(ngModel)]="selectedStatus">
+            <option *ngFor="let s of statusList" [value]="s">{{s.name}}</option>
+        </select>
         <button type="button" class="btn btn-icon" (click)="changeStatus(selectedFolders,selectedStatus)">
             <i class="fa fa-check"></i>
         </button>

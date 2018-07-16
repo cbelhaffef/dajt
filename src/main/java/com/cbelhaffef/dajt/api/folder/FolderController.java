@@ -1,20 +1,18 @@
 package com.cbelhaffef.dajt.api.folder;
 
 import com.cbelhaffef.dajt.api.user.UserService;
-import com.cbelhaffef.dajt.enums.FolderPriority;
-import com.cbelhaffef.dajt.enums.FolderStatus;
 import com.cbelhaffef.dajt.exception.ResourceAlreadyAddedException;
 import com.cbelhaffef.dajt.model.accused.Accused;
 import com.cbelhaffef.dajt.model.action.Action;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.folder.FolderPriorityResponse;
-import com.cbelhaffef.dajt.model.folder.FolderStatusResponse;
 import com.cbelhaffef.dajt.model.office.Office;
+import com.cbelhaffef.dajt.model.status.Status;
 import com.cbelhaffef.dajt.model.user.User;
 import com.cbelhaffef.dajt.model.victim.Victim;
 import com.cbelhaffef.dajt.repo.ActionRepo;
 import com.cbelhaffef.dajt.repo.FolderRepo;
+import com.cbelhaffef.dajt.repo.StatusRepo;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +25,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +40,8 @@ public class FolderController {
 
     @Autowired private ActionRepo actionRepo;
 
+    @Autowired private StatusRepo statusRepo;
+
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
     @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
     public FolderListResponse getFoldersByPage(
@@ -50,7 +49,7 @@ public class FolderController {
         @ApiParam(value = "between 1 to 1000") @RequestParam(value = "size"  ,  defaultValue="10",  required = false) Integer size,
         @RequestParam(value = "folderNumber", required = false) String folderNumber,
         @RequestParam(value = "office"      , required = false) Long office,
-        @RequestParam(value = "status"      , required = false) FolderStatus status,
+        @RequestParam(value = "status"      , required = false) Long status,
         @RequestParam(value = "accused"     , required = false) String accused,
         @RequestParam(value = "victim"      , required = false) String victim,
         Pageable pageable
@@ -64,7 +63,9 @@ public class FolderController {
         Office officeObj = new Office();
         officeObj.setId(office);
         if (office != null)  { qry.setOffice(officeObj); }
-        if (status != null)  { qry.setStatus(status); }
+        Status statusObj = new Status();
+        statusObj.setId(status);
+        if (status != null)  { qry.setStatus(statusObj); }
 
         Victim victimObj = new Victim();
         victimObj.setName(victim);
@@ -90,21 +91,6 @@ public class FolderController {
         return folderSaved;
     }
 
-    @ApiOperation(value = "List of status", response = FolderStatusResponse.class)
-    @RequestMapping(value = "/folders/status", method = RequestMethod.GET)
-    public FolderStatusResponse getFoldersStatus(@RequestParam(value="name", required = false) String name) {
-        FolderStatusResponse resp = new FolderStatusResponse();
-        resp.setItems(Arrays.asList(FolderStatus.values()));
-        return resp;
-    }
-
-    @ApiOperation(value = "List of priorities", response = FolderStatusResponse.class)
-    @RequestMapping(value = "/folders/priorities", method = RequestMethod.GET)
-    public FolderPriorityResponse getFoldersPriorities(@RequestParam(value="name", required = false) String name) {
-        FolderPriorityResponse resp = new FolderPriorityResponse();
-        resp.setItems(Arrays.asList(FolderPriority.values()));
-        return resp;
-    }
 
     @ApiOperation(value = "Order Details", response = Folder.class)
     @RequestMapping(value = "/folders/{id}", method = RequestMethod.GET)
@@ -189,23 +175,22 @@ public class FolderController {
     @Transactional
     @ApiOperation(value = "Change  status to list of folders", response = Folder.class)
     @RequestMapping(value="/folders/changeStatus/{status}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Folder> changeStatusToListOfFolders(@PathVariable("status") String status, @RequestBody List<Long> foldersIds)
+    public List<Folder> changeStatusToListOfFolders(@PathVariable("status") String statusCode, @RequestBody List<Long> foldersIds)
         throws ResourceNotFoundException {
-
-        FolderStatus statusEnum = FolderStatus.valueOf(status);
-
-        if(statusEnum == null){
-            throw new ResourceNotFoundException("le status n'a pas été trouvée. Contactez votre Administrateur.",null);
-        }
 
         if(foldersIds == null || foldersIds.isEmpty()){
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
         }
 
+        Optional<Status> statusDb = statusRepo.findByCode(statusCode);
+        if(!statusDb.isPresent()){
+            throw  new ResourceNotFoundException("Aucun status existe avec l'id : " + statusCode,null);
+        }
+
         List<Folder> foldersDb = folderRepo.findByIdIn(foldersIds);
 
         for(Folder f : foldersDb){
-            f.setStatus(statusEnum);
+            f.setStatus(statusDb.get());
             folderRepo.save(f);
         }
 

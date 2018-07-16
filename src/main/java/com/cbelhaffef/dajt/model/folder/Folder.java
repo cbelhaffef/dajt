@@ -1,7 +1,5 @@
 package com.cbelhaffef.dajt.model.folder;
 
-import com.cbelhaffef.dajt.enums.FolderPriority;
-import com.cbelhaffef.dajt.enums.FolderStatus;
 import com.cbelhaffef.dajt.enums.JudgementStatus;
 import com.cbelhaffef.dajt.model.accused.Accused;
 import com.cbelhaffef.dajt.model.action.Action;
@@ -10,10 +8,11 @@ import com.cbelhaffef.dajt.model.advocate.Advocate;
 import com.cbelhaffef.dajt.model.comment.Comment;
 import com.cbelhaffef.dajt.model.court.Court;
 import com.cbelhaffef.dajt.model.office.Office;
+import com.cbelhaffef.dajt.model.priority.Priority;
+import com.cbelhaffef.dajt.model.status.Status;
 import com.cbelhaffef.dajt.model.user.User;
 import com.cbelhaffef.dajt.model.victim.Victim;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.jetbrains.annotations.NotNull;
@@ -59,19 +58,23 @@ public class Folder implements Comparable<Folder>{
     private User reporter;
 
     @ManyToOne
+    @JoinColumn(name="updater", referencedColumnName = "user_id")
+    private User updater;
+
+    @ManyToOne
     @JoinColumn(name="office_id")
     private Office office;
 
     @Column(name="administration_concerned")
     private String administrationConcerned;
 
-    @Column(name="folder_status", nullable = false, columnDefinition = "varchar(50) default 'OPEN'")
-    @Enumerated(EnumType.STRING)
-    private FolderStatus status = FolderStatus.OPEN;
+    @ManyToOne
+    @JoinColumn(name="status_id")
+    private Status status;
 
-    @Column(name="folder_priority", nullable = false, columnDefinition = "varchar(50) default 'MINOR'")
-    @Enumerated(EnumType.STRING)
-    private FolderPriority priority = FolderPriority.MINOR;
+    @ManyToOne
+    @JoinColumn(name="priority_id")
+    private Priority priority;
 
     @CreationTimestamp
     @Column(name="created")

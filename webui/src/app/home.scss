@@ -83,8 +83,9 @@ body{
     background-color: #4a4f52;
 }
 
-.topbar-menu>li>a:active {
+.topbar-menu > li > a.active {
     border-bottom: 4px solid #03f503;
+    background-color: #4a4f52;
 }
 
 .subnav {
@@ -175,4 +176,12 @@ body{
 
 .red {
     color: red;
+}
+
+.wid100 {
+    width: 100%;
+}
+
+.wid96 {
+    width: 96%;
 }

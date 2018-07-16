@@ -9,8 +9,8 @@ public class SessionItem {
     private String  token;
     private String  username;
     private Long    userId;
-    private String  firstName;
-    private String  lastName;
+    private String  firstname;
+    private String  lastname;
     private String  email;
     private List<String> roles;
 }
