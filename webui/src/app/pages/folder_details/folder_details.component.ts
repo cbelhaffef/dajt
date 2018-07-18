@@ -18,16 +18,25 @@ import {Status} from '../../models/status.model';
 import {Priority} from '../../models/priority.model';
 import {Victim} from '../../models/victim.model';
 import {Accused} from '../../models/accused.model';
+import {MessageService} from 'primeng/components/common/messageservice';
+import {Action} from '../../models/action.model';
+import {SharedService} from '../../services/shared.service';
+import {User} from '../../models/user.model';
+import {Dropdown, OverlayPanel} from 'primeng/primeng';
+import {UserService} from '../../services/api/user.service';
 
 @Component( {
     selector   :  's-folders-pg',
     templateUrl:  './folder_details.component.html',
     styleUrls  :  [ './folder_details.scss'],
+    providers : [MessageService]
 })
 
-export class FolderDetailsComponent implements OnInit {
+export class FolderDetailsComponent implements OnInit  {
 
     @ViewChild(NgForm) updateDetailfolderForm:  NgForm;
+    @ViewChild(OverlayPanel) overlayPanel:  OverlayPanel;
+    @ViewChild('assignUserDropdown') assignUserDropdown:  Dropdown;
 
     msgs:  Message[] = [];
 
@@ -42,6 +51,9 @@ export class FolderDetailsComponent implements OnInit {
     public showUpdateActions = false;
     public showUpdateComments = false;
 
+    public listUsers = [];
+    public selectedUser:  User;
+    public showAssignUserOPanel = false;
 
     public statusList: Status[] = [];
     public prioritiesList: Priority[] = [];
@@ -68,30 +80,43 @@ export class FolderDetailsComponent implements OnInit {
                 private priorityService: PriorityService,
                 private courtService:  CourtService,
                 private commonService: CommonService,
+                private userService: UserService,
                 private userInfoService: UserInfoService,
+                private messageService: MessageService,
+                private sharedService: SharedService,
                 private fb:  FormBuilder) {
     }
 
     ngOnInit():  void {
-        const me = this;
-        me.isLoading = true;
+        const _self = this;
+        _self.isLoading = true;
 
-        me.folderService.getFolderDetails(me.activateRoute.snapshot.params.id)
+        _self.sharedService.toggle$.subscribe(item  => {
+            _self.msgs.push({severity: 'error', summary: ' خطأ داخلي في الخادم ', detail: item['message'] });
+        });
+        _self.userService.getUsers()
+            .subscribe(function(users) {
+                for (let u of users) {
+                    _self.listUsers.push( {label:  u.firstname + ' ' + u.lastname , value :  u});
+                }
+            });
+        _self.folderService.getFolderDetails(_self.activateRoute.snapshot.params.id)
             .subscribe(function(folder) {
-                me.folder = folder;
-                me.isLoading = false;
+                _self.folder = folder;
+                _self.isLoading = false;
             });
-        me.statusService.getStatus()
+        _self.statusService.getStatus()
             .subscribe(function(statusList) {
-                me.statusList = statusList;
+                _self.statusList = statusList;
             });
-        me.priorityService.getPriorities()
+        _self.priorityService.getPriorities()
             .subscribe(function(prioritiesList) {
-                me.prioritiesList = prioritiesList;
+                _self.prioritiesList = prioritiesList;
             });
-        me.actionService.getActions()
+
+        _self.actionService.getActions()
             .subscribe(function(actionsList) {
-                me.actionsList = actionsList;
+                _self.actionsList = actionsList;
             });
     }
 
@@ -131,7 +156,20 @@ export class FolderDetailsComponent implements OnInit {
         _self.showUpdateActions = !_self.showUpdateActions;
     }
 
-    updateDetailFolder(f:  NgForm) {
+    showHideUpdateComments(): void {
+        let _self = this;
+        _self.showUpdateComments = !_self.showUpdateComments;
+    }
+
+    compareStatusFn(s1: Status, s2: Status): boolean {
+        return s1 && s2 ? s1.id === s2.id : s1 === s2;
+    }
+
+    comparePriorityFn(p1: Priority, p2: Priority): boolean {
+        return p1 && p2 ? p1.id === p2.id : p1 === p2;
+    }
+
+    updateDetailFolder(f:  NgForm, folder: Folder) {
         let _self = this;
         let userStored = _self.userInfoService.getUserInfo();
         if (userStored != null) {
@@ -141,54 +179,90 @@ export class FolderDetailsComponent implements OnInit {
             let c = new Court(f.value['court']);
             f.value['court'] = c;
         }
-        _self.folderService.addFolder(f.value)
-            .subscribe(function(folder) {
-                alert('dossier crée');
-                // _self.close();
+
+        folder.updater = f.value.updater;
+        folder.court = f.value.court;
+        folder.status = f.value.status;
+        folder.priority = f.value.priority;
+        folder.administrationConcerned = f.value.administrationConcerned;
+
+        _self.folderService.updateFolder(folder)
+            .subscribe(function(fd) {
+                _self.folder = fd;
+                _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+                _self.showUpdateDetail = false;
             });
     }
 
-    updateVictimsFolder(f: NgForm) {
+    addVictim(fd: Folder, victimName: string) {
+        let _self = this;
+        _self.folderService.addVictim(fd, new Victim(victimName)).subscribe(function(folderDb) {
+            _self.folder = folderDb;
+            _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+            _self.victim = '' ;
+        });
+    }
+
+    removeVictim(fd: Folder, victim: Victim) {
+        let _self = this;
+        _self.folderService.removeVictim(fd, victim).subscribe(function(folderDb) {
+            _self.folder = folderDb;
+            _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+            _self.showUpdateVictims = false;
+        });
+    }
+
+    addAccused(fd: Folder, accusedName: string) {
+        let _self = this;
+        _self.folderService.addAccused(fd, new Accused(accusedName)).subscribe(function(folderDb) {
+            _self.folder = folderDb;
+            _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+            _self.accused = '' ;
+        });
+    }
+
+    removeAccused(fd: Folder, accused: Accused) {
+        let _self = this;
+        _self.folderService.removeAccused(fd, accused).subscribe(function (folderDb) {
+            _self.folder = folderDb;
+            _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+            _self.showHideUpdateAccused();
+        });
+    }
+
+    addAction(fd: Folder, action: Action) {
+        let _self = this;
+        _self.folderService.addAction(fd, action).subscribe(function(folderDb) {
+            _self.folder = folderDb;
+            _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+            _self.showUpdateActions = false;
+        });
+    }
+
+    removeAction(fd: Folder,  action: Action) {
+        let _self = this;
+        _self.folderService.removeAction(fd, action).subscribe(function(folderDb) {
+            _self.folder = folderDb;
+            _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+            _self.showUpdateActions = false;
+        });
+    }
+
+    assignUserToMe(fd: Folder) {
         let _self = this;
         let userStored = _self.userInfoService.getUserInfo();
         if (userStored != null) {
-            f.value['updater'] = { userId :  userStored.userId };
+            _self.assignUser(fd, userStored);
         }
-        f.value['victims'] = _self.selectedVictims;
     }
 
-    updateAccusedFolder(f: NgForm) {
-        let _self = this;
-        let userStored = _self.userInfoService.getUserInfo();
-        if (userStored != null) {
-            f.value['updater'] = { userId :  userStored.userId };
-        }
-        f.value['accused'] = _self.selectedAccused;
-    }
-
-    updatePeopleFolder(f: NgForm) {
-        let _self = this;
-        let userStored = _self.userInfoService.getUserInfo();
-        if (userStored != null) {
-            f.value['updater'] = { userId :  userStored.userId };
-        }
-        f.value['created'] = _self.selectedAccused;
-    }
-
-    addVictim(victim: string) {
-        let _self = this;
-    }
-
-    removeVictim(AccusedId: number) {
-        let _self = this;
-    }
-
-    addAccused(accused: string) {
-        let _self = this;
-    }
-
-    removeAccused(accusedId: number) {
-        let _self = this;
+    assignUser(fd: Folder, user: User) {
+      let _self = this;
+      _self.folderService.assignUserToFolder(fd, user).subscribe(function(folderDb) {
+          _self.folder = folderDb;
+          _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
+          _self.showUpdateActions = false;
+      });
     }
 
     closeDetailUpdating() {
@@ -199,11 +273,13 @@ export class FolderDetailsComponent implements OnInit {
     closeVictimsUpdating() {
         let _self = this;
         _self.showUpdateVictims = false;
+        _self.victim = '';
     }
 
     closeAccusedUpdating() {
         let _self = this;
         _self.showUpdateAccused = false;
+        _self.accused = '';
     }
 
     closeActionsUpdating() {
@@ -232,5 +308,14 @@ export class FolderDetailsComponent implements OnInit {
             return value.replace('<br/>', '\n');
         }
         return value;
+    }
+
+    showAssignUserDropdown():  void {
+        let _self = this;
+        _self.selectedUser = null;
+        _self.showAssignUserOPanel = true;
+        if (_self.assignUserDropdown) {
+            _self.assignUserDropdown.value = null;
+        }
     }
 }

@@ -7,7 +7,7 @@ import 'rxjs/observable/throw';
 import 'rxjs/add/observable/of';
 import {UserInfoService} from '../user-info.service';
 import {AppConfig} from '../../app-config';
-import {RequestOptions} from '@angular/http';
+import {SharedService} from '../shared.service';
 
 
 @Injectable()
@@ -17,7 +17,8 @@ export class ApiRequestService {
         private appConfig:  AppConfig,
         private http:  HttpClient,
         private router:  Router,
-        private userInfoService:  UserInfoService
+        private userInfoService:  UserInfoService,
+        private sharedService: SharedService
     ) {}
 
     /**
@@ -41,6 +42,7 @@ export class ApiRequestService {
                 if ((error.status === 401 || error.status === 403) && me.router.url !== '/login') {
                     me.router.navigate(['/logout']);
                 }
+                me.sharedService.toggle(error);
                 return Observable.throw(error || 'Server error');
             });
     }
@@ -54,6 +56,7 @@ export class ApiRequestService {
                 } else if ((error.status === 401 || error.status === 403) && me.router.url === '/login') {
                     return Observable.of(error || 'Server error');
                 }
+                me.sharedService.toggle(error);
                 return Observable.throw(error || 'Server error');
             });
     }
@@ -65,17 +68,19 @@ export class ApiRequestService {
                 if ((error.status === 401 || error.status === 403) && me.router.url !== '/login') {
                     me.router.navigate(['/logout']);
                 }
+                me.sharedService.toggle(error);
                 return Observable.throw(error || 'Server error');
             });
     }
 
     delete(url:  string):  Observable<any> {
         let me = this;
-        return this.http.delete(this.appConfig.baseApiPath + url, { headers:  this.getHeaders()})
+        return me.http.delete(this.appConfig.baseApiPath + url, { headers:  this.getHeaders()})
             .catch(function(error:  any) {
                 if ((error.status === 401 || error.status === 403) && me.router.url !== '/login') {
                     me.router.navigate(['/logout']);
                 }
+                me.sharedService.toggle(error);
                 return Observable.throw(error || 'Server error');
             });
     }

@@ -53,7 +53,7 @@ export class FoldersComponent implements OnInit {
     public showAssignUserOPanel = false;
 
     public listActions = [];
-    public selectedAction:  Action;
+    public selectedAction:  any;
     public showAddActionOPanel = false;
 
     public statusList = [];
@@ -99,6 +99,7 @@ export class FoldersComponent implements OnInit {
                    _self.listUsers.push( {label:  u.firstname + ' ' + u.lastname , value :  u});
                }
             });
+
         _self.actionService.getActions()
             .subscribe(function(actions) {
                 for (let a of actions) {

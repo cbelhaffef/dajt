@@ -45,8 +45,8 @@ CREATE TABLE user_role (
 /* Table: advocate */
 CREATE TABLE advocate (
     advocate_id     INT NOT NULL AUTO_INCREMENT,
-    firstame       NVARCHAR(255),
-    lastame       NVARCHAR(255),
+    firstname       NVARCHAR(255),
+    lastname       NVARCHAR(255),
     PRIMARY KEY (advocate_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -127,7 +127,9 @@ CREATE TABLE victim (
 /* Table: action */
 CREATE TABLE action (
     action_id INT NOT NULL AUTO_INCREMENT,
-    name NVARCHAR(255),
+    name NVARCHAR(255) UNIQUE NOT NULL,
+    code NVARCHAR (50) UNIQUE NOT NULL,
+    description NVARCHAR(255),
     PRIMARY KEY (action_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

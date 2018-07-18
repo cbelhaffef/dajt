@@ -154,7 +154,9 @@ export class FoldersCreateDialogComponent implements OnInit {
         let userStored = _self.userInfoService.getUserInfo();
         if (userStored != null) {
             f.value['reporter'] = { userId :  userStored.userId };
+            f.value['updater'] = { userId :  userStored.userId };
         }
+
         f.value['victims'] = _self.selectedVictims;
         f.value['accused'] = _self.selectedAccused;
         if (typeof f.value['court'] === 'string') {

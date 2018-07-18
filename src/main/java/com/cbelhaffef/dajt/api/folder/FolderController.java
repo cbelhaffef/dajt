@@ -2,6 +2,8 @@ package com.cbelhaffef.dajt.api.folder;
 
 import com.cbelhaffef.dajt.api.user.UserService;
 import com.cbelhaffef.dajt.exception.ResourceAlreadyAddedException;
+import com.cbelhaffef.dajt.exception.ResourceNotFoundException;
+import com.cbelhaffef.dajt.identity.TokenUser;
 import com.cbelhaffef.dajt.model.accused.Accused;
 import com.cbelhaffef.dajt.model.action.Action;
 import com.cbelhaffef.dajt.model.folder.Folder;
@@ -10,18 +12,18 @@ import com.cbelhaffef.dajt.model.office.Office;
 import com.cbelhaffef.dajt.model.status.Status;
 import com.cbelhaffef.dajt.model.user.User;
 import com.cbelhaffef.dajt.model.victim.Victim;
-import com.cbelhaffef.dajt.repo.ActionRepo;
-import com.cbelhaffef.dajt.repo.FolderRepo;
-import com.cbelhaffef.dajt.repo.StatusRepo;
+import com.cbelhaffef.dajt.repo.*;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -41,6 +43,10 @@ public class FolderController {
     @Autowired private ActionRepo actionRepo;
 
     @Autowired private StatusRepo statusRepo;
+
+    @Autowired private VictimRepo victimRepo;
+
+    @Autowired private AccusedRepo accusedRepo;
 
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
     @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
@@ -83,7 +89,7 @@ public class FolderController {
         return resp;
     }
 
-    @RequestMapping(value="/folders", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value="/folders", method = RequestMethod.POST ,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Folder addFolder(@RequestBody Folder folder){
         folder.getVictims().forEach(v -> v.setFolder(folder));
         folder.getAccused().forEach(a -> a.setFolder(folder));
@@ -91,6 +97,18 @@ public class FolderController {
         return folderSaved;
     }
 
+    @RequestMapping(value="/folders", method = RequestMethod.PUT ,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder updateFolder(@RequestBody Folder folder) throws BadHttpRequest {
+        if(folder == null && folder.getId() == null) {
+            throw new BadHttpRequest();
+        }
+        Optional<Folder> folderDb = folderRepo.findById(folder.getId());
+        if(!folderDb.isPresent()){
+            throw new ResourceNotFoundException("Pas de dossier pour l'id : " + folder.getId());
+        }
+        Folder folderSaved = folderRepo.save(folder);
+        return folderSaved;
+    }
 
     @ApiOperation(value = "Order Details", response = Folder.class)
     @RequestMapping(value = "/folders/{id}", method = RequestMethod.GET)
@@ -103,15 +121,15 @@ public class FolderController {
     @ApiOperation(value = "Assign user to list of folder", response = Folder.class)
     @RequestMapping(value="/folders/assign/{userId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Folder> assignUser(@PathVariable("userId") Long userId, @RequestBody List<Long> foldersIds)
-        throws ResourceNotFoundException, ResourceNotFoundException {
+        throws ResourceNotFoundException {
 
         User userDb = userService.getUserById(userId);
         if(userDb == null){
-            throw new ResourceNotFoundException("l'opérateur n'a pas été trouvé. Contactez votre Administrateur.",null);
+            throw new ResourceNotFoundException("l'opérateur n'a pas été trouvé. Contactez votre Administrateur.");
         }
 
         if(foldersIds == null || foldersIds.isEmpty()){
-            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
         List<Folder> foldersDb = folderRepo.findByIdIn(foldersIds);
@@ -124,48 +142,24 @@ public class FolderController {
     }
 
     @Transactional
-    @RequestMapping(value="/folders/{folderId}/actions", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Folder addAction(@PathVariable("folderId") Long folderId, @RequestBody Action action)
-        throws ResourceNotFoundException{
-        //check if actions is not already added
-        //if not then added to list actions of folders and then leave;
-        if(folderId == null){
-            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
-        }
-
-        Optional<Folder> optionalFolderDb = folderRepo.findById(folderId);
-        if(!optionalFolderDb.isPresent()){
-            throw new ResourceNotFoundException("Aucun dossier trouvé. Contactez votre administrateur.",null);
-        }
-
-        Folder folderDb = optionalFolderDb.get();
-        if (folderDb.getActions().contains(action)) {
-            throw new ResourceAlreadyAddedException("L'action à déja été traiter sur ce dossier");
-        }
-        folderDb.getActions().add(action);
-
-        return folderDb;
-    }
-
-    @Transactional
     @ApiOperation(value = "Add action to list of folders", response = Folder.class)
-    @RequestMapping(value="/folders/addAction/{actionId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Folder> addActionToListOfFolders(@PathVariable("actionId") Long actionId, @RequestBody List<Long> foldersIds)
+    @RequestMapping(value="/folders/addAction/{actionCode}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Folder> addActionToFolders(@PathVariable("actionCode") String actionCode, @RequestBody List<Long> foldersIds)
         throws ResourceNotFoundException {
 
-        Action actionDb = actionRepo.findOne(actionId);
-        if(actionDb == null){
-            throw new ResourceNotFoundException("l'action n'a pas été trouvée. Contactez votre Administrateur.",null);
+        if(foldersIds == null || foldersIds.isEmpty()){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        if(foldersIds == null || foldersIds.isEmpty()){
-            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
+        Optional<Action> actionDb = actionRepo.findByCode(actionCode);
+        if(!actionDb.isPresent()){
+            throw new ResourceNotFoundException("l'action n'a pas été trouvée. Contactez votre Administrateur.");
         }
 
         List<Folder> foldersDb = folderRepo.findByIdIn(foldersIds);
 
         for(Folder f : foldersDb){
-            f.getActions().add(actionDb);
+            f.getActions().add(actionDb.get());
             folderRepo.save(f);
         }
 
@@ -173,18 +167,170 @@ public class FolderController {
     }
 
     @Transactional
+    @ApiOperation(value = "Add victim to folder", response = Folder.class)
+    @RequestMapping(value="/folders/{folderId}/addVictim", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder addVictimToFolder(@PathVariable("folderId") Long folderId,@RequestBody Victim victim)
+        throws ResourceNotFoundException {
+
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
+        }
+
+        Folder folderDb = folderRepo.findOne(folderId);
+        if(folderDb == null){
+            throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
+        }
+
+        if(folderDb.getVictims().contains(victim)){
+          throw  new ResourceAlreadyAddedException("la victime : " + victim.getName() + " a déja été rajouter au dossier : " + folderDb.getNumber());
+        };
+        folderDb = setUpdaterFromAuthToken(folderDb);
+
+        victim.setFolder(folderDb);
+        victim = victimRepo.save(victim);
+        folderDb.getVictims().add(victim);
+        folderRepo.save(folderDb);
+        return folderDb;
+    }
+
+    @Transactional
+    @ApiOperation(value = "remove victim from folder", response = Folder.class)
+    @RequestMapping(value="/folders/{folderId}/removeVictim/{victimId}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder removeVictimFromFolder(@PathVariable("folderId") Long folderId, @PathVariable("victimId") Long victimId)
+        throws ResourceNotFoundException {
+
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
+        }
+
+        Folder folderDb = folderRepo.findOne(folderId);
+        if(folderDb == null){
+            throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
+        }
+
+        folderDb = setUpdaterFromAuthToken(folderDb);
+
+        folderDb.getVictims().removeIf(v -> v.getId() == victimId );
+        victimRepo.delete(victimId);
+        folderDb = folderRepo.save(folderDb);
+        return folderDb;
+    }
+
+    @Transactional
+    @ApiOperation(value = "Add accused to folder", response = Folder.class)
+    @RequestMapping(value="/folders/{folderId}/addAccused", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder addAccusedToFolder(@PathVariable("folderId") Long folderId,@RequestBody Accused accused)
+        throws ResourceNotFoundException {
+
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
+        }
+
+        Folder folderDb = folderRepo.findOne(folderId);
+        if(folderDb == null){
+            throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
+        }
+
+        if(folderDb.getAccused().contains(accused)) {
+            throw  new ResourceAlreadyAddedException("l'accusé : " + accused.getName() + " a déja été rajouter au dossier : " + folderDb.getNumber());
+        };
+
+        folderDb = setUpdaterFromAuthToken(folderDb);
+
+        accused.setFolder(folderDb);
+        accused = accusedRepo.save(accused);
+        folderDb = folderRepo.save(folderDb);
+        folderDb.getAccused().add(accused);
+        return folderDb;
+    }
+
+    @Transactional
+    @ApiOperation(value = "remove accused from folder", response = Folder.class)
+    @RequestMapping(value="/folders/{folderId}/removeAccused/{victimId}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder removeAccusedFromFolder(@PathVariable("folderId") Long folderId, @PathVariable("accusedId") Long accusedId)
+        throws ResourceNotFoundException {
+
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
+        }
+
+        Folder folderDb = folderRepo.findOne(folderId);
+        if(folderDb == null){
+            throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
+        }
+
+        folderDb = setUpdaterFromAuthToken(folderDb);
+
+        folderDb.getAccused().removeIf(a -> a.getId() == accusedId );
+        accusedRepo.delete(accusedId);
+
+        folderDb = folderRepo.save(folderDb);
+
+        return folderDb;
+    }
+
+    @Transactional
+    @ApiOperation(value = "Add action to folder", response = Folder.class)
+    @RequestMapping(value="/folders/{folderId}/addAction", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder addActionToFolder(@PathVariable("folderId") Long folderId,@RequestBody Action action)
+        throws ResourceNotFoundException {
+
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
+        }
+
+        Folder folderDb = folderRepo.findOne(folderId);
+        if(folderDb == null){
+            throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
+        }
+
+        if(folderDb.getActions().contains(action)) {
+            throw  new ResourceAlreadyAddedException("l'action : " + action.getName() + " a déja été rajouter au dossier : " + folderDb.getNumber());
+        };
+
+        folderDb = setUpdaterFromAuthToken(folderDb);
+
+        folderDb.getActions().add(action);
+        folderDb = folderRepo.save(folderDb);
+        return folderDb;
+    }
+
+    @Transactional
+    @ApiOperation(value = "remove action from folder", response = Folder.class)
+    @RequestMapping(value="/folders/{folderId}/removeAction/{actionId}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder removeActionFromFolder(@PathVariable("folderId") Long folderId, @PathVariable("actionId") Long actionId)
+        throws ResourceNotFoundException {
+
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
+        }
+
+        Folder folderDb = folderRepo.findOne(folderId);
+        if(folderDb == null){
+            throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
+        }
+
+        folderDb = setUpdaterFromAuthToken(folderDb);
+
+        folderDb.getActions().removeIf(a -> a.getId() == actionId );
+        folderDb = folderRepo.save(folderDb);
+
+        return folderDb;
+    }
+
+    @Transactional
     @ApiOperation(value = "Change  status to list of folders", response = Folder.class)
     @RequestMapping(value="/folders/changeStatus/{status}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Folder> changeStatusToListOfFolders(@PathVariable("status") String statusCode, @RequestBody List<Long> foldersIds)
+    public List<Folder> changeStatusOfFolders(@PathVariable("status") String statusCode, @RequestBody List<Long> foldersIds)
         throws ResourceNotFoundException {
 
         if(foldersIds == null || foldersIds.isEmpty()){
-            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.",null);
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
         Optional<Status> statusDb = statusRepo.findByCode(statusCode);
         if(!statusDb.isPresent()){
-            throw  new ResourceNotFoundException("Aucun status existe avec l'id : " + statusCode,null);
+            throw  new ResourceNotFoundException("Aucun status existe pour le code : " + statusCode);
         }
 
         List<Folder> foldersDb = folderRepo.findByIdIn(foldersIds);
@@ -197,4 +343,41 @@ public class FolderController {
         return foldersDb;
     }
 
+    @Transactional
+    @ApiOperation(value = "Add action to folder", response = Folder.class)
+    @RequestMapping(value="/folders/{folderId}/assign", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Folder assignToMe(@PathVariable("folderId") Long folderId,@RequestBody User user)
+        throws ResourceNotFoundException {
+
+        if(folderId == null){
+            throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
+        }
+
+        Folder folderDb = folderRepo.findOne(folderId);
+        if(folderDb == null){
+            throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
+        }
+
+        User userDb = userService.getUserById(user.getUserId());
+        if(userDb == null){
+            throw new ResourceNotFoundException("Aucun utilisateur existe pour le nom : " + user.getUsername());
+        }
+
+        folderDb = setUpdaterFromAuthToken(folderDb);
+
+        folderDb.setAssignee(user);
+
+        folderDb = folderRepo.save(folderDb);
+        return folderDb;
+    }
+
+    private Folder setUpdaterFromAuthToken(Folder folder){
+        Authentication authToken = SecurityContextHolder.getContext().getAuthentication();
+        TokenUser tokenUser = (TokenUser)authToken.getPrincipal();
+        User user = userService.getUserById(tokenUser.getUser().getUserId());
+        if(user != null){
+            folder.setUpdater(user);
+        }
+        return folder;
+    }
 }

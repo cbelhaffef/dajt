@@ -6,6 +6,8 @@ export class Priority {
     public icon: string;
     public description: string;
 
-    constructor() {}
+    constructor(id?: number) {
+        this.id = id;
+    }
 
 }

@@ -60,6 +60,9 @@ import {EditorModule} from 'primeng/editor';
 import {CardModule} from 'primeng/card';
 import {ChipsModule} from 'primeng/chips';
 import {MessageService} from 'primeng/components/common/messageservice';
+import {SidebarModule} from 'primeng/components/sidebar/sidebar';
+import {GrowlModule} from 'primeng/growl';
+import {SharedService} from './services/shared.service';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeAr, 'ar');
@@ -91,6 +94,8 @@ registerLocaleData(localeAr, 'ar');
     CheckboxModule,
     ChipsModule,
     MessagesModule,
+    SidebarModule,
+    GrowlModule,
 
 
     // Local App Modules
@@ -125,6 +130,7 @@ registerLocaleData(localeAr, 'ar');
 
   providers:  [
     AuthGuard,
+    SharedService,
     UserInfoService,
     UserService,
     TranslateService,

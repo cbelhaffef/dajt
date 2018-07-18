@@ -70,6 +70,7 @@
 
     <div class="ui-g">
         <div class="ui-g-12">
+            <!-- actions bar -->
             <div id="actions" class="ui-g" style="margin-bottom: 5px">
                 <div class="ui-g-1">
                     <p-button (onClick)="overlayPanel.show($event);showAssignUserDropdown()"
@@ -97,6 +98,7 @@
                 </div>
             </div>
 
+            <!-- table result-->
             <p-table [value]="listFolders?.items" [(selection)]="selectedFolders"
                      [lazy]="true" (onLazyLoad)="loadFoldersLazy($event)" [paginator]="true"
                      [rows]="10" [totalRecords]="listFolders?.totalItems" [loading]="loading"
@@ -116,11 +118,12 @@
                         <th width="13%" i18n>Victimes</th>
                         <th width="13%" i18n>Coupables</th>
                         <th width="7%"  i18n>Tribunal</th>
-                        <th width="10%" i18n>Date modification</th>
+                        <th width="8%" i18n>Date modification</th>
                         <th width="10%" i18n>Assigné</th>
                         <th width="4%"  i18n>Actions</th>
+                        <th width="5%"  i18n>Priorité</th>
                         <th width="5%"  i18n>Status</th>
-                        <th width="10%" i18n>Type d'envoi</th>
+                        <th width="8%" i18n>Type d'envoi</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-folder>
@@ -165,10 +168,19 @@
                             </span>
                         </td>
                         <td align="center">
-                            <img alt="" height="20"
+                            <img alt=""
+                                 src="{{folder.priority?.icon}}"
+                                 [pTooltip]="folder?.priority?.name"
+                                 height="30"
+                                 width="30"
+                                 class="icon-value">
+                        </td>
+                        <td align="center">
+                            <img alt=""
                                  src="{{folder.status?.icon}}"
                                  [pTooltip]="folder?.status?.name"
-                                 width="20"
+                                 height="30"
+                                 width="30"
                                  class="icon-value">
                         </td>
                         <td>
@@ -230,7 +242,7 @@
     <!-- ChangeStatusPanel-->
     <div *ngIf="showChangeStatusOPanel">
         <select [(ngModel)]="selectedStatus">
-            <option *ngFor="let s of statusList" [value]="s">{{s.name}}</option>
+            <option *ngFor="let s of statusList" [ngValue]="s">{{s.name}}</option>
         </select>
         <button type="button" class="btn btn-icon" (click)="changeStatus(selectedFolders,selectedStatus)">
             <i class="fa fa-check"></i>

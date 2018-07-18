@@ -41,13 +41,11 @@ public class Victim {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Victim victim = (Victim) o;
-        return Objects.equals(id, victim.id) &&
-            Objects.equals(name, victim.name);
+        return Objects.equals(name, victim.name);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(super.hashCode(), id, name);
+        return Objects.hash(super.hashCode(), name);
     }
 }
