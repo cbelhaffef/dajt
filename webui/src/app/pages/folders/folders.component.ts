@@ -20,6 +20,7 @@ import {LazyLoadEvent, Message} from 'primeng/api';
 import {StatusService} from '../../services/api/status.service';
 import {Status} from '../../models/status.model';
 import {MessageService} from 'primeng/components/common/messageservice';
+import {SharedService} from '../../services/shared.service';
 
 @Component( {
     selector   :  's-folders-pg',
@@ -73,11 +74,18 @@ export class FoldersComponent implements OnInit {
                 private statusService:  StatusService,
                 private userService:  UserService,
                 private actionService:  ActionService,
+                public sharedService: SharedService,
                 public dialog:  MatDialog) { }
 
     ngOnInit():  void {
         let _self = this;
+
+        _self.sharedService.toggle$.subscribe(item  => {
+            _self.msgs.push({severity: 'success', summary: ' تم انشاء الملف : ' + item['number'], detail: '' });
+        });
+
         _self.getFolders();
+
         _self.statusService.getStatus()
             .subscribe(function(statusList) {
                 _self.statusList = statusList;

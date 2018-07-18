@@ -12,6 +12,9 @@ import {UserInfoService} from '../../services/user-info.service';
 import {Victim} from '../../models/victim.model';
 import {Accused} from '../../models/accused.model';
 import {Court} from '../../models/court.model';
+import {PriorityService} from '../../services/api/priority.service';
+import {StatusService} from '../../services/api/status.service';
+import {SharedService} from '../../services/shared.service';
 
 @Component( {
     selector:  'folders-create-dialog-component',
@@ -24,6 +27,8 @@ export class FoldersCreateDialogComponent implements OnInit {
 
     public listOffices = [];
     public listUsers = [];
+    public listStatus = [];
+    public listPriorities = [];
 
     public filteredOffices:  any[] = [];
     public queryOffice:  string;
@@ -48,8 +53,11 @@ export class FoldersCreateDialogComponent implements OnInit {
         public officeService:  OfficeService,
         public folderService:  FolderService,
         public courtService:   CourtService,
+        public statusService: StatusService,
+        public priorityService: PriorityService,
         public userService:  UserService,
         public userInfoService:  UserInfoService,
+        public sharedService: SharedService,
         public dialogRef:  MatDialogRef<FoldersCreateDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data:  any) { }
 
@@ -58,6 +66,14 @@ export class FoldersCreateDialogComponent implements OnInit {
         _self.officeService.getOffices()
             .subscribe(function(offices) {
                 _self.listOffices = offices;
+            });
+        _self.statusService.getStatus()
+            .subscribe(function(listStatus) {
+                _self.listStatus = listStatus;
+            });
+        _self.priorityService.getPriorities()
+            .subscribe(function(listPriorities) {
+                _self.listPriorities = listPriorities;
             });
         _self.userService.getUsers()
             .subscribe(function(users) {
@@ -165,6 +181,7 @@ export class FoldersCreateDialogComponent implements OnInit {
         }
         _self.folderService.addFolder(f.value)
             .subscribe(function(folder) {
+                _self.sharedService.emit(folder);
                 _self.close();
 
             });

@@ -261,7 +261,7 @@ export class FolderDetailsComponent implements OnInit  {
       _self.folderService.assignUserToFolder(fd, user).subscribe(function(folderDb) {
           _self.folder = folderDb;
           _self.msgs.push({severity: 'success', summary: ' تم تحديث المجلد : ' + fd.number, detail: ''});
-          _self.showUpdateActions = false;
+          _self.showAssignUserOPanel = false;
       });
     }
 

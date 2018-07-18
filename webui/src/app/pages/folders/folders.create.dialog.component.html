@@ -39,6 +39,37 @@
                 <textarea pInputTextarea id="offence" name="offence" ngModel class="wid100"></textarea>
             </div>
         </div>
+
+        <!-- status -->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="status" i18n>Statut</label><span class="red">*</span>
+            </div>
+            <div class="ui-g-10">
+                <div class="select ">
+                    <select id="status" name="status" class="select-basic" ngModel>
+                        <option value=""></option>
+                        <option *ngFor="let s of listStatus" [ngValue]="s">{{s.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- priority -->
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <label for="priority" i18n>Priorité</label><span class="red">*</span>
+            </div>
+            <div class="ui-g-10">
+                <div class="select ">
+                    <select id="priority" name="priority" class="select-basic" ngModel>
+                        <option value=""></option>
+                        <option *ngFor="let p of listPriorities" [ngValue]="p">{{p.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <!-- victims-->
         <div class="ui-g">
             <div class="ui-g-2">
@@ -116,6 +147,6 @@
 </div>
 
 <div mat-dialog-actions style="border-top : 1px solid #ccc!important;">
-    <p-button type="submit" icon="fa fa-fw fa-check" i18n-label label="Créer" style="margin-left:10px"></p-button>
-    <p-button (click)="close()" icon="fa fa-fw fa-close" i18n-label label="Annuler"></p-button>
+    <p-button type="submit" (click)="createFolder(createFolderForm)" icon="fa fa-fw fa-check" i18n-label label="Créer" style="margin-left:10px"></p-button>
+    <p-button type="button" (click)="close()" icon="fa fa-fw fa-close" i18n-label label="Annuler"></p-button>
 </div>

@@ -92,7 +92,7 @@ export class FolderService {
     assignUserToFolder(folder:  Folder, user:  User):  Observable<any> {
         const me = this;
         const folderSubject = new  Subject<any>();
-        this.apiRequest.post('api/folders/' + folder.id + '/assign', user)
+        this.apiRequest.put('api/folders/' + folder.id + '/assign', user)
             .subscribe(jsonResp => {
                 folderSubject.next(jsonResp);
             });

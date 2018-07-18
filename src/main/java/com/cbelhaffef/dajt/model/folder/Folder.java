@@ -45,7 +45,7 @@ public class Folder implements Comparable<Folder>{
     @Column(name="offence_date")
     private Date offenceDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="court_id")
     private Court court;
 

@@ -42,7 +42,7 @@ export class ApiRequestService {
                 if ((error.status === 401 || error.status === 403) && me.router.url !== '/login') {
                     me.router.navigate(['/logout']);
                 }
-                me.sharedService.toggle(error);
+                me.sharedService.emit(error);
                 return Observable.throw(error || 'Server error');
             });
     }
@@ -56,7 +56,7 @@ export class ApiRequestService {
                 } else if ((error.status === 401 || error.status === 403) && me.router.url === '/login') {
                     return Observable.of(error || 'Server error');
                 }
-                me.sharedService.toggle(error);
+                me.sharedService.emit(error);
                 return Observable.throw(error || 'Server error');
             });
     }
@@ -68,7 +68,7 @@ export class ApiRequestService {
                 if ((error.status === 401 || error.status === 403) && me.router.url !== '/login') {
                     me.router.navigate(['/logout']);
                 }
-                me.sharedService.toggle(error);
+                me.sharedService.emit(error);
                 return Observable.throw(error || 'Server error');
             });
     }
@@ -80,7 +80,7 @@ export class ApiRequestService {
                 if ((error.status === 401 || error.status === 403) && me.router.url !== '/login') {
                     me.router.navigate(['/logout']);
                 }
-                me.sharedService.toggle(error);
+                me.sharedService.emit(error);
                 return Observable.throw(error || 'Server error');
             });
     }

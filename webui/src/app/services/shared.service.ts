@@ -9,7 +9,7 @@ export class SharedService {
 
     constructor() {}
 
-    toggle(event) {
+    emit(event) {
         this._toggle.next(event);
     }
 }

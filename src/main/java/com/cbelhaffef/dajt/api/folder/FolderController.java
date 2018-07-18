@@ -1,11 +1,12 @@
 package com.cbelhaffef.dajt.api.folder;
 
 import com.cbelhaffef.dajt.api.user.UserService;
+import com.cbelhaffef.dajt.enums.StatusFolder;
 import com.cbelhaffef.dajt.exception.ResourceAlreadyAddedException;
 import com.cbelhaffef.dajt.exception.ResourceNotFoundException;
-import com.cbelhaffef.dajt.identity.TokenUser;
 import com.cbelhaffef.dajt.model.accused.Accused;
 import com.cbelhaffef.dajt.model.action.Action;
+import com.cbelhaffef.dajt.model.court.Court;
 import com.cbelhaffef.dajt.model.folder.Folder;
 import com.cbelhaffef.dajt.model.folder.FolderListResponse;
 import com.cbelhaffef.dajt.model.office.Office;
@@ -27,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +49,8 @@ public class FolderController {
     @Autowired private VictimRepo victimRepo;
 
     @Autowired private AccusedRepo accusedRepo;
+
+    @Autowired private CourtRepo courtRepo;
 
     @ApiOperation(value = "List of folders", response = FolderListResponse.class)
     @RequestMapping(value = "/folders", method = RequestMethod.GET , produces={"application/json; charset=UTF-8"})
@@ -89,10 +93,24 @@ public class FolderController {
         return resp;
     }
 
+    @Transactional
     @RequestMapping(value="/folders", method = RequestMethod.POST ,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Folder addFolder(@RequestBody Folder folder){
         folder.getVictims().forEach(v -> v.setFolder(folder));
         folder.getAccused().forEach(a -> a.setFolder(folder));
+        if(folder.getStatus() != null && folder.getStatus().getCode().equals(StatusFolder.CLOSE.name())){
+            folder.setClosed(new Date());
+        }else{
+            folder.setClosed(null);
+        }
+        if(folder.getCourt() != null && folder.getCourt().getId() != null){
+            Court court = courtRepo.findOne(folder.getCourt().getId());
+            if(court != null){
+                court.getFolders().add(folder);
+                folder.setCourt(court);
+            }
+        }
+
         Folder folderSaved = folderRepo.save(folder);
         return folderSaved;
     }
@@ -105,6 +123,11 @@ public class FolderController {
         Optional<Folder> folderDb = folderRepo.findById(folder.getId());
         if(!folderDb.isPresent()){
             throw new ResourceNotFoundException("Pas de dossier pour l'id : " + folder.getId());
+        }
+        if(folder.getStatus() != null && folder.getStatus().getCode().equals(StatusFolder.CLOSE.name())){
+            folder.setClosed(new Date());
+        }else{
+            folder.setClosed(null);
         }
         Folder folderSaved = folderRepo.save(folder);
         return folderSaved;
@@ -337,6 +360,11 @@ public class FolderController {
 
         for(Folder f : foldersDb){
             f.setStatus(statusDb.get());
+            if(statusDb.get().getCode().equals(StatusFolder.CLOSE.name())){
+                f.setClosed(new Date());
+            }else{
+                f.setClosed(null);
+            }
             folderRepo.save(f);
         }
 
@@ -346,7 +374,7 @@ public class FolderController {
     @Transactional
     @ApiOperation(value = "Add action to folder", response = Folder.class)
     @RequestMapping(value="/folders/{folderId}/assign", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Folder assignToMe(@PathVariable("folderId") Long folderId,@RequestBody User user)
+    public Folder assignToFolder(@PathVariable("folderId") Long folderId,@RequestBody User user)
         throws ResourceNotFoundException {
 
         if(folderId == null){
@@ -373,8 +401,8 @@ public class FolderController {
 
     private Folder setUpdaterFromAuthToken(Folder folder){
         Authentication authToken = SecurityContextHolder.getContext().getAuthentication();
-        TokenUser tokenUser = (TokenUser)authToken.getPrincipal();
-        User user = userService.getUserById(tokenUser.getUser().getUserId());
+        String username = (String)authToken.getPrincipal();
+        User user = userService.getUserInfoByUsername(username);
         if(user != null){
             folder.setUpdater(user);
         }
