@@ -8,39 +8,55 @@
           <context context-type="sourcefile">app/home.component.ts</context>
           <context context-type="linenumber">13</context>
         </context-group>
-		<target>الشؤون القضائية</target>
+        <target>الشؤون القضائية</target>
+      </trans-unit>
+      <trans-unit id="5bf52e5d5f2c9e42a70ce12f6289fdd2555bb268" datatype="html">
+        <source>Administration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/home.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <target>قائمة الإدارة</target>
       </trans-unit>
       <trans-unit id="40e0bdcfee016d4bca0bd27d398456b44ac3c6d5" datatype="html">
         <source>Liste des Dossiers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/home.component.ts</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">39</context>
         </context-group>
-		<target>قائمة الملفات</target>
+        <target>قائمة الملفات</target>
       </trans-unit>
-      <trans-unit id="d94174db6e0e6c4948e4bf9703e28c9a81fc0951" datatype="html">
-        <source>Liste des Avocats</source>
+      <trans-unit id="5c7040a244810fff2f2c3d23ba8a1735525523ca" datatype="html">
+        <source>Déconnexion</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/home.component.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">62</context>
         </context-group>
-		<target>قائمة المحامين</target>
+        <target>انفصال</target>
       </trans-unit>
       <trans-unit id="55a57e6165759f4c48fd86a29d674304066044e9" datatype="html">
-        <source>Veuillez vous connecter s'il vous plaît</source>
+        <source>Connexion</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/login/login.component.ts</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">5</context>
         </context-group>
-		<target>الرجاء تسجيل الدخول من فضلك</target>
+        <target>تسجيل الدخول</target>
+      </trans-unit>
+      <trans-unit id="4afbb9cd26f1defa6591390bb51e3cf571166328" datatype="html">
+        <source>Maintenir la connexion</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/login/login.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <target>الحفاظ على الاتصال</target>
       </trans-unit>
       <trans-unit id="7a5b80bdfff39603e595a2a61d5032115874e412" datatype="html">
         <source>Se connecter</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/login/login.component.ts</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">48</context>
         </context-group>
-		<target>تسجيل الدخول</target>
+        <target>تسجيل الدخول</target>
       </trans-unit>
       <trans-unit id="9b3f09921bf92734c1083b71008cfe8ec71ec985" datatype="html">
         <source>Vous êtes maintenant déconnecté</source>
@@ -70,7 +86,7 @@
         <source>Création d&apos;un dossier </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="linenumber">2</context>
         </context-group>
 		<target>انشاء ملف جديد</target>
       </trans-unit>
@@ -78,11 +94,11 @@
         <source>Bureau</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">39</context>
         </context-group>
 		<target>المكتب</target>
       </trans-unit>
@@ -90,7 +106,7 @@
         <source>Numéro dossier</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">26</context>
         </context-group>
 		<target>رقم الملف</target>
       </trans-unit>
@@ -98,27 +114,51 @@
         <source>Infraction</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">117</context>
         </context-group>
-		<target>المخالفة</target>
+        <target>المخالفة</target>
+      </trans-unit>
+      <trans-unit id="2f673bb913f414816f57ea4420da7d3c63856322" datatype="html">
+        <source>Statut</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+        <target>الحالة</target>
+      </trans-unit>
+      <trans-unit id="1c48dffe0378f8d42a7f4cafb2dafe7b7e594498" datatype="html">
+        <source>Priorité</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+        <target>الأولوية</target>
       </trans-unit>
       <trans-unit id="55353fbd1e4d1c8aa0b41b2039310dd5fd5f88de" datatype="html">
         <source>Victimes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">118</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">252</context>
         </context-group>
 		<target>الضحايا</target>
       </trans-unit>
@@ -126,15 +166,15 @@
         <source>Coupables</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">91</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">184</context>
+          <context context-type="linenumber">293</context>
         </context-group>
 		<target>المتهمين</target>
       </trans-unit>
@@ -142,19 +182,23 @@
         <source>Tribunal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">105</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">120</context>
         </context-group>
-		<target>المحكمة</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <target>المحكمة</target>
       </trans-unit>
       <trans-unit id="a215aeb834c415d6b692c68db035d9f2d9dee8f8" datatype="html">
         <source>Assigner à</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">126</context>
         </context-group>
 		<target>تعيين موظف</target>
       </trans-unit>
@@ -162,7 +206,7 @@
         <source>Type d&apos;envoie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">140</context>
         </context-group>
 		<target>نوع الإرسال</target>
       </trans-unit>
@@ -170,91 +214,79 @@
         <source>Créer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">150</context>
         </context-group>
-		<target>انشاء</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">460</context>
+        </context-group>
+        <target>انشاء</target>
       </trans-unit>
       <trans-unit id="12380235948088ddf227ad226ce8a2ae63878fe5" datatype="html">
         <source>Annuler</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.create.dialog.component.ts</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">151</context>
         </context-group>
-		<target>إلغاء</target>
-      </trans-unit>
-      <trans-unit id="dcc92276b4e5e049ee3ef85ecdba675688c4f073" datatype="html">
-        <source>Le dossier</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">234</context>
         </context-group>
-		<target>الملف</target>
-      </trans-unit>
-      <trans-unit id="bc1585c7fb693c753189951cf97b555f3f788bbd" datatype="html">
-        <source>تم إنشائه.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-		<target></target>
+        <target>إلغاء</target>
       </trans-unit>
       <trans-unit id="c97a9c737cf4172db11ce7b1b99c2876e3714e92" datatype="html">
         <source>Numéro Dossier</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">11</context>
         </context-group>
-		<target>رقم الملف</target>
+        <target>الملف</target>
       </trans-unit>
       <trans-unit id="99c35e3b502c177a9f4644eed2dfc8ad947eeed5" datatype="html">
         <source>Victime</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">19</context>
         </context-group>
-		<target>الضحية</target>
+        <target>الضحية</target>
       </trans-unit>
       <trans-unit id="06cc509096d1b9e1991927a304d498445387fe6f" datatype="html">
         <source>Coupable</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">27</context>
         </context-group>
-		<target>المتهم</target>
+        <target>المتهم</target>
       </trans-unit>
       <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
         <source>Status</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">125</context>
         </context-group>
-		<target>الحالة</target>
+        <target>الحالة</target>
       </trans-unit>
       <trans-unit id="68f804572d399e03252ce1a60c961465e1f543a5" datatype="html">
         <source>Recherche</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">62</context>
         </context-group>
 		<target>بحث</target>
       </trans-unit>
-      <trans-unit id="6b46825b7b3d62fbed66703a0b923226199e655f" datatype="html">
-        <source>Assigner</source>
+      <trans-unit id="5c4ac60a9b1c6795119bcdde4904acf82634b597" datatype="html">
+        <source>Assigné a</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">102</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">80</context>
         </context-group>
 		<target>تعين موضف</target>
       </trans-unit>
@@ -262,23 +294,39 @@
         <source>Actions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">123</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">218</context>
+          <context context-type="linenumber">332</context>
         </context-group>
-		<target>الأفعال</target>
+        <target>الإجراءات</target>
+      </trans-unit>
+      <trans-unit id="1abcc08c3e25ca053e047291d00292dc7f329eec" datatype="html">
+        <source>Dossiers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+        <target>ملف</target>
+      </trans-unit>
+      <trans-unit id="3adce6cf59585639b0adb352109a7e30dbed721b" datatype="html">
+        <source>Il y&apos;a</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <target>هنالك</target>
       </trans-unit>
       <trans-unit id="9562fd44bcb90e1f4c628deb32c3ae8675f43bae" datatype="html">
         <source>Numéro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">116</context>
         </context-group>
 		<target>رقم</target>
       </trans-unit>
@@ -286,7 +334,7 @@
         <source>Date modification</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">121</context>
         </context-group>
 		<target>تاريخ التعديل</target>
       </trans-unit>
@@ -294,7 +342,7 @@
         <source>Assigné</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">122</context>
         </context-group>
 		<target>المعين</target>
       </trans-unit>
@@ -302,15 +350,19 @@
         <source>Type d&apos;envoi</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">126</context>
         </context-group>
-		<target>نوع الإرسال</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+        <target>نوع الإرسال</target>
       </trans-unit>
       <trans-unit id="62980ee5e205a586a9f2c2b1755cac185504f538" datatype="html">
         <source>Aucun résultat trouvé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">105</context>
         </context-group>
 		<target>لم يتم العثور على نتائج</target>
       </trans-unit>
@@ -318,91 +370,173 @@
         <source>Créer un dossier</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folders/folders.component.ts</context>
-          <context context-type="linenumber">272</context>
+          <context context-type="linenumber">261</context>
         </context-group>
-		<target>انشاء ملف جديد</target>
+        <target>انشاء ملف جديد</target>
+      </trans-unit>
+      <trans-unit id="7582755e46cff3b0d29465ce750a51c9b841ae9f" datatype="html">
+        <source>Retour</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <target>الرجوع</target>
+      </trans-unit>
+      <trans-unit id="6b46825b7b3d62fbed66703a0b923226199e655f" datatype="html">
+        <source>Assigner</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">416</context>
+        </context-group>
+        <target>تعين موضف</target>
       </trans-unit>
       <trans-unit id="31b8ae33caf0a70206d02cfe7b93d23eb3772003" datatype="html">
         <source>Me l&apos;assigner</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">48</context>
         </context-group>
-		<target>عيّنني</target>
+        <target>اتكفل به</target>
       </trans-unit>
       <trans-unit id="26c12affe18110d67922799a88afa09dfcf938b0" datatype="html">
         <source>Détail</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">64</context>
         </context-group>
-		<target>التفاصيل</target>
+        <target>التفاصيل</target>
       </trans-unit>
-      <trans-unit id="df1b2e6f296cea4c0770d49af8b69726e4d77561" datatype="html">
-        <source>Statut:</source>
+      <trans-unit id="b74af38005e8a8914e45af2ec412e11ceafef8b6" datatype="html">
+        <source>Priority</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">94</context>
         </context-group>
-		<target>:الحالة</target>
+        <target>الأولوية</target>
       </trans-unit>
-      <trans-unit id="aaa926b822ff0c14a6160c727c167e0ce4dc96d6" datatype="html">
-        <source>Tribunal:</source>
+      <trans-unit id="9c81f65633e32e921c56da44f26445a85c2c45a2" datatype="html">
+        <source>Statut</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">145</context>
         </context-group>
-		<target>:المحكمة</target>
+        <target>الحالة</target>
       </trans-unit>
-      <trans-unit id="4193c9eb868aeec119b78a14795241e0aa5e8b60" datatype="html">
-        <source>Priority:</source>
+      <trans-unit id="c9aeebcfe46ad3eae12f2c14c5b7add5dca661db" datatype="html">
+        <source>Priority</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">162</context>
         </context-group>
-		<target>الأولوية</target>
+        <target>الأولوية</target>
       </trans-unit>
-      <trans-unit id="879dacf6a129a28d0909db1addd5693cff90b039" datatype="html">
-        <source>Type d&apos;envoi:</source>
+      <trans-unit id="6d1b5d30616f516b10ff2f6c21d9d7886e046b51" datatype="html">
+        <source>Tribunal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">180</context>
         </context-group>
-		<target>نوع الإرسال</target>
+        <target>المحكمة</target>
       </trans-unit>
-      <trans-unit id="4ee30b9285d5bf3610118b8b01d1731e0c4fed05" datatype="html">
-        <source>People</source>
+      <trans-unit id="24186563579a3a32df01fba1b079ba348c5b7a33" datatype="html">
+        <source>Type d&apos;envoie:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">246</context>
+          <context context-type="linenumber">207</context>
         </context-group>
-		<target>الأشخاص</target>
+        <target>نوع الإرسال</target>
       </trans-unit>
-      <trans-unit id="cb1b286d9e2e10db8f3ee4d22b535943b61b0a02" datatype="html">
-        <source>Assigner:</source>
+      <trans-unit id="72a7143f7cf06514d2ae3eb28d6e7ca82ccdfdce" datatype="html">
+        <source>valider</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">252</context>
+          <context context-type="linenumber">226</context>
         </context-group>
-		<target>:المعين</target>
+        <target>التحقق</target>
+      </trans-unit>
+      <trans-unit id="c4afee117cdb34c8c02dc2d91e2526475b08e181" datatype="html">
+        <source>Modification des détails</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+        <target>تحرير التفاصيل</target>
+      </trans-unit>
+      <trans-unit id="5e3d16d9664db1629dfe6356c7929c8eac79b962" datatype="html">
+        <source>Commentaires</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">383</context>
+        </context-group>
+        <target>الملاحظات</target>
+      </trans-unit>
+      <trans-unit id="56b75c492cf867f16f31057d52c2e6711547d964" datatype="html">
+        <source>Personnes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">409</context>
+        </context-group>
+        <target>الأشخاص</target>
+      </trans-unit>
+      <trans-unit id="d57ab182c9ee4789bc9c2402726f030afd32c7fa" datatype="html">
+        <source>Auteur</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">427</context>
+        </context-group>
+        <target>المؤلف</target>
+      </trans-unit>
+      <trans-unit id="91ecce65f1d23f9419d1c953cd6b7bc7f91c110e" datatype="html">
+        <source>Updater</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">438</context>
+        </context-group>
+        <target>المعدل</target>
       </trans-unit>
       <trans-unit id="ae78cbe2e07f699217c7488237bdb79850173273" datatype="html">
         <source>Dates</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
-          <context context-type="linenumber">271</context>
+          <context context-type="linenumber">452</context>
         </context-group>
-		<target>التواريخ</target>
+        <target>التواريخ</target>
+      </trans-unit>
+      <trans-unit id="d15bda3a65f69a753035f13bcb6d8a40b7455552" datatype="html">
+        <source>Modifier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">471</context>
+        </context-group>
+        <target>تعديل</target>
+      </trans-unit>
+      <trans-unit id="217d9e849dea8c019678e11f8ab57f3ad6f2aac8" datatype="html">
+        <source>Clôturer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/folder_details/folder_details.component.ts</context>
+          <context context-type="linenumber">482</context>
+        </context-group>
+        <target>تغليق</target>
       </trans-unit>
       <trans-unit id="86a9b059bdb8f5cbe2169ecb5f8935ad1677e9c4" datatype="html">
-        <source>
-        Chargement...
-    </source>
+        <source>Chargement...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/spinner/spinner.component.ts</context>
           <context context-type="linenumber">3</context>
         </context-group>
-		<target>...تحميل</target>
+        <target>تحميل ...</target>
+      </trans-unit>
+      <trans-unit id="589aebd95b45ee49a9a3f8fd62d9048310e35522" datatype="html">
+        <source>404 Page Non Trouvée </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/404/page-not-found.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <target>404 الصفحة غير موجودة</target>
       </trans-unit>
     </body>
   </file>
