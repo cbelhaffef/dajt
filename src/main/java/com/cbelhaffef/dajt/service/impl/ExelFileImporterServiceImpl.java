@@ -18,6 +18,7 @@ import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +29,11 @@ import java.nio.file.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.cbelhaffef.dajt.enums.FolderTopic.UNKOWN;
 import static com.cbelhaffef.dajt.model.importfile.StatusImport.IN_PROGRESS;
 import static com.cbelhaffef.dajt.model.importfile.StatusImport.ON_ERROR;
 
@@ -89,10 +92,10 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                 throw new FileNotFoundException(msg);
             }
 
-            Optional<Import> importDb = importRepo.findByFileName(fileExel.getAbsolutePath());
+            Optional<Import> importDb = importRepo.findByFileNameAndStatus(fileExel.getAbsolutePath(),StatusImport.FINICHED);
 
             if(importDb.isPresent()){
-                String msg = "le fichier a été déja importé dans le system.";
+                String msg = "le fichier a déja été importé dans le system.";
                 throw new FileAlreadyExistsException(msg);
             }
 
@@ -130,15 +133,18 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             //change file to temp
             filePathTemp = renameFileWhen(filePath.toFile(),IN_PROGRESS).toPath();
 
+            fileExel = filePathTemp.toFile();
+
             Workbook workbook = new XSSFWorkbook(streamExel);
             Sheet datatypeSheet = workbook.getSheetAt(0); // choose year on sheet
             Iterator<Row> iterator = datatypeSheet.iterator();
 
             //Skip the header (first row)
+            int count = 1;
             if (iterator.hasNext()) iterator.next();
             Folder previousFolder = null;
             while (iterator.hasNext()) {
-
+                count++;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
 
@@ -148,39 +154,51 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                 folder.setUpdated(date);
                 folder.setStatus(statusOpen.isPresent() ? statusOpen.get() : null);
                 folder.setPriority(priortyMinor.isPresent() ? priortyMinor.get() : null);
+
+                folder.setOffice(office);
+
+                log.debug("processing row number : " + count);
+                boolean isErrorProcessing = false;
                 // treatment of the boxes of the current line
-                for(int i = 0 ; cellIterator.hasNext() ; i++){
+                for(int i = 0 ; cellIterator.hasNext() && !isErrorProcessing ; i++){
                     Cell currentCell = cellIterator.next();
 
                     // key
-                    if (i == FolderColumnImportEnum.KEY.getValue() && currentCell.getCellTypeEnum() == CellType.STRING) {
-                        if(currentCell.getStringCellValue().isEmpty()){
-                            log.warn("la ligne " + i + " du fichier d'import " + fileExel.getName() + " à été ignorée");
-                            continue;
-                        }
-                        // format Key
-                        // first tag BIS
-                        String key = currentCell.getStringCellValue().replace(TAG_BIS_AR, TAG_BIS_FR);
-                        // second \n to " "
-                        key = key.replace("\n" , " ");
-                        // reverse if it given
-                        key = reverseKey(key,reversedKey);
-
-                        Optional<Folder> folderDb = folderRepo.findByNumber(key);
-                        if(folderDb.isPresent()){
-                            log.info( "Le dossier numéro : " + key + " à déja été importé.");
+                    if (i == FolderColumnImportEnum.KEY.getValue()) {
+                        if (currentCell.getCellTypeEnum() == CellType.BLANK) {
+                            log.warn("la ligne " + count + " du fichier d'import " + fileExel.getName() + " à été ignorée car le numéro du dossier est absent");
+                            isErrorProcessing = true;
                             break;
-                        }
-                        folder.setNumber(key);
-                    }
+                        } else if (currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
 
+                            // format Key
+                            // first tag BIS
+                            String key = currentCell.getStringCellValue().replace(TAG_BIS_AR, TAG_BIS_FR);
+                            // second \n to " "
+                            key = key.replace("\n", " ");
+                            // reverse if it given
+                            key = reverseKey(key, reversedKey);
+                            Optional<Folder> folderDb = folderRepo.findByNumber(key);
+                            if (folderDb.isPresent()) {
+                                log.info("Le dossier numéro : " + key + " à déja été importé.");
+                                isErrorProcessing = true;
+                                break;
+                            }
+                            log.debug("processing folder number : " + key);
+                            folder.setNumber(key);
+                        }
+                    }
                     // direcotrateKey
-                    if (i == FolderColumnImportEnum.DIRECTORATE_KEY.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()){
+                    if (i == FolderColumnImportEnum.DIRECTORATE_KEY.getValue() &&
+                        currentCell.getCellTypeEnum() == CellType.STRING &&
+                        !currentCell.getStringCellValue().isEmpty()){
                         folder.setDirectorateNumber(currentCell.getStringCellValue());
                     }
 
                     // Victims
-                    if (i == FolderColumnImportEnum.VICTIMS.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
+                    if (i == FolderColumnImportEnum.VICTIMS.getValue() &&
+                        currentCell.getCellTypeEnum() == CellType.STRING &&
+                        !currentCell.getStringCellValue().isEmpty()) {
                         String stringVictims = currentCell.getStringCellValue();
                         Set<Victim> victims = new HashSet<>();
                         if(stringVictims.contains("\n")){
@@ -201,7 +219,9 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                     }
 
                     // Accused
-                    if (i == FolderColumnImportEnum.ACCUSED.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
+                    if (i == FolderColumnImportEnum.ACCUSED.getValue() &&
+                        currentCell.getCellTypeEnum() == CellType.STRING &&
+                        !currentCell.getStringCellValue().isEmpty()) {
                         String stringGuilties = currentCell.getStringCellValue();
                         Set<Accused> accused = new HashSet<>();
                         if(stringGuilties.contains("\n")){
@@ -222,27 +242,41 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                     }
 
                     // Offence
-                    if (i == FolderColumnImportEnum.OFFENCE.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
-                        String offenceValue = currentCell.getStringCellValue();
-                        if(offenceValue.matches("(/){2,}") && i > 0 && previousFolder.getOffence() != null && !previousFolder.getOffence().isEmpty()){
-                            offenceValue = previousFolder.getOffence();
+                    if (i == FolderColumnImportEnum.OFFENCE.getValue()) {
+                        String offenceValue = null;
+                        if(currentCell.getCellTypeEnum() == CellType.BLANK){
+                            offenceValue = UNKOWN.getValue();
+                        }else if (currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()){
+                            offenceValue = currentCell.getStringCellValue();
+                            if(offenceValue.matches("(/){2,}") && i > 0 && previousFolder.getOffence() != null && !previousFolder.getOffence().isEmpty()){
+                                offenceValue = previousFolder.getOffence();
+                                folder.setOffenceDate(extractDateFromString(offenceValue));
+                            }
                         }
-                        folder.setOffenceDate(extractDateFromString(offenceValue));
                         folder.setOffence(offenceValue);
                     }
 
                     // Court
-                    if (i == FolderColumnImportEnum.COURT.getValue() && currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
-                        String courtName = currentCell.getStringCellValue();
-                        if(courtName.matches("(/){2,}") && i > 0 && previousFolder.getCourt() != null){
-                            folder.setCourt(previousFolder.getCourt());
-                        }else{
-                            Optional<Court> court = courtRepo.findByName(courtName);
-                            if(!court.isPresent()){
-                                court = Optional.of(new Court(currentCell.getStringCellValue()));
+                    if (i == FolderColumnImportEnum.COURT.getValue()) {
+                        String courtName = null;
+                        Court court = null;
+                        if(currentCell.getCellTypeEnum() == CellType.BLANK) {
+                            courtName = UNKOWN.getValue();
+                        } else if (currentCell.getCellTypeEnum() == CellType.STRING && !currentCell.getStringCellValue().isEmpty()) {
+                            courtName = currentCell.getStringCellValue();
+                            if(courtName.matches("(/){2,}") && i > 0 && previousFolder.getCourt() != null){
+                                court = previousFolder.getCourt();
                             }
-                            folder.setCourt(court.get());
                         }
+                        if (court != null) {
+                            Optional<Court> courtDb = courtRepo.findByName(courtName);
+                            if(!courtDb.isPresent()){
+                                court = new Court(courtName);
+                            }else{
+                                court = courtDb.get();
+                            }
+                        }
+                        folder.setCourt(court);
                     }
 
                     // ADMINISTRATION_CONCERNED
@@ -252,13 +286,14 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                         folder.setAdministrationConcerned(currentCell.getStringCellValue());
                     }
 
-                    folder.setOffice(office);
                 }
 
-
-                folder = folderRepo.save(folder);
-                previousFolder = folder;
-                folders.add(folder);
+                if(!isErrorProcessing){
+                    // save folder
+                    folder = folderRepo.save(folder);
+                    previousFolder = folder;
+                    folders.add(folder);
+                }
             }
 
             imp.setEnded(new Date());
@@ -278,6 +313,8 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             // Move import file into archive directory when finished
             Path target = Paths.get(direArchiveToDay.getAbsolutePath());
             Files.move(filePathTemp,target.resolve(filePath.getFileName()));
+
+            log.info("============= Fin de l'importation pour le bureau '" + office.getName()+ "' du fichier : " + imp.getFileName());
 
         } catch ( Exception e ) {
             endImportOnError(fileExel,imp,e.toString() + " - " + e.getMessage());
@@ -344,21 +381,16 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
     }
 
     public void endImportOnError(File file, Import imp, String message) {
-        String msg = "L'import du fichier : " + file.getName() +" a échoué - " + message;
+        String msg = "L'import du fichier : " + imp.getFileName() +" a échoué - " + message;
         log.error(msg);
         imp.setStatus(ON_ERROR);
         imp.setEnded(new Date());
         imp.setMessage(msg);
         importRepo.save(imp);
-        String fileName = file.getName();
-        if (file.exists() && !fileName.endsWith(IN_PROGRESS.name())){
-            fileName += IN_PROGRESS.name();
-        }
-        file = new File(file.getParent() + File.separator + fileName);
 
         try {
             if(file.exists()) {
-                renameFileWhen(file, ON_ERROR);
+                file = renameFileWhen(file, ON_ERROR);
             }
         } catch (IOException e) {
             log.error("Le fichier : " + file.getName() + " n'existe pas.");

@@ -18,7 +18,6 @@ public class ThreadInitializer {
 
     @PostConstruct
     public void init(){
-//        WatchFolderThread WatchFolderThread = applicationContext.getBean(WatchFolderThread.class);
         taskExecutor.execute(watchFolderThread);
     }
 

@@ -79,7 +79,7 @@ CREATE TABLE folder (
     folder_id       INT NOT NULL AUTO_INCREMENT,
     number           VARCHAR(255) NOT NULL UNIQUE,
     directorate_number VARCHAR(255),
-    offence         VARCHAR(255) NOT NULL,
+    offence         LONGTEXT NOT NULL,
     offence_date    DATETIME NULL DEFAULT NULL,
     office_id       INT NOT NULL,
     court_id        INT,

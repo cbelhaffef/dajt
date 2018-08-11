@@ -21,9 +21,7 @@ public class WatchFolderThread implements Runnable{
     public void run() {
         try {
             watcherFolderService.initWatch(PATH_FOLDER_TO_WATCH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e ) {
             e.printStackTrace();
         }
 
