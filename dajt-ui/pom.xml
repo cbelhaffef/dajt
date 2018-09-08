@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.cbelhaffef</groupId>
+        <artifactId>dajt</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dajt-web</artifactId>
+
+    <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+        <main.basedir>${project.parent.basedir}</main.basedir>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+    </properties>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>ui-src</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- *** RESOURCE PLUGIN *** -->
+            <!--<plugin>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<version>${maven-resources-plugin.version}</version>-->
+                <!--<executions>-->
+                    <!--&lt;!&ndash; copy webui dist folder to src/resource/webui &ndash;&gt;-->
+                    <!--<execution>-->
+                        <!--&lt;!&ndash;<id>copy-resources</id>&ndash;&gt;-->
+                        <!--<id>prepare-package</id>-->
+                        <!--&lt;!&ndash;<phase>validate</phase>&ndash;&gt;-->
+                        <!--<phase>prepare-package</phase>-->
+                        <!--<goals><goal>copy-resources</goal></goals>-->
+                        <!--<configuration>-->
+                            <!--&lt;!&ndash;<outputDirectory>${project.basedir}/src/main/resources/public</outputDirectory>&ndash;&gt;-->
+                            <!--<outputDirectory>${project.basedir}/target/classes/public</outputDirectory>-->
+                            <!--<resources>-->
+                                <!--<resource>-->
+                                    <!--<directory>${project.basedir}/target/dist</directory>-->
+                                    <!--<excludes><exclude>*.gz</exclude></excludes>-->
+                                <!--</resource>-->
+                            <!--</resources>-->
+                            <!--<encoding>UTF-8</encoding>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
+            <!-- *** FRONTENT PLUGIN *** -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install node and yarn</id>
+                        <goals><goal>install-node-and-yarn</goal></goals>
+                        <configuration>
+                            <nodeVersion>v9.9.0</nodeVersion>
+                            <yarnVersion>v1.5.1</yarnVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>yarn install</id>
+                        <goals><goal>yarn</goal></goals>
+                        <configuration><arguments>install</arguments></configuration>
+                    </execution>
+                    <execution>
+                        <id>yarn lint</id>
+                        <goals><goal>yarn</goal></goals>
+                        <configuration><arguments>lint</arguments></configuration>
+                    </execution>
+                    <execution>
+                        <id>yarn build</id>
+                        <goals><goal>yarn</goal></goals>
+                        <phase>generate-resources</phase>
+                        <configuration><arguments>build</arguments></configuration>
+                    </execution>
+                    <execution>
+                        <id>yarn test</id>
+                        <goals><goal>yarn</goal></goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>test</arguments>
+                            <environmentVariables><CI>true</CI></environmentVariables>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
