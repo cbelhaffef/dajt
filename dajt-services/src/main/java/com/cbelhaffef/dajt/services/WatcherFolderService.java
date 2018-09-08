@@ -1,4 +1,4 @@
-package com.cbelhaffef.services;
+package com.cbelhaffef.dajt.services;
 
 import java.io.IOException;
 

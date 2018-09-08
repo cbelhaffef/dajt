@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model.response;
+package com.cbelhaffef.dajt.models.response;
 
 import org.springframework.data.domain.*;
 import lombok.*;

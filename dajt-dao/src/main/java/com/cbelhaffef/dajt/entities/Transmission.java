@@ -1,10 +1,9 @@
-package com.cbelhaffef.dajt.model.transmission;
+package com.cbelhaffef.dajt.entities;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-
 import java.util.Date;
 
 @Data

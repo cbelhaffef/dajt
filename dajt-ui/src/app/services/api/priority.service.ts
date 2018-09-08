@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ApiRequestService} from './api-request.service';
 import {TranslateService} from './translate.service';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class PriorityService {

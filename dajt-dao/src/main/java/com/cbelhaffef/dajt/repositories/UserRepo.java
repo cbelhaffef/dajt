@@ -1,9 +1,10 @@
-package com.cbelhaffef.dajt.repo;
+package com.cbelhaffef.dajt.repositories;
 
+import com.cbelhaffef.dajt.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.cbelhaffef.dajt.model.user.User;
+
 import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Long> {

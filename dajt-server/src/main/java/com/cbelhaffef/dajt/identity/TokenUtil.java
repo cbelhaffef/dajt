@@ -5,11 +5,8 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.*;
 import javax.servlet.http.*;
 import java.util.*;
-import java.io.IOException;
-import java.util.stream.Collectors;
 
-import com.cbelhaffef.dajt.model.user.Role;
-import com.cbelhaffef.dajt.model.user.User;
+import com.cbelhaffef.dajt.entities.User;
 
 @Service
 public class TokenUtil {

@@ -1,8 +1,5 @@
-package com.cbelhaffef.dajt.model.actionlog;
+package com.cbelhaffef.dajt.entities;
 
-import com.cbelhaffef.dajt.model.action.Action;
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,5 +1,6 @@
-package com.cbelhaffef.dajt.model.status;
+package com.cbelhaffef.dajt.models.status;
 
+import com.cbelhaffef.dajt.entities.Status;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

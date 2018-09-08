@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model.transmission;
+package com.cbelhaffef.dajt.models.transmission;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

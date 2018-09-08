@@ -1,11 +1,10 @@
 package com.cbelhaffef.dajt.threads;
 
-import com.cbelhaffef.dajt.service.WatcherFolderService;
+import com.cbelhaffef.dajt.services.WatcherFolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Component

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component( {
-	selector:  's-transmission_file-pg',
+	selector:  'app-transmission_file-pg',
 	templateUrl:  './transmission_file.component.html',
     styleUrls:  [ './transmission_file.scss'],
 })

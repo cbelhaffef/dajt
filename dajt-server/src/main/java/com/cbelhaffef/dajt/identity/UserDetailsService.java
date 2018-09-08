@@ -1,21 +1,13 @@
 package com.cbelhaffef.dajt.identity;
 
-import com.cbelhaffef.dajt.repo.UserRepo;
+import com.cbelhaffef.dajt.entities.User;
+import com.cbelhaffef.dajt.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Service;
 
-import com.cbelhaffef.dajt.model.user.Role;
-import com.cbelhaffef.dajt.model.user.User;
-import com.cbelhaffef.dajt.repo.UserRepo;
-
-import java.util.Optional;
 
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {

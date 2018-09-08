@@ -1,8 +1,8 @@
-package com.cbelhaffef.dajt.model.session;
+package com.cbelhaffef.dajt.entities;
 
-import lombok.*;
-import java.util.*;
-import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class SessionItem {

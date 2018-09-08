@@ -1,13 +1,10 @@
-package com.cbelhaffef.dajt.repo;
+package com.cbelhaffef.dajt.repositories;
 
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.repo.custom.FolderRepoCustom;
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.repo.custom.FolderRepoCustom;
+import com.cbelhaffef.dajt.entities.Folder;
+import com.cbelhaffef.dajt.repositories.custom.FolderRepoCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.QueryByExampleExecutor;
 
 import java.util.Collection;
 import java.util.List;

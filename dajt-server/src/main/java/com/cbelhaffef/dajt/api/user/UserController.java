@@ -1,14 +1,10 @@
 package com.cbelhaffef.dajt.api.user;
 
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.response.OperationResponse;
-import com.cbelhaffef.dajt.model.user.User;
-import com.cbelhaffef.dajt.model.user.UserListResponse;
-import com.cbelhaffef.dajt.model.user.UserResponse;
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.response.OperationResponse;
-import com.cbelhaffef.dajt.model.user.UserListResponse;
-import com.cbelhaffef.dajt.model.user.UserResponse;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.models.response.OperationResponse;
+import com.cbelhaffef.dajt.entities.User;
+import com.cbelhaffef.dajt.models.user.UserListResponse;
+import com.cbelhaffef.dajt.models.user.UserResponse;
 import com.google.common.base.Strings;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static com.cbelhaffef.dajt.model.response.OperationResponse.ResponseStatusEnum;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)

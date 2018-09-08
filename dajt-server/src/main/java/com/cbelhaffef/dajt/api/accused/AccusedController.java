@@ -1,9 +1,9 @@
 package com.cbelhaffef.dajt.api.accused;
 
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.accused.Accused;
-import com.cbelhaffef.dajt.model.accused.AccusedListResponse;
-import com.cbelhaffef.dajt.repo.AccusedRepo;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.entities.Accused;
+import com.cbelhaffef.dajt.models.accused.AccusedListResponse;
+import com.cbelhaffef.dajt.repositories.AccusedRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

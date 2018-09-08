@@ -1,8 +1,8 @@
-package com.cbelhaffef.dajt.model.importfile;
+package com.cbelhaffef.dajt.entities;
 
+import com.cbelhaffef.dajt.enums.StatusImport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;

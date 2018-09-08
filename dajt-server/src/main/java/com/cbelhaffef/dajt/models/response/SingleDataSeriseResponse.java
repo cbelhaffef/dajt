@@ -1,11 +1,11 @@
 //This is a common http response model for providing data series
 
-package com.cbelhaffef.dajt.model.response;
+package com.cbelhaffef.dajt.models.response;
 
 import lombok.*;
 import java.util.*;
 
-import com.cbelhaffef.dajt.model.data.*;
+import com.cbelhaffef.dajt.models.data.*;
 
 @Data
 @EqualsAndHashCode(callSuper=false)

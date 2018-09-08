@@ -1,6 +1,7 @@
-package com.cbelhaffef.dajt.model.folder;
+package com.cbelhaffef.dajt.models.folder;
 
-import com.cbelhaffef.dajt.model.response.PageResponse;
+import com.cbelhaffef.dajt.entities.Folder;
+import com.cbelhaffef.dajt.models.response.PageResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

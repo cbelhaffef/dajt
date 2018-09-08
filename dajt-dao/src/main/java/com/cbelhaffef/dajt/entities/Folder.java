@@ -1,17 +1,6 @@
-package com.cbelhaffef.dajt.model.folder;
+package com.cbelhaffef.dajt.entities;
 
 import com.cbelhaffef.dajt.enums.JudgementStatus;
-import com.cbelhaffef.dajt.model.accused.Accused;
-import com.cbelhaffef.dajt.model.action.Action;
-import com.cbelhaffef.dajt.model.actionlog.ActionLog;
-import com.cbelhaffef.dajt.model.advocate.Advocate;
-import com.cbelhaffef.dajt.model.comment.Comment;
-import com.cbelhaffef.dajt.model.court.Court;
-import com.cbelhaffef.dajt.model.office.Office;
-import com.cbelhaffef.dajt.model.priority.Priority;
-import com.cbelhaffef.dajt.model.status.Status;
-import com.cbelhaffef.dajt.model.user.User;
-import com.cbelhaffef.dajt.model.victim.Victim;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

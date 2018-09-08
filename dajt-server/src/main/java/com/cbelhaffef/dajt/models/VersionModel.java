@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model;
+package com.cbelhaffef.dajt.models;
 
 import lombok.*;
 

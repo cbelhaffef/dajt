@@ -23,7 +23,7 @@ import {MessageService} from 'primeng/components/common/messageservice';
 import {SharedService} from '../../services/shared.service';
 
 @Component( {
-    selector   :  's-folders-pg',
+    selector   :  'app-folders-pg',
     templateUrl:  './folders.component.html',
     styleUrls  :  [ './folders.scss'],
 })

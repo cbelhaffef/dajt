@@ -1,13 +1,8 @@
 package com.cbelhaffef.dajt.api;
 
-import com.cbelhaffef.dajt.model.VersionModel;
+import com.cbelhaffef.dajt.models.VersionModel;
 import io.swagger.annotations.*;
-import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import static org.springframework.http.MediaType.*;
-
-import com.cbelhaffef.dajt.model.VersionModel;
 
 @RestController
 @RequestMapping(value = "/version", produces = { "application/json" })

@@ -5,7 +5,7 @@
  */
 
 
-package com.cbelhaffef.dajt.model.response;
+package com.cbelhaffef.dajt.models.response;
 
 import io.swagger.annotations.*;
 import lombok.*;

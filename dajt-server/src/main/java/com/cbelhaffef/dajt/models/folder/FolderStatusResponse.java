@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model.folder;
+package com.cbelhaffef.dajt.models.folder;
 
 import com.cbelhaffef.dajt.enums.StatusFolder;
 import io.swagger.annotations.ApiModelProperty;

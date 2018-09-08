@@ -1,12 +1,9 @@
 package com.cbelhaffef.dajt.api.action;
 
-import com.cbelhaffef.dajt.model.action.Action;
-import com.cbelhaffef.dajt.model.action.ActionListResponse;
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.office.Office;
-import com.cbelhaffef.dajt.model.office.OfficeListResponse;
-import com.cbelhaffef.dajt.repo.ActionRepo;
-import com.cbelhaffef.dajt.repo.OfficeRepo;
+import com.cbelhaffef.dajt.entities.Action;
+import com.cbelhaffef.dajt.models.action.ActionListResponse;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.repositories.ActionRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

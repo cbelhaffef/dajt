@@ -1,9 +1,9 @@
 package com.cbelhaffef.dajt.api.court;
 
-import com.cbelhaffef.dajt.model.court.Court;
-import com.cbelhaffef.dajt.model.court.CourtListResponse;
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.repo.CourtRepo;
+import com.cbelhaffef.dajt.entities.Court;
+import com.cbelhaffef.dajt.models.court.CourtListResponse;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.repositories.CourtRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

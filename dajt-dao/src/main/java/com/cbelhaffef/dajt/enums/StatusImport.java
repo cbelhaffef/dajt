@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.models.importfile;
+package com.cbelhaffef.dajt.enums;
 
 public enum StatusImport {
 

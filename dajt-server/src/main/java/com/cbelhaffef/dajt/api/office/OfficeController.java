@@ -1,12 +1,9 @@
 package com.cbelhaffef.dajt.api.office;
 
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.office.Office;
-import com.cbelhaffef.dajt.model.office.OfficeListResponse;
-import com.cbelhaffef.dajt.repo.OfficeRepo;
-import com.cbelhaffef.dajt.model.office.Office;
-import com.cbelhaffef.dajt.model.office.OfficeListResponse;
-import com.cbelhaffef.dajt.repo.OfficeRepo;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.entities.Office;
+import com.cbelhaffef.dajt.models.office.OfficeListResponse;
+import com.cbelhaffef.dajt.repositories.OfficeRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

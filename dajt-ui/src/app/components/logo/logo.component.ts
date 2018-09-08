@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 @Component( {
-	selector:  's-logo',
+	selector:  'app-logo',
 	templateUrl:  './logo.component.html'
 })
 

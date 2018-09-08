@@ -1,7 +1,7 @@
-package com.cbelhaffef.dajt.repo;
+package com.cbelhaffef.dajt.repositories;
 
-import com.cbelhaffef.dajt.model.importfile.Import;
-import com.cbelhaffef.dajt.model.importfile.StatusImport;
+import com.cbelhaffef.dajt.entities.Import;
+import com.cbelhaffef.dajt.enums.StatusImport;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

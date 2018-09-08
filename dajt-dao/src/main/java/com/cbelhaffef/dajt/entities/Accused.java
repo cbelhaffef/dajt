@@ -1,6 +1,5 @@
-package com.cbelhaffef.dajt.model.accused;
+package com.cbelhaffef.dajt.entities;
 
-import com.cbelhaffef.dajt.model.folder.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +9,7 @@ import java.util.Objects;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper=false)
 @Table(name="accused")
 public class Accused {
 

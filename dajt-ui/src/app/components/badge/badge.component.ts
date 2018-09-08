@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 @Component( {
-	selector:  's-badge',
+	selector:  'app-badge',
   template:  `<span class="s-badge {{badgeCls}}">{{text}}</span>`
 })
 

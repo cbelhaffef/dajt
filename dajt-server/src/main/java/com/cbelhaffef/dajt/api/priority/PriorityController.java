@@ -1,10 +1,9 @@
 package com.cbelhaffef.dajt.api.priority;
 
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.priority.Priority;
-import com.cbelhaffef.dajt.model.priority.PriorityListResponse;
-import com.cbelhaffef.dajt.model.status.StatusListResponse;
-import com.cbelhaffef.dajt.repo.PriorityRepo;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.entities.Priority;
+import com.cbelhaffef.dajt.models.priority.PriorityListResponse;
+import com.cbelhaffef.dajt.repositories.PriorityRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

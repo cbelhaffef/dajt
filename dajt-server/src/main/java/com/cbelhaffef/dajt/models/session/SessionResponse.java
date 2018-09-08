@@ -1,8 +1,9 @@
-package com.cbelhaffef.dajt.model.session;
+package com.cbelhaffef.dajt.models.session;
 
+import com.cbelhaffef.dajt.entities.SessionItem;
 import io.swagger.annotations.*;
 import lombok.*;
-import com.cbelhaffef.dajt.model.response.*;
+import com.cbelhaffef.dajt.models.response.*;
 
 @Data
 @EqualsAndHashCode(callSuper=false)

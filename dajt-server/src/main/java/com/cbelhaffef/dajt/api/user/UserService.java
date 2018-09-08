@@ -1,16 +1,13 @@
 package com.cbelhaffef.dajt.api.user;
 
-import com.cbelhaffef.dajt.model.user.User;
-import com.cbelhaffef.dajt.repo.UserRepo;
-import com.cbelhaffef.dajt.repo.UserRepo;
+import com.cbelhaffef.dajt.entities.User;
+import com.cbelhaffef.dajt.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {

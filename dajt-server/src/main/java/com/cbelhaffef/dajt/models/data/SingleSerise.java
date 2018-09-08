@@ -1,10 +1,8 @@
-package com.cbelhaffef.dajt.model.data;
+package com.cbelhaffef.dajt.models.data;
 
 import lombok.*;
-import java.util.*;
+
 import java.math.BigDecimal;
-import javax.persistence.*;
-import io.swagger.annotations.ApiModelProperty;
 
 @Data
 public class SingleSerise  {

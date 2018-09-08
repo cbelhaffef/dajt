@@ -1,12 +1,7 @@
-package com.cbelhaffef.dajt.repo.custom.impl;
+package com.cbelhaffef.dajt.repositories.custom.impl;
 
-import com.cbelhaffef.dajt.model.accused.QAccused;
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.folder.QFolder;
-import com.cbelhaffef.dajt.model.office.QOffice;
-import com.cbelhaffef.dajt.model.status.QStatus;
-import com.cbelhaffef.dajt.model.victim.QVictim;
-import com.cbelhaffef.dajt.repo.custom.FolderRepoCustom;
+import com.cbelhaffef.dajt.entities.*;
+import com.cbelhaffef.dajt.repositories.custom.FolderRepoCustom;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

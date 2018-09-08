@@ -1,6 +1,6 @@
-package com.cbelhaffef.dajt.repo;
+package com.cbelhaffef.dajt.repositories;
 
-import com.cbelhaffef.dajt.model.status.Status;
+import com.cbelhaffef.dajt.entities.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

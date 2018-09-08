@@ -1,7 +1,7 @@
-package com.cbelhaffef.dajt.model.user;
+package com.cbelhaffef.dajt.models.user;
 
-import com.cbelhaffef.dajt.model.accused.Accused;
-import com.cbelhaffef.dajt.model.response.PageResponse;
+import com.cbelhaffef.dajt.entities.User;
+import com.cbelhaffef.dajt.models.response.PageResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

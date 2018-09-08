@@ -1,6 +1,7 @@
-package com.cbelhaffef.dajt.model.actionlog;
+package com.cbelhaffef.dajt.models.actionlog;
 
-import com.cbelhaffef.dajt.model.response.PageResponse;
+import com.cbelhaffef.dajt.entities.ActionLog;
+import com.cbelhaffef.dajt.models.response.PageResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

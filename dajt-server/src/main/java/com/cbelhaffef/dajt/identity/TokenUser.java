@@ -1,8 +1,7 @@
 package com.cbelhaffef.dajt.identity;
 
 import org.springframework.security.core.authority.AuthorityUtils;
-import com.cbelhaffef.dajt.model.user.Role;
-import com.cbelhaffef.dajt.model.user.User;
+import com.cbelhaffef.dajt.entities.User;
 
 public class TokenUser extends org.springframework.security.core.userdetails.User {
     private User user;

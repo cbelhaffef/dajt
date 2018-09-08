@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component( {
-    selector:  's-advocates-pg',
+    selector:  'app-advocates-pg',
     templateUrl:  './advocates.component.html',
     styleUrls:  [ './advocates.scss'],
 })

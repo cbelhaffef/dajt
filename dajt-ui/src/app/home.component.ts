@@ -2,14 +2,11 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from './services/api/auth.service';
 import {UserInfoService} from './services/user-info.service';
+import {filter, map, mergeMap, switchMap} from 'rxjs/operators';
 
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/switchMap';
 
 @Component( {
-  selector   :  'home-comp',
+  selector   :  'app-home-comp',
   templateUrl:  './home.component.html',
   styleUrls  :  ['./home.scss'],
   encapsulation:  ViewEncapsulation.None
@@ -18,9 +15,9 @@ export class HomeComponent    {
 
     public showAppAlert = true;
 
-    public selectedHeaderItemIndex:  number = 0;
-    public selectedSubNavItemIndex:  number = 1;
-    public userName:  string = '';
+    public selectedHeaderItemIndex = 0;
+    public selectedSubNavItemIndex = 1;
+    public userName = '';
 
     constructor(
         private router:  Router,
@@ -29,17 +26,17 @@ export class HomeComponent    {
         private userInfoService:  UserInfoService) {
 
         // This block is to retrieve the data from the routes (routes are defined in app-routing.module.ts)
-        router.events
-            .filter(event => event instanceof NavigationEnd)
-            .map( _ => this.router.routerState.root)
-            .map(route => {
+        router.events.pipe(
+            filter(event => event instanceof NavigationEnd),
+            map( _ => this.router.routerState.root),
+            map(route => {
                 while (route.firstChild) {
                     route = route.firstChild;
                 }
                 return route;
-            })
-        .mergeMap( route => route.data)
-        .subscribe(data => {
+            }),
+            mergeMap( route => route.data))
+            .subscribe(data => {
             console.log('Route data===:  ', data[0]);
             this.selectedHeaderItemIndex = data[0] ? data[0].selectedHeaderItemIndex :  -1;
             this.selectedSubNavItemIndex = data[0] ? data[0].selectedSubNavItemIndex :  -1;

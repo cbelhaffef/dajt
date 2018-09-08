@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model.user;
+package com.cbelhaffef.dajt.models.user;
 
 import io.swagger.annotations.*;
 import lombok.*;

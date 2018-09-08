@@ -4,7 +4,7 @@ import 'rxjs/add/operator/mergeMap';
 
 
 @Component( {
-	selector:  's-transmissions-pg',
+	selector:  'app-transmissions-pg',
 	templateUrl:  './transmissions.component.html',
     styleUrls:  [ './transmissions.scss'],
 })

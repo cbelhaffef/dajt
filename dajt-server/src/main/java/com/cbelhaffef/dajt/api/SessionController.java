@@ -1,15 +1,11 @@
 package com.cbelhaffef.dajt.api;
 
-import com.cbelhaffef.dajt.model.session.SessionItem;
-import com.cbelhaffef.dajt.model.session.SessionResponse;
-import com.cbelhaffef.dajt.model.user.Login;
-import com.cbelhaffef.dajt.model.user.User;
-import com.cbelhaffef.dajt.repo.UserRepo;
-import com.cbelhaffef.dajt.model.response.OperationResponse;
-import com.cbelhaffef.dajt.model.session.SessionItem;
-import com.cbelhaffef.dajt.model.session.SessionResponse;
-import com.cbelhaffef.dajt.model.user.Login;
-import com.cbelhaffef.dajt.repo.UserRepo;
+import com.cbelhaffef.dajt.entities.SessionItem;
+import com.cbelhaffef.dajt.models.session.SessionResponse;
+import com.cbelhaffef.dajt.models.user.Login;
+import com.cbelhaffef.dajt.entities.User;
+import com.cbelhaffef.dajt.repositories.UserRepo;
+import com.cbelhaffef.dajt.models.response.OperationResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static com.cbelhaffef.dajt.model.response.OperationResponse.ResponseStatusEnum;
 
 /*
 This is a dummy rest controller, for the purpose of documentation (/session) path is map to a filter

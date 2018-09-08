@@ -1,15 +1,12 @@
-package com.cbelhaffef.dajt.model.user;
+package com.cbelhaffef.dajt.entities;
 
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.office.Office;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.List;
+import com.cbelhaffef.dajt.enums.Role;
 
 @Entity
 @Table(name="user")

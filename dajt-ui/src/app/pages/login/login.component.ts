@@ -3,7 +3,7 @@ import { AuthService } from '../../services/api/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-	selector   : 's-login-pg',
+	selector   : 'app-login-pg',
 	templateUrl: './login.component.html',
     styleUrls  : [ './login.scss'],
 })

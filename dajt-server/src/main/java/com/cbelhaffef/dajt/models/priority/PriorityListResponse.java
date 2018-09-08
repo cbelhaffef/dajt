@@ -1,5 +1,6 @@
-package com.cbelhaffef.dajt.model.priority;
+package com.cbelhaffef.dajt.models.priority;
 
+import com.cbelhaffef.dajt.entities.Priority;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

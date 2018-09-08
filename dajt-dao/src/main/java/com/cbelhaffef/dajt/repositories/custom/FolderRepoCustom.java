@@ -1,6 +1,7 @@
-package com.cbelhaffef.dajt.repo.custom;
+package com.cbelhaffef.dajt.repositories.custom;
 
-import com.cbelhaffef.dajt.model.folder.Folder;
+
+import com.cbelhaffef.dajt.entities.Folder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

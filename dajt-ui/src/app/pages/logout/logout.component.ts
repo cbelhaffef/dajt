@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 
 @Component( {
-	selector   :  's-logout-pg',
+	selector   :  'app-logout-pg',
 	templateUrl:  './logout.component.html',
     styleUrls  :  [ './logout.scss'],
 })

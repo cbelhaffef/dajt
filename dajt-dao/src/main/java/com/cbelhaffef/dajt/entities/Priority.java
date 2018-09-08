@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model.priority;
+package com.cbelhaffef.dajt.entities;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,5 +1,6 @@
-package com.cbelhaffef.dajt.model.role;
+package com.cbelhaffef.dajt.models.role;
 
+import com.cbelhaffef.dajt.entities.Role;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

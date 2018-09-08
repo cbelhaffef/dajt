@@ -1,7 +1,7 @@
-package com.cbelhaffef.dajt.repo;
+package com.cbelhaffef.dajt.repositories;
 
-import com.cbelhaffef.dajt.model.victim.Victim;
-import com.cbelhaffef.dajt.model.victim.Victim;
+
+import com.cbelhaffef.dajt.entities.Victim;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

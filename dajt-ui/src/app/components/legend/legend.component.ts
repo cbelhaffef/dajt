@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component( {
-	selector :  's-legend',
+	selector :  'app-legend',
     styleUrls:  [ './legend.scss'],
 	template :  `
     <div class="s-legend-wrap">

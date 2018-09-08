@@ -1,9 +1,10 @@
 package com.cbelhaffef.dajt.api.status;
 
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.status.Status;
-import com.cbelhaffef.dajt.model.status.StatusListResponse;
-import com.cbelhaffef.dajt.repo.StatusRepo;
+import com.cbelhaffef.dajt.entities.Status;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.entities.Status;
+import com.cbelhaffef.dajt.models.status.StatusListResponse;
+import com.cbelhaffef.dajt.repositories.StatusRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

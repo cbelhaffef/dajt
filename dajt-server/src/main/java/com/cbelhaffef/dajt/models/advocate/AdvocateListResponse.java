@@ -1,5 +1,6 @@
-package com.cbelhaffef.dajt.model.advocate;
+package com.cbelhaffef.dajt.models.advocate;
 
+import com.cbelhaffef.dajt.entities.Advocate;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,14 +1,14 @@
 
 package com.cbelhaffef.dajt.service;
 
-import com.cbelhaffef.dajt.model.court.Court;
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.office.Office;
+import com.cbelhaffef.dajt.entities.Court;
+import com.cbelhaffef.dajt.entities.Folder;
+import com.cbelhaffef.dajt.entities.Office;
 import com.cbelhaffef.dajt.repositories.CourtRepo;
 import com.cbelhaffef.dajt.repositories.FolderRepo;
 import com.cbelhaffef.dajt.repositories.ImportRepo;
 import com.cbelhaffef.dajt.repositories.OfficeRepo;
-import com.cbelhaffef.services.impl.ExelFileImporterServiceImpl;
+import com.cbelhaffef.dajt.services.impl.ExelFileImporterServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

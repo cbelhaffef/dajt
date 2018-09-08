@@ -1,19 +1,21 @@
 package com.cbelhaffef.dajt.api.folder;
 
 import com.cbelhaffef.dajt.api.user.UserService;
+
 import com.cbelhaffef.dajt.enums.StatusFolder;
 import com.cbelhaffef.dajt.exception.ResourceAlreadyAddedException;
 import com.cbelhaffef.dajt.exception.ResourceNotFoundException;
-import com.cbelhaffef.dajt.model.accused.Accused;
-import com.cbelhaffef.dajt.model.action.Action;
-import com.cbelhaffef.dajt.model.court.Court;
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.folder.FolderListResponse;
-import com.cbelhaffef.dajt.model.office.Office;
-import com.cbelhaffef.dajt.model.status.Status;
-import com.cbelhaffef.dajt.model.user.User;
-import com.cbelhaffef.dajt.model.victim.Victim;
-import com.cbelhaffef.dajt.repo.*;
+import com.cbelhaffef.dajt.entities.Folder;
+import com.cbelhaffef.dajt.entities.Status;
+import com.cbelhaffef.dajt.entities.Accused;
+import com.cbelhaffef.dajt.entities.Action;
+import com.cbelhaffef.dajt.entities.Court;
+import com.cbelhaffef.dajt.models.folder.FolderListResponse;
+import com.cbelhaffef.dajt.entities.Office;
+import com.cbelhaffef.dajt.entities.Status;
+import com.cbelhaffef.dajt.entities.User;
+import com.cbelhaffef.dajt.entities.Victim;
+import com.cbelhaffef.dajt.repositories.*;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

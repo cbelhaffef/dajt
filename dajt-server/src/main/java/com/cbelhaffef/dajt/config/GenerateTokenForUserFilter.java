@@ -2,9 +2,9 @@ package com.cbelhaffef.dajt.config;
 
 import com.cbelhaffef.dajt.identity.TokenUser;
 import com.cbelhaffef.dajt.identity.TokenUtil;
-import com.cbelhaffef.dajt.model.response.OperationResponse;
-import com.cbelhaffef.dajt.model.session.SessionItem;
-import com.cbelhaffef.dajt.model.session.SessionResponse;
+import com.cbelhaffef.dajt.models.response.OperationResponse;
+import com.cbelhaffef.dajt.entities.SessionItem;
+import com.cbelhaffef.dajt.models.session.SessionResponse;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.*;
@@ -18,8 +18,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.*;
 import lombok.extern.slf4j.Slf4j;
 
-import com.cbelhaffef.dajt.identity.*;
-import com.cbelhaffef.dajt.model.user.User;
+import com.cbelhaffef.dajt.entities.User;
 import com.fasterxml.jackson.databind.*;
 
 

@@ -1,7 +1,5 @@
-package com.cbelhaffef.dajt.model.advocate;
+package com.cbelhaffef.dajt.entities;
 
-import com.cbelhaffef.dajt.model.folder.Folder;
-import com.cbelhaffef.dajt.model.folder.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

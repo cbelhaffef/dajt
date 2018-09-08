@@ -1,4 +1,4 @@
-package com.cbelhaffef.dajt.model.transmission;
+package com.cbelhaffef.dajt.models.transmission;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

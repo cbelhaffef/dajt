@@ -12,7 +12,7 @@
 
             <div style="flex:1"></div>
             <div *ngIf="isLoading" class="spinner spinner-md" style="margin:0 10px;">Loading...</div>
-            <s-legend [legend]="orderByStatusData" ></s-legend>
+            <app-legend [legend]="orderByStatusData" ></app-legend>
         </div>
 
         </div>
@@ -28,7 +28,7 @@
 
 
 <ng-template #orderStatusCellTpl let-row="row" let-value="value" let-i="index">
-  <s-badge [text]=value [badgeCls]="'s-badge-'+value.toLowerCase().replace(' ','')"></s-badge>
+  <app-badge [text]=value [badgeCls]="'app-badge-'+value.toLowerCase().replace(' ','')"></app-badge>
 </ng-template>
 
 

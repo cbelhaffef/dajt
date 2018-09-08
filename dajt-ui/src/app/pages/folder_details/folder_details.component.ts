@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import 'rxjs/add/operator/switchMap';
+import 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {FolderService} from '../../services/api/folder.service';
 import {Folder} from '../../models/folder.model';
@@ -26,7 +26,7 @@ import {Dropdown, OverlayPanel} from 'primeng/primeng';
 import {UserService} from '../../services/api/user.service';
 
 @Component( {
-    selector   :  's-folders-pg',
+    selector   :  'app-folders-pg',
     templateUrl:  './folder_details.component.html',
     styleUrls  :  [ './folder_details.scss'],
     providers : [MessageService]

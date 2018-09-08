@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import {Observable, Subject} from 'rxjs';
 import {LoginInfoInStorage, UserInfoService} from '../user-info.service';
 import {ApiRequestService} from './api-request.service';
 
