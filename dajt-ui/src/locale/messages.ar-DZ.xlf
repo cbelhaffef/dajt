@@ -48,7 +48,7 @@
           <context context-type="sourcefile">app/pages/login/login.component.ts</context>
           <context context-type="linenumber">37</context>
         </context-group>
-        <target>الحفاظ على الاتصال</target>
+        <target>الحفاظ على الاتصال </target>
       </trans-unit>
       <trans-unit id="7a5b80bdfff39603e595a2a61d5032115874e412" datatype="html">
         <source>Se connecter</source>

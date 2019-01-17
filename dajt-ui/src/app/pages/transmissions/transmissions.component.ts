@@ -1,12 +1,11 @@
-import { Component, OnInit,TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/mergeMap';
 
 
 @Component( {
-	selector:  'app-transmissions-pg',
-	templateUrl:  './transmissions.component.html',
-    styleUrls:  [ './transmissions.scss'],
+  selector:  'app-transmissions-pg',
+  templateUrl:  './transmissions.component.html',
+  styleUrls:  [ './transmissions.scss'],
 })
 
 export class TransmissionsComponent implements OnInit {
@@ -15,13 +14,13 @@ export class TransmissionsComponent implements OnInit {
     columns: any[];
     rows: any[];
     orderByStatusData:  any[] = [];
-    isLoading: boolean=false;
+    isLoading: boolean = false;
     constructor(private router:  Router) { }
 
     ngOnInit() {
-        var me = this;
+        let me = this;
 
-        this.columns=[
+        me.columns = [
              {prop: "orderId"         , name:  "ID"           , width: 65, cellTemplate:  this.orderIdTpl   },
              {prop: "orderDate"       , name:  "Order Date"   , width: 105 },
              {prop: "orderStatus"     , name:  "Status"       , width: 85, cellTemplate:  this.statusCellTpl },

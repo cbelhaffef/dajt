@@ -13,7 +13,7 @@ import {User} from '../../models/user.model';
 import {Folder} from '../../models/folder.model';
 import {SpinnerService} from '../../services/spinner.service';
 import {Dropdown, OverlayPanel} from 'primeng/primeng';
-import {Action} from 'app/models/action.model';
+import {Action} from '../../models/action.model';
 import {ActionService} from '../../services/api/action.service';
 import {FolderResponse} from '../../models/folder.response.model';
 import {LazyLoadEvent, Message} from 'primeng/api';

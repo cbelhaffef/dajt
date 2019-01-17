@@ -5,8 +5,9 @@
     z-index: 1;
     top:2%;
     right:6%;
-    min-width: 234px;
+    min-width: 222px;
     min-height: 132px;
+    background-size: 214px 85px;
 }
 .s-login-container {
     /* layout */
@@ -26,7 +27,7 @@
     width: 30%;
     position: fixed;
     top: 20%;
-    right: 2%;
+    right: 4%;
     margin: 0 auto;
 }
 
@@ -47,6 +48,12 @@
 }
 
 .ui-widget {
-    font-size: 1.5em !important;
+    font-size: 1.0em !important;
 }
 
+.s-login-input {
+  height: 28px;
+  padding: 0px 3px 0px 3px;
+  border: solid 1px #BABABA;
+  font-size: 1.0em;
+}

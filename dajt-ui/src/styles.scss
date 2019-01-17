@@ -1,69 +1,9 @@
-@import '../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
 /* You can add global styles to this file, and also import other style files */
-@import './assets/scss/var';
-@import './assets/scss/base';
 
-html {
-    /* make sure we use up the whole viewport */
-    width: 100%;
-    min-height: 100vh;
-}
-body {
-    width: 100%;
-    background-color: $s-bg-gray;
-    //min-height: 100vh; /* this helps with the sticky footer */
-    direction: rtl; /* Right to Left - arabic*/
-}
-header.legend-title{
-  background-color: transparent;
-  color:#333;
-  height:inherit;
+.text-right{
+  text-align: right;
 }
 
-.s-dashboard-pg .chart-legend .legend-wrap {
-  width: 105px;
-}
-
-
-// Custom Classes
-.s-badge{
-  font-size:11px;
-  font-weight:normal;
-  border-radius: 2px;
-  padding:2px 5px;
-
-  &.s-badge-error,
-  &.s-badge-onhold   { background-color: $s-c-error; color:$s-c-white;}
-  &.s-badge-warning  { background-color: #ff8e28; color:$s-c-text;}
-  &.s-badge-good     { background-color: $s-c-good; color:$s-c-text;}
-  &.s-badge-new      { background-color: $s-c-info; color:$s-c-white;}
-
-  &.s-badge-close      { background-color: #ff8e28; color:$s-c-text;}
-  &.s-badge-in_progres { background-color: $s-c-good; color:$s-c-text;}
-  &.s-badge-open       { background-color: $s-c-info; color:$s-c-white;}
-}
-
-
-.tile{
-    display:flex;
-    padding:16px;
-    margin:16px;
-    border-radius:2px;
-    &.column { flex-direction: column;}
-    &.center { align-items: center;}
-    &.white {
-        background-color: $s-bg-white;
-        border:1px solid #ccc;
-    }
-}
-
-input[type=text] {
-    border: 1px solid #d6d6d6 !important;
-}
-
-.ui-autocomplete-dd .ui-autocomplete-dropdown.ui-corner-all {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-top-left-radius: unset;
-    border-bottom-left-radius: unset;
+.text-left{
+  text-align: left;
 }
