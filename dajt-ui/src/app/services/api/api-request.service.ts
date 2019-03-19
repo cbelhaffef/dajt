@@ -2,20 +2,21 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
-import {UserInfoService} from '../user-info.service';
+import {UserinfoService} from '../userinfo.service';
 import {AppConfig} from '../../app-config';
 import {SharedService} from '../shared.service';
 import {catchError} from 'rxjs/operators';
 
 
 @Injectable()
-export class ApiRequestService {
+export class
+ApiRequestService {
 
     constructor(
         private appConfig:  AppConfig,
         private http:  HttpClient,
         private router:  Router,
-        private userInfoService:  UserInfoService,
+        private userInfoService:  UserinfoService,
         private sharedService: SharedService
     ) {}
 

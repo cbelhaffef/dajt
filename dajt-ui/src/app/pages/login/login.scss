@@ -2,7 +2,7 @@
 .s-login-logo{
     background: url("../../../assets/images/dajt-logo.jpg") no-repeat center;
     position: absolute;
-    z-index: 1;
+    //z-index: 1;
     top:2%;
     right:6%;
     min-width: 222px;
@@ -11,16 +11,14 @@
 }
 .s-login-container {
     /* layout */
-    min-height: 100vh;
-    min-width: 100vh;
+    min-height: 100%;
+    min-width: 100%;
     /* background styling */
     background: url("../../../assets/images/background.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .s-login-pg {

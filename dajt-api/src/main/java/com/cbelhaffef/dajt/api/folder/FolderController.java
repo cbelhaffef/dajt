@@ -1,20 +1,22 @@
 package com.cbelhaffef.dajt.api.folder;
 
+import com.cbelhaffef.dajt.api.accused.AccusedRepo;
+import com.cbelhaffef.dajt.api.action.ActionRepo;
+import com.cbelhaffef.dajt.api.court.CourtRepo;
+import com.cbelhaffef.dajt.api.status.StatusRepo;
 import com.cbelhaffef.dajt.api.user.UserService;
 
-import com.cbelhaffef.dajt.dao.enums.StatusFolder;
+import com.cbelhaffef.dajt.api.vicitm.VictimRepo;
+import com.cbelhaffef.dajt.api.status.StatusFolder;
 import com.cbelhaffef.dajt.exception.ResourceAlreadyAddedException;
 import com.cbelhaffef.dajt.exception.ResourceNotFoundException;
-import com.cbelhaffef.dajt.dao.entities.Folder;
-import com.cbelhaffef.dajt.dao.entities.Status;
-import com.cbelhaffef.dajt.dao.entities.Accused;
-import com.cbelhaffef.dajt.dao.entities.Action;
-import com.cbelhaffef.dajt.dao.entities.Court;
-import com.cbelhaffef.dajt.models.folder.FolderListResponse;
-import com.cbelhaffef.dajt.dao.entities.Office;
-import com.cbelhaffef.dajt.dao.entities.User;
-import com.cbelhaffef.dajt.dao.entities.Victim;
-import com.cbelhaffef.dajt.dao.repositories.*;
+import com.cbelhaffef.dajt.api.status.Status;
+import com.cbelhaffef.dajt.api.accused.Accused;
+import com.cbelhaffef.dajt.api.action.Action;
+import com.cbelhaffef.dajt.api.court.Court;
+import com.cbelhaffef.dajt.api.office.Office;
+import com.cbelhaffef.dajt.api.user.User;
+import com.cbelhaffef.dajt.api.vicitm.Victim;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -105,7 +107,7 @@ public class FolderController {
             folder.setClosed(null);
         }
         if(folder.getCourt() != null && folder.getCourt().getId() != null){
-            Court court = courtRepo.findOne(folder.getCourt().getId());
+            Court court = courtRepo.getOne(folder.getCourt().getId());
             if(court != null){
                 court.getFolders().add(folder);
                 folder.setCourt(court);
@@ -200,7 +202,7 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.findOne(folderId);
+        Folder folderDb = folderRepo.getOne(folderId);
         if(folderDb == null){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
@@ -227,15 +229,15 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.findOne(folderId);
+        Folder folderDb = folderRepo.getOne(folderId);
         if(folderDb == null){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
 
         folderDb = setUpdaterFromAuthToken(folderDb);
 
-        folderDb.getVictims().removeIf(v -> v.getId() == victimId );
-        victimRepo.delete(victimId);
+        folderDb.getVictims().removeIf(v -> v.getId() == victimId);
+        victimRepo.delete(new Victim(victimId));
         folderDb = folderRepo.save(folderDb);
         return folderDb;
     }
@@ -250,7 +252,7 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.findOne(folderId);
+        Folder folderDb = folderRepo.getOne(folderId);
         if(folderDb == null){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
@@ -278,7 +280,7 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.findOne(folderId);
+        Folder folderDb = folderRepo.getOne(folderId);
         if(folderDb == null){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
@@ -286,7 +288,7 @@ public class FolderController {
         folderDb = setUpdaterFromAuthToken(folderDb);
 
         folderDb.getAccused().removeIf(a -> a.getId() == accusedId );
-        accusedRepo.delete(accusedId);
+        accusedRepo.delete(new Accused(accusedId));
 
         folderDb = folderRepo.save(folderDb);
 
@@ -303,7 +305,7 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.findOne(folderId);
+        Folder folderDb = folderRepo.getOne(folderId);
         if(folderDb == null){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
@@ -329,7 +331,7 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.findOne(folderId);
+        Folder folderDb = folderRepo.getOne(folderId);
         if(folderDb == null){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
@@ -382,7 +384,7 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.findOne(folderId);
+        Folder folderDb = folderRepo.getOne(folderId);
         if(folderDb == null){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }

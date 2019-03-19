@@ -1,7 +1,7 @@
 <div class="no-margin">
     <div  id="layout-topbar">
         <a class="menu-button" href="#">
-            <i class="fa fa-bars"></i>
+            <i class="pi pi-bars"></i>
         </a>
 
         <a class="logo" href="#/">
@@ -10,37 +10,28 @@
 
         <ul class="topbar-menu">
             <li class="ng-tns-c0-0">
-                <a class="active" routerLink="/home/legal_cases/folders" routerLinkActive="active" i18n>Affaires Judiciaires</a>
+                <a class="active" routerLink="/home/cases/folders" routerLinkActive="active" i18n>Affaires Judiciaires</a>
             </li>
         </ul>
 
         <ul class="topbar-menu actions">
-            <li class="ng-tns-c0-0">
-                <a class="nav-link nav-text" routerLink="/administration">
-                    <i class="fa fa-cog"></i>
-                    <span style="line-height: 50px;" i18n>
-                        Administration
-                    </span>
-                </a>
-            </li>
-            <li class="ng-tns-c0-0">
-                <a class="nav-link nav-text" routerLink="/logout" i18n-pToolTip pTooltip="Déconnexion">
-                    <span style="line-height: 50px;"><i class="fa fa-power-off"></i>
-                        &nbsp;{{userName}}
-                    </span>
-                </a>
+            <li>
+              <a class="nav-link nav-text" routerLink="/logout">
+                <i class="pi pi-sign-out" style="font-size: 23px;position:absolute;top:25%;left:5px"></i>
+                <span>&nbsp;{{userName}}</span>
+              </a>
             </li>
         </ul>
     </div>
 
     <nav class="subnav" >
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/home/legal_cases/folders" routerLinkActive="active" i18n>Liste des Dossiers</a>
+        <ul class="nav" style="justify-content: flex-end">
+            <li class="nav-item" style="margin-right: 2rem">
+                <a class="nav-link" routerLink="/home/cases/folders" routerLinkActive="active" i18n>Liste des Dossiers</a>
             </li>
 
             <!--<li class="nav-item">-->
-                <!--<a class="nav-link" routerLink="/home/legal_cases/advocates" routerLinkActive="active" i18n>Liste des Avocats</a>-->
+                <!--<a class="nav-link" routerLink="/home/cases/advocates" routerLinkActive="active" i18n>Liste des Avocats</a>-->
             <!--</li>-->
         </ul>
     </nav>

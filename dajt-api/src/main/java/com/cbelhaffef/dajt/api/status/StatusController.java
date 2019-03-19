@@ -1,10 +1,6 @@
 package com.cbelhaffef.dajt.api.status;
 
-import com.cbelhaffef.dajt.dao.entities.Status;
-import com.cbelhaffef.dajt.models.folder.FolderListResponse;
-import com.cbelhaffef.dajt.dao.entities.Status;
-import com.cbelhaffef.dajt.models.status.StatusListResponse;
-import com.cbelhaffef.dajt.dao.repositories.StatusRepo;
+import com.cbelhaffef.dajt.api.folder.FolderListResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

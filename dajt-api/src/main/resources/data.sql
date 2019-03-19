@@ -30,21 +30,29 @@ insert into action(action_id, code, name, description) VALUES
     (13, 'REQUEST_SUPPORTING_DOCUMENTS',          'طلب الوثائق الداعمة', 'Demande de pièces justificatives'),
     (14, 'REQUEST_ISSUANCE_BINDING_STATE', 'طلب إصدار بيان قابل للإنفاذ', 'Demande d\'emission d\'un état exécutoire');
 
+insert into role(role_id, name, code) values
+    (1, 'إجرائي', 'ROLE_ADMIN'),
+    (2, 'وكيل',   'ROLE_USER');
 
 /* User */
 insert into user
-    (user_id, username,           password,              firstname,       lastname,                 email,                role,    is_active,   sex,      office_id) values
-    (1,       'admin',            'admin',               'admin'         ,  'admin',             'admin@dajt.gouv.dz',      'ADMIN' ,   1,        null,      null),
-    (2,       'hkharbouche',      'changeme',            'houria'       ,  'kharbouche',        'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  null),
-    (3,       'souala',          'changeme',            'soumia'       ,  'ouala',              'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  2),
+    (user_id, username,           password,                                                                   firstname,        lastname,            email,                         enabled,   sex,      office_id) values
+    (1,       'admin',            '$2a$10$F.QTzKbl1Pwb9qf2BWg/5O.0HyugZ20S54mX0YX4us2fNSjVJtcA6',               'admin',          'admin',             'admin@dajt.gouv.dz',          true,      null,     1),
+    (2,       'agent',            '$2a$10$4SwvxQFk0/UFlg1ZTGPuX.DwMF.vdSaPiJVc.lmwkpFxGd4atIvOu',                'agent',          'agent',             'agent@dajt.gouv.dz',          true,      'MALE',    1);
+/*
+    (2,       'hkharbouche',      'changeme',            'houria'       ,  'kharbouche',        'admin@dajt.gouv.dz',      2,        true,     'MALE'  1);
+    (3,       'souala',           'changeme',            'soumia'       ,  'ouala',             'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  2),
     (4,       'caouina',          'changeme',            'chafia'       ,  'aouina',            'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  2),
     (5,       'kbenzaied',        'changeme',            'kenza'        ,  'benzaied',          'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  1),
     (6,       'alamara',          'changeme',            'ahmed'        ,  'lamara',            'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    1),
     (7,       'abelhaffef',       'changeme',            'abdelaziz'    ,  'belhaffef',         'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    1),
     (8,       'rderrasechouk',    'changeme',            'rahima'       ,  'derras echouk',     'admin@dajt.gouv.dz',       'USER' ,    1,        'FEMALE',  1),
     (9,       'faffifchaouche',   'changeme',            'farid'        ,  'affif chaouche',    'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2),
-    (10,       'mtabel',           'changeme',            'mourad'        ,  'tabel',            'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2),
-    (11,       'omohamedbanir',    'changeme',            'omar'        ,  'mohamed banir',      'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2);
+    (10,      'mtabel',           'changeme',            'mourad'       ,  'tabel',             'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2),
+    (11,      'omohamedbanir',    'changeme',            'omar'         ,  'mohamed banir',     'admin@dajt.gouv.dz',       'USER' ,    1,        'MALE',    2);
+*/
 
-
-
+insert into user_role(user_id, role_id) values
+   (1, 1),
+   (1, 2),
+   (2, 2);

@@ -10,19 +10,19 @@
         </div>
         <div class="ui-g-12 ui-md-10 aui-page-header-main">
             <div id="folder-number">
-                <a id="project-name-val" routerLink="/home/legal_cases/offices/{{folder.office.id}}">{{folder.office.name}}</a>
+                <a id="project-name-val" routerLink="/home/cases/offices/{{folder.office.id}}">{{folder.office.name}}</a>
                 &nbsp;&nbsp;/&nbsp;&nbsp;
-                <a class="issue-link" routerLink="/home/legal_cases/folders/{{folder.id}}" id="key-val" rel="10049">{{folder.number}}</a>
+                <a class="issue-link" routerLink="/home/cases/folders/{{folder.id}}" id="key-val" rel="10049">{{folder.number}}</a>
             </div>
             <h1 id="summary-val">{{folder.offence}}</h1>
         </div>
         <!-- return button-->
         <div class="ui-g-12 ui-md-1 aui-page-header-actions">
             <button pButton type="button"
-                    routerLink="/home/legal_cases/folders"
+                    routerLink="/home/cases/folders"
                     i18n-label
                     label="Retour"
-                    icon="fa fa-undo"
+                    icon="pi pi-undo"
                     class="ui-button-secondary margin-top-10">
             </button>
         </div>
@@ -38,7 +38,7 @@
                         (click)="overlayPanel.show($event);showAssignUserDropdown()"
                         i18n-label
                         label="Assigner"
-                        icon="fa fa-users"
+                        icon="pi pi-users"
                         class="ui-button-secondary">
                 </button>
                 <!-- assigne to me -->
@@ -46,7 +46,7 @@
                         (click)="assignUserToMe(folder)"
                         i18n-label
                         label="Me l'assigner"
-                        icon="fa fa-child"
+                        icon="pi pi-child"
                         class="ui-button-secondary">
                 </button>
             </div>
@@ -64,7 +64,7 @@
                     <div class="ui-g-1 toggle-title" i18n>Détail</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-pencil" style="cursor: pointer"
+                        <i class="pi pi-pencil" style="cursor: pointer"
                            (click)="showHideUpdateDetail()">
                         </i>
                     </div>
@@ -152,7 +152,7 @@
                                     </div>
                                     <div class="ui-grid-col-4">
                                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!status.valid && status.dirty">
-                                            <i class="fa fa-close"></i>
+                                            <i class="pi pi-close"></i>
                                             le status est requie
                                         </div>
                                     </div>
@@ -169,7 +169,7 @@
                                     </div>
                                     <div class="ui-grid-col-4">
                                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!priority.valid && priority.dirty">
-                                            <i class="fa fa-close"></i>
+                                            <i class="pi pi-close"></i>
                                             la Priorité est requise
                                         </div>
                                     </div>
@@ -196,7 +196,7 @@
                                     </div>
                                     <div class="ui-grid-col-4">
                                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!court.valid && court.dirty">
-                                            <i class="fa fa-close"></i>
+                                            <i class="pi pi-close"></i>
                                             le Tribunal est requie
                                         </div>
                                     </div>
@@ -224,7 +224,7 @@
                                     <div class="ui-grid-col-3">
                                         <button pButton type="submit"
                                                 i18n-label label="valider"
-                                                icon="fa fa-check"
+                                                icon="pi pi-check"
                                                 [disabled]="!updateDetailFolderForm.valid"
                                                 class="ui-button-info">
                                         </button>
@@ -232,7 +232,7 @@
                                     <div class="ui-grid-col-3">
                                          <button pButton type="butotn"
                                                  i18n-label label="Annuler"
-                                                 icon="fa fa-close"
+                                                 icon="pi pi-close"
                                                  (click)="closeDetailUpdating()"
                                                  class="ui-button-danger">
                                          </button>
@@ -252,7 +252,7 @@
                     <div class="ui-g-1 toggle-title" i18n>Victimes</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-pencil pointer"
+                        <i class="pi pi-pencil pointer"
                            (click)="showHideUpdateVictims()">
                         </i>
                     </div>
@@ -265,10 +265,10 @@
                         <button pButton type="button"
                                 (click)="addVictim(folder, victim)"
                                 class="btn btn-icon"
-                                icon="fa fa-check">
+                                icon="pi pi-check">
                         </button>
                         <button pButton type="button"
-                                icon="fa fa-close"
+                                icon="pi pi-close"
                                 (click)="closeVictimsUpdating()">
                         </button>
                     </div>
@@ -277,7 +277,7 @@
                             <li class="list-item wrap" *ngFor="let v of folder.victims">
                                 <span class="detail-value">{{v.name}}</span>
                                 &nbsp;
-                                <i class="fa fa-trash pointer"
+                                <i class="pi pi-trash pointer"
                                     *ngIf="showUpdateVictims"
                                     (click)="removeVictim(folder, v)">
                                 </i>
@@ -293,7 +293,7 @@
                     <div class="ui-g-1 toggle-title" i18n>Coupables</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-pencil" (click)="showHideUpdateAccused()"></i>
+                        <i class="pi pi-pencil" (click)="showHideUpdateAccused()"></i>
                     </div>
                 </div>
                 <div class="mod-content">
@@ -303,10 +303,10 @@
                         <button pButton type="button"
                                 (click)="addAccused(folder, accused)"
                                 class="btn btn-icon"
-                                icon="fa fa-check">
+                                icon="pi pi-check">
                         </button>
                         <button pButton type="button"
-                                icon="fa fa-close"
+                                icon="pi pi-close"
                                 class="btn btn-icon"
                                 (click)="closeAccusedUpdating()">
                         </button>
@@ -316,7 +316,7 @@
                             <li class="list-item wrap" *ngFor="let acc of folder.accused">
                                 <span class="detail-value">{{acc.name}}</span>
                                 &nbsp;
-                                <i class="fa fa-trash pointer"
+                                <i class="pi pi-trash pointer"
                                    *ngIf="showUpdateAccused"
                                    (click)="removeAccused(folder, acc)">
                                 </i>
@@ -332,7 +332,7 @@
                     <div class="ui-g-1 toggle-title" i18n>Actions</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-pencil" (click)="showHideUpdateActions()">
+                        <i class="pi pi-pencil" (click)="showHideUpdateActions()">
 
                         </i>
                     </div>
@@ -355,10 +355,10 @@
                         </p-dropdown>
                         <button pButton type="submit"
                                 class="btn btn-icon"
-                                icon="fa fa-check">
+                                icon="pi pi-check">
                         </button>
                         <button pButton type="button"
-                                icon="fa fa-close"
+                                icon="pi pi-close"
                                 (click)="closeActionsUpdating()">
                         </button>
                     </div>
@@ -366,7 +366,7 @@
                         <ul class="property-list">
                             <li class="list-item wrap" *ngFor="let a of folder.actions">
                                 <span class="detail-value">{{a.name}}</span>
-                                <i class="fa fa-trash pointer"
+                                <i class="pi pi-trash pointer"
                                    *ngIf="showUpdateActions"
                                    (click)="removeAction(folder, ac)">
                                 </i>
@@ -383,7 +383,7 @@
                     <div class="ui-g-1 toggle-title" i18n>Commentaires</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="fa fa-plus" (click)="showHideUpdateComments()">
+                        <i class="pi pi-plus" (click)="showHideUpdateComments()">
                         </i>
                     </div>
                 </div>
@@ -515,7 +515,7 @@
             </ng-template>
         </p-dropdown>
         <button type="button" class="btn btn-icon" (click)="assignUser(folder,selectedUser)">
-            <i class="fa fa-check"></i>
+            <i class="pi pi-check"></i>
         </button>
     </div>
 

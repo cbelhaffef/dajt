@@ -6,6 +6,7 @@ USE dajt;
 CREATE TABLE office (
     office_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
+    code VARCHAR(255),
     PRIMARY KEY (office_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -13,14 +14,13 @@ CREATE TABLE office (
 CREATE TABLE user (
     user_id     INT NOT NULL,
     username    NVARCHAR(20) NOT NULL,
-    password    NVARCHAR(20) NOT NULL,
+    password    NVARCHAR(255) NOT NULL,
     firstname  NVARCHAR(50) ,
     lastname   NVARCHAR(50) ,
     email       NVARCHAR(70) ,
-    role        NVARCHAR(20) ,
     sex         NVARCHAR(20) ,
     office_id   INT ,
-    is_active   TINYINT  ,
+    enabled    TINYINT  ,
     CONSTRAINT fk_user__office FOREIGN KEY (office_id) REFERENCES office(office_id),
     CONSTRAINT user_id PRIMARY KEY(user_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -29,6 +29,7 @@ CREATE TABLE user (
 CREATE TABLE role (
     role_id INT NOT NULL  AUTO_INCREMENT,
     name NVARCHAR (255) NOT NULL,
+    code NVARCHAR (60) NOT NULL,
     PRIMARY KEY (role_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -37,7 +38,6 @@ CREATE TABLE user_role (
     user_id INT NOT NULL,
     role_id int NOT NULL,
     PRIMARY KEY (`user_id`,`role_id`),
-    /*KEY `role_id` (`role_id`),*/
     CONSTRAINT fk_user__role FOREIGN KEY (user_id) REFERENCES user(user_id),
     CONSTRAINT fk_role__user FOREIGN KEY (role_id) REFERENCES role(role_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

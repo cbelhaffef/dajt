@@ -1,9 +1,6 @@
 package com.cbelhaffef.dajt.api.action;
 
-import com.cbelhaffef.dajt.dao.entities.Action;
-import com.cbelhaffef.dajt.models.action.ActionListResponse;
-import com.cbelhaffef.dajt.models.folder.FolderListResponse;
-import com.cbelhaffef.dajt.dao.repositories.ActionRepo;
+import com.cbelhaffef.dajt.api.folder.FolderListResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

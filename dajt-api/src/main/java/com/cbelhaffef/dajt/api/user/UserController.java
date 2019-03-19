@@ -1,10 +1,7 @@
 package com.cbelhaffef.dajt.api.user;
 
-import com.cbelhaffef.dajt.models.folder.FolderListResponse;
-import com.cbelhaffef.dajt.models.response.OperationResponse;
-import com.cbelhaffef.dajt.dao.entities.User;
-import com.cbelhaffef.dajt.models.user.UserListResponse;
-import com.cbelhaffef.dajt.models.user.UserResponse;
+import com.cbelhaffef.dajt.api.auth.OperationResponse;
+import com.cbelhaffef.dajt.api.folder.FolderListResponse;
 import com.google.common.base.Strings;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

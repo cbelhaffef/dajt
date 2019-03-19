@@ -1,10 +1,7 @@
 package com.cbelhaffef.dajt.api.vicitm;
 
-import com.cbelhaffef.dajt.models.folder.FolderListResponse;
-import com.cbelhaffef.dajt.dao.entities.Victim;
+import com.cbelhaffef.dajt.api.folder.FolderListResponse;
 
-import com.cbelhaffef.dajt.models.victim.VictimListResponse;
-import com.cbelhaffef.dajt.dao.repositories.VictimRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from './services/api/auth.service';
-import {UserInfoService} from './services/user-info.service';
+import {UserinfoService} from './services/userinfo.service';
 import {filter, map, mergeMap, switchMap} from 'rxjs/operators';
 
 
@@ -23,9 +23,9 @@ export class HomeComponent    {
         private router:  Router,
         private activeRoute:  ActivatedRoute,
         private loginService:  AuthService,
-        private userInfoService:  UserInfoService) {
+        private userInfoService:  UserinfoService) {
 
-        // This block is to retrieve the data from the routes (routes are defined in app-routing.module.ts)
+        // This block is to retrieve the data from the routes (routes are defined in app.routing.ts)
         router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map( _ => this.router.routerState.root),

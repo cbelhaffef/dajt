@@ -11,12 +11,12 @@
         <target>الشؤون القضائية</target>
       </trans-unit>
       <trans-unit id="5bf52e5d5f2c9e42a70ce12f6289fdd2555bb268" datatype="html">
-        <source>Administration</source>
+        <source>Déconnection</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/home.component.ts</context>
           <context context-type="linenumber">21</context>
         </context-group>
-        <target>قائمة الإدارة</target>
+        <target>انفصال</target>
       </trans-unit>
       <trans-unit id="40e0bdcfee016d4bca0bd27d398456b44ac3c6d5" datatype="html">
         <source>Liste des Dossiers</source>

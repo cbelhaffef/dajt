@@ -1,7 +1,5 @@
 package com.cbelhaffef.dajt.api.user;
 
-import com.cbelhaffef.dajt.dao.entities.User;
-import com.cbelhaffef.dajt.dao.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,7 +52,7 @@ public class UserService {
 	}
 
 	public User getUserById(Long id){
-	    return userRepo.findOne(id);
+	    return userRepo.getOne(id);
 }
 
 	public Page<User> getUsers(Pageable pageable){

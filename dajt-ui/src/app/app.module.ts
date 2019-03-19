@@ -7,7 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule, MatProgressSpinnerModule} from '@angular/material';
 import {TableModule} from 'primeng/table';
 // Local App Modules
-import {AppRoutingModule} from './app-routing.module';
+import {AppRouting} from './app.routing';
 // Directives
 import {TrackScrollDirective} from './directives/track_scroll/track_scroll.directive';
 // Components
@@ -22,12 +22,12 @@ import {LogoutComponent} from './pages/logout/logout.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 // Services
 import {AppConfig} from './app-config';
-import {UserInfoService} from './services/user-info.service';
-import {AuthGuard} from './services/auth_guard.service';
+import {UserinfoService} from './services/userinfo.service';
+import {AuthGuardService} from './services/authguard.service';
 import {ApiRequestService} from './services/api/api-request.service';
 import {TranslateService} from './services/api/translate.service';
 import {AuthService} from './services/api/auth.service';
-import {LegalCasesComponent} from './pages/legal_cases/legal_cases.component';
+import {LegalCasesComponent} from './pages/cases/cases.component';
 import {TransmissionsComponent} from './pages/transmissions/transmissions.component';
 import {TransmissionFileComponent} from './pages/transmission_file/transmission_file.component';
 import {AdvocatesComponent} from './pages/advocates/advocate.component';
@@ -99,7 +99,7 @@ registerLocaleData(localeAr, 'ar');
 
 
     // Local App Modules
-    AppRoutingModule
+    AppRouting
   ],
   entryComponents:  [FoldersCreateDialogComponent],
   declarations:  [
@@ -129,9 +129,9 @@ registerLocaleData(localeAr, 'ar');
   ],
 
   providers:  [
-    AuthGuard,
+    AuthGuardService,
     SharedService,
-    UserInfoService,
+    UserinfoService,
     UserService,
     TranslateService,
     ApiRequestService,

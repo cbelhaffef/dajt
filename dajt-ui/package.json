@@ -3,9 +3,9 @@
   "version": "1.1.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --aot",
+    "start": "ng serve --aot --configuration=ar-DZ",
     "build": "ng build --aot",
-    "build:prod": "ng build -prod --aot -prod --output-path dajt-ui/META-INF/resources",
+    "build:prod": "ng build --prod --aot --configuration=ar-DZ --outputPath dist/META-INF/resources",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

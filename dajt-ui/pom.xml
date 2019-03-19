@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.cbelhaffef.dajt</groupId>
-        <artifactId>dajt-old</artifactId>
+        <artifactId>dajt</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -18,12 +18,27 @@
     </properties>
 
     <build>
-        <resources>
-            <resource>
-                <directory>ui-src</directory>
-            </resource>
-        </resources>
+      <resources>
+        <resource>
+          <directory>dist</directory>
+        </resource>
+      </resources>
         <plugins>
+          <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>2.5</version>
+            <configuration>
+              <filesets>
+                <fileset>
+                  <directory>dist</directory>
+                  <includes>
+                    <include>*</include>
+                  </includes>
+                </fileset>
+              </filesets>
+            </configuration>
+          </plugin>
+
             <!-- *** FRONTEND PLUGIN *** -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -36,7 +51,7 @@
                         </goals>
                         <configuration>
                             <nodeVersion>v10.15.0</nodeVersion>
-                            <npmVersion>v6.5.0</npmVersion>
+                            <npmVersion>6.4.1</npmVersion>
                         </configuration>
                     </execution>
                     <execution>
@@ -48,38 +63,38 @@
                             <arguments>install</arguments>
                         </configuration>
                     </execution>
+                    <!--<execution>-->
+                        <!--<id>npm lint</id>-->
+                        <!--<goals>-->
+                            <!--<goal>npm</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<arguments>lint</arguments>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                     <execution>
-                        <id>npm lint</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>lint</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>npm build</id>
+                        <id>npm run build:prod</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>build</arguments>
+                            <arguments>run build:prod</arguments>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>npm test</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>test</phase>
-                        <configuration>
-                            <arguments>test</arguments>
-                            <environmentVariables>
-                                <CI>true</CI>
-                            </environmentVariables>
-                        </configuration>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>npm test</id>-->
+                        <!--<goals>-->
+                            <!--<goal>npm</goal>-->
+                        <!--</goals>-->
+                        <!--<phase>test</phase>-->
+                        <!--<configuration>-->
+                            <!--<arguments>test</arguments>-->
+                            <!--<environmentVariables>-->
+                                <!--<CI>true</CI>-->
+                            <!--</environmentVariables>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>

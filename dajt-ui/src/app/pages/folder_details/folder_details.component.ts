@@ -10,7 +10,7 @@ import {AccusedService} from '../../services/api/accused.service';
 import {ActionService} from '../../services/api/action.service';
 import {Message} from 'primeng/api';
 import {Court} from '../../models/court.model';
-import {UserInfoService} from '../../services/user-info.service';
+import {UserinfoService} from '../../services/userinfo.service';
 import {StatusService} from '../../services/api/status.service';
 import {PriorityService} from '../../services/api/priority.service';
 import {CommonService} from '../../services/common.service';
@@ -81,7 +81,7 @@ export class FolderDetailsComponent implements OnInit  {
                 private courtService:  CourtService,
                 private commonService: CommonService,
                 private userService: UserService,
-                private userInfoService: UserInfoService,
+                private userInfoService: UserinfoService,
                 private messageService: MessageService,
                 private sharedService: SharedService,
                 private fb:  FormBuilder) {

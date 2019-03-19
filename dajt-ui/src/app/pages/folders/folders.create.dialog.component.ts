@@ -8,7 +8,7 @@ import {FolderService} from '../../services/api/folder.service';
 import {any} from 'codelyzer/util/function';
 import {CourtService} from '../../services/api/court.service';
 import {UserService} from '../../services/api/user.service';
-import {UserInfoService} from '../../services/user-info.service';
+import {UserinfoService} from '../../services/userinfo.service';
 import {Victim} from '../../models/victim.model';
 import {Accused} from '../../models/accused.model';
 import {Court} from '../../models/court.model';
@@ -56,7 +56,7 @@ export class FoldersCreateDialogComponent implements OnInit {
         public statusService: StatusService,
         public priorityService: PriorityService,
         public userService:  UserService,
-        public userInfoService:  UserInfoService,
+        public userInfoService:  UserinfoService,
         public sharedService: SharedService,
         public dialogRef:  MatDialogRef<FoldersCreateDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data:  any) { }

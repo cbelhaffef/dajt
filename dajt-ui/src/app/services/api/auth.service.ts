@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, Subject} from 'rxjs';
-import {LoginInfoInStorage, UserInfoService} from '../user-info.service';
+import {LoginInfoInStorage, UserinfoService} from '../userinfo.service';
 import {ApiRequestService} from './api-request.service';
 
 export interface AuthRequestParam {
@@ -12,11 +12,11 @@ export interface AuthRequestParam {
 @Injectable()
 export class AuthService {
 
-    public landingPage = '/home/legal_cases/folders';
+    public landingPage = '/home/cases/folders';
 
     constructor(
         private router:  Router,
-        private userInfoService:  UserInfoService,
+        private userInfoService:  UserinfoService,
         private apiRequest:  ApiRequestService) {}
 
 
@@ -32,7 +32,7 @@ export class AuthService {
         let loginDataSubject:  Subject<any> = new Subject<any>();
         let loginInfoReturn:  LoginInfoInStorage; // Object that we want to send back to Login Page
 
-        this.apiRequest.post('session', bodyData)
+        this.apiRequest.post('api/auth/signin', bodyData)
             .subscribe(jsonResp => {
                 if (jsonResp !== undefined && jsonResp !== null && jsonResp.operationStatus === 'SUCCESS') {
                     // Create a success object that we want to send back to login page
@@ -41,17 +41,17 @@ export class AuthService {
                         'message'    :  jsonResp.operationMessage,
                         'landingPage':  this.landingPage,
                         'user'       :   {
-                            'userId'     :  jsonResp.item.userId,
-                            'email'      :  jsonResp.item.emailAddress,
-                            'username'   :  jsonResp.item.username,
-                            'firstname'  :  jsonResp.item.firsname,
-                            'lastname'   :  jsonResp.item.lastname,
-                            'displayName':  jsonResp.item.firstname + ' ' + jsonResp.item.lastname,
+                            'userId'     :  jsonResp.item.userPrinciple.id,
+                            'email'      :  jsonResp.item.userPrinciple.email,
+                            'username'   :  jsonResp.item.userPrinciple.username,
+                            'firstname'  :  jsonResp.item.userPrinciple.firsname,
+                            'lastname'   :  jsonResp.item.userPrinciple.lastname,
+                            'displayName':  jsonResp.item.userPrinciple.firstname + ' ' + jsonResp.item.userPrinciple.lastname,
                             'token'      :  jsonResp.item.token,
                         }
                     };
 
-                    // store username and jwt token in session storage to keep user logged in between page refreshes
+                    // store username and jwt token in auth storage to keep user logged in between page refreshes
                     this.userInfoService.storeUserInfo(JSON.stringify(loginInfoReturn.user));
                 } else {
                     // Create a faliure object that we want to send back to login page

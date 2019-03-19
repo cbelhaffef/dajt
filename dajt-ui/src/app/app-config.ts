@@ -8,12 +8,12 @@ export class AppConfig {
     // Provide all the Application Configs here
 
     public version = '1.0.0';
-    public locale  = 'en-US';
-    public currencyFormat = { style: 'currency', currency:  'USD' };
+    public locale  = 'ar-DZ';
+    public currencyFormat = { style: 'currency', currency:  'DZ' };
     public dateFormat     = { year: 'numeric', month:  'short', day:  'numeric'};
 
     // API Related configs
-    public apiPort = '9119';
+    public apiPort = '8080';
     public apiProtocol: string;
     public apiHostName: string;
     public baseApiPath: string;
