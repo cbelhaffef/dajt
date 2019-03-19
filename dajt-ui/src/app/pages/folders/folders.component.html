@@ -106,7 +106,8 @@
             <p-table [value]="listFolders?.items" [(selection)]="selectedFolders"
                      [lazy]="true" (onLazyLoad)="loadFoldersLazy($event)" [paginator]="true"
                      [rows]="10" [totalRecords]="listFolders?.totalItems" [loading]="loading"
-                     i18n-emptymessage emptymessage="Aucun résultat trouvé">
+                     i18n-emptymessage emptymessage="Aucun résultat trouvé"
+                     dir="rtl">
                 <ng-template pTemplate="caption" >
                     <span i18n>Dossiers</span>
                     <span class="badge badge-success">{{listFolders?.totalItems}}</span>&nbsp;
@@ -144,22 +145,22 @@
                         <td>
                             <ul class="list compact">
                                 <li  *ngFor="let v of folder.victims">
-                                    {{v.name}}
+                                    {{v?.name}}
                                 </li>
                             </ul>
                         </td>
                         <td>
                             <ul class="list compact">
                                 <li  *ngFor="let g of folder.accused">
-                                    {{g.name}}
+                                    {{g?.name}}
                                 </li>
                             </ul>
                         </td>
                         <td>
-                            {{folder.court.name}}
+                            {{folder?.court?.name}}
                         </td>
                         <td>
-                            {{folder.updated | date : 'longDate':'':'ar-DZ'}}
+                            {{folder?.updated | date : 'longDate':'':'ar-DZ'}}
                         </td>
                         <td>
                             {{folder?.assignee?.firstname}}&nbsp;{{folder?.assignee?.lastname}}
