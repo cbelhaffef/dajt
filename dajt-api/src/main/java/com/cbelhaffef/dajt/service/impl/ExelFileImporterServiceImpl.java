@@ -96,9 +96,9 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
                 throw new FileNotFoundException(msg);
             }
 
-            Optional<Import> importDb = importRepo.findByFileNameAndStatus(fileExel.getAbsolutePath(), StatusImport.FINICHED);
+            List<Import> imports= importRepo.findByFileNameAndStatus(fileExel.getAbsolutePath(), StatusImport.FINICHED);
 
-            if(importDb.isPresent()){
+            if(!imports.isEmpty()){
                 String msg = "le fichier a déja été importé dans le system.";
                 throw new FileAlreadyExistsException(msg);
             }

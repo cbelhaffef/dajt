@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
-@Table(name="imports")
+@Table(name="import")
 public class Import {
 
     @Id
