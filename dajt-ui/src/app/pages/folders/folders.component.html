@@ -4,7 +4,7 @@
 
     <div class="ui-g" >
         <div class="ui-g-1"></div>
-        <div class="ui-g-10">
+        <div class="ui-g-10" dir="rtl">
             <form id="folder-form-search" #filterFoldersForm="ngForm" (ngSubmit)="onSubmitFilterFoldersForm(filterFoldersForm)">
                 <div class="ui-g">
                     <div class="ui-g-1 text-left">
@@ -109,9 +109,9 @@
                      i18n-emptymessage emptymessage="Aucun résultat trouvé"
                      dir="rtl">
                 <ng-template pTemplate="caption" >
-                    <span i18n>Dossiers</span>
-                    <span class="badge badge-success">{{listFolders?.totalItems}}</span>&nbsp;
-                    <span i18n>Il y'a</span>&nbsp;
+                  <span i18n>Il y'a</span>&nbsp;
+                  <span class="badge badge-success">{{listFolders?.totalItems}}</span>&nbsp;
+                  <span i18n>Dossiers</span>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
@@ -234,10 +234,10 @@
                     i18n-placeholder="Choisissez votre action"
                     dir="rtl">
             <ng-template let-item pTemplate="selectedAction">
-                <span style="vertical-align:middle">{{item.label}}</span>
+                <span style="vertical-align:middle">{{item.name}}</span>
             </ng-template>
-            <ng-template let-action pTemplate="item">
-                <span>{{action.label}}</span>
+            <ng-template let-action pTemplate="item" dir="rtl">
+                <span>{{action.name}}</span>
             </ng-template>
         </p-dropdown>
         <button type="button" class="btn btn-icon" (click)="addAction(selectedFolders,selectedAction)">

@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.cbelhaffef.dajt.service.ExelFileImporterService;
@@ -63,7 +64,8 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
     @Autowired
     private PriorityRepo priorityRepo;
 
-    private final static String ARCHIVE_DIRECTORY = "/mnt/imports/archives";
+    @Value("${folder.archives.path}")
+    private String folderArchivePath;
 
     private final static String TAG_DATE_OF_OFFENCE = "بتاريـخ";
     private final static String TAG_UNKOWN = "مجهول";
@@ -128,7 +130,8 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             String yearOfFolders = args[2];
 
             Long OfficeId = new Long(officeNumber.substring(1));
-            Office office = officeRepo.getOne(OfficeId);
+            Optional<Office> officeOptional = officeRepo.findById(OfficeId);
+            Office office = officeOptional.isPresent() ? officeOptional.get() : null;
 
             log.info("============= Debut de l'importation pour le bureau '" + office.getName()+ "' du fichier : " + fileExel.getAbsolutePath());
 
@@ -304,13 +307,13 @@ public class ExelFileImporterServiceImpl implements ExelFileImporterService {
             imp.setMessage("le fichier " + filePath.getFileName() + " a été importé avec succées");
             imp.setStatus(StatusImport.FINICHED);
             imp = importRepo.save(imp);
-            File dirArchive = new File(ARCHIVE_DIRECTORY);
+            File dirArchive = new File(folderArchivePath);
             if(!dirArchive.exists()){
                 dirArchive.mkdirs() ;
             }
             String toDayString = formatterArch.format(new Date());
 
-            File direArchiveToDay = new File(ARCHIVE_DIRECTORY + File.separator + toDayString);
+            File direArchiveToDay = new File(folderArchivePath + File.separator + toDayString);
             if(!direArchiveToDay.exists()){
                 direArchiveToDay.mkdirs() ;
             }

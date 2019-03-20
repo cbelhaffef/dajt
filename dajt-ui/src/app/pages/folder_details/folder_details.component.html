@@ -10,11 +10,11 @@
         </div>
         <div class="ui-g-12 ui-md-10 aui-page-header-main">
             <div id="folder-number">
-                <a id="project-name-val" routerLink="/home/cases/offices/{{folder.office.id}}">{{folder.office.name}}</a>
+                <a id="project-name-val" routerLink="/home/cases/offices/{{folder?.office?.id}}">{{folder?.office?.name}}</a>
                 &nbsp;&nbsp;/&nbsp;&nbsp;
-                <a class="issue-link" routerLink="/home/cases/folders/{{folder.id}}" id="key-val" rel="10049">{{folder.number}}</a>
+                <a class="issue-link" routerLink="/home/cases/folders/{{folder?.id}}" id="key-val" rel="10049">{{folder?.number}}</a>
             </div>
-            <h1 id="summary-val">{{folder.offence}}</h1>
+            <h1 id="summary-val">{{folder?.offence}}</h1>
         </div>
         <!-- return button-->
         <div class="ui-g-12 ui-md-1 aui-page-header-actions">
@@ -22,8 +22,9 @@
                     routerLink="/home/cases/folders"
                     i18n-label
                     label="Retour"
-                    icon="pi pi-undo"
-                    class="ui-button-secondary margin-top-10">
+                    icon="pi pi-arrow-circle-left"
+                    class="ui-button-secondary margin-top-10"
+                    style="margin-left: 12%">
             </button>
         </div>
     </div>
@@ -39,14 +40,15 @@
                         i18n-label
                         label="Assigner"
                         icon="pi pi-users"
-                        class="ui-button-secondary">
+                        class="ui-button-secondary"
+                        style="margin-left: 2%">
                 </button>
                 <!-- assigne to me -->
                 <button pButton type="button"
                         (click)="assignUserToMe(folder)"
                         i18n-label
                         label="Me l'assigner"
-                        icon="pi pi-child"
+                        icon="pi pi-calendar-plus"
                         class="ui-button-secondary">
                 </button>
             </div>
@@ -64,7 +66,7 @@
                     <div class="ui-g-1 toggle-title" i18n>Détail</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="pi pi-pencil" style="cursor: pointer"
+                        <i class="pi pi-pencil pointer" style="cursor: pointer"
                            (click)="showHideUpdateDetail()">
                         </i>
                     </div>
@@ -95,8 +97,8 @@
                                     </div>
                                     <div class="ui-g-8">
                                         <span class="wrap" id="priorityValue">
-                                            <span class="detail-value">{{folder.priority?.name}}</span>&nbsp;
-                                            <img alt="" [src]="folder.priority?.icon" height="30" width="30" class="icon-value">&nbsp;
+                                            <span class="detail-value">{{folder?.priority?.name}}</span>&nbsp;
+                                            <img alt="" [src]="folder?.priority?.icon" height="30" width="30" class="icon-value">&nbsp;
 
                                         </span>
 
@@ -114,7 +116,7 @@
                                     </div>
                                     <div class="ui-g-8">
                                         <span class="wrap" id="courtValue" >
-                                            <span class="detail-value">{{folder.court.name}}</span>
+                                            <span class="detail-value">{{folder?.court?.name}}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -125,7 +127,7 @@
                                     </div>
                                     <div class="ui-g-8">
                                         <span class="wrap"  id="administrationConcernedValue">
-                                            <div class="detail-value" [innerHTML]="displayBreakLine(folder.administrationConcerned)"></div>
+                                            <div class="detail-value" [innerHTML]="displayBreakLine(folder?.administrationConcerned)"></div>
                                         </span>
                                     </div>
                                 </div>
@@ -152,7 +154,7 @@
                                     </div>
                                     <div class="ui-grid-col-4">
                                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!status.valid && status.dirty">
-                                            <i class="pi pi-close"></i>
+                                            <i class="pi pi-times"></i>
                                             le status est requie
                                         </div>
                                     </div>
@@ -169,7 +171,7 @@
                                     </div>
                                     <div class="ui-grid-col-4">
                                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!priority.valid && priority.dirty">
-                                            <i class="pi pi-close"></i>
+                                            <i class="pi pi-times"></i>
                                             la Priorité est requise
                                         </div>
                                     </div>
@@ -195,8 +197,8 @@
                                         </p-autoComplete>
                                     </div>
                                     <div class="ui-grid-col-4">
-                                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!court.valid && court.dirty">
-                                            <i class="pi pi-close"></i>
+                                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!court?.valid && court?.dirty">
+                                            <i class="pi pi-times"></i>
                                             le Tribunal est requie
                                         </div>
                                     </div>
@@ -232,7 +234,7 @@
                                     <div class="ui-grid-col-3">
                                          <button pButton type="butotn"
                                                  i18n-label label="Annuler"
-                                                 icon="pi pi-close"
+                                                 icon="pi pi-times"
                                                  (click)="closeDetailUpdating()"
                                                  class="ui-button-danger">
                                          </button>
@@ -261,20 +263,21 @@
                 <div class="mod-content">
                     <!--  victims values -->
                     <div id="victimsUpdating" [hidden]="!showUpdateVictims">
-                        <input id="victims" name="victims" [(ngModel)]="victim" (keyup.enter)="addVictim(folder, victim)">
+                        <input id="victims" name="victims" [(ngModel)]="victim" (keyup.enter)="addVictim(folder, victim)" style="margin-left: 1%">
                         <button pButton type="button"
                                 (click)="addVictim(folder, victim)"
                                 class="btn btn-icon"
-                                icon="pi pi-check">
+                                icon="pi pi-check"
+                                style="margin-left: 1%">
                         </button>
                         <button pButton type="button"
-                                icon="pi pi-close"
+                                icon="pi pi-times"
                                 (click)="closeVictimsUpdating()">
                         </button>
                     </div>
                     <div id="victimsValues">
                         <ul class="property-list">
-                            <li class="list-item wrap" *ngFor="let v of folder.victims">
+                            <li class="list-item wrap" *ngFor="let v of folder?.victims">
                                 <span class="detail-value">{{v.name}}</span>
                                 &nbsp;
                                 <i class="pi pi-trash pointer"
@@ -293,27 +296,27 @@
                     <div class="ui-g-1 toggle-title" i18n>Coupables</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="pi pi-pencil" (click)="showHideUpdateAccused()"></i>
+                        <i class="pi pi-pencil pointer" (click)="showHideUpdateAccused()"></i>
                     </div>
                 </div>
                 <div class="mod-content">
                     <!--  accused values -->
                     <div id="accusedUpdating" [hidden]="!showUpdateAccused">
-                        <input id="accused" name="accused" [(ngModel)]="accused" (keyup.enter)="addAccused(folder, accused)">
+                        <input id="accused" name="accused" [(ngModel)]="accused" (keyup.enter)="addAccused(folder, accused)" style="margin-left: 1%">
                         <button pButton type="button"
                                 (click)="addAccused(folder, accused)"
                                 class="btn btn-icon"
-                                icon="pi pi-check">
+                                icon="pi pi-check" style="margin-left: 1%">
                         </button>
                         <button pButton type="button"
-                                icon="pi pi-close"
+                                icon="pi pi-times"
                                 class="btn btn-icon"
                                 (click)="closeAccusedUpdating()">
                         </button>
                     </div>
                     <div id="AccusedValues">
                         <ul class="property-list">
-                            <li class="list-item wrap" *ngFor="let acc of folder.accused">
+                            <li class="list-item wrap" *ngFor="let acc of folder?.accused">
                                 <span class="detail-value">{{acc.name}}</span>
                                 &nbsp;
                                 <i class="pi pi-trash pointer"
@@ -332,7 +335,7 @@
                     <div class="ui-g-1 toggle-title" i18n>Actions</div>
                     <div class="ui-g-10 toggle-bar" style="width:90%"></div>
                     <div class="ui-g-1" style="width:2%">
-                        <i class="pi pi-pencil" (click)="showHideUpdateActions()">
+                        <i class="pi pi-pencil pointer" (click)="showHideUpdateActions()">
 
                         </i>
                     </div>
@@ -345,30 +348,32 @@
                                     [style]="{'width':'300px'}"
                                     filter="true"
                                     i18n-placeholder="Choisissez votre action"
-                                    dir="rtl">
+                                    dir="rtl"
+                                    style="margin-left: 1%">
                             <ng-template let-item pTemplate="selectedAction">
-                                <span style="vertical-align:middle">{{item.label}}</span>
+                                <span style="vertical-align:middle">{{item.name}}</span>
                             </ng-template>
-                            <ng-template let-action pTemplate="item">
-                                <span>{{action.label}}</span>
+                            <ng-template let-action pTemplate="item" dir="rtl">
+                                <span>{{action.name}}</span>
                             </ng-template>
                         </p-dropdown>
                         <button pButton type="submit"
                                 class="btn btn-icon"
-                                icon="pi pi-check">
+                                icon="pi pi-check"
+                                style="margin-left: 1%">
                         </button>
                         <button pButton type="button"
-                                icon="pi pi-close"
+                                icon="pi pi-times"
                                 (click)="closeActionsUpdating()">
                         </button>
                     </div>
                     <div id="actionsValues">
                         <ul class="property-list">
-                            <li class="list-item wrap" *ngFor="let a of folder.actions">
+                            <li class="list-item wrap" *ngFor="let a of folder?.actions">
                                 <span class="detail-value">{{a.name}}</span>
                                 <i class="pi pi-trash pointer"
                                    *ngIf="showUpdateActions"
-                                   (click)="removeAction(folder, ac)">
+                                   (click)="removeAction(folder, a)">
                                 </i>
                             </li>
                         </ul>
@@ -461,7 +466,7 @@
                         </div>
                         <div class="ui-g-8">
                             <span class="wrap" id="created">
-                                <div class="detail-value">{{folder.created | date : 'longDate':'':'ar'}}</div>
+                                <div class="detail-value">{{folder?.created | date : 'longDate':'':'ar'}}</div>
                             </span>
                         </div>
                     </div>
@@ -472,7 +477,7 @@
                         </div>
                         <div class="ui-g-8">
                             <span class="wrap"  id="updated">
-                                <div class="detail-value">{{folder.updated | date : 'longDate':'':'ar'}}</div>
+                                <div class="detail-value">{{folder?.updated | date : 'longDate':'':'ar'}}</div>
                             </span>
                         </div>
                     </div>
@@ -483,7 +488,7 @@
                         </div>
                         <div class="ui-g-8">
                             <span class="wrap" id="closed">
-                                <div class="detail-value">{{folder.closed | date : 'longDate':'':'ar'}}</div>
+                                <div class="detail-value">{{folder?.closed | date : 'longDate':'':'ar'}}</div>
                             </span>
                         </div>
                     </div>

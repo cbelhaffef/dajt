@@ -18,7 +18,7 @@ public class JwtProvider {
     private static final long VALIDITY_TIME_MS_LONG = 10 * 24 * 60 * 60 * 1000; // 10 days Validity
     private static final long VALIDITY_TIME_MS_SHORT =  2 * 60 * 60 * 1000; // 2 hours  validity
 
-    @Value("jwt.secret.key")
+    @Value("${jwt.secret.key}")
     private String jwtSecret;
 
     @Value("#{new Integer('${jwt.expiration}')}")

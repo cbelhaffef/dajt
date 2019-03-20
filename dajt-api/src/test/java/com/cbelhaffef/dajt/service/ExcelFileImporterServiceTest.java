@@ -70,7 +70,8 @@ public class ExcelFileImporterServiceTest {
         Office office = new Office();
         office.setId(1L);
         office.setName("B1");
-        Mockito.when(officeRepo.getOne(Mockito.anyLong())).thenReturn(office);
+        Optional<Office> officeOptional = Optional.of(office);
+        Mockito.when(officeRepo.findById(Mockito.anyLong())).thenReturn(officeOptional);
 
         Court court = new Court();
         court.setId(1L);

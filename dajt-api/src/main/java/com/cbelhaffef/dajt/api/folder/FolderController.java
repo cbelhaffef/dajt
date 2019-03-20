@@ -17,6 +17,7 @@ import com.cbelhaffef.dajt.api.court.Court;
 import com.cbelhaffef.dajt.api.office.Office;
 import com.cbelhaffef.dajt.api.user.User;
 import com.cbelhaffef.dajt.api.vicitm.Victim;
+import com.cbelhaffef.dajt.security.service.UserPrinciple;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -107,8 +108,9 @@ public class FolderController {
             folder.setClosed(null);
         }
         if(folder.getCourt() != null && folder.getCourt().getId() != null){
-            Court court = courtRepo.getOne(folder.getCourt().getId());
-            if(court != null){
+            Optional<Court> courtOptional = courtRepo.findById(folder.getCourt().getId());
+            if(courtOptional.isPresent()){
+                Court court = courtOptional.get();
                 court.getFolders().add(folder);
                 folder.setCourt(court);
             }
@@ -149,10 +151,11 @@ public class FolderController {
     public List<Folder> assignUser(@PathVariable("userId") Long userId, @RequestBody List<Long> foldersIds)
         throws ResourceNotFoundException {
 
-        User userDb = userService.getUserById(userId);
-        if(userDb == null){
+        Optional<User> userDbOptional = userService.getUserById(userId);
+        if(!userDbOptional.isPresent()){
             throw new ResourceNotFoundException("l'opérateur n'a pas été trouvé. Contactez votre Administrateur.");
         }
+        User userDb = userDbOptional.get();
 
         if(foldersIds == null || foldersIds.isEmpty()){
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
@@ -202,10 +205,11 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.getOne(folderId);
-        if(folderDb == null){
+        Optional<Folder> folderDbOptional = folderRepo.findById(folderId);
+        if(!folderDbOptional.isPresent()){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
+        Folder folderDb = folderDbOptional.get();
 
         if(folderDb.getVictims().contains(victim)){
           throw  new ResourceAlreadyAddedException("la victime : " + victim.getName() + " a déja été rajouter au dossier : " + folderDb.getNumber());
@@ -229,11 +233,11 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.getOne(folderId);
-        if(folderDb == null){
+        Optional<Folder> folderDbOptional = folderRepo.findById(folderId);
+        if(!folderDbOptional.isPresent()){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
-
+        Folder folderDb = folderDbOptional.get();
         folderDb = setUpdaterFromAuthToken(folderDb);
 
         folderDb.getVictims().removeIf(v -> v.getId() == victimId);
@@ -252,11 +256,11 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.getOne(folderId);
-        if(folderDb == null){
+        Optional<Folder> folderDbOptional = folderRepo.findById(folderId);
+        if(!folderDbOptional.isPresent()){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
-
+        Folder folderDb = folderDbOptional.get();
         if(folderDb.getAccused().contains(accused)) {
             throw  new ResourceAlreadyAddedException("l'accusé : " + accused.getName() + " a déja été rajouter au dossier : " + folderDb.getNumber());
         };
@@ -272,7 +276,7 @@ public class FolderController {
 
     @Transactional
     @ApiOperation(value = "remove accused from folder", response = Folder.class)
-    @RequestMapping(value="/folders/{folderId}/removeAccused/{victimId}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value="/folders/{folderId}/removeAccused/{accusedId}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Folder removeAccusedFromFolder(@PathVariable("folderId") Long folderId, @PathVariable("accusedId") Long accusedId)
         throws ResourceNotFoundException {
 
@@ -280,10 +284,11 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.getOne(folderId);
-        if(folderDb == null){
+        Optional<Folder> folderDbOptional = folderRepo.findById(folderId);
+        if(!folderDbOptional.isPresent()){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
+        Folder folderDb = folderDbOptional.get();
 
         folderDb = setUpdaterFromAuthToken(folderDb);
 
@@ -305,10 +310,11 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.getOne(folderId);
-        if(folderDb == null){
+        Optional<Folder> folderDbOptional = folderRepo.findById(folderId);
+        if(!folderDbOptional.isPresent()){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
+        Folder folderDb = folderDbOptional.get();
 
         if(folderDb.getActions().contains(action)) {
             throw  new ResourceAlreadyAddedException("l'action : " + action.getName() + " a déja été rajouter au dossier : " + folderDb.getNumber());
@@ -331,11 +337,11 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.getOne(folderId);
-        if(folderDb == null){
+        Optional<Folder> folderDbOptional = folderRepo.findById(folderId);
+        if(!folderDbOptional.isPresent()){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
-
+        Folder folderDb = folderDbOptional.get();
         folderDb = setUpdaterFromAuthToken(folderDb);
 
         folderDb.getActions().removeIf(a -> a.getId() == actionId );
@@ -384,15 +390,17 @@ public class FolderController {
             throw new ResourceNotFoundException("Aucun dossier n'a été séléctionné. Vérifier votre requête.");
         }
 
-        Folder folderDb = folderRepo.getOne(folderId);
-        if(folderDb == null){
+        Optional<Folder> folderDbOptional = folderRepo.findById(folderId);
+        if(!folderDbOptional.isPresent()){
             throw new ResourceNotFoundException("le dossier n'a pas été trouvée. Contactez votre Administrateur.");
         }
+        Folder folderDb = folderDbOptional.get();
 
-        User userDb = userService.getUserById(user.getUserId());
-        if(userDb == null){
-            throw new ResourceNotFoundException("Aucun utilisateur existe pour le nom : " + user.getUsername());
+        Optional<User> userDbOptional = userService.getUserById(user.getUserId());
+        if(!userDbOptional.isPresent()){
+            throw new ResourceNotFoundException("l'opérateur n'a pas été trouvé. Contactez votre Administrateur.");
         }
+        User userDb = userDbOptional.get();
 
         folderDb = setUpdaterFromAuthToken(folderDb);
 
@@ -404,8 +412,8 @@ public class FolderController {
 
     private Folder setUpdaterFromAuthToken(Folder folder){
         Authentication authToken = SecurityContextHolder.getContext().getAuthentication();
-        String username = (String)authToken.getPrincipal();
-        User user = userService.getUserInfoByUsername(username);
+        UserPrinciple userPrinciple = (UserPrinciple)authToken.getPrincipal();
+        User user = userService.getUserInfoByUsername(userPrinciple.getUsername());
         if(user != null){
             folder.setUpdater(user);
         }

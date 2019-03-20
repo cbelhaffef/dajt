@@ -2,6 +2,7 @@ package com.cbelhaffef.dajt.threads;
 
 import com.cbelhaffef.dajt.service.WatcherFolderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,8 @@ import java.io.IOException;
 @Scope("prototype")
 public class WatchFolderThread implements Runnable{
 
-    private final static String PATH_FOLDER_TO_WATCH = "/mnt/imports";
+    @Value("${folder.watch.path}")
+    private String folderWatchPath;
 
     @Autowired
     private WatcherFolderService watcherFolderService;
@@ -19,7 +21,7 @@ public class WatchFolderThread implements Runnable{
     @Override
     public void run() {
         try {
-            watcherFolderService.initWatch(PATH_FOLDER_TO_WATCH);
+            watcherFolderService.initWatch(folderWatchPath);
         } catch (IOException | InterruptedException e ) {
             e.printStackTrace();
         }

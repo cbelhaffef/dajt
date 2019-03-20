@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <property name="APP_LOG_HOME" value="/applications/dajt/logs" />
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
@@ -9,12 +11,27 @@
         </layout>
     </appender>
 
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOG_HOME}/dajt.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${APP_LOG_HOME}/dajt.%d{yyyy-MM-dd-HH-mm}.%i.log.zip</fileNamePattern>
+            <maxHistory>60</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <logger name="com.cbelhaffef" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="ROLLING" />
     </logger>
 
     <root level="error">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="ROLLING" />
     </root>
 
 </configuration>
